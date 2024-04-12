@@ -6,6 +6,7 @@ import {
   ICreditDelegator__factory,
   ILeveragedPositionsFactory,
   ILeveragedPositionsFactory__factory,
+  LeveragedPosition__factory,
   LeveragedPositionsLens,
   LeveragedPositionsLens__factory
 } from '../typechain';
@@ -196,6 +197,24 @@ export default class LevatoSDK {
       amount,
       leverage ?? '1'
     );
+
+    await tx.wait();
+
+    return tx.hash;
+  }
+
+  /**
+   * Close a position
+   * @param { string } contractAddress
+   * @returns The transaction hash
+   */
+  async closePosition(contractAddress: string): Promise<string> {
+    const leveragedPositionContract = LeveragedPosition__factory.connect(
+      contractAddress,
+      this.#signer
+    );
+
+    const tx = await leveragedPositionContract['closePosition()']();
 
     await tx.wait();
 
