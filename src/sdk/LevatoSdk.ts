@@ -165,4 +165,40 @@ export default class LevatoSDK {
     // Reverse to sort them in descending order
     return [openPositions.reverse(), closedPositions.reverse()];
   }
+
+  // Public mutations
+
+  /**
+   * Open a position
+   * @param { string } collateralUnderlying
+   * @param { string } stableTokenUnderlying
+   * @param { BigNumber } amount
+   * @param { string } fundingTokenUnderlying
+   * @param { string } leverage
+   * @returns The transaction hash
+   */
+  async openPosition(
+    collateralUnderlying: string,
+    stableTokenUnderlying: string,
+    amount: BigNumber,
+    fundingTokenUnderlying: string,
+    leverage: string
+  ): Promise<string> {
+    const [collateralIonicMarket, stableIonicMarket] = await Promise.all([
+      this.#flashLoanRouterContract.ionicMarketOfAsset(collateralUnderlying),
+      this.#flashLoanRouterContract.ionicMarketOfAsset(stableTokenUnderlying)
+    ]);
+
+    const tx = await this.#factoryContract.createAndFundIonicPositionAtRatio(
+      collateralIonicMarket,
+      stableIonicMarket,
+      fundingTokenUnderlying,
+      amount,
+      leverage ?? '1'
+    );
+
+    await tx.wait();
+
+    return tx.hash;
+  }
 }
