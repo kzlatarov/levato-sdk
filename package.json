@@ -19,6 +19,6 @@
   },
   "homepage": "https://github.com/kzlatarov/levato-sdk#readme",
   "dependencies": {
-    "ethers": "^6.11.1"
+    "ethers": "5"
   }
 }

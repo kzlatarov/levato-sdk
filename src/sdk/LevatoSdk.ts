@@ -1,4 +1,4 @@
-import { Signer, formatEther } from 'ethers';
+import { BigNumber, Signer } from 'ethers';
 import {
   FlashloanRouter,
   FlashloanRouter__factory,
@@ -9,6 +9,7 @@ import {
   LeveragedPositionsLens,
   LeveragedPositionsLens__factory
 } from '../typechain';
+import { formatEther } from 'ethers/lib/utils';
 
 export type LevatoSDKContructor = {
   signer: Signer;
@@ -90,12 +91,13 @@ export default class LevatoSDK {
    * @param { string } collateralUnderlying
    * @param { string } collateralAmount
    * @param { string } borrowAssetUnderlying
+   * @returns BigNumber representing the max leverage value
    */
   async getMaxLeverageRatio(
     collateralUnderlying: string,
     collateralAmount: string,
     borrowAssetUnderlying: string
-  ): Promise<bigint> {
+  ): Promise<BigNumber> {
     const result = await this.#lensContract.getMaxLeverageRatio.staticCall(
       collateralUnderlying,
       collateralAmount,
@@ -103,5 +105,64 @@ export default class LevatoSDK {
     );
 
     return result;
+  }
+
+  /**
+   * Get liquidation threshold
+   * @param collateralAsset
+   * @param collateralAmount
+   * @param borrowedAsset
+   * @param leverageRatio
+   * @returns BigNumber representing the liquidation threshold
+   */
+  async getLiquidationThreshold(
+    collateralAsset: string,
+    collateralAmount: string,
+    borrowedAsset: string,
+    leverageRatio: string
+  ): Promise<BigNumber | undefined> {
+    const result = await this.#lensContract.getLiquidationThreshold.staticCall(
+      collateralAsset,
+      collateralAmount.toString(),
+      borrowedAsset,
+      leverageRatio.toString()
+    );
+
+    return result;
+  }
+
+  /**
+   * Get positions info
+   * @param { string } address
+   * @returns Opened and closed positions info in descending order
+   */
+  async getPositionsInfo(
+    address: string
+  ): Promise<
+    [
+      LeveragedPositionsLens.PositionInfoStructOutput[],
+      LeveragedPositionsLens.PositionInfoStructOutput[]
+    ]
+  > {
+    const [positions] =
+      await this.#factoryContract.getPositionsByAccount.staticCall(address);
+
+    const apys = positions.map(() => '0');
+    const positionsData = await this.#lensContract.getPositionsInfo.staticCall(
+      JSON.parse(JSON.stringify(positions)),
+      apys
+    );
+    const openPositions: LeveragedPositionsLens.PositionInfoStructOutput[] = [];
+    const closedPositions: LeveragedPositionsLens.PositionInfoStructOutput[] =
+      [];
+
+    for (let i = 0; i < positionsData.length; i++) {
+      positionsData[i].closed
+        ? closedPositions.push(positionsData[i])
+        : openPositions.push(positionsData[i]);
+    }
+
+    // Reverse to sort them in descending order
+    return [openPositions.reverse(), closedPositions.reverse()];
   }
 }
