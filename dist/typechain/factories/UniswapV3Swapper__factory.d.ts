@@ -1,0 +1,58 @@
+import { ContractFactory } from "ethers";
+import type { Signer, ContractDeployTransaction, ContractRunner } from "ethers";
+import type { NonPayableOverrides } from "../common";
+import type { UniswapV3Swapper, UniswapV3SwapperInterface } from "../UniswapV3Swapper";
+type UniswapV3SwapperConstructorParams = [signer?: Signer] | ConstructorParameters<typeof ContractFactory>;
+export declare class UniswapV3Swapper__factory extends ContractFactory {
+    constructor(...args: UniswapV3SwapperConstructorParams);
+    getDeployTransaction(overrides?: NonPayableOverrides & {
+        from?: string;
+    }): Promise<ContractDeployTransaction>;
+    deploy(overrides?: NonPayableOverrides & {
+        from?: string;
+    }): Promise<UniswapV3Swapper & {
+        deploymentTransaction(): ContractTransactionResponse;
+    }>;
+    connect(runner: ContractRunner | null): UniswapV3Swapper__factory;
+    static readonly bytecode = "0x608060405234801561001057600080fd5b50610463806100206000396000f3fe608060405234801561001057600080fd5b50600436106100365760003560e01c806306fdde031461003b57806310badf4e14610076575b600080fd5b604080518082018252601081526f2ab734b9bbb0b82b19a9bbb0b83832b960811b6020820152905161006d9190610247565b60405180910390f35b6100896100843660046102ca565b6100a8565b604080516001600160a01b03909316835260208301919091520161006d565b6000806000806000858060200190518101906100c49190610397565b5060405163095ea7b360e01b81526001600160a01b038083166004830152602482018d90529399508997509195509350908a16915063095ea7b3906044016020604051808303816000875af1158015610121573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906101459190610414565b5060408051610100810182526001600160a01b038a811682528581166020830190815262ffffff8681168486019081523060608601908152426080870190815260a087018f8152600060c0890181815260e08a01918252995163414bf38960e01b81529851881660048a0152955187166024890152925190931660448701525184166064860152905160848501525160a4840152925160c48301529151821660e48201529082169063414bf38990610104016020604051808303816000875af1158015610216573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061023a919061043d565b9350505050935093915050565b600060208083528351808285015260005b8181101561027457858101830151858201604001528201610258565b81811115610286576000604083870101525b50601f01601f1916929092016040019392505050565b6001600160a01b03811681146102b157600080fd5b50565b634e487b7160e01b600052604160045260246000fd5b6000806000606084860312156102df57600080fd5b83356102ea8161029c565b925060208401359150604084013567ffffffffffffffff8082111561030e57600080fd5b818601915086601f83011261032257600080fd5b813581811115610334576103346102b4565b604051601f8201601f19908116603f0116810190838211818310171561035c5761035c6102b4565b8160405282815289602084870101111561037557600080fd5b8260208601602083013760006020848301015280955050505050509250925092565b600080600080600060a086880312156103af57600080fd5b85516103ba8161029c565b60208701519095506103cb8161029c565b604087015190945062ffffff811681146103e457600080fd5b60608701519093506103f58161029c565b60808701519092506104068161029c565b809150509295509295909350565b60006020828403121561042657600080fd5b8151801515811461043657600080fd5b9392505050565b60006020828403121561044f57600080fd5b505191905056fea164736f6c634300080a000a";
+    static readonly abi: readonly [{
+        readonly inputs: readonly [];
+        readonly name: "name";
+        readonly outputs: readonly [{
+            readonly internalType: "string";
+            readonly name: "";
+            readonly type: "string";
+        }];
+        readonly stateMutability: "pure";
+        readonly type: "function";
+    }, {
+        readonly inputs: readonly [{
+            readonly internalType: "contract IERC20Upgradeable";
+            readonly name: "inputToken";
+            readonly type: "address";
+        }, {
+            readonly internalType: "uint256";
+            readonly name: "inputAmount";
+            readonly type: "uint256";
+        }, {
+            readonly internalType: "bytes";
+            readonly name: "strategyData";
+            readonly type: "bytes";
+        }];
+        readonly name: "redeem";
+        readonly outputs: readonly [{
+            readonly internalType: "contract IERC20Upgradeable";
+            readonly name: "outputToken";
+            readonly type: "address";
+        }, {
+            readonly internalType: "uint256";
+            readonly name: "outputAmount";
+            readonly type: "uint256";
+        }];
+        readonly stateMutability: "nonpayable";
+        readonly type: "function";
+    }];
+    static createInterface(): UniswapV3SwapperInterface;
+    static connect(address: string, runner?: ContractRunner | null): UniswapV3Swapper;
+}
+export {};

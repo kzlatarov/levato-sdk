@@ -1,0 +1,57 @@
+import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
+import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedListener, TypedContractMethod } from "../common";
+export interface GaugeV2Interface extends Interface {
+    getFunction(nameOrSignature: "TOKEN" | "balanceOf" | "deposit" | "depositAll" | "earned" | "getReward" | "rewardToken" | "withdraw" | "withdrawAll"): FunctionFragment;
+    encodeFunctionData(functionFragment: "TOKEN", values?: undefined): string;
+    encodeFunctionData(functionFragment: "balanceOf", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "deposit", values: [BigNumberish]): string;
+    encodeFunctionData(functionFragment: "depositAll", values?: undefined): string;
+    encodeFunctionData(functionFragment: "earned", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "getReward", values?: undefined): string;
+    encodeFunctionData(functionFragment: "rewardToken", values?: undefined): string;
+    encodeFunctionData(functionFragment: "withdraw", values: [BigNumberish]): string;
+    encodeFunctionData(functionFragment: "withdrawAll", values?: undefined): string;
+    decodeFunctionResult(functionFragment: "TOKEN", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "depositAll", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "earned", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "getReward", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "rewardToken", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "withdrawAll", data: BytesLike): Result;
+}
+export interface GaugeV2 extends BaseContract {
+    connect(runner?: ContractRunner | null): GaugeV2;
+    waitForDeployment(): Promise<this>;
+    interface: GaugeV2Interface;
+    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
+    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
+    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
+    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
+    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
+    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
+    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
+    listeners(eventName?: string): Promise<Array<Listener>>;
+    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
+    TOKEN: TypedContractMethod<[], [string], "view">;
+    balanceOf: TypedContractMethod<[arg0: AddressLike], [bigint], "view">;
+    deposit: TypedContractMethod<[arg0: BigNumberish], [void], "nonpayable">;
+    depositAll: TypedContractMethod<[], [void], "nonpayable">;
+    earned: TypedContractMethod<[arg0: AddressLike], [bigint], "view">;
+    getReward: TypedContractMethod<[], [void], "nonpayable">;
+    rewardToken: TypedContractMethod<[], [string], "view">;
+    withdraw: TypedContractMethod<[arg0: BigNumberish], [void], "nonpayable">;
+    withdrawAll: TypedContractMethod<[], [void], "nonpayable">;
+    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
+    getFunction(nameOrSignature: "TOKEN"): TypedContractMethod<[], [string], "view">;
+    getFunction(nameOrSignature: "balanceOf"): TypedContractMethod<[arg0: AddressLike], [bigint], "view">;
+    getFunction(nameOrSignature: "deposit"): TypedContractMethod<[arg0: BigNumberish], [void], "nonpayable">;
+    getFunction(nameOrSignature: "depositAll"): TypedContractMethod<[], [void], "nonpayable">;
+    getFunction(nameOrSignature: "earned"): TypedContractMethod<[arg0: AddressLike], [bigint], "view">;
+    getFunction(nameOrSignature: "getReward"): TypedContractMethod<[], [void], "nonpayable">;
+    getFunction(nameOrSignature: "rewardToken"): TypedContractMethod<[], [string], "view">;
+    getFunction(nameOrSignature: "withdraw"): TypedContractMethod<[arg0: BigNumberish], [void], "nonpayable">;
+    getFunction(nameOrSignature: "withdrawAll"): TypedContractMethod<[], [void], "nonpayable">;
+    filters: {};
+}
