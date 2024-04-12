@@ -2,9 +2,10 @@
   "name": "levato-sdk",
   "version": "1.0.0",
   "description": "The package provides methods to use levato leverage contracts",
-  "main": "index.js",
+  "main": "dist/index.js",
   "devDependencies": {},
   "scripts": {
+    "dev": "tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "dcvx",
@@ -16,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/kzlatarov/levato-sdk/issues"
   },
-  "homepage": "https://github.com/kzlatarov/levato-sdk#readme"
+  "homepage": "https://github.com/kzlatarov/levato-sdk#readme",
+  "dependencies": {
+    "ethers": "5"
+  }
 }
