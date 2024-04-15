@@ -1,24 +1,22 @@
-import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedListener, TypedContractMethod } from "./common";
+import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, ContractTransaction, PayableOverrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 export declare namespace IMulticall3 {
     type CallStruct = {
-        target: AddressLike;
+        target: string;
         callData: BytesLike;
     };
-    type CallStructOutput = [target: string, callData: string] & {
+    type CallStructOutput = [string, string] & {
         target: string;
         callData: string;
     };
     type Call3Struct = {
-        target: AddressLike;
+        target: string;
         allowFailure: boolean;
         callData: BytesLike;
     };
-    type Call3StructOutput = [
-        target: string,
-        allowFailure: boolean,
-        callData: string
-    ] & {
+    type Call3StructOutput = [string, boolean, string] & {
         target: string;
         allowFailure: boolean;
         callData: string;
@@ -27,30 +25,43 @@ export declare namespace IMulticall3 {
         success: boolean;
         returnData: BytesLike;
     };
-    type ResultStructOutput = [success: boolean, returnData: string] & {
+    type ResultStructOutput = [boolean, string] & {
         success: boolean;
         returnData: string;
     };
     type Call3ValueStruct = {
-        target: AddressLike;
+        target: string;
         allowFailure: boolean;
         value: BigNumberish;
         callData: BytesLike;
     };
-    type Call3ValueStructOutput = [
-        target: string,
-        allowFailure: boolean,
-        value: bigint,
-        callData: string
-    ] & {
+    type Call3ValueStructOutput = [string, boolean, BigNumber, string] & {
         target: string;
         allowFailure: boolean;
-        value: bigint;
+        value: BigNumber;
         callData: string;
     };
 }
-export interface IMulticall3Interface extends Interface {
-    getFunction(nameOrSignature: "aggregate" | "aggregate3" | "aggregate3Value" | "blockAndAggregate" | "getBasefee" | "getBlockHash" | "getBlockNumber" | "getChainId" | "getCurrentBlockCoinbase" | "getCurrentBlockDifficulty" | "getCurrentBlockGasLimit" | "getCurrentBlockTimestamp" | "getEthBalance" | "getLastBlockHash" | "tryAggregate" | "tryBlockAndAggregate"): FunctionFragment;
+export interface IMulticall3Interface extends utils.Interface {
+    functions: {
+        "aggregate((address,bytes)[])": FunctionFragment;
+        "aggregate3((address,bool,bytes)[])": FunctionFragment;
+        "aggregate3Value((address,bool,uint256,bytes)[])": FunctionFragment;
+        "blockAndAggregate((address,bytes)[])": FunctionFragment;
+        "getBasefee()": FunctionFragment;
+        "getBlockHash(uint256)": FunctionFragment;
+        "getBlockNumber()": FunctionFragment;
+        "getChainId()": FunctionFragment;
+        "getCurrentBlockCoinbase()": FunctionFragment;
+        "getCurrentBlockDifficulty()": FunctionFragment;
+        "getCurrentBlockGasLimit()": FunctionFragment;
+        "getCurrentBlockTimestamp()": FunctionFragment;
+        "getEthBalance(address)": FunctionFragment;
+        "getLastBlockHash()": FunctionFragment;
+        "tryAggregate(bool,(address,bytes)[])": FunctionFragment;
+        "tryBlockAndAggregate(bool,(address,bytes)[])": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "aggregate" | "aggregate3" | "aggregate3Value" | "blockAndAggregate" | "getBasefee" | "getBlockHash" | "getBlockNumber" | "getChainId" | "getCurrentBlockCoinbase" | "getCurrentBlockDifficulty" | "getCurrentBlockGasLimit" | "getCurrentBlockTimestamp" | "getEthBalance" | "getLastBlockHash" | "tryAggregate" | "tryBlockAndAggregate"): FunctionFragment;
     encodeFunctionData(functionFragment: "aggregate", values: [IMulticall3.CallStruct[]]): string;
     encodeFunctionData(functionFragment: "aggregate3", values: [IMulticall3.Call3Struct[]]): string;
     encodeFunctionData(functionFragment: "aggregate3Value", values: [IMulticall3.Call3ValueStruct[]]): string;
@@ -63,7 +74,7 @@ export interface IMulticall3Interface extends Interface {
     encodeFunctionData(functionFragment: "getCurrentBlockDifficulty", values?: undefined): string;
     encodeFunctionData(functionFragment: "getCurrentBlockGasLimit", values?: undefined): string;
     encodeFunctionData(functionFragment: "getCurrentBlockTimestamp", values?: undefined): string;
-    encodeFunctionData(functionFragment: "getEthBalance", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "getEthBalance", values: [string]): string;
     encodeFunctionData(functionFragment: "getLastBlockHash", values?: undefined): string;
     encodeFunctionData(functionFragment: "tryAggregate", values: [boolean, IMulticall3.CallStruct[]]): string;
     encodeFunctionData(functionFragment: "tryBlockAndAggregate", values: [boolean, IMulticall3.CallStruct[]]): string;
@@ -83,146 +94,199 @@ export interface IMulticall3Interface extends Interface {
     decodeFunctionResult(functionFragment: "getLastBlockHash", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "tryAggregate", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "tryBlockAndAggregate", data: BytesLike): Result;
+    events: {};
 }
 export interface IMulticall3 extends BaseContract {
-    connect(runner?: ContractRunner | null): IMulticall3;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: IMulticall3Interface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    aggregate: TypedContractMethod<[
-        calls: IMulticall3.CallStruct[]
-    ], [
-        [bigint, string[]] & {
-            blockNumber: bigint;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        aggregate(calls: IMulticall3.CallStruct[], overrides?: PayableOverrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        aggregate3(calls: IMulticall3.Call3Struct[], overrides?: PayableOverrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        aggregate3Value(calls: IMulticall3.Call3ValueStruct[], overrides?: PayableOverrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        blockAndAggregate(calls: IMulticall3.CallStruct[], overrides?: PayableOverrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        getBasefee(overrides?: CallOverrides): Promise<[BigNumber] & {
+            basefee: BigNumber;
+        }>;
+        getBlockHash(blockNumber: BigNumberish, overrides?: CallOverrides): Promise<[string] & {
+            blockHash: string;
+        }>;
+        getBlockNumber(overrides?: CallOverrides): Promise<[BigNumber] & {
+            blockNumber: BigNumber;
+        }>;
+        getChainId(overrides?: CallOverrides): Promise<[BigNumber] & {
+            chainid: BigNumber;
+        }>;
+        getCurrentBlockCoinbase(overrides?: CallOverrides): Promise<[string] & {
+            coinbase: string;
+        }>;
+        getCurrentBlockDifficulty(overrides?: CallOverrides): Promise<[BigNumber] & {
+            difficulty: BigNumber;
+        }>;
+        getCurrentBlockGasLimit(overrides?: CallOverrides): Promise<[BigNumber] & {
+            gaslimit: BigNumber;
+        }>;
+        getCurrentBlockTimestamp(overrides?: CallOverrides): Promise<[BigNumber] & {
+            timestamp: BigNumber;
+        }>;
+        getEthBalance(addr: string, overrides?: CallOverrides): Promise<[BigNumber] & {
+            balance: BigNumber;
+        }>;
+        getLastBlockHash(overrides?: CallOverrides): Promise<[string] & {
+            blockHash: string;
+        }>;
+        tryAggregate(requireSuccess: boolean, calls: IMulticall3.CallStruct[], overrides?: PayableOverrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        tryBlockAndAggregate(requireSuccess: boolean, calls: IMulticall3.CallStruct[], overrides?: PayableOverrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+    };
+    aggregate(calls: IMulticall3.CallStruct[], overrides?: PayableOverrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    aggregate3(calls: IMulticall3.Call3Struct[], overrides?: PayableOverrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    aggregate3Value(calls: IMulticall3.Call3ValueStruct[], overrides?: PayableOverrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    blockAndAggregate(calls: IMulticall3.CallStruct[], overrides?: PayableOverrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    getBasefee(overrides?: CallOverrides): Promise<BigNumber>;
+    getBlockHash(blockNumber: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    getBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
+    getChainId(overrides?: CallOverrides): Promise<BigNumber>;
+    getCurrentBlockCoinbase(overrides?: CallOverrides): Promise<string>;
+    getCurrentBlockDifficulty(overrides?: CallOverrides): Promise<BigNumber>;
+    getCurrentBlockGasLimit(overrides?: CallOverrides): Promise<BigNumber>;
+    getCurrentBlockTimestamp(overrides?: CallOverrides): Promise<BigNumber>;
+    getEthBalance(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getLastBlockHash(overrides?: CallOverrides): Promise<string>;
+    tryAggregate(requireSuccess: boolean, calls: IMulticall3.CallStruct[], overrides?: PayableOverrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    tryBlockAndAggregate(requireSuccess: boolean, calls: IMulticall3.CallStruct[], overrides?: PayableOverrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    callStatic: {
+        aggregate(calls: IMulticall3.CallStruct[], overrides?: CallOverrides): Promise<[
+            BigNumber,
+            string[]
+        ] & {
+            blockNumber: BigNumber;
             returnData: string[];
-        }
-    ], "payable">;
-    aggregate3: TypedContractMethod<[
-        calls: IMulticall3.Call3Struct[]
-    ], [
-        IMulticall3.ResultStructOutput[]
-    ], "payable">;
-    aggregate3Value: TypedContractMethod<[
-        calls: IMulticall3.Call3ValueStruct[]
-    ], [
-        IMulticall3.ResultStructOutput[]
-    ], "payable">;
-    blockAndAggregate: TypedContractMethod<[
-        calls: IMulticall3.CallStruct[]
-    ], [
-        [
-            bigint,
+        }>;
+        aggregate3(calls: IMulticall3.Call3Struct[], overrides?: CallOverrides): Promise<IMulticall3.ResultStructOutput[]>;
+        aggregate3Value(calls: IMulticall3.Call3ValueStruct[], overrides?: CallOverrides): Promise<IMulticall3.ResultStructOutput[]>;
+        blockAndAggregate(calls: IMulticall3.CallStruct[], overrides?: CallOverrides): Promise<[
+            BigNumber,
             string,
             IMulticall3.ResultStructOutput[]
         ] & {
-            blockNumber: bigint;
+            blockNumber: BigNumber;
             blockHash: string;
             returnData: IMulticall3.ResultStructOutput[];
-        }
-    ], "payable">;
-    getBasefee: TypedContractMethod<[], [bigint], "view">;
-    getBlockHash: TypedContractMethod<[
-        blockNumber: BigNumberish
-    ], [
-        string
-    ], "view">;
-    getBlockNumber: TypedContractMethod<[], [bigint], "view">;
-    getChainId: TypedContractMethod<[], [bigint], "view">;
-    getCurrentBlockCoinbase: TypedContractMethod<[], [string], "view">;
-    getCurrentBlockDifficulty: TypedContractMethod<[], [bigint], "view">;
-    getCurrentBlockGasLimit: TypedContractMethod<[], [bigint], "view">;
-    getCurrentBlockTimestamp: TypedContractMethod<[], [bigint], "view">;
-    getEthBalance: TypedContractMethod<[addr: AddressLike], [bigint], "view">;
-    getLastBlockHash: TypedContractMethod<[], [string], "view">;
-    tryAggregate: TypedContractMethod<[
-        requireSuccess: boolean,
-        calls: IMulticall3.CallStruct[]
-    ], [
-        IMulticall3.ResultStructOutput[]
-    ], "payable">;
-    tryBlockAndAggregate: TypedContractMethod<[
-        requireSuccess: boolean,
-        calls: IMulticall3.CallStruct[]
-    ], [
-        [
-            bigint,
+        }>;
+        getBasefee(overrides?: CallOverrides): Promise<BigNumber>;
+        getBlockHash(blockNumber: BigNumberish, overrides?: CallOverrides): Promise<string>;
+        getBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
+        getChainId(overrides?: CallOverrides): Promise<BigNumber>;
+        getCurrentBlockCoinbase(overrides?: CallOverrides): Promise<string>;
+        getCurrentBlockDifficulty(overrides?: CallOverrides): Promise<BigNumber>;
+        getCurrentBlockGasLimit(overrides?: CallOverrides): Promise<BigNumber>;
+        getCurrentBlockTimestamp(overrides?: CallOverrides): Promise<BigNumber>;
+        getEthBalance(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getLastBlockHash(overrides?: CallOverrides): Promise<string>;
+        tryAggregate(requireSuccess: boolean, calls: IMulticall3.CallStruct[], overrides?: CallOverrides): Promise<IMulticall3.ResultStructOutput[]>;
+        tryBlockAndAggregate(requireSuccess: boolean, calls: IMulticall3.CallStruct[], overrides?: CallOverrides): Promise<[
+            BigNumber,
             string,
             IMulticall3.ResultStructOutput[]
         ] & {
-            blockNumber: bigint;
+            blockNumber: BigNumber;
             blockHash: string;
             returnData: IMulticall3.ResultStructOutput[];
-        }
-    ], "payable">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "aggregate"): TypedContractMethod<[
-        calls: IMulticall3.CallStruct[]
-    ], [
-        [bigint, string[]] & {
-            blockNumber: bigint;
-            returnData: string[];
-        }
-    ], "payable">;
-    getFunction(nameOrSignature: "aggregate3"): TypedContractMethod<[
-        calls: IMulticall3.Call3Struct[]
-    ], [
-        IMulticall3.ResultStructOutput[]
-    ], "payable">;
-    getFunction(nameOrSignature: "aggregate3Value"): TypedContractMethod<[
-        calls: IMulticall3.Call3ValueStruct[]
-    ], [
-        IMulticall3.ResultStructOutput[]
-    ], "payable">;
-    getFunction(nameOrSignature: "blockAndAggregate"): TypedContractMethod<[
-        calls: IMulticall3.CallStruct[]
-    ], [
-        [
-            bigint,
-            string,
-            IMulticall3.ResultStructOutput[]
-        ] & {
-            blockNumber: bigint;
-            blockHash: string;
-            returnData: IMulticall3.ResultStructOutput[];
-        }
-    ], "payable">;
-    getFunction(nameOrSignature: "getBasefee"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "getBlockHash"): TypedContractMethod<[blockNumber: BigNumberish], [string], "view">;
-    getFunction(nameOrSignature: "getBlockNumber"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "getChainId"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "getCurrentBlockCoinbase"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "getCurrentBlockDifficulty"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "getCurrentBlockGasLimit"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "getCurrentBlockTimestamp"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "getEthBalance"): TypedContractMethod<[addr: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "getLastBlockHash"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "tryAggregate"): TypedContractMethod<[
-        requireSuccess: boolean,
-        calls: IMulticall3.CallStruct[]
-    ], [
-        IMulticall3.ResultStructOutput[]
-    ], "payable">;
-    getFunction(nameOrSignature: "tryBlockAndAggregate"): TypedContractMethod<[
-        requireSuccess: boolean,
-        calls: IMulticall3.CallStruct[]
-    ], [
-        [
-            bigint,
-            string,
-            IMulticall3.ResultStructOutput[]
-        ] & {
-            blockNumber: bigint;
-            blockHash: string;
-            returnData: IMulticall3.ResultStructOutput[];
-        }
-    ], "payable">;
+        }>;
+    };
     filters: {};
+    estimateGas: {
+        aggregate(calls: IMulticall3.CallStruct[], overrides?: PayableOverrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        aggregate3(calls: IMulticall3.Call3Struct[], overrides?: PayableOverrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        aggregate3Value(calls: IMulticall3.Call3ValueStruct[], overrides?: PayableOverrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        blockAndAggregate(calls: IMulticall3.CallStruct[], overrides?: PayableOverrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        getBasefee(overrides?: CallOverrides): Promise<BigNumber>;
+        getBlockHash(blockNumber: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        getBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
+        getChainId(overrides?: CallOverrides): Promise<BigNumber>;
+        getCurrentBlockCoinbase(overrides?: CallOverrides): Promise<BigNumber>;
+        getCurrentBlockDifficulty(overrides?: CallOverrides): Promise<BigNumber>;
+        getCurrentBlockGasLimit(overrides?: CallOverrides): Promise<BigNumber>;
+        getCurrentBlockTimestamp(overrides?: CallOverrides): Promise<BigNumber>;
+        getEthBalance(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getLastBlockHash(overrides?: CallOverrides): Promise<BigNumber>;
+        tryAggregate(requireSuccess: boolean, calls: IMulticall3.CallStruct[], overrides?: PayableOverrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        tryBlockAndAggregate(requireSuccess: boolean, calls: IMulticall3.CallStruct[], overrides?: PayableOverrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        aggregate(calls: IMulticall3.CallStruct[], overrides?: PayableOverrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        aggregate3(calls: IMulticall3.Call3Struct[], overrides?: PayableOverrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        aggregate3Value(calls: IMulticall3.Call3ValueStruct[], overrides?: PayableOverrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        blockAndAggregate(calls: IMulticall3.CallStruct[], overrides?: PayableOverrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        getBasefee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getBlockHash(blockNumber: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getBlockNumber(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getChainId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getCurrentBlockCoinbase(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getCurrentBlockDifficulty(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getCurrentBlockGasLimit(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getCurrentBlockTimestamp(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getEthBalance(addr: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getLastBlockHash(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        tryAggregate(requireSuccess: boolean, calls: IMulticall3.CallStruct[], overrides?: PayableOverrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        tryBlockAndAggregate(requireSuccess: boolean, calls: IMulticall3.CallStruct[], overrides?: PayableOverrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+    };
 }

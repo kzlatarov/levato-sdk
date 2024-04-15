@@ -1,96 +1,133 @@
-import type { BaseContract, BytesLike, FunctionFragment, Result, Interface, EventFragment, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedLogDescription, TypedListener, TypedContractMethod } from "../common";
-export interface ITransparentUpgradeableProxyInterface extends Interface {
-    getFunction(nameOrSignature: "admin" | "changeAdmin" | "implementation" | "upgradeTo" | "upgradeToAndCall"): FunctionFragment;
-    getEvent(nameOrSignatureOrTopic: "AdminChanged" | "BeaconUpgraded" | "Upgraded"): EventFragment;
+import type { BaseContract, BigNumber, BytesLike, CallOverrides, ContractTransaction, Overrides, PayableOverrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "../common";
+export interface ITransparentUpgradeableProxyInterface extends utils.Interface {
+    functions: {
+        "admin()": FunctionFragment;
+        "changeAdmin(address)": FunctionFragment;
+        "implementation()": FunctionFragment;
+        "upgradeTo(address)": FunctionFragment;
+        "upgradeToAndCall(address,bytes)": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "admin" | "changeAdmin" | "implementation" | "upgradeTo" | "upgradeToAndCall"): FunctionFragment;
     encodeFunctionData(functionFragment: "admin", values?: undefined): string;
-    encodeFunctionData(functionFragment: "changeAdmin", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "changeAdmin", values: [string]): string;
     encodeFunctionData(functionFragment: "implementation", values?: undefined): string;
-    encodeFunctionData(functionFragment: "upgradeTo", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "upgradeToAndCall", values: [AddressLike, BytesLike]): string;
+    encodeFunctionData(functionFragment: "upgradeTo", values: [string]): string;
+    encodeFunctionData(functionFragment: "upgradeToAndCall", values: [string, BytesLike]): string;
     decodeFunctionResult(functionFragment: "admin", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "changeAdmin", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "implementation", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "upgradeTo", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "upgradeToAndCall", data: BytesLike): Result;
+    events: {
+        "AdminChanged(address,address)": EventFragment;
+        "BeaconUpgraded(address)": EventFragment;
+        "Upgraded(address)": EventFragment;
+    };
+    getEvent(nameOrSignatureOrTopic: "AdminChanged"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "BeaconUpgraded"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "Upgraded"): EventFragment;
 }
-export declare namespace AdminChangedEvent {
-    type InputTuple = [previousAdmin: AddressLike, newAdmin: AddressLike];
-    type OutputTuple = [previousAdmin: string, newAdmin: string];
-    interface OutputObject {
-        previousAdmin: string;
-        newAdmin: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export interface AdminChangedEventObject {
+    previousAdmin: string;
+    newAdmin: string;
 }
-export declare namespace BeaconUpgradedEvent {
-    type InputTuple = [beacon: AddressLike];
-    type OutputTuple = [beacon: string];
-    interface OutputObject {
-        beacon: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type AdminChangedEvent = TypedEvent<[
+    string,
+    string
+], AdminChangedEventObject>;
+export type AdminChangedEventFilter = TypedEventFilter<AdminChangedEvent>;
+export interface BeaconUpgradedEventObject {
+    beacon: string;
 }
-export declare namespace UpgradedEvent {
-    type InputTuple = [implementation: AddressLike];
-    type OutputTuple = [implementation: string];
-    interface OutputObject {
-        implementation: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type BeaconUpgradedEvent = TypedEvent<[
+    string
+], BeaconUpgradedEventObject>;
+export type BeaconUpgradedEventFilter = TypedEventFilter<BeaconUpgradedEvent>;
+export interface UpgradedEventObject {
+    implementation: string;
 }
+export type UpgradedEvent = TypedEvent<[string], UpgradedEventObject>;
+export type UpgradedEventFilter = TypedEventFilter<UpgradedEvent>;
 export interface ITransparentUpgradeableProxy extends BaseContract {
-    connect(runner?: ContractRunner | null): ITransparentUpgradeableProxy;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: ITransparentUpgradeableProxyInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    admin: TypedContractMethod<[], [string], "view">;
-    changeAdmin: TypedContractMethod<[arg0: AddressLike], [void], "nonpayable">;
-    implementation: TypedContractMethod<[], [string], "view">;
-    upgradeTo: TypedContractMethod<[arg0: AddressLike], [void], "nonpayable">;
-    upgradeToAndCall: TypedContractMethod<[
-        arg0: AddressLike,
-        arg1: BytesLike
-    ], [
-        void
-    ], "payable">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "admin"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "changeAdmin"): TypedContractMethod<[arg0: AddressLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "implementation"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "upgradeTo"): TypedContractMethod<[arg0: AddressLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "upgradeToAndCall"): TypedContractMethod<[
-        arg0: AddressLike,
-        arg1: BytesLike
-    ], [
-        void
-    ], "payable">;
-    getEvent(key: "AdminChanged"): TypedContractEvent<AdminChangedEvent.InputTuple, AdminChangedEvent.OutputTuple, AdminChangedEvent.OutputObject>;
-    getEvent(key: "BeaconUpgraded"): TypedContractEvent<BeaconUpgradedEvent.InputTuple, BeaconUpgradedEvent.OutputTuple, BeaconUpgradedEvent.OutputObject>;
-    getEvent(key: "Upgraded"): TypedContractEvent<UpgradedEvent.InputTuple, UpgradedEvent.OutputTuple, UpgradedEvent.OutputObject>;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        admin(overrides?: CallOverrides): Promise<[string]>;
+        changeAdmin(arg0: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        implementation(overrides?: CallOverrides): Promise<[string]>;
+        upgradeTo(arg0: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        upgradeToAndCall(arg0: string, arg1: BytesLike, overrides?: PayableOverrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+    };
+    admin(overrides?: CallOverrides): Promise<string>;
+    changeAdmin(arg0: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    implementation(overrides?: CallOverrides): Promise<string>;
+    upgradeTo(arg0: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    upgradeToAndCall(arg0: string, arg1: BytesLike, overrides?: PayableOverrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    callStatic: {
+        admin(overrides?: CallOverrides): Promise<string>;
+        changeAdmin(arg0: string, overrides?: CallOverrides): Promise<void>;
+        implementation(overrides?: CallOverrides): Promise<string>;
+        upgradeTo(arg0: string, overrides?: CallOverrides): Promise<void>;
+        upgradeToAndCall(arg0: string, arg1: BytesLike, overrides?: CallOverrides): Promise<void>;
+    };
     filters: {
-        "AdminChanged(address,address)": TypedContractEvent<AdminChangedEvent.InputTuple, AdminChangedEvent.OutputTuple, AdminChangedEvent.OutputObject>;
-        AdminChanged: TypedContractEvent<AdminChangedEvent.InputTuple, AdminChangedEvent.OutputTuple, AdminChangedEvent.OutputObject>;
-        "BeaconUpgraded(address)": TypedContractEvent<BeaconUpgradedEvent.InputTuple, BeaconUpgradedEvent.OutputTuple, BeaconUpgradedEvent.OutputObject>;
-        BeaconUpgraded: TypedContractEvent<BeaconUpgradedEvent.InputTuple, BeaconUpgradedEvent.OutputTuple, BeaconUpgradedEvent.OutputObject>;
-        "Upgraded(address)": TypedContractEvent<UpgradedEvent.InputTuple, UpgradedEvent.OutputTuple, UpgradedEvent.OutputObject>;
-        Upgraded: TypedContractEvent<UpgradedEvent.InputTuple, UpgradedEvent.OutputTuple, UpgradedEvent.OutputObject>;
+        "AdminChanged(address,address)"(previousAdmin?: null, newAdmin?: null): AdminChangedEventFilter;
+        AdminChanged(previousAdmin?: null, newAdmin?: null): AdminChangedEventFilter;
+        "BeaconUpgraded(address)"(beacon?: string | null): BeaconUpgradedEventFilter;
+        BeaconUpgraded(beacon?: string | null): BeaconUpgradedEventFilter;
+        "Upgraded(address)"(implementation?: string | null): UpgradedEventFilter;
+        Upgraded(implementation?: string | null): UpgradedEventFilter;
+    };
+    estimateGas: {
+        admin(overrides?: CallOverrides): Promise<BigNumber>;
+        changeAdmin(arg0: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        implementation(overrides?: CallOverrides): Promise<BigNumber>;
+        upgradeTo(arg0: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        upgradeToAndCall(arg0: string, arg1: BytesLike, overrides?: PayableOverrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        admin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        changeAdmin(arg0: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        implementation(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        upgradeTo(arg0: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        upgradeToAndCall(arg0: string, arg1: BytesLike, overrides?: PayableOverrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
     };
 }

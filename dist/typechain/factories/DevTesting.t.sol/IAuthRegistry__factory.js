@@ -7,54 +7,54 @@ exports.IAuthRegistry__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        inputs: [],
+        type: "function",
         name: "owner",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "setUserRole",
         inputs: [
             {
-                internalType: "address",
                 name: "pool",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "user",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint8",
                 name: "role",
                 type: "uint8",
+                internalType: "uint8",
             },
             {
-                internalType: "bool",
                 name: "enabled",
                 type: "bool",
+                internalType: "bool",
             },
         ],
-        name: "setUserRole",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
 ];
 class IAuthRegistry__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.IAuthRegistry__factory = IAuthRegistry__factory;

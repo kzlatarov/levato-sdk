@@ -7,26 +7,26 @@ exports.Script__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        inputs: [],
+        type: "function",
         name: "IS_SCRIPT",
+        inputs: [],
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
 ];
 class Script__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.Script__factory = Script__factory;

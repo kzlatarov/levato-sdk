@@ -1,47 +1,48 @@
-import { type ContractRunner } from "ethers";
+import { Signer } from "ethers";
+import type { Provider } from "@ethersproject/providers";
 import type { IBeefyStrategy, IBeefyStrategyInterface } from "../../BeefyERC4626.sol/IBeefyStrategy";
 export declare class IBeefyStrategy__factory {
     static readonly abi: readonly [{
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "harvestOnDeposit";
+        readonly inputs: readonly [];
         readonly outputs: readonly [{
-            readonly internalType: "bool";
             readonly name: "";
             readonly type: "bool";
+            readonly internalType: "bool";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }, {
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "keeper";
-        readonly outputs: readonly [{
-            readonly internalType: "address";
-            readonly name: "";
-            readonly type: "address";
-        }];
-        readonly stateMutability: "view";
-        readonly type: "function";
-    }, {
         readonly inputs: readonly [];
-        readonly name: "owner";
         readonly outputs: readonly [{
-            readonly internalType: "address";
             readonly name: "";
             readonly type: "address";
+            readonly internalType: "address";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "owner";
+        readonly inputs: readonly [];
+        readonly outputs: readonly [{
+            readonly name: "";
+            readonly type: "address";
+            readonly internalType: "address";
+        }];
+        readonly stateMutability: "view";
+    }, {
+        readonly type: "function";
+        readonly name: "setHarvestOnDeposit";
         readonly inputs: readonly [{
-            readonly internalType: "bool";
             readonly name: "";
             readonly type: "bool";
+            readonly internalType: "bool";
         }];
-        readonly name: "setHarvestOnDeposit";
         readonly outputs: readonly [];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }];
     static createInterface(): IBeefyStrategyInterface;
-    static connect(address: string, runner?: ContractRunner | null): IBeefyStrategy;
+    static connect(address: string, signerOrProvider: Signer | Provider): IBeefyStrategy;
 }

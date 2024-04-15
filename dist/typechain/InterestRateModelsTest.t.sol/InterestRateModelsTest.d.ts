@@ -1,18 +1,32 @@
-import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, EventFragment, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedLogDescription, TypedListener, TypedContractMethod } from "../common";
+import type { BaseContract, BigNumber, BytesLike, CallOverrides, ContractTransaction, Overrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "../common";
 export declare namespace StdInvariant {
     type FuzzSelectorStruct = {
-        addr: AddressLike;
+        addr: string;
         selectors: BytesLike[];
     };
-    type FuzzSelectorStructOutput = [addr: string, selectors: string[]] & {
+    type FuzzSelectorStructOutput = [string, string[]] & {
         addr: string;
         selectors: string[];
     };
 }
-export interface InterestRateModelsTestInterface extends Interface {
-    getFunction(nameOrSignature: "IS_TEST" | "excludeArtifacts" | "excludeContracts" | "excludeSenders" | "failed" | "targetArtifactSelectors" | "targetArtifacts" | "targetContracts" | "targetSelectors" | "targetSenders" | "testJumpRateModel"): FunctionFragment;
-    getEvent(nameOrSignatureOrTopic: "log" | "log_address" | "log_array(uint256[])" | "log_array(int256[])" | "log_array(address[])" | "log_bytes" | "log_bytes32" | "log_int" | "log_named_address" | "log_named_array(string,uint256[])" | "log_named_array(string,int256[])" | "log_named_array(string,address[])" | "log_named_bytes" | "log_named_bytes32" | "log_named_decimal_int" | "log_named_decimal_uint" | "log_named_int" | "log_named_string" | "log_named_uint" | "log_string" | "log_uint" | "logs"): EventFragment;
+export interface InterestRateModelsTestInterface extends utils.Interface {
+    functions: {
+        "IS_TEST()": FunctionFragment;
+        "excludeArtifacts()": FunctionFragment;
+        "excludeContracts()": FunctionFragment;
+        "excludeSenders()": FunctionFragment;
+        "failed()": FunctionFragment;
+        "targetArtifactSelectors()": FunctionFragment;
+        "targetArtifacts()": FunctionFragment;
+        "targetContracts()": FunctionFragment;
+        "targetSelectors()": FunctionFragment;
+        "targetSenders()": FunctionFragment;
+        "testJumpRateModel()": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "IS_TEST" | "excludeArtifacts" | "excludeContracts" | "excludeSenders" | "failed" | "targetArtifactSelectors" | "targetArtifacts" | "targetContracts" | "targetSelectors" | "targetSenders" | "testJumpRateModel"): FunctionFragment;
     encodeFunctionData(functionFragment: "IS_TEST", values?: undefined): string;
     encodeFunctionData(functionFragment: "excludeArtifacts", values?: undefined): string;
     encodeFunctionData(functionFragment: "excludeContracts", values?: undefined): string;
@@ -35,372 +49,368 @@ export interface InterestRateModelsTestInterface extends Interface {
     decodeFunctionResult(functionFragment: "targetSelectors", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "targetSenders", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "testJumpRateModel", data: BytesLike): Result;
+    events: {
+        "log(string)": EventFragment;
+        "log_address(address)": EventFragment;
+        "log_array(uint256[])": EventFragment;
+        "log_array(int256[])": EventFragment;
+        "log_array(address[])": EventFragment;
+        "log_bytes(bytes)": EventFragment;
+        "log_bytes32(bytes32)": EventFragment;
+        "log_int(int256)": EventFragment;
+        "log_named_address(string,address)": EventFragment;
+        "log_named_array(string,uint256[])": EventFragment;
+        "log_named_array(string,int256[])": EventFragment;
+        "log_named_array(string,address[])": EventFragment;
+        "log_named_bytes(string,bytes)": EventFragment;
+        "log_named_bytes32(string,bytes32)": EventFragment;
+        "log_named_decimal_int(string,int256,uint256)": EventFragment;
+        "log_named_decimal_uint(string,uint256,uint256)": EventFragment;
+        "log_named_int(string,int256)": EventFragment;
+        "log_named_string(string,string)": EventFragment;
+        "log_named_uint(string,uint256)": EventFragment;
+        "log_string(string)": EventFragment;
+        "log_uint(uint256)": EventFragment;
+        "logs(bytes)": EventFragment;
+    };
+    getEvent(nameOrSignatureOrTopic: "log"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "log_address"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "log_array(uint256[])"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "log_array(int256[])"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "log_array(address[])"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "log_bytes"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "log_bytes32"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "log_int"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "log_named_address"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "log_named_array(string,uint256[])"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "log_named_array(string,int256[])"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "log_named_array(string,address[])"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "log_named_bytes"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "log_named_bytes32"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "log_named_decimal_int"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "log_named_decimal_uint"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "log_named_int"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "log_named_string"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "log_named_uint"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "log_string"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "log_uint"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "logs"): EventFragment;
 }
-export declare namespace logEvent {
-    type InputTuple = [arg0: string];
-    type OutputTuple = [arg0: string];
-    interface OutputObject {
-        arg0: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export interface logEventObject {
+    arg0: string;
 }
-export declare namespace log_addressEvent {
-    type InputTuple = [arg0: AddressLike];
-    type OutputTuple = [arg0: string];
-    interface OutputObject {
-        arg0: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type logEvent = TypedEvent<[string], logEventObject>;
+export type logEventFilter = TypedEventFilter<logEvent>;
+export interface log_addressEventObject {
+    arg0: string;
 }
-export declare namespace log_array_uint256_array_Event {
-    type InputTuple = [val: BigNumberish[]];
-    type OutputTuple = [val: bigint[]];
-    interface OutputObject {
-        val: bigint[];
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type log_addressEvent = TypedEvent<[string], log_addressEventObject>;
+export type log_addressEventFilter = TypedEventFilter<log_addressEvent>;
+export interface log_array_uint256_array_EventObject {
+    val: BigNumber[];
 }
-export declare namespace log_array_int256_array_Event {
-    type InputTuple = [val: BigNumberish[]];
-    type OutputTuple = [val: bigint[]];
-    interface OutputObject {
-        val: bigint[];
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type log_array_uint256_array_Event = TypedEvent<[
+    BigNumber[]
+], log_array_uint256_array_EventObject>;
+export type log_array_uint256_array_EventFilter = TypedEventFilter<log_array_uint256_array_Event>;
+export interface log_array_int256_array_EventObject {
+    val: BigNumber[];
 }
-export declare namespace log_array_address_array_Event {
-    type InputTuple = [val: AddressLike[]];
-    type OutputTuple = [val: string[]];
-    interface OutputObject {
-        val: string[];
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type log_array_int256_array_Event = TypedEvent<[
+    BigNumber[]
+], log_array_int256_array_EventObject>;
+export type log_array_int256_array_EventFilter = TypedEventFilter<log_array_int256_array_Event>;
+export interface log_array_address_array_EventObject {
+    val: string[];
 }
-export declare namespace log_bytesEvent {
-    type InputTuple = [arg0: BytesLike];
-    type OutputTuple = [arg0: string];
-    interface OutputObject {
-        arg0: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type log_array_address_array_Event = TypedEvent<[
+    string[]
+], log_array_address_array_EventObject>;
+export type log_array_address_array_EventFilter = TypedEventFilter<log_array_address_array_Event>;
+export interface log_bytesEventObject {
+    arg0: string;
 }
-export declare namespace log_bytes32Event {
-    type InputTuple = [arg0: BytesLike];
-    type OutputTuple = [arg0: string];
-    interface OutputObject {
-        arg0: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type log_bytesEvent = TypedEvent<[string], log_bytesEventObject>;
+export type log_bytesEventFilter = TypedEventFilter<log_bytesEvent>;
+export interface log_bytes32EventObject {
+    arg0: string;
 }
-export declare namespace log_intEvent {
-    type InputTuple = [arg0: BigNumberish];
-    type OutputTuple = [arg0: bigint];
-    interface OutputObject {
-        arg0: bigint;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type log_bytes32Event = TypedEvent<[string], log_bytes32EventObject>;
+export type log_bytes32EventFilter = TypedEventFilter<log_bytes32Event>;
+export interface log_intEventObject {
+    arg0: BigNumber;
 }
-export declare namespace log_named_addressEvent {
-    type InputTuple = [key: string, val: AddressLike];
-    type OutputTuple = [key: string, val: string];
-    interface OutputObject {
-        key: string;
-        val: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type log_intEvent = TypedEvent<[BigNumber], log_intEventObject>;
+export type log_intEventFilter = TypedEventFilter<log_intEvent>;
+export interface log_named_addressEventObject {
+    key: string;
+    val: string;
 }
-export declare namespace log_named_array_string_uint256_array_Event {
-    type InputTuple = [key: string, val: BigNumberish[]];
-    type OutputTuple = [key: string, val: bigint[]];
-    interface OutputObject {
-        key: string;
-        val: bigint[];
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type log_named_addressEvent = TypedEvent<[
+    string,
+    string
+], log_named_addressEventObject>;
+export type log_named_addressEventFilter = TypedEventFilter<log_named_addressEvent>;
+export interface log_named_array_string_uint256_array_EventObject {
+    key: string;
+    val: BigNumber[];
 }
-export declare namespace log_named_array_string_int256_array_Event {
-    type InputTuple = [key: string, val: BigNumberish[]];
-    type OutputTuple = [key: string, val: bigint[]];
-    interface OutputObject {
-        key: string;
-        val: bigint[];
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type log_named_array_string_uint256_array_Event = TypedEvent<[
+    string,
+    BigNumber[]
+], log_named_array_string_uint256_array_EventObject>;
+export type log_named_array_string_uint256_array_EventFilter = TypedEventFilter<log_named_array_string_uint256_array_Event>;
+export interface log_named_array_string_int256_array_EventObject {
+    key: string;
+    val: BigNumber[];
 }
-export declare namespace log_named_array_string_address_array_Event {
-    type InputTuple = [key: string, val: AddressLike[]];
-    type OutputTuple = [key: string, val: string[]];
-    interface OutputObject {
-        key: string;
-        val: string[];
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type log_named_array_string_int256_array_Event = TypedEvent<[
+    string,
+    BigNumber[]
+], log_named_array_string_int256_array_EventObject>;
+export type log_named_array_string_int256_array_EventFilter = TypedEventFilter<log_named_array_string_int256_array_Event>;
+export interface log_named_array_string_address_array_EventObject {
+    key: string;
+    val: string[];
 }
-export declare namespace log_named_bytesEvent {
-    type InputTuple = [key: string, val: BytesLike];
-    type OutputTuple = [key: string, val: string];
-    interface OutputObject {
-        key: string;
-        val: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type log_named_array_string_address_array_Event = TypedEvent<[
+    string,
+    string[]
+], log_named_array_string_address_array_EventObject>;
+export type log_named_array_string_address_array_EventFilter = TypedEventFilter<log_named_array_string_address_array_Event>;
+export interface log_named_bytesEventObject {
+    key: string;
+    val: string;
 }
-export declare namespace log_named_bytes32Event {
-    type InputTuple = [key: string, val: BytesLike];
-    type OutputTuple = [key: string, val: string];
-    interface OutputObject {
-        key: string;
-        val: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type log_named_bytesEvent = TypedEvent<[
+    string,
+    string
+], log_named_bytesEventObject>;
+export type log_named_bytesEventFilter = TypedEventFilter<log_named_bytesEvent>;
+export interface log_named_bytes32EventObject {
+    key: string;
+    val: string;
 }
-export declare namespace log_named_decimal_intEvent {
-    type InputTuple = [
-        key: string,
-        val: BigNumberish,
-        decimals: BigNumberish
-    ];
-    type OutputTuple = [key: string, val: bigint, decimals: bigint];
-    interface OutputObject {
-        key: string;
-        val: bigint;
-        decimals: bigint;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type log_named_bytes32Event = TypedEvent<[
+    string,
+    string
+], log_named_bytes32EventObject>;
+export type log_named_bytes32EventFilter = TypedEventFilter<log_named_bytes32Event>;
+export interface log_named_decimal_intEventObject {
+    key: string;
+    val: BigNumber;
+    decimals: BigNumber;
 }
-export declare namespace log_named_decimal_uintEvent {
-    type InputTuple = [
-        key: string,
-        val: BigNumberish,
-        decimals: BigNumberish
-    ];
-    type OutputTuple = [key: string, val: bigint, decimals: bigint];
-    interface OutputObject {
-        key: string;
-        val: bigint;
-        decimals: bigint;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type log_named_decimal_intEvent = TypedEvent<[
+    string,
+    BigNumber,
+    BigNumber
+], log_named_decimal_intEventObject>;
+export type log_named_decimal_intEventFilter = TypedEventFilter<log_named_decimal_intEvent>;
+export interface log_named_decimal_uintEventObject {
+    key: string;
+    val: BigNumber;
+    decimals: BigNumber;
 }
-export declare namespace log_named_intEvent {
-    type InputTuple = [key: string, val: BigNumberish];
-    type OutputTuple = [key: string, val: bigint];
-    interface OutputObject {
-        key: string;
-        val: bigint;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type log_named_decimal_uintEvent = TypedEvent<[
+    string,
+    BigNumber,
+    BigNumber
+], log_named_decimal_uintEventObject>;
+export type log_named_decimal_uintEventFilter = TypedEventFilter<log_named_decimal_uintEvent>;
+export interface log_named_intEventObject {
+    key: string;
+    val: BigNumber;
 }
-export declare namespace log_named_stringEvent {
-    type InputTuple = [key: string, val: string];
-    type OutputTuple = [key: string, val: string];
-    interface OutputObject {
-        key: string;
-        val: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type log_named_intEvent = TypedEvent<[
+    string,
+    BigNumber
+], log_named_intEventObject>;
+export type log_named_intEventFilter = TypedEventFilter<log_named_intEvent>;
+export interface log_named_stringEventObject {
+    key: string;
+    val: string;
 }
-export declare namespace log_named_uintEvent {
-    type InputTuple = [key: string, val: BigNumberish];
-    type OutputTuple = [key: string, val: bigint];
-    interface OutputObject {
-        key: string;
-        val: bigint;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type log_named_stringEvent = TypedEvent<[
+    string,
+    string
+], log_named_stringEventObject>;
+export type log_named_stringEventFilter = TypedEventFilter<log_named_stringEvent>;
+export interface log_named_uintEventObject {
+    key: string;
+    val: BigNumber;
 }
-export declare namespace log_stringEvent {
-    type InputTuple = [arg0: string];
-    type OutputTuple = [arg0: string];
-    interface OutputObject {
-        arg0: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type log_named_uintEvent = TypedEvent<[
+    string,
+    BigNumber
+], log_named_uintEventObject>;
+export type log_named_uintEventFilter = TypedEventFilter<log_named_uintEvent>;
+export interface log_stringEventObject {
+    arg0: string;
 }
-export declare namespace log_uintEvent {
-    type InputTuple = [arg0: BigNumberish];
-    type OutputTuple = [arg0: bigint];
-    interface OutputObject {
-        arg0: bigint;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type log_stringEvent = TypedEvent<[string], log_stringEventObject>;
+export type log_stringEventFilter = TypedEventFilter<log_stringEvent>;
+export interface log_uintEventObject {
+    arg0: BigNumber;
 }
-export declare namespace logsEvent {
-    type InputTuple = [arg0: BytesLike];
-    type OutputTuple = [arg0: string];
-    interface OutputObject {
-        arg0: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type log_uintEvent = TypedEvent<[BigNumber], log_uintEventObject>;
+export type log_uintEventFilter = TypedEventFilter<log_uintEvent>;
+export interface logsEventObject {
+    arg0: string;
 }
+export type logsEvent = TypedEvent<[string], logsEventObject>;
+export type logsEventFilter = TypedEventFilter<logsEvent>;
 export interface InterestRateModelsTest extends BaseContract {
-    connect(runner?: ContractRunner | null): InterestRateModelsTest;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: InterestRateModelsTestInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    IS_TEST: TypedContractMethod<[], [boolean], "view">;
-    excludeArtifacts: TypedContractMethod<[], [string[]], "view">;
-    excludeContracts: TypedContractMethod<[], [string[]], "view">;
-    excludeSenders: TypedContractMethod<[], [string[]], "view">;
-    failed: TypedContractMethod<[], [boolean], "nonpayable">;
-    targetArtifactSelectors: TypedContractMethod<[
-    ], [
-        StdInvariant.FuzzSelectorStructOutput[]
-    ], "view">;
-    targetArtifacts: TypedContractMethod<[], [string[]], "view">;
-    targetContracts: TypedContractMethod<[], [string[]], "view">;
-    targetSelectors: TypedContractMethod<[
-    ], [
-        StdInvariant.FuzzSelectorStructOutput[]
-    ], "view">;
-    targetSenders: TypedContractMethod<[], [string[]], "view">;
-    testJumpRateModel: TypedContractMethod<[], [void], "nonpayable">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "IS_TEST"): TypedContractMethod<[], [boolean], "view">;
-    getFunction(nameOrSignature: "excludeArtifacts"): TypedContractMethod<[], [string[]], "view">;
-    getFunction(nameOrSignature: "excludeContracts"): TypedContractMethod<[], [string[]], "view">;
-    getFunction(nameOrSignature: "excludeSenders"): TypedContractMethod<[], [string[]], "view">;
-    getFunction(nameOrSignature: "failed"): TypedContractMethod<[], [boolean], "nonpayable">;
-    getFunction(nameOrSignature: "targetArtifactSelectors"): TypedContractMethod<[], [StdInvariant.FuzzSelectorStructOutput[]], "view">;
-    getFunction(nameOrSignature: "targetArtifacts"): TypedContractMethod<[], [string[]], "view">;
-    getFunction(nameOrSignature: "targetContracts"): TypedContractMethod<[], [string[]], "view">;
-    getFunction(nameOrSignature: "targetSelectors"): TypedContractMethod<[], [StdInvariant.FuzzSelectorStructOutput[]], "view">;
-    getFunction(nameOrSignature: "targetSenders"): TypedContractMethod<[], [string[]], "view">;
-    getFunction(nameOrSignature: "testJumpRateModel"): TypedContractMethod<[], [void], "nonpayable">;
-    getEvent(key: "log"): TypedContractEvent<logEvent.InputTuple, logEvent.OutputTuple, logEvent.OutputObject>;
-    getEvent(key: "log_address"): TypedContractEvent<log_addressEvent.InputTuple, log_addressEvent.OutputTuple, log_addressEvent.OutputObject>;
-    getEvent(key: "log_array(uint256[])"): TypedContractEvent<log_array_uint256_array_Event.InputTuple, log_array_uint256_array_Event.OutputTuple, log_array_uint256_array_Event.OutputObject>;
-    getEvent(key: "log_array(int256[])"): TypedContractEvent<log_array_int256_array_Event.InputTuple, log_array_int256_array_Event.OutputTuple, log_array_int256_array_Event.OutputObject>;
-    getEvent(key: "log_array(address[])"): TypedContractEvent<log_array_address_array_Event.InputTuple, log_array_address_array_Event.OutputTuple, log_array_address_array_Event.OutputObject>;
-    getEvent(key: "log_bytes"): TypedContractEvent<log_bytesEvent.InputTuple, log_bytesEvent.OutputTuple, log_bytesEvent.OutputObject>;
-    getEvent(key: "log_bytes32"): TypedContractEvent<log_bytes32Event.InputTuple, log_bytes32Event.OutputTuple, log_bytes32Event.OutputObject>;
-    getEvent(key: "log_int"): TypedContractEvent<log_intEvent.InputTuple, log_intEvent.OutputTuple, log_intEvent.OutputObject>;
-    getEvent(key: "log_named_address"): TypedContractEvent<log_named_addressEvent.InputTuple, log_named_addressEvent.OutputTuple, log_named_addressEvent.OutputObject>;
-    getEvent(key: "log_named_array(string,uint256[])"): TypedContractEvent<log_named_array_string_uint256_array_Event.InputTuple, log_named_array_string_uint256_array_Event.OutputTuple, log_named_array_string_uint256_array_Event.OutputObject>;
-    getEvent(key: "log_named_array(string,int256[])"): TypedContractEvent<log_named_array_string_int256_array_Event.InputTuple, log_named_array_string_int256_array_Event.OutputTuple, log_named_array_string_int256_array_Event.OutputObject>;
-    getEvent(key: "log_named_array(string,address[])"): TypedContractEvent<log_named_array_string_address_array_Event.InputTuple, log_named_array_string_address_array_Event.OutputTuple, log_named_array_string_address_array_Event.OutputObject>;
-    getEvent(key: "log_named_bytes"): TypedContractEvent<log_named_bytesEvent.InputTuple, log_named_bytesEvent.OutputTuple, log_named_bytesEvent.OutputObject>;
-    getEvent(key: "log_named_bytes32"): TypedContractEvent<log_named_bytes32Event.InputTuple, log_named_bytes32Event.OutputTuple, log_named_bytes32Event.OutputObject>;
-    getEvent(key: "log_named_decimal_int"): TypedContractEvent<log_named_decimal_intEvent.InputTuple, log_named_decimal_intEvent.OutputTuple, log_named_decimal_intEvent.OutputObject>;
-    getEvent(key: "log_named_decimal_uint"): TypedContractEvent<log_named_decimal_uintEvent.InputTuple, log_named_decimal_uintEvent.OutputTuple, log_named_decimal_uintEvent.OutputObject>;
-    getEvent(key: "log_named_int"): TypedContractEvent<log_named_intEvent.InputTuple, log_named_intEvent.OutputTuple, log_named_intEvent.OutputObject>;
-    getEvent(key: "log_named_string"): TypedContractEvent<log_named_stringEvent.InputTuple, log_named_stringEvent.OutputTuple, log_named_stringEvent.OutputObject>;
-    getEvent(key: "log_named_uint"): TypedContractEvent<log_named_uintEvent.InputTuple, log_named_uintEvent.OutputTuple, log_named_uintEvent.OutputObject>;
-    getEvent(key: "log_string"): TypedContractEvent<log_stringEvent.InputTuple, log_stringEvent.OutputTuple, log_stringEvent.OutputObject>;
-    getEvent(key: "log_uint"): TypedContractEvent<log_uintEvent.InputTuple, log_uintEvent.OutputTuple, log_uintEvent.OutputObject>;
-    getEvent(key: "logs"): TypedContractEvent<logsEvent.InputTuple, logsEvent.OutputTuple, logsEvent.OutputObject>;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        IS_TEST(overrides?: CallOverrides): Promise<[boolean]>;
+        excludeArtifacts(overrides?: CallOverrides): Promise<[string[]] & {
+            excludedArtifacts_: string[];
+        }>;
+        excludeContracts(overrides?: CallOverrides): Promise<[string[]] & {
+            excludedContracts_: string[];
+        }>;
+        excludeSenders(overrides?: CallOverrides): Promise<[string[]] & {
+            excludedSenders_: string[];
+        }>;
+        failed(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        targetArtifactSelectors(overrides?: CallOverrides): Promise<[
+            StdInvariant.FuzzSelectorStructOutput[]
+        ] & {
+            targetedArtifactSelectors_: StdInvariant.FuzzSelectorStructOutput[];
+        }>;
+        targetArtifacts(overrides?: CallOverrides): Promise<[string[]] & {
+            targetedArtifacts_: string[];
+        }>;
+        targetContracts(overrides?: CallOverrides): Promise<[string[]] & {
+            targetedContracts_: string[];
+        }>;
+        targetSelectors(overrides?: CallOverrides): Promise<[
+            StdInvariant.FuzzSelectorStructOutput[]
+        ] & {
+            targetedSelectors_: StdInvariant.FuzzSelectorStructOutput[];
+        }>;
+        targetSenders(overrides?: CallOverrides): Promise<[string[]] & {
+            targetedSenders_: string[];
+        }>;
+        testJumpRateModel(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+    };
+    IS_TEST(overrides?: CallOverrides): Promise<boolean>;
+    excludeArtifacts(overrides?: CallOverrides): Promise<string[]>;
+    excludeContracts(overrides?: CallOverrides): Promise<string[]>;
+    excludeSenders(overrides?: CallOverrides): Promise<string[]>;
+    failed(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    targetArtifactSelectors(overrides?: CallOverrides): Promise<StdInvariant.FuzzSelectorStructOutput[]>;
+    targetArtifacts(overrides?: CallOverrides): Promise<string[]>;
+    targetContracts(overrides?: CallOverrides): Promise<string[]>;
+    targetSelectors(overrides?: CallOverrides): Promise<StdInvariant.FuzzSelectorStructOutput[]>;
+    targetSenders(overrides?: CallOverrides): Promise<string[]>;
+    testJumpRateModel(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    callStatic: {
+        IS_TEST(overrides?: CallOverrides): Promise<boolean>;
+        excludeArtifacts(overrides?: CallOverrides): Promise<string[]>;
+        excludeContracts(overrides?: CallOverrides): Promise<string[]>;
+        excludeSenders(overrides?: CallOverrides): Promise<string[]>;
+        failed(overrides?: CallOverrides): Promise<boolean>;
+        targetArtifactSelectors(overrides?: CallOverrides): Promise<StdInvariant.FuzzSelectorStructOutput[]>;
+        targetArtifacts(overrides?: CallOverrides): Promise<string[]>;
+        targetContracts(overrides?: CallOverrides): Promise<string[]>;
+        targetSelectors(overrides?: CallOverrides): Promise<StdInvariant.FuzzSelectorStructOutput[]>;
+        targetSenders(overrides?: CallOverrides): Promise<string[]>;
+        testJumpRateModel(overrides?: CallOverrides): Promise<void>;
+    };
     filters: {
-        "log(string)": TypedContractEvent<logEvent.InputTuple, logEvent.OutputTuple, logEvent.OutputObject>;
-        log: TypedContractEvent<logEvent.InputTuple, logEvent.OutputTuple, logEvent.OutputObject>;
-        "log_address(address)": TypedContractEvent<log_addressEvent.InputTuple, log_addressEvent.OutputTuple, log_addressEvent.OutputObject>;
-        log_address: TypedContractEvent<log_addressEvent.InputTuple, log_addressEvent.OutputTuple, log_addressEvent.OutputObject>;
-        "log_array(uint256[])": TypedContractEvent<log_array_uint256_array_Event.InputTuple, log_array_uint256_array_Event.OutputTuple, log_array_uint256_array_Event.OutputObject>;
-        "log_array(int256[])": TypedContractEvent<log_array_int256_array_Event.InputTuple, log_array_int256_array_Event.OutputTuple, log_array_int256_array_Event.OutputObject>;
-        "log_array(address[])": TypedContractEvent<log_array_address_array_Event.InputTuple, log_array_address_array_Event.OutputTuple, log_array_address_array_Event.OutputObject>;
-        "log_bytes(bytes)": TypedContractEvent<log_bytesEvent.InputTuple, log_bytesEvent.OutputTuple, log_bytesEvent.OutputObject>;
-        log_bytes: TypedContractEvent<log_bytesEvent.InputTuple, log_bytesEvent.OutputTuple, log_bytesEvent.OutputObject>;
-        "log_bytes32(bytes32)": TypedContractEvent<log_bytes32Event.InputTuple, log_bytes32Event.OutputTuple, log_bytes32Event.OutputObject>;
-        log_bytes32: TypedContractEvent<log_bytes32Event.InputTuple, log_bytes32Event.OutputTuple, log_bytes32Event.OutputObject>;
-        "log_int(int256)": TypedContractEvent<log_intEvent.InputTuple, log_intEvent.OutputTuple, log_intEvent.OutputObject>;
-        log_int: TypedContractEvent<log_intEvent.InputTuple, log_intEvent.OutputTuple, log_intEvent.OutputObject>;
-        "log_named_address(string,address)": TypedContractEvent<log_named_addressEvent.InputTuple, log_named_addressEvent.OutputTuple, log_named_addressEvent.OutputObject>;
-        log_named_address: TypedContractEvent<log_named_addressEvent.InputTuple, log_named_addressEvent.OutputTuple, log_named_addressEvent.OutputObject>;
-        "log_named_array(string,uint256[])": TypedContractEvent<log_named_array_string_uint256_array_Event.InputTuple, log_named_array_string_uint256_array_Event.OutputTuple, log_named_array_string_uint256_array_Event.OutputObject>;
-        "log_named_array(string,int256[])": TypedContractEvent<log_named_array_string_int256_array_Event.InputTuple, log_named_array_string_int256_array_Event.OutputTuple, log_named_array_string_int256_array_Event.OutputObject>;
-        "log_named_array(string,address[])": TypedContractEvent<log_named_array_string_address_array_Event.InputTuple, log_named_array_string_address_array_Event.OutputTuple, log_named_array_string_address_array_Event.OutputObject>;
-        "log_named_bytes(string,bytes)": TypedContractEvent<log_named_bytesEvent.InputTuple, log_named_bytesEvent.OutputTuple, log_named_bytesEvent.OutputObject>;
-        log_named_bytes: TypedContractEvent<log_named_bytesEvent.InputTuple, log_named_bytesEvent.OutputTuple, log_named_bytesEvent.OutputObject>;
-        "log_named_bytes32(string,bytes32)": TypedContractEvent<log_named_bytes32Event.InputTuple, log_named_bytes32Event.OutputTuple, log_named_bytes32Event.OutputObject>;
-        log_named_bytes32: TypedContractEvent<log_named_bytes32Event.InputTuple, log_named_bytes32Event.OutputTuple, log_named_bytes32Event.OutputObject>;
-        "log_named_decimal_int(string,int256,uint256)": TypedContractEvent<log_named_decimal_intEvent.InputTuple, log_named_decimal_intEvent.OutputTuple, log_named_decimal_intEvent.OutputObject>;
-        log_named_decimal_int: TypedContractEvent<log_named_decimal_intEvent.InputTuple, log_named_decimal_intEvent.OutputTuple, log_named_decimal_intEvent.OutputObject>;
-        "log_named_decimal_uint(string,uint256,uint256)": TypedContractEvent<log_named_decimal_uintEvent.InputTuple, log_named_decimal_uintEvent.OutputTuple, log_named_decimal_uintEvent.OutputObject>;
-        log_named_decimal_uint: TypedContractEvent<log_named_decimal_uintEvent.InputTuple, log_named_decimal_uintEvent.OutputTuple, log_named_decimal_uintEvent.OutputObject>;
-        "log_named_int(string,int256)": TypedContractEvent<log_named_intEvent.InputTuple, log_named_intEvent.OutputTuple, log_named_intEvent.OutputObject>;
-        log_named_int: TypedContractEvent<log_named_intEvent.InputTuple, log_named_intEvent.OutputTuple, log_named_intEvent.OutputObject>;
-        "log_named_string(string,string)": TypedContractEvent<log_named_stringEvent.InputTuple, log_named_stringEvent.OutputTuple, log_named_stringEvent.OutputObject>;
-        log_named_string: TypedContractEvent<log_named_stringEvent.InputTuple, log_named_stringEvent.OutputTuple, log_named_stringEvent.OutputObject>;
-        "log_named_uint(string,uint256)": TypedContractEvent<log_named_uintEvent.InputTuple, log_named_uintEvent.OutputTuple, log_named_uintEvent.OutputObject>;
-        log_named_uint: TypedContractEvent<log_named_uintEvent.InputTuple, log_named_uintEvent.OutputTuple, log_named_uintEvent.OutputObject>;
-        "log_string(string)": TypedContractEvent<log_stringEvent.InputTuple, log_stringEvent.OutputTuple, log_stringEvent.OutputObject>;
-        log_string: TypedContractEvent<log_stringEvent.InputTuple, log_stringEvent.OutputTuple, log_stringEvent.OutputObject>;
-        "log_uint(uint256)": TypedContractEvent<log_uintEvent.InputTuple, log_uintEvent.OutputTuple, log_uintEvent.OutputObject>;
-        log_uint: TypedContractEvent<log_uintEvent.InputTuple, log_uintEvent.OutputTuple, log_uintEvent.OutputObject>;
-        "logs(bytes)": TypedContractEvent<logsEvent.InputTuple, logsEvent.OutputTuple, logsEvent.OutputObject>;
-        logs: TypedContractEvent<logsEvent.InputTuple, logsEvent.OutputTuple, logsEvent.OutputObject>;
+        "log(string)"(arg0?: null): logEventFilter;
+        log(arg0?: null): logEventFilter;
+        "log_address(address)"(arg0?: null): log_addressEventFilter;
+        log_address(arg0?: null): log_addressEventFilter;
+        "log_array(uint256[])"(val?: null): log_array_uint256_array_EventFilter;
+        "log_array(int256[])"(val?: null): log_array_int256_array_EventFilter;
+        "log_array(address[])"(val?: null): log_array_address_array_EventFilter;
+        "log_bytes(bytes)"(arg0?: null): log_bytesEventFilter;
+        log_bytes(arg0?: null): log_bytesEventFilter;
+        "log_bytes32(bytes32)"(arg0?: null): log_bytes32EventFilter;
+        log_bytes32(arg0?: null): log_bytes32EventFilter;
+        "log_int(int256)"(arg0?: null): log_intEventFilter;
+        log_int(arg0?: null): log_intEventFilter;
+        "log_named_address(string,address)"(key?: null, val?: null): log_named_addressEventFilter;
+        log_named_address(key?: null, val?: null): log_named_addressEventFilter;
+        "log_named_array(string,uint256[])"(key?: null, val?: null): log_named_array_string_uint256_array_EventFilter;
+        "log_named_array(string,int256[])"(key?: null, val?: null): log_named_array_string_int256_array_EventFilter;
+        "log_named_array(string,address[])"(key?: null, val?: null): log_named_array_string_address_array_EventFilter;
+        "log_named_bytes(string,bytes)"(key?: null, val?: null): log_named_bytesEventFilter;
+        log_named_bytes(key?: null, val?: null): log_named_bytesEventFilter;
+        "log_named_bytes32(string,bytes32)"(key?: null, val?: null): log_named_bytes32EventFilter;
+        log_named_bytes32(key?: null, val?: null): log_named_bytes32EventFilter;
+        "log_named_decimal_int(string,int256,uint256)"(key?: null, val?: null, decimals?: null): log_named_decimal_intEventFilter;
+        log_named_decimal_int(key?: null, val?: null, decimals?: null): log_named_decimal_intEventFilter;
+        "log_named_decimal_uint(string,uint256,uint256)"(key?: null, val?: null, decimals?: null): log_named_decimal_uintEventFilter;
+        log_named_decimal_uint(key?: null, val?: null, decimals?: null): log_named_decimal_uintEventFilter;
+        "log_named_int(string,int256)"(key?: null, val?: null): log_named_intEventFilter;
+        log_named_int(key?: null, val?: null): log_named_intEventFilter;
+        "log_named_string(string,string)"(key?: null, val?: null): log_named_stringEventFilter;
+        log_named_string(key?: null, val?: null): log_named_stringEventFilter;
+        "log_named_uint(string,uint256)"(key?: null, val?: null): log_named_uintEventFilter;
+        log_named_uint(key?: null, val?: null): log_named_uintEventFilter;
+        "log_string(string)"(arg0?: null): log_stringEventFilter;
+        log_string(arg0?: null): log_stringEventFilter;
+        "log_uint(uint256)"(arg0?: null): log_uintEventFilter;
+        log_uint(arg0?: null): log_uintEventFilter;
+        "logs(bytes)"(arg0?: null): logsEventFilter;
+        logs(arg0?: null): logsEventFilter;
+    };
+    estimateGas: {
+        IS_TEST(overrides?: CallOverrides): Promise<BigNumber>;
+        excludeArtifacts(overrides?: CallOverrides): Promise<BigNumber>;
+        excludeContracts(overrides?: CallOverrides): Promise<BigNumber>;
+        excludeSenders(overrides?: CallOverrides): Promise<BigNumber>;
+        failed(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        targetArtifactSelectors(overrides?: CallOverrides): Promise<BigNumber>;
+        targetArtifacts(overrides?: CallOverrides): Promise<BigNumber>;
+        targetContracts(overrides?: CallOverrides): Promise<BigNumber>;
+        targetSelectors(overrides?: CallOverrides): Promise<BigNumber>;
+        targetSenders(overrides?: CallOverrides): Promise<BigNumber>;
+        testJumpRateModel(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        IS_TEST(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        excludeArtifacts(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        excludeContracts(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        excludeSenders(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        failed(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        targetArtifactSelectors(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        targetArtifacts(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        targetContracts(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        targetSelectors(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        targetSenders(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        testJumpRateModel(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
     };
 }

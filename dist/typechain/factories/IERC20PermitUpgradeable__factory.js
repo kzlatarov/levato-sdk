@@ -7,88 +7,88 @@ exports.IERC20PermitUpgradeable__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        inputs: [],
+        type: "function",
         name: "DOMAIN_SEPARATOR",
+        inputs: [],
         outputs: [
             {
-                internalType: "bytes32",
                 name: "",
                 type: "bytes32",
+                internalType: "bytes32",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "nonces",
         inputs: [
             {
-                internalType: "address",
                 name: "owner",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "nonces",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "permit",
         inputs: [
             {
-                internalType: "address",
                 name: "owner",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "spender",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "value",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "deadline",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint8",
                 name: "v",
                 type: "uint8",
+                internalType: "uint8",
             },
             {
-                internalType: "bytes32",
                 name: "r",
                 type: "bytes32",
+                internalType: "bytes32",
             },
             {
-                internalType: "bytes32",
                 name: "s",
                 type: "bytes32",
+                internalType: "bytes32",
             },
         ],
-        name: "permit",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
 ];
 class IERC20PermitUpgradeable__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.IERC20PermitUpgradeable__factory = IERC20PermitUpgradeable__factory;

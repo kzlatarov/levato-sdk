@@ -7,57 +7,57 @@ exports.IDiamondBase__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        inputs: [],
+        type: "function",
         name: "_listExtensions",
+        inputs: [],
         outputs: [
             {
-                internalType: "address[]",
                 name: "",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_registerExtension",
         inputs: [
             {
-                internalType: "contract DiamondExtension",
                 name: "extensionToAdd",
                 type: "address",
+                internalType: "contract DiamondExtension",
             },
             {
-                internalType: "contract DiamondExtension",
                 name: "extensionToReplace",
                 type: "address",
+                internalType: "contract DiamondExtension",
             },
         ],
-        name: "_registerExtension",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_replaceExtensions",
         inputs: [
             {
-                internalType: "address[]",
                 name: "extensions",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
-        name: "_replaceExtensions",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
 ];
 class IDiamondBase__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.IDiamondBase__factory = IDiamondBase__factory;

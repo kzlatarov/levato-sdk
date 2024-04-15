@@ -7,299 +7,299 @@ exports.CErc20StorageInterface__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        inputs: [],
+        type: "function",
         name: "accrualBlockNumber",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "admin",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "adminFeeMantissa",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "adminHasRights",
+        inputs: [],
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "borrowIndex",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "comptroller",
+        inputs: [],
         outputs: [
             {
-                internalType: "contract IonicComptroller",
                 name: "",
                 type: "address",
+                internalType: "contract IonicComptroller",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "decimals",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint8",
                 name: "",
                 type: "uint8",
+                internalType: "uint8",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "feeSeizeShareMantissa",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "interestRateModel",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "ionicAdmin",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "ionicAdminHasRights",
+        inputs: [],
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "ionicFeeMantissa",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "name",
+        inputs: [],
         outputs: [
             {
-                internalType: "string",
                 name: "",
                 type: "string",
+                internalType: "string",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "protocolSeizeShareMantissa",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "reserveFactorMantissa",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "symbol",
+        inputs: [],
         outputs: [
             {
-                internalType: "string",
                 name: "",
                 type: "string",
+                internalType: "string",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "totalAdminFees",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "totalBorrows",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "totalIonicFees",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "totalReserves",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "totalSupply",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "underlying",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
 ];
 class CErc20StorageInterface__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.CErc20StorageInterface__factory = CErc20StorageInterface__factory;

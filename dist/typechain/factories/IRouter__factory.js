@@ -7,418 +7,1617 @@ exports.IRouter__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        inputs: [
-            {
-                internalType: "address",
-                name: "tokenA",
-                type: "address",
-            },
-            {
-                internalType: "address",
-                name: "tokenB",
-                type: "address",
-            },
-            {
-                internalType: "bool",
-                name: "stable",
-                type: "bool",
-            },
-            {
-                internalType: "uint256",
-                name: "amountADesired",
-                type: "uint256",
-            },
-            {
-                internalType: "uint256",
-                name: "amountBDesired",
-                type: "uint256",
-            },
-            {
-                internalType: "uint256",
-                name: "amountAMin",
-                type: "uint256",
-            },
-            {
-                internalType: "uint256",
-                name: "amountBMin",
-                type: "uint256",
-            },
-            {
-                internalType: "address",
-                name: "to",
-                type: "address",
-            },
-            {
-                internalType: "uint256",
-                name: "deadline",
-                type: "uint256",
-            },
-        ],
-        name: "addLiquidity",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "amountA",
-                type: "uint256",
-            },
-            {
-                internalType: "uint256",
-                name: "amountB",
-                type: "uint256",
-            },
-            {
-                internalType: "uint256",
-                name: "liquidity",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "nonpayable",
         type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "uint256",
-                name: "amountIn",
-                type: "uint256",
-            },
-            {
-                components: [
-                    {
-                        internalType: "address",
-                        name: "from",
-                        type: "address",
-                    },
-                    {
-                        internalType: "address",
-                        name: "to",
-                        type: "address",
-                    },
-                    {
-                        internalType: "bool",
-                        name: "stable",
-                        type: "bool",
-                    },
-                ],
-                internalType: "struct IRouter.Route[]",
-                name: "routes",
-                type: "tuple[]",
-            },
-        ],
-        name: "getAmountsOut",
+        name: "ETHER",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256[]",
-                name: "amounts",
-                type: "uint256[]",
+                name: "",
+                type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "UNSAFE_swapExactTokensForTokens",
         inputs: [
             {
-                internalType: "address",
-                name: "tokenA",
-                type: "address",
+                name: "amounts",
+                type: "uint256[]",
+                internalType: "uint256[]",
             },
             {
-                internalType: "address",
-                name: "tokenB",
-                type: "address",
+                name: "routes",
+                type: "tuple[]",
+                internalType: "struct IRouter.Route[]",
+                components: [
+                    {
+                        name: "from",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "to",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "stable",
+                        type: "bool",
+                        internalType: "bool",
+                    },
+                    {
+                        name: "factory",
+                        type: "address",
+                        internalType: "address",
+                    },
+                ],
             },
             {
-                internalType: "bool",
-                name: "stable",
-                type: "bool",
+                name: "to",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "deadline",
+                type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "getReserves",
         outputs: [
             {
+                name: "",
+                type: "uint256[]",
+                internalType: "uint256[]",
+            },
+        ],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "addLiquidity",
+        inputs: [
+            {
+                name: "tokenA",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "tokenB",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "stable",
+                type: "bool",
+                internalType: "bool",
+            },
+            {
+                name: "amountADesired",
+                type: "uint256",
                 internalType: "uint256",
+            },
+            {
+                name: "amountBDesired",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "amountAMin",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "amountBMin",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "to",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "deadline",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        outputs: [
+            {
+                name: "amountA",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "amountB",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "liquidity",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "addLiquidityETH",
+        inputs: [
+            {
+                name: "token",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "stable",
+                type: "bool",
+                internalType: "bool",
+            },
+            {
+                name: "amountTokenDesired",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "amountTokenMin",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "amountETHMin",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "to",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "deadline",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        outputs: [
+            {
+                name: "amountToken",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "amountETH",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "liquidity",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "payable",
+    },
+    {
+        type: "function",
+        name: "defaultFactory",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "factoryRegistry",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "generateZapInParams",
+        inputs: [
+            {
+                name: "tokenA",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "tokenB",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "stable",
+                type: "bool",
+                internalType: "bool",
+            },
+            {
+                name: "_factory",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "amountInA",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "amountInB",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "routesA",
+                type: "tuple[]",
+                internalType: "struct IRouter.Route[]",
+                components: [
+                    {
+                        name: "from",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "to",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "stable",
+                        type: "bool",
+                        internalType: "bool",
+                    },
+                    {
+                        name: "factory",
+                        type: "address",
+                        internalType: "address",
+                    },
+                ],
+            },
+            {
+                name: "routesB",
+                type: "tuple[]",
+                internalType: "struct IRouter.Route[]",
+                components: [
+                    {
+                        name: "from",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "to",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "stable",
+                        type: "bool",
+                        internalType: "bool",
+                    },
+                    {
+                        name: "factory",
+                        type: "address",
+                        internalType: "address",
+                    },
+                ],
+            },
+        ],
+        outputs: [
+            {
+                name: "amountOutMinA",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "amountOutMinB",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "amountAMin",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "amountBMin",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "generateZapOutParams",
+        inputs: [
+            {
+                name: "tokenA",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "tokenB",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "stable",
+                type: "bool",
+                internalType: "bool",
+            },
+            {
+                name: "_factory",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "liquidity",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "routesA",
+                type: "tuple[]",
+                internalType: "struct IRouter.Route[]",
+                components: [
+                    {
+                        name: "from",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "to",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "stable",
+                        type: "bool",
+                        internalType: "bool",
+                    },
+                    {
+                        name: "factory",
+                        type: "address",
+                        internalType: "address",
+                    },
+                ],
+            },
+            {
+                name: "routesB",
+                type: "tuple[]",
+                internalType: "struct IRouter.Route[]",
+                components: [
+                    {
+                        name: "from",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "to",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "stable",
+                        type: "bool",
+                        internalType: "bool",
+                    },
+                    {
+                        name: "factory",
+                        type: "address",
+                        internalType: "address",
+                    },
+                ],
+            },
+        ],
+        outputs: [
+            {
+                name: "amountOutMinA",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "amountOutMinB",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "amountAMin",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "amountBMin",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getAmountsOut",
+        inputs: [
+            {
+                name: "amountIn",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "routes",
+                type: "tuple[]",
+                internalType: "struct IRouter.Route[]",
+                components: [
+                    {
+                        name: "from",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "to",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "stable",
+                        type: "bool",
+                        internalType: "bool",
+                    },
+                    {
+                        name: "factory",
+                        type: "address",
+                        internalType: "address",
+                    },
+                ],
+            },
+        ],
+        outputs: [
+            {
+                name: "amounts",
+                type: "uint256[]",
+                internalType: "uint256[]",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getReserves",
+        inputs: [
+            {
+                name: "tokenA",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "tokenB",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "stable",
+                type: "bool",
+                internalType: "bool",
+            },
+            {
+                name: "_factory",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
                 name: "reserveA",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "reserveB",
                 type: "uint256",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "pair",
-                type: "address",
-            },
-        ],
-        name: "isPair",
-        outputs: [
-            {
-                internalType: "bool",
-                name: "",
-                type: "bool",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "tokenA",
-                type: "address",
-            },
-            {
-                internalType: "address",
-                name: "tokenB",
-                type: "address",
-            },
-            {
-                internalType: "bool",
-                name: "stable",
-                type: "bool",
-            },
-        ],
-        name: "pairFor",
-        outputs: [
-            {
-                internalType: "address",
-                name: "pair",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "tokenA",
-                type: "address",
-            },
-            {
-                internalType: "address",
-                name: "tokenB",
-                type: "address",
-            },
-            {
-                internalType: "bool",
-                name: "stable",
-                type: "bool",
-            },
-            {
                 internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "poolFor",
+        inputs: [
+            {
+                name: "tokenA",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "tokenB",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "stable",
+                type: "bool",
+                internalType: "bool",
+            },
+            {
+                name: "_factory",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "pool",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "quoteAddLiquidity",
+        inputs: [
+            {
+                name: "tokenA",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "tokenB",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "stable",
+                type: "bool",
+                internalType: "bool",
+            },
+            {
+                name: "_factory",
+                type: "address",
+                internalType: "address",
+            },
+            {
                 name: "amountADesired",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "amountBDesired",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "quoteAddLiquidity",
         outputs: [
             {
-                internalType: "uint256",
                 name: "amountA",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "amountB",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "liquidity",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "quoteRemoveLiquidity",
         inputs: [
             {
-                internalType: "address",
                 name: "tokenA",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "tokenB",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "bool",
                 name: "stable",
                 type: "bool",
+                internalType: "bool",
             },
             {
-                internalType: "uint256",
+                name: "_factory",
+                type: "address",
+                internalType: "address",
+            },
+            {
                 name: "liquidity",
                 type: "uint256",
-            },
-            {
                 internalType: "uint256",
-                name: "amountAMin",
-                type: "uint256",
-            },
-            {
-                internalType: "uint256",
-                name: "amountBMin",
-                type: "uint256",
-            },
-            {
-                internalType: "address",
-                name: "to",
-                type: "address",
-            },
-            {
-                internalType: "uint256",
-                name: "deadline",
-                type: "uint256",
             },
         ],
-        name: "removeLiquidity",
         outputs: [
             {
-                internalType: "uint256",
                 name: "amountA",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "amountB",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        stateMutability: "nonpayable",
-        type: "function",
+        stateMutability: "view",
     },
     {
+        type: "function",
+        name: "quoteStableLiquidityRatio",
         inputs: [
             {
-                internalType: "uint256",
-                name: "amountIn",
-                type: "uint256",
-            },
-            {
-                internalType: "uint256",
-                name: "amountOutMin",
-                type: "uint256",
-            },
-            {
-                components: [
-                    {
-                        internalType: "address",
-                        name: "from",
-                        type: "address",
-                    },
-                    {
-                        internalType: "address",
-                        name: "to",
-                        type: "address",
-                    },
-                    {
-                        internalType: "bool",
-                        name: "stable",
-                        type: "bool",
-                    },
-                ],
-                internalType: "struct IRouter.Route[]",
-                name: "routes",
-                type: "tuple[]",
-            },
-            {
-                internalType: "address",
-                name: "to",
+                name: "tokenA",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
-                name: "deadline",
-                type: "uint256",
+                name: "tokenB",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "factory",
+                type: "address",
+                internalType: "address",
             },
         ],
-        name: "swapExactTokensForTokens",
         outputs: [
             {
-                internalType: "uint256[]",
-                name: "amounts",
-                type: "uint256[]",
+                name: "ratio",
+                type: "uint256",
+                internalType: "uint256",
             },
         ],
-        stateMutability: "nonpayable",
-        type: "function",
+        stateMutability: "view",
     },
     {
+        type: "function",
+        name: "removeLiquidity",
         inputs: [
             {
-                internalType: "uint256",
-                name: "amountIn",
-                type: "uint256",
-            },
-            {
-                internalType: "uint256",
-                name: "amountOutMin",
-                type: "uint256",
-            },
-            {
-                internalType: "address",
-                name: "tokenFrom",
+                name: "tokenA",
                 type: "address",
-            },
-            {
                 internalType: "address",
-                name: "tokenTo",
-                type: "address",
             },
             {
-                internalType: "bool",
+                name: "tokenB",
+                type: "address",
+                internalType: "address",
+            },
+            {
                 name: "stable",
                 type: "bool",
+                internalType: "bool",
             },
             {
-                internalType: "address",
+                name: "liquidity",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "amountAMin",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "amountBMin",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
                 name: "to",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "deadline",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "swapExactTokensForTokensSimple",
         outputs: [
             {
-                internalType: "uint256[]",
-                name: "amounts",
-                type: "uint256[]",
+                name: "amountA",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "amountB",
+                type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
+    },
+    {
         type: "function",
+        name: "removeLiquidityETH",
+        inputs: [
+            {
+                name: "token",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "stable",
+                type: "bool",
+                internalType: "bool",
+            },
+            {
+                name: "liquidity",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "amountTokenMin",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "amountETHMin",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "to",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "deadline",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        outputs: [
+            {
+                name: "amountToken",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "amountETH",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "removeLiquidityETHSupportingFeeOnTransferTokens",
+        inputs: [
+            {
+                name: "token",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "stable",
+                type: "bool",
+                internalType: "bool",
+            },
+            {
+                name: "liquidity",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "amountTokenMin",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "amountETHMin",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "to",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "deadline",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        outputs: [
+            {
+                name: "amountETH",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "sortTokens",
+        inputs: [
+            {
+                name: "tokenA",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "tokenB",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "token0",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "token1",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "pure",
+    },
+    {
+        type: "function",
+        name: "swapExactETHForTokens",
+        inputs: [
+            {
+                name: "amountOutMin",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "routes",
+                type: "tuple[]",
+                internalType: "struct IRouter.Route[]",
+                components: [
+                    {
+                        name: "from",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "to",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "stable",
+                        type: "bool",
+                        internalType: "bool",
+                    },
+                    {
+                        name: "factory",
+                        type: "address",
+                        internalType: "address",
+                    },
+                ],
+            },
+            {
+                name: "to",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "deadline",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        outputs: [
+            {
+                name: "amounts",
+                type: "uint256[]",
+                internalType: "uint256[]",
+            },
+        ],
+        stateMutability: "payable",
+    },
+    {
+        type: "function",
+        name: "swapExactETHForTokensSupportingFeeOnTransferTokens",
+        inputs: [
+            {
+                name: "amountOutMin",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "routes",
+                type: "tuple[]",
+                internalType: "struct IRouter.Route[]",
+                components: [
+                    {
+                        name: "from",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "to",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "stable",
+                        type: "bool",
+                        internalType: "bool",
+                    },
+                    {
+                        name: "factory",
+                        type: "address",
+                        internalType: "address",
+                    },
+                ],
+            },
+            {
+                name: "to",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "deadline",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        outputs: [],
+        stateMutability: "payable",
+    },
+    {
+        type: "function",
+        name: "swapExactTokensForETH",
+        inputs: [
+            {
+                name: "amountIn",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "amountOutMin",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "routes",
+                type: "tuple[]",
+                internalType: "struct IRouter.Route[]",
+                components: [
+                    {
+                        name: "from",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "to",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "stable",
+                        type: "bool",
+                        internalType: "bool",
+                    },
+                    {
+                        name: "factory",
+                        type: "address",
+                        internalType: "address",
+                    },
+                ],
+            },
+            {
+                name: "to",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "deadline",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        outputs: [
+            {
+                name: "amounts",
+                type: "uint256[]",
+                internalType: "uint256[]",
+            },
+        ],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "swapExactTokensForETHSupportingFeeOnTransferTokens",
+        inputs: [
+            {
+                name: "amountIn",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "amountOutMin",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "routes",
+                type: "tuple[]",
+                internalType: "struct IRouter.Route[]",
+                components: [
+                    {
+                        name: "from",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "to",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "stable",
+                        type: "bool",
+                        internalType: "bool",
+                    },
+                    {
+                        name: "factory",
+                        type: "address",
+                        internalType: "address",
+                    },
+                ],
+            },
+            {
+                name: "to",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "deadline",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        outputs: [],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "swapExactTokensForTokens",
+        inputs: [
+            {
+                name: "amountIn",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "amountOutMin",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "routes",
+                type: "tuple[]",
+                internalType: "struct IRouter.Route[]",
+                components: [
+                    {
+                        name: "from",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "to",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "stable",
+                        type: "bool",
+                        internalType: "bool",
+                    },
+                    {
+                        name: "factory",
+                        type: "address",
+                        internalType: "address",
+                    },
+                ],
+            },
+            {
+                name: "to",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "deadline",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        outputs: [
+            {
+                name: "amounts",
+                type: "uint256[]",
+                internalType: "uint256[]",
+            },
+        ],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "swapExactTokensForTokensSupportingFeeOnTransferTokens",
+        inputs: [
+            {
+                name: "amountIn",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "amountOutMin",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "routes",
+                type: "tuple[]",
+                internalType: "struct IRouter.Route[]",
+                components: [
+                    {
+                        name: "from",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "to",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "stable",
+                        type: "bool",
+                        internalType: "bool",
+                    },
+                    {
+                        name: "factory",
+                        type: "address",
+                        internalType: "address",
+                    },
+                ],
+            },
+            {
+                name: "to",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "deadline",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        outputs: [],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "voter",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "weth",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "contract IWETH",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "zapIn",
+        inputs: [
+            {
+                name: "tokenIn",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "amountInA",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "amountInB",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "zapInPool",
+                type: "tuple",
+                internalType: "struct IRouter.Zap",
+                components: [
+                    {
+                        name: "tokenA",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "tokenB",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "stable",
+                        type: "bool",
+                        internalType: "bool",
+                    },
+                    {
+                        name: "factory",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "amountOutMinA",
+                        type: "uint256",
+                        internalType: "uint256",
+                    },
+                    {
+                        name: "amountOutMinB",
+                        type: "uint256",
+                        internalType: "uint256",
+                    },
+                    {
+                        name: "amountAMin",
+                        type: "uint256",
+                        internalType: "uint256",
+                    },
+                    {
+                        name: "amountBMin",
+                        type: "uint256",
+                        internalType: "uint256",
+                    },
+                ],
+            },
+            {
+                name: "routesA",
+                type: "tuple[]",
+                internalType: "struct IRouter.Route[]",
+                components: [
+                    {
+                        name: "from",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "to",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "stable",
+                        type: "bool",
+                        internalType: "bool",
+                    },
+                    {
+                        name: "factory",
+                        type: "address",
+                        internalType: "address",
+                    },
+                ],
+            },
+            {
+                name: "routesB",
+                type: "tuple[]",
+                internalType: "struct IRouter.Route[]",
+                components: [
+                    {
+                        name: "from",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "to",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "stable",
+                        type: "bool",
+                        internalType: "bool",
+                    },
+                    {
+                        name: "factory",
+                        type: "address",
+                        internalType: "address",
+                    },
+                ],
+            },
+            {
+                name: "to",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "stake",
+                type: "bool",
+                internalType: "bool",
+            },
+        ],
+        outputs: [
+            {
+                name: "liquidity",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "payable",
+    },
+    {
+        type: "function",
+        name: "zapOut",
+        inputs: [
+            {
+                name: "tokenOut",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "liquidity",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "zapOutPool",
+                type: "tuple",
+                internalType: "struct IRouter.Zap",
+                components: [
+                    {
+                        name: "tokenA",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "tokenB",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "stable",
+                        type: "bool",
+                        internalType: "bool",
+                    },
+                    {
+                        name: "factory",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "amountOutMinA",
+                        type: "uint256",
+                        internalType: "uint256",
+                    },
+                    {
+                        name: "amountOutMinB",
+                        type: "uint256",
+                        internalType: "uint256",
+                    },
+                    {
+                        name: "amountAMin",
+                        type: "uint256",
+                        internalType: "uint256",
+                    },
+                    {
+                        name: "amountBMin",
+                        type: "uint256",
+                        internalType: "uint256",
+                    },
+                ],
+            },
+            {
+                name: "routesA",
+                type: "tuple[]",
+                internalType: "struct IRouter.Route[]",
+                components: [
+                    {
+                        name: "from",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "to",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "stable",
+                        type: "bool",
+                        internalType: "bool",
+                    },
+                    {
+                        name: "factory",
+                        type: "address",
+                        internalType: "address",
+                    },
+                ],
+            },
+            {
+                name: "routesB",
+                type: "tuple[]",
+                internalType: "struct IRouter.Route[]",
+                components: [
+                    {
+                        name: "from",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "to",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "stable",
+                        type: "bool",
+                        internalType: "bool",
+                    },
+                    {
+                        name: "factory",
+                        type: "address",
+                        internalType: "address",
+                    },
+                ],
+            },
+        ],
+        outputs: [],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "error",
+        name: "ETHTransferFailed",
+        inputs: [],
+    },
+    {
+        type: "error",
+        name: "Expired",
+        inputs: [],
+    },
+    {
+        type: "error",
+        name: "InsufficientAmount",
+        inputs: [],
+    },
+    {
+        type: "error",
+        name: "InsufficientAmountA",
+        inputs: [],
+    },
+    {
+        type: "error",
+        name: "InsufficientAmountADesired",
+        inputs: [],
+    },
+    {
+        type: "error",
+        name: "InsufficientAmountAOptimal",
+        inputs: [],
+    },
+    {
+        type: "error",
+        name: "InsufficientAmountB",
+        inputs: [],
+    },
+    {
+        type: "error",
+        name: "InsufficientAmountBDesired",
+        inputs: [],
+    },
+    {
+        type: "error",
+        name: "InsufficientLiquidity",
+        inputs: [],
+    },
+    {
+        type: "error",
+        name: "InsufficientOutputAmount",
+        inputs: [],
+    },
+    {
+        type: "error",
+        name: "InvalidAmountInForETHDeposit",
+        inputs: [],
+    },
+    {
+        type: "error",
+        name: "InvalidPath",
+        inputs: [],
+    },
+    {
+        type: "error",
+        name: "InvalidRouteA",
+        inputs: [],
+    },
+    {
+        type: "error",
+        name: "InvalidRouteB",
+        inputs: [],
+    },
+    {
+        type: "error",
+        name: "InvalidTokenInForETHDeposit",
+        inputs: [],
+    },
+    {
+        type: "error",
+        name: "OnlyWETH",
+        inputs: [],
+    },
+    {
+        type: "error",
+        name: "PoolDoesNotExist",
+        inputs: [],
+    },
+    {
+        type: "error",
+        name: "PoolFactoryDoesNotExist",
+        inputs: [],
+    },
+    {
+        type: "error",
+        name: "SameAddresses",
+        inputs: [],
+    },
+    {
+        type: "error",
+        name: "ZeroAddress",
+        inputs: [],
     },
 ];
 class IRouter__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.IRouter__factory = IRouter__factory;

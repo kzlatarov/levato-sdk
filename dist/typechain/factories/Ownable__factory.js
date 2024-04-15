@@ -7,65 +7,65 @@ exports.Ownable__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "previousOwner",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "newOwner",
-                type: "address",
-            },
-        ],
-        name: "OwnershipTransferred",
-        type: "event",
-    },
-    {
-        inputs: [],
+        type: "function",
         name: "owner",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "renounceOwnership",
+        inputs: [],
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "transferOwnership",
         inputs: [
             {
-                internalType: "address",
                 name: "newOwner",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "transferOwnership",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
+    },
+    {
+        type: "event",
+        name: "OwnershipTransferred",
+        inputs: [
+            {
+                name: "previousOwner",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "newOwner",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
     },
 ];
 class Ownable__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.Ownable__factory = Ownable__factory;

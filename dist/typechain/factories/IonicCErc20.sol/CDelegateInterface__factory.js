@@ -7,52 +7,52 @@ exports.CDelegateInterface__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
+        type: "function",
+        name: "_becomeImplementation",
         inputs: [
             {
-                internalType: "bytes",
                 name: "data",
                 type: "bytes",
+                internalType: "bytes",
             },
         ],
-        name: "_becomeImplementation",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "contractType",
+        inputs: [],
         outputs: [
             {
-                internalType: "string",
                 name: "",
                 type: "string",
+                internalType: "string",
             },
         ],
         stateMutability: "pure",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "delegateType",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint8",
                 name: "",
                 type: "uint8",
+                internalType: "uint8",
             },
         ],
         stateMutability: "pure",
-        type: "function",
     },
 ];
 class CDelegateInterface__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.CDelegateInterface__factory = CDelegateInterface__factory;

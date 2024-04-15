@@ -1,61 +1,62 @@
-import { type ContractRunner } from "ethers";
+import { Signer } from "ethers";
+import type { Provider } from "@ethersproject/providers";
 import type { UnitrollerInterface, UnitrollerInterfaceInterface } from "../../IonicComptroller.sol/UnitrollerInterface";
 export declare class UnitrollerInterface__factory {
     static readonly abi: readonly [{
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "_acceptAdmin";
+        readonly inputs: readonly [];
         readonly outputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "_setPendingAdmin";
         readonly inputs: readonly [{
-            readonly internalType: "address";
             readonly name: "newPendingAdmin";
             readonly type: "address";
+            readonly internalType: "address";
         }];
-        readonly name: "_setPendingAdmin";
         readonly outputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "_toggleAdminRights";
         readonly inputs: readonly [{
-            readonly internalType: "bool";
             readonly name: "hasRights";
             readonly type: "bool";
+            readonly internalType: "bool";
         }];
-        readonly name: "_toggleAdminRights";
         readonly outputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }, {
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "_upgrade";
+        readonly inputs: readonly [];
         readonly outputs: readonly [];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }, {
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "comptrollerImplementation";
+        readonly inputs: readonly [];
         readonly outputs: readonly [{
-            readonly internalType: "address";
             readonly name: "";
             readonly type: "address";
+            readonly internalType: "address";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }];
     static createInterface(): UnitrollerInterfaceInterface;
-    static connect(address: string, runner?: ContractRunner | null): UnitrollerInterface;
+    static connect(address: string, signerOrProvider: Signer | Provider): UnitrollerInterface;
 }

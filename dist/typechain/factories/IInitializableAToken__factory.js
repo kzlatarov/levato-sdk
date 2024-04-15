@@ -7,116 +7,116 @@ exports.IInitializableAToken__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "underlyingAsset",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "pool",
-                type: "address",
-            },
-            {
-                indexed: false,
-                internalType: "address",
-                name: "treasury",
-                type: "address",
-            },
-            {
-                indexed: false,
-                internalType: "address",
-                name: "incentivesController",
-                type: "address",
-            },
-            {
-                indexed: false,
-                internalType: "uint8",
-                name: "aTokenDecimals",
-                type: "uint8",
-            },
-            {
-                indexed: false,
-                internalType: "string",
-                name: "aTokenName",
-                type: "string",
-            },
-            {
-                indexed: false,
-                internalType: "string",
-                name: "aTokenSymbol",
-                type: "string",
-            },
-            {
-                indexed: false,
-                internalType: "bytes",
-                name: "params",
-                type: "bytes",
-            },
-        ],
-        name: "Initialized",
-        type: "event",
-    },
-    {
-        inputs: [
-            {
-                internalType: "contract IPool",
-                name: "pool",
-                type: "address",
-            },
-            {
-                internalType: "address",
-                name: "treasury",
-                type: "address",
-            },
-            {
-                internalType: "address",
-                name: "underlyingAsset",
-                type: "address",
-            },
-            {
-                internalType: "contract IAaveIncentivesController",
-                name: "incentivesController",
-                type: "address",
-            },
-            {
-                internalType: "uint8",
-                name: "aTokenDecimals",
-                type: "uint8",
-            },
-            {
-                internalType: "string",
-                name: "aTokenName",
-                type: "string",
-            },
-            {
-                internalType: "string",
-                name: "aTokenSymbol",
-                type: "string",
-            },
-            {
-                internalType: "bytes",
-                name: "params",
-                type: "bytes",
-            },
-        ],
+        type: "function",
         name: "initialize",
+        inputs: [
+            {
+                name: "pool",
+                type: "address",
+                internalType: "contract IPool",
+            },
+            {
+                name: "treasury",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "underlyingAsset",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "incentivesController",
+                type: "address",
+                internalType: "contract IAaveIncentivesController",
+            },
+            {
+                name: "aTokenDecimals",
+                type: "uint8",
+                internalType: "uint8",
+            },
+            {
+                name: "aTokenName",
+                type: "string",
+                internalType: "string",
+            },
+            {
+                name: "aTokenSymbol",
+                type: "string",
+                internalType: "string",
+            },
+            {
+                name: "params",
+                type: "bytes",
+                internalType: "bytes",
+            },
+        ],
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
+    },
+    {
+        type: "event",
+        name: "Initialized",
+        inputs: [
+            {
+                name: "underlyingAsset",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "pool",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "treasury",
+                type: "address",
+                indexed: false,
+                internalType: "address",
+            },
+            {
+                name: "incentivesController",
+                type: "address",
+                indexed: false,
+                internalType: "address",
+            },
+            {
+                name: "aTokenDecimals",
+                type: "uint8",
+                indexed: false,
+                internalType: "uint8",
+            },
+            {
+                name: "aTokenName",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+            {
+                name: "aTokenSymbol",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+            {
+                name: "params",
+                type: "bytes",
+                indexed: false,
+                internalType: "bytes",
+            },
+        ],
+        anonymous: false,
     },
 ];
 class IInitializableAToken__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.IInitializableAToken__factory = IInitializableAToken__factory;

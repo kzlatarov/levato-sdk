@@ -1,43 +1,50 @@
-import type { BaseContract, BytesLike, FunctionFragment, Result, Interface, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedListener, TypedContractMethod } from "./common";
-export interface IFlywheelBoosterInterface extends Interface {
-    getFunction(nameOrSignature: "boostedBalanceOf" | "boostedTotalSupply"): FunctionFragment;
-    encodeFunctionData(functionFragment: "boostedBalanceOf", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "boostedTotalSupply", values: [AddressLike]): string;
+import type { BaseContract, BigNumber, BytesLike, CallOverrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
+export interface IFlywheelBoosterInterface extends utils.Interface {
+    functions: {
+        "boostedBalanceOf(address,address)": FunctionFragment;
+        "boostedTotalSupply(address)": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "boostedBalanceOf" | "boostedTotalSupply"): FunctionFragment;
+    encodeFunctionData(functionFragment: "boostedBalanceOf", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "boostedTotalSupply", values: [string]): string;
     decodeFunctionResult(functionFragment: "boostedBalanceOf", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "boostedTotalSupply", data: BytesLike): Result;
+    events: {};
 }
 export interface IFlywheelBooster extends BaseContract {
-    connect(runner?: ContractRunner | null): IFlywheelBooster;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: IFlywheelBoosterInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    boostedBalanceOf: TypedContractMethod<[
-        strategy: AddressLike,
-        user: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    boostedTotalSupply: TypedContractMethod<[
-        strategy: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "boostedBalanceOf"): TypedContractMethod<[
-        strategy: AddressLike,
-        user: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "boostedTotalSupply"): TypedContractMethod<[strategy: AddressLike], [bigint], "view">;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        boostedBalanceOf(strategy: string, user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        boostedTotalSupply(strategy: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    };
+    boostedBalanceOf(strategy: string, user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    boostedTotalSupply(strategy: string, overrides?: CallOverrides): Promise<BigNumber>;
+    callStatic: {
+        boostedBalanceOf(strategy: string, user: string, overrides?: CallOverrides): Promise<BigNumber>;
+        boostedTotalSupply(strategy: string, overrides?: CallOverrides): Promise<BigNumber>;
+    };
     filters: {};
+    estimateGas: {
+        boostedBalanceOf(strategy: string, user: string, overrides?: CallOverrides): Promise<BigNumber>;
+        boostedTotalSupply(strategy: string, overrides?: CallOverrides): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        boostedBalanceOf(strategy: string, user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        boostedTotalSupply(strategy: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    };
 }

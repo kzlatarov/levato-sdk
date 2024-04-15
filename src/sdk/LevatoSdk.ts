@@ -69,7 +69,7 @@ export default class LevatoSDK {
   async getAssetsBorrowRates(
     assetsUnderlying: string[]
   ): Promise<Map<string, string> | undefined> {
-    const rates = await this.#lensContract.getAssetsBorrowRates.staticCall(
+    const rates = await this.#lensContract.getAssetsBorrowRates(
       assetsUnderlying
     );
     const ratesMap: Map<string, string> = new Map();
@@ -78,7 +78,9 @@ export default class LevatoSDK {
       for (let i = 0; i < rates.length; i++) {
         ratesMap.set(
           assetsUnderlying[i],
-          `${Number(formatEther(rates[i] * 100n)).toFixed(3)}%`
+          `${Number(formatEther(rates[i].mul(BigNumber.from(100)))).toFixed(
+            3
+          )}%`
         );
       }
     }
@@ -99,7 +101,7 @@ export default class LevatoSDK {
     collateralAmount: string,
     borrowAssetUnderlying: string
   ): Promise<BigNumber> {
-    const result = await this.#lensContract.getMaxLeverageRatio.staticCall(
+    const result = await this.#lensContract.getMaxLeverageRatio(
       collateralUnderlying,
       collateralAmount,
       borrowAssetUnderlying
@@ -122,7 +124,7 @@ export default class LevatoSDK {
     borrowedAsset: string,
     leverageRatio: string
   ): Promise<BigNumber | undefined> {
-    const result = await this.#lensContract.getLiquidationThreshold.staticCall(
+    const result = await this.#lensContract.getLiquidationThreshold(
       collateralAsset,
       collateralAmount.toString(),
       borrowedAsset,
@@ -145,11 +147,12 @@ export default class LevatoSDK {
       LeveragedPositionsLens.PositionInfoStructOutput[]
     ]
   > {
-    const [positions] =
-      await this.#factoryContract.getPositionsByAccount.staticCall(address);
+    const [positions] = await this.#factoryContract.getPositionsByAccount(
+      address
+    );
 
     const apys = positions.map(() => '0');
-    const positionsData = await this.#lensContract.getPositionsInfo.staticCall(
+    const positionsData = await this.#lensContract.callStatic.getPositionsInfo(
       JSON.parse(JSON.stringify(positions)),
       apys
     );

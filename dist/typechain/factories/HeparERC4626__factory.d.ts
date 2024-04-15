@@ -1,4 +1,5 @@
-import { type ContractRunner } from "ethers";
+import { Signer } from "ethers";
+import type { Provider } from "@ethersproject/providers";
 import type { HeparERC4626, HeparERC4626Interface } from "../HeparERC4626";
 export declare class HeparERC4626__factory {
     static readonly abi: readonly [{
@@ -723,5 +724,5 @@ export declare class HeparERC4626__factory {
         readonly type: "function";
     }];
     static createInterface(): HeparERC4626Interface;
-    static connect(address: string, runner?: ContractRunner | null): HeparERC4626;
+    static connect(address: string, signerOrProvider: Signer | Provider): HeparERC4626;
 }

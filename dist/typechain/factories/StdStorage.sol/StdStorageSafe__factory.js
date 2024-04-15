@@ -7,54 +7,54 @@ exports.StdStorageSafe__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        anonymous: false,
+        type: "event",
+        name: "SlotFound",
         inputs: [
             {
-                indexed: false,
-                internalType: "address",
                 name: "who",
                 type: "address",
+                indexed: false,
+                internalType: "address",
             },
             {
-                indexed: false,
-                internalType: "bytes4",
                 name: "fsig",
                 type: "bytes4",
+                indexed: false,
+                internalType: "bytes4",
             },
             {
-                indexed: false,
-                internalType: "bytes32",
                 name: "keysHash",
                 type: "bytes32",
+                indexed: false,
+                internalType: "bytes32",
             },
             {
-                indexed: false,
-                internalType: "uint256",
                 name: "slot",
                 type: "uint256",
+                indexed: false,
+                internalType: "uint256",
             },
         ],
-        name: "SlotFound",
-        type: "event",
+        anonymous: false,
     },
     {
-        anonymous: false,
+        type: "event",
+        name: "WARNING_UninitedSlot",
         inputs: [
             {
-                indexed: false,
-                internalType: "address",
                 name: "who",
                 type: "address",
+                indexed: false,
+                internalType: "address",
             },
             {
-                indexed: false,
-                internalType: "uint256",
                 name: "slot",
                 type: "uint256",
+                indexed: false,
+                internalType: "uint256",
             },
         ],
-        name: "WARNING_UninitedSlot",
-        type: "event",
+        anonymous: false,
     },
 ];
 const _bytecode = "0x602d6037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea164736f6c634300080a000a";
@@ -68,22 +68,25 @@ class StdStorageSafe__factory extends ethers_1.ContractFactory {
             super(_abi, _bytecode, args[0]);
         }
     }
-    getDeployTransaction(overrides) {
-        return super.getDeployTransaction(overrides || {});
-    }
     deploy(overrides) {
         return super.deploy(overrides || {});
     }
-    connect(runner) {
-        return super.connect(runner);
+    getDeployTransaction(overrides) {
+        return super.getDeployTransaction(overrides || {});
+    }
+    attach(address) {
+        return super.attach(address);
+    }
+    connect(signer) {
+        return super.connect(signer);
     }
     static bytecode = _bytecode;
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.StdStorageSafe__factory = StdStorageSafe__factory;

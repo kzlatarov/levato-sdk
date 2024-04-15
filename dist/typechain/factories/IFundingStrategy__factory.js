@@ -7,60 +7,60 @@ exports.IFundingStrategy__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        inputs: [],
+        type: "function",
         name: "name",
+        inputs: [],
         outputs: [
             {
-                internalType: "string",
                 name: "",
                 type: "string",
+                internalType: "string",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "redeem",
         inputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "inputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "uint256",
                 name: "inputAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "bytes",
                 name: "strategyData",
                 type: "bytes",
+                internalType: "bytes",
             },
         ],
-        name: "redeem",
         outputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "outputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "uint256",
                 name: "outputAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
 ];
 class IFundingStrategy__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.IFundingStrategy__factory = IFundingStrategy__factory;

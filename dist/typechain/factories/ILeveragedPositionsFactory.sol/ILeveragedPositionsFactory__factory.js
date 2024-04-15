@@ -7,1090 +7,1090 @@ exports.ILeveragedPositionsFactory__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "user",
-                type: "address",
-            },
-            {
-                indexed: false,
-                internalType: "contract LeveragedPosition",
-                name: "position",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "collateral",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "stable",
-                type: "address",
-            },
-            {
-                indexed: false,
-                internalType: "uint16",
-                name: "lendingProtocol",
-                type: "uint16",
-            },
-        ],
-        name: "PositionCreated",
-        type: "event",
-    },
-    {
-        inputs: [],
+        type: "function",
         name: "_listExtensions",
+        inputs: [],
         outputs: [
             {
-                internalType: "address[]",
                 name: "",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_registerExtension",
         inputs: [
             {
-                internalType: "contract DiamondExtension",
                 name: "extensionToAdd",
                 type: "address",
+                internalType: "contract DiamondExtension",
             },
             {
-                internalType: "contract DiamondExtension",
                 name: "extensionToReplace",
                 type: "address",
+                internalType: "contract DiamondExtension",
             },
         ],
-        name: "_registerExtension",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_replaceExtensions",
         inputs: [
             {
-                internalType: "address[]",
                 name: "extensions",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
-        name: "_replaceExtensions",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_setIonicPairWhitelisted",
         inputs: [
             {
-                internalType: "contract IonicCErc20",
                 name: "_collateralMarket",
                 type: "address",
+                internalType: "contract IonicCErc20",
             },
             {
-                internalType: "contract IonicCErc20",
                 name: "_stableMarket",
                 type: "address",
+                internalType: "contract IonicCErc20",
             },
             {
-                internalType: "bool",
                 name: "_whitelisted",
                 type: "bool",
+                internalType: "bool",
             },
         ],
-        name: "_setIonicPairWhitelisted",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_setPairWhitelisted",
         inputs: [
             {
-                internalType: "address",
                 name: "_collateralAsset",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "_stableAsset",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "bool",
                 name: "_whitelisted",
                 type: "bool",
+                internalType: "bool",
             },
         ],
-        name: "_setPairWhitelisted",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "closeAndRemoveUserPosition",
         inputs: [
             {
-                internalType: "contract LeveragedPosition",
                 name: "position",
                 type: "address",
+                internalType: "contract LeveragedPosition",
             },
         ],
-        name: "closeAndRemoveUserPosition",
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "createAavePosition",
         inputs: [
             {
-                internalType: "address",
                 name: "user",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "_collateralAsset",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "_stableAsset",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "createAavePosition",
         outputs: [
             {
-                internalType: "contract LeveragedPosition",
                 name: "",
                 type: "address",
+                internalType: "contract LeveragedPosition",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [
-            {
-                internalType: "address",
-                name: "_collateralAsset",
-                type: "address",
-            },
-            {
-                internalType: "address",
-                name: "_collateralVault",
-                type: "address",
-            },
-            {
-                internalType: "address",
-                name: "_stableAsset",
-                type: "address",
-            },
-            {
-                internalType: "contract IERC20Upgradeable",
-                name: "_fundingAsset",
-                type: "address",
-            },
-            {
-                internalType: "uint256",
-                name: "_fundingAmount",
-                type: "uint256",
-            },
-        ],
+        type: "function",
         name: "createAndFundDelegatedPosition",
+        inputs: [
+            {
+                name: "_collateralAsset",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "_collateralVault",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "_stableAsset",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "_fundingAsset",
+                type: "address",
+                internalType: "contract IERC20Upgradeable",
+            },
+            {
+                name: "_fundingAmount",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
         outputs: [
             {
-                internalType: "contract LeveragedPosition",
                 name: "",
                 type: "address",
+                internalType: "contract LeveragedPosition",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [
-            {
-                internalType: "address",
-                name: "_collateralAsset",
-                type: "address",
-            },
-            {
-                internalType: "address",
-                name: "_collateralVault",
-                type: "address",
-            },
-            {
-                internalType: "address",
-                name: "_stableAsset",
-                type: "address",
-            },
-            {
-                internalType: "contract IERC20Upgradeable",
-                name: "_fundingAsset",
-                type: "address",
-            },
-            {
-                internalType: "uint256",
-                name: "_fundingAmount",
-                type: "uint256",
-            },
-            {
-                internalType: "uint256",
-                name: "_leverageRatio",
-                type: "uint256",
-            },
-        ],
+        type: "function",
         name: "createAndFundDelegatedPositionAtRatio",
+        inputs: [
+            {
+                name: "_collateralAsset",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "_collateralVault",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "_stableAsset",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "_fundingAsset",
+                type: "address",
+                internalType: "contract IERC20Upgradeable",
+            },
+            {
+                name: "_fundingAmount",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "_leverageRatio",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
         outputs: [
             {
-                internalType: "contract LeveragedPosition",
                 name: "",
                 type: "address",
+                internalType: "contract LeveragedPosition",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [
-            {
-                internalType: "contract IonicCErc20",
-                name: "_collateralMarket",
-                type: "address",
-            },
-            {
-                internalType: "contract IonicCErc20",
-                name: "_stableMarket",
-                type: "address",
-            },
-            {
-                internalType: "contract IERC20Upgradeable",
-                name: "_fundingAsset",
-                type: "address",
-            },
-            {
-                internalType: "uint256",
-                name: "_fundingAmount",
-                type: "uint256",
-            },
-        ],
+        type: "function",
         name: "createAndFundIonicPosition",
+        inputs: [
+            {
+                name: "_collateralMarket",
+                type: "address",
+                internalType: "contract IonicCErc20",
+            },
+            {
+                name: "_stableMarket",
+                type: "address",
+                internalType: "contract IonicCErc20",
+            },
+            {
+                name: "_fundingAsset",
+                type: "address",
+                internalType: "contract IERC20Upgradeable",
+            },
+            {
+                name: "_fundingAmount",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
         outputs: [
             {
-                internalType: "contract LeveragedPosition",
                 name: "",
                 type: "address",
+                internalType: "contract LeveragedPosition",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [
-            {
-                internalType: "contract IonicCErc20",
-                name: "_collateralMarket",
-                type: "address",
-            },
-            {
-                internalType: "contract IonicCErc20",
-                name: "_stableMarket",
-                type: "address",
-            },
-            {
-                internalType: "contract IERC20Upgradeable",
-                name: "_fundingAsset",
-                type: "address",
-            },
-            {
-                internalType: "uint256",
-                name: "_fundingAmount",
-                type: "uint256",
-            },
-            {
-                internalType: "uint256",
-                name: "_leverageRatio",
-                type: "uint256",
-            },
-        ],
+        type: "function",
         name: "createAndFundIonicPositionAtRatio",
-        outputs: [
-            {
-                internalType: "contract LeveragedPosition",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
         inputs: [
             {
-                internalType: "address",
-                name: "_collateralAsset",
-                type: "address",
-            },
-            {
-                internalType: "address",
-                name: "_collateralVault",
-                type: "address",
-            },
-            {
-                internalType: "address",
-                name: "_stableAsset",
-                type: "address",
-            },
-            {
-                internalType: "contract IERC20Upgradeable",
-                name: "_fundingAsset",
-                type: "address",
-            },
-            {
-                internalType: "uint256",
-                name: "_fundingAmount",
-                type: "uint256",
-            },
-        ],
-        name: "createAndFundPosition",
-        outputs: [
-            {
-                internalType: "contract LeveragedPosition",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "_collateralAsset",
-                type: "address",
-            },
-            {
-                internalType: "address",
-                name: "_collateralVault",
-                type: "address",
-            },
-            {
-                internalType: "address",
-                name: "_stableAsset",
-                type: "address",
-            },
-            {
-                internalType: "contract IERC20Upgradeable",
-                name: "_fundingAsset",
-                type: "address",
-            },
-            {
-                internalType: "uint256",
-                name: "_fundingAmount",
-                type: "uint256",
-            },
-            {
-                internalType: "uint256",
-                name: "_leverageRatio",
-                type: "uint256",
-            },
-        ],
-        name: "createAndFundPositionAtRatio",
-        outputs: [
-            {
-                internalType: "contract LeveragedPosition",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "_collateralAsset",
-                type: "address",
-            },
-            {
-                internalType: "address",
-                name: "_collateralVault",
-                type: "address",
-            },
-            {
-                internalType: "address",
-                name: "_stableAsset",
-                type: "address",
-            },
-        ],
-        name: "createDelegatedPosition",
-        outputs: [
-            {
-                internalType: "contract LeveragedPosition",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "contract IonicCErc20",
                 name: "_collateralMarket",
                 type: "address",
+                internalType: "contract IonicCErc20",
             },
             {
-                internalType: "contract IonicCErc20",
                 name: "_stableMarket",
                 type: "address",
+                internalType: "contract IonicCErc20",
+            },
+            {
+                name: "_fundingAsset",
+                type: "address",
+                internalType: "contract IERC20Upgradeable",
+            },
+            {
+                name: "_fundingAmount",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "_leverageRatio",
+                type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "createIonicPosition",
         outputs: [
             {
-                internalType: "contract LeveragedPosition",
                 name: "",
                 type: "address",
+                internalType: "contract LeveragedPosition",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "createAndFundPosition",
         inputs: [
             {
-                internalType: "address",
                 name: "_collateralAsset",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "_collateralVault",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "_stableAsset",
                 type: "address",
+                internalType: "address",
+            },
+            {
+                name: "_fundingAsset",
+                type: "address",
+                internalType: "contract IERC20Upgradeable",
+            },
+            {
+                name: "_fundingAmount",
+                type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "createPosition",
         outputs: [
             {
-                internalType: "contract LeveragedPosition",
                 name: "",
                 type: "address",
+                internalType: "contract LeveragedPosition",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [],
-        name: "creditDelegator",
+        type: "function",
+        name: "createAndFundPositionAtRatio",
+        inputs: [
+            {
+                name: "_collateralAsset",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "_collateralVault",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "_stableAsset",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "_fundingAsset",
+                type: "address",
+                internalType: "contract IERC20Upgradeable",
+            },
+            {
+                name: "_fundingAmount",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "_leverageRatio",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
         outputs: [
             {
-                internalType: "contract ICreditDelegator",
                 name: "",
                 type: "address",
+                internalType: "contract LeveragedPosition",
+            },
+        ],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "createDelegatedPosition",
+        inputs: [
+            {
+                name: "_collateralAsset",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "_collateralVault",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "_stableAsset",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "contract LeveragedPosition",
+            },
+        ],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "createIonicPosition",
+        inputs: [
+            {
+                name: "_collateralMarket",
+                type: "address",
+                internalType: "contract IonicCErc20",
+            },
+            {
+                name: "_stableMarket",
+                type: "address",
+                internalType: "contract IonicCErc20",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "contract LeveragedPosition",
+            },
+        ],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "createPosition",
+        inputs: [
+            {
+                name: "_collateralAsset",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "_collateralVault",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "_stableAsset",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "contract LeveragedPosition",
+            },
+        ],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "creditDelegator",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "contract ICreditDelegator",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "deregisterVault",
         inputs: [
             {
-                internalType: "address",
                 name: "vault",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "deregisterVault",
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "flashloanRouter",
+        inputs: [],
         outputs: [
             {
-                internalType: "contract IFlashloanRouter",
                 name: "",
                 type: "address",
+                internalType: "contract IFlashloanRouter",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "fundPosition",
         inputs: [
             {
-                internalType: "contract LeveragedPosition",
                 name: "position",
                 type: "address",
+                internalType: "contract LeveragedPosition",
             },
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "fundingAsset",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "uint256",
                 name: "amount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "fundPosition",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "fundersRegistry",
+        inputs: [],
         outputs: [
             {
-                internalType: "contract IFundersRegistry",
                 name: "",
                 type: "address",
+                internalType: "contract IFundersRegistry",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getAaveMaxLeverageRatio",
         inputs: [
             {
-                internalType: "address",
                 name: "collateralAsset",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "collateralAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "address",
                 name: "borrowedAsset",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "getAaveMaxLeverageRatio",
         outputs: [
             {
-                internalType: "uint256",
                 name: "maxLeverageRatio",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getAccountsWithOpenPositions",
+        inputs: [],
         outputs: [
             {
-                internalType: "address[]",
                 name: "",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [
-            {
-                internalType: "address",
-                name: "asset",
-                type: "address",
-            },
-        ],
+        type: "function",
         name: "getAssetBorrowRate",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
         inputs: [
             {
-                internalType: "address",
                 name: "asset",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "getAssetPrice",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getAssetPrice",
         inputs: [
             {
-                internalType: "contract IonicCErc20",
+                name: "asset",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getBorrowableMarketsByCollateral",
+        inputs: [
+            {
                 name: "_collateralMarket",
                 type: "address",
+                internalType: "contract IonicCErc20",
             },
         ],
-        name: "getBorrowableMarketsByCollateral",
         outputs: [
             {
-                internalType: "address[]",
                 name: "",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getLeverageRatioAfterBorrow",
         inputs: [
             {
-                internalType: "address",
                 name: "collateralAsset",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "borrowedAsset",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "newBorrowsAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "positionSupplyAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "positionBorrowAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "getLeverageRatioAfterBorrow",
         outputs: [
             {
-                internalType: "uint256",
                 name: "r",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getLeverageRatioAfterRepay",
         inputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "collateralAsset",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "borrowedAsset",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "uint256",
                 name: "repaidBorrowsAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "positionSupplyAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "positionBorrowAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "getLeverageRatioAfterRepay",
         outputs: [
             {
-                internalType: "uint256",
                 name: "r",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getLiquidationThreshold",
         inputs: [
             {
-                internalType: "address",
                 name: "collateralAsset",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "collateralAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "address",
                 name: "borrowedAsset",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "leverageRatio",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "getLiquidationThreshold",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getMinBorrowNative",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getPositionsByAccount",
         inputs: [
             {
-                internalType: "address",
                 name: "account",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "getPositionsByAccount",
         outputs: [
             {
-                internalType: "address[]",
                 name: "",
                 type: "address[]",
+                internalType: "address[]",
             },
             {
-                internalType: "bool[]",
                 name: "",
                 type: "bool[]",
+                internalType: "bool[]",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getPositionsExtension",
         inputs: [
             {
-                internalType: "bytes4",
                 name: "msgSig",
                 type: "bytes4",
+                internalType: "bytes4",
             },
         ],
-        name: "getPositionsExtension",
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getPositionsTotalCollateralValue",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getRegisteredVaults",
-        outputs: [
-            {
-                internalType: "address[]",
-                name: "",
-                type: "address[]",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
         inputs: [],
-        name: "getWhitelistedCollateralMarkets",
         outputs: [
             {
-                internalType: "address[]",
                 name: "",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getWhitelistedCollateralMarkets",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address[]",
+                internalType: "address[]",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "initialize",
         inputs: [
             {
-                internalType: "contract ICreditDelegator",
                 name: "_delegator",
                 type: "address",
+                internalType: "contract ICreditDelegator",
             },
             {
-                internalType: "contract MasterPriceOracle",
                 name: "_oracle",
                 type: "address",
+                internalType: "contract MasterPriceOracle",
             },
         ],
-        name: "initialize",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "isFactoryPosition",
         inputs: [
             {
-                internalType: "contract LeveragedPosition",
                 name: "position",
                 type: "address",
+                internalType: "contract LeveragedPosition",
             },
         ],
-        name: "isFactoryPosition",
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "isVaultRegistered",
         inputs: [
             {
-                internalType: "address",
                 name: "vault",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "isVaultRegistered",
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "minBorrowNative",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "oracle",
-        outputs: [
-            {
-                internalType: "contract MasterPriceOracle",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
         inputs: [],
-        name: "owner",
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "contract MasterPriceOracle",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "owner",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "registerVault",
         inputs: [
             {
-                internalType: "address",
                 name: "vault",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "registerVault",
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "reinitialize",
         inputs: [
             {
-                internalType: "contract MasterPriceOracle",
                 name: "_oracle",
                 type: "address",
+                internalType: "contract MasterPriceOracle",
             },
         ],
-        name: "reinitialize",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "removeClosedPosition",
         inputs: [
             {
-                internalType: "address",
                 name: "closedPosition",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "removeClosedPosition",
         outputs: [
             {
-                internalType: "bool",
                 name: "removed",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "swap",
         inputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "inputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "uint256",
                 name: "inputAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "outputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
-        name: "swap",
         outputs: [
             {
-                internalType: "uint256",
                 name: "outputAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "vaultOfPosition",
         inputs: [
             {
-                internalType: "address",
                 name: "position",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "vaultOfPosition",
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
+    },
+    {
+        type: "event",
+        name: "PositionCreated",
+        inputs: [
+            {
+                name: "user",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "position",
+                type: "address",
+                indexed: false,
+                internalType: "contract LeveragedPosition",
+            },
+            {
+                name: "collateral",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "stable",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "lendingProtocol",
+                type: "uint16",
+                indexed: false,
+                internalType: "uint16",
+            },
+        ],
+        anonymous: false,
     },
 ];
 class ILeveragedPositionsFactory__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.ILeveragedPositionsFactory__factory = ILeveragedPositionsFactory__factory;

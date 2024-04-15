@@ -1,94 +1,185 @@
-import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedListener, TypedContractMethod } from "../common";
-export interface IonicComptrollerInterface extends Interface {
-    getFunction(nameOrSignature: "_acceptAdmin" | "_addRewardsDistributor" | "_afterNonReentrant" | "_becomeImplementation" | "_beforeNonReentrant" | "_blacklistBorrowingAgainstCollateral" | "_blacklistBorrowingAgainstCollateralWhitelist" | "_borrowCapWhitelist" | "_deployMarket" | "_removeFlywheel" | "_setBorrowCapForCollateral" | "_setBorrowCapForCollateralWhitelist" | "_setBorrowCapGuardian" | "_setBorrowPaused" | "_setCloseFactor" | "_setCollateralFactor" | "_setLiquidationIncentive" | "_setMarketBorrowCaps" | "_setMarketSupplyCaps" | "_setMintPaused" | "_setPauseGuardian" | "_setPendingAdmin" | "_setPriceOracle" | "_setSeizePaused" | "_setTransferPaused" | "_setWhitelistEnforcement" | "_setWhitelistStatuses" | "_supplyCapWhitelist" | "_toggleAdminRights" | "_unsupportMarket" | "_upgrade" | "accountAssets" | "addNonAccruingFlywheel" | "admin" | "adminHasRights" | "borrowAllowed" | "borrowCapForCollateral" | "borrowCaps" | "borrowGuardianPaused" | "borrowWithinLimits" | "borrowingAgainstCollateralBlacklist" | "cTokensByUnderlying" | "checkMembership" | "closeFactorMantissa" | "comptrollerImplementation" | "enforceWhitelist" | "enterMarkets" | "exitMarket" | "getAccountLiquidity" | "getAccruingFlywheels" | "getAllBorrowers" | "getAllMarkets" | "getAssetAsCollateralValueCap" | "getAssetsIn" | "getHypotheticalAccountLiquidity" | "getMaxRedeemOrBorrow" | "getRewardsDistributors" | "getWhitelist" | "getWhitelistedBorrowersBorrows" | "getWhitelistedSuppliersSupply" | "ionicAdmin" | "ionicAdminHasRights" | "isBlacklistBorrowingAgainstCollateralWhitelisted" | "isBorrowCapForCollateralWhitelisted" | "isBorrowCapWhitelisted" | "isDeprecated" | "isSupplyCapWhitelisted" | "isUserOfPool" | "liquidateBorrowAllowed" | "liquidateCalculateSeizeTokens" | "liquidationIncentiveMantissa" | "markets" | "mintAllowed" | "mintGuardianPaused" | "mintVerify" | "oracle" | "pauseGuardian" | "pendingAdmin" | "redeemAllowed" | "redeemVerify" | "repayBorrowAllowed" | "rewardsDistributors" | "seizeAllowed" | "suppliers" | "supplyCaps" | "transferAllowed" | "whitelist"): FunctionFragment;
+import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, ContractTransaction, Overrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "../common";
+export interface IonicComptrollerInterface extends utils.Interface {
+    functions: {
+        "_acceptAdmin()": FunctionFragment;
+        "_addRewardsDistributor(address)": FunctionFragment;
+        "_afterNonReentrant()": FunctionFragment;
+        "_becomeImplementation()": FunctionFragment;
+        "_beforeNonReentrant()": FunctionFragment;
+        "_blacklistBorrowingAgainstCollateral(address,address,bool)": FunctionFragment;
+        "_blacklistBorrowingAgainstCollateralWhitelist(address,address,address,bool)": FunctionFragment;
+        "_borrowCapWhitelist(address,address,bool)": FunctionFragment;
+        "_deployMarket(uint8,bytes,bytes,uint256)": FunctionFragment;
+        "_removeFlywheel(address)": FunctionFragment;
+        "_setBorrowCapForCollateral(address,address,uint256)": FunctionFragment;
+        "_setBorrowCapForCollateralWhitelist(address,address,address,bool)": FunctionFragment;
+        "_setBorrowCapGuardian(address)": FunctionFragment;
+        "_setBorrowPaused(address,bool)": FunctionFragment;
+        "_setCloseFactor(uint256)": FunctionFragment;
+        "_setCollateralFactor(address,uint256)": FunctionFragment;
+        "_setLiquidationIncentive(uint256)": FunctionFragment;
+        "_setMarketBorrowCaps(address[],uint256[])": FunctionFragment;
+        "_setMarketSupplyCaps(address[],uint256[])": FunctionFragment;
+        "_setMintPaused(address,bool)": FunctionFragment;
+        "_setPauseGuardian(address)": FunctionFragment;
+        "_setPendingAdmin(address)": FunctionFragment;
+        "_setPriceOracle(address)": FunctionFragment;
+        "_setSeizePaused(bool)": FunctionFragment;
+        "_setTransferPaused(bool)": FunctionFragment;
+        "_setWhitelistEnforcement(bool)": FunctionFragment;
+        "_setWhitelistStatuses(address[],bool[])": FunctionFragment;
+        "_supplyCapWhitelist(address,address,bool)": FunctionFragment;
+        "_toggleAdminRights(bool)": FunctionFragment;
+        "_unsupportMarket(address)": FunctionFragment;
+        "_upgrade()": FunctionFragment;
+        "accountAssets(address,uint256)": FunctionFragment;
+        "addNonAccruingFlywheel(address)": FunctionFragment;
+        "admin()": FunctionFragment;
+        "adminHasRights()": FunctionFragment;
+        "borrowAllowed(address,address,uint256)": FunctionFragment;
+        "borrowCapForCollateral(address,address)": FunctionFragment;
+        "borrowCaps(address)": FunctionFragment;
+        "borrowGuardianPaused(address)": FunctionFragment;
+        "borrowWithinLimits(address,uint256)": FunctionFragment;
+        "borrowingAgainstCollateralBlacklist(address,address)": FunctionFragment;
+        "cTokensByUnderlying(address)": FunctionFragment;
+        "checkMembership(address,address)": FunctionFragment;
+        "closeFactorMantissa()": FunctionFragment;
+        "comptrollerImplementation()": FunctionFragment;
+        "enforceWhitelist()": FunctionFragment;
+        "enterMarkets(address[])": FunctionFragment;
+        "exitMarket(address)": FunctionFragment;
+        "getAccountLiquidity(address)": FunctionFragment;
+        "getAccruingFlywheels()": FunctionFragment;
+        "getAllBorrowers()": FunctionFragment;
+        "getAllMarkets()": FunctionFragment;
+        "getAssetAsCollateralValueCap(address,address,bool,address)": FunctionFragment;
+        "getAssetsIn(address)": FunctionFragment;
+        "getHypotheticalAccountLiquidity(address,address,uint256,uint256)": FunctionFragment;
+        "getMaxRedeemOrBorrow(address,address,bool)": FunctionFragment;
+        "getRewardsDistributors()": FunctionFragment;
+        "getWhitelist()": FunctionFragment;
+        "getWhitelistedBorrowersBorrows(address)": FunctionFragment;
+        "getWhitelistedSuppliersSupply(address)": FunctionFragment;
+        "ionicAdmin()": FunctionFragment;
+        "ionicAdminHasRights()": FunctionFragment;
+        "isBlacklistBorrowingAgainstCollateralWhitelisted(address,address,address)": FunctionFragment;
+        "isBorrowCapForCollateralWhitelisted(address,address,address)": FunctionFragment;
+        "isBorrowCapWhitelisted(address,address)": FunctionFragment;
+        "isDeprecated(address)": FunctionFragment;
+        "isSupplyCapWhitelisted(address,address)": FunctionFragment;
+        "isUserOfPool(address)": FunctionFragment;
+        "liquidateBorrowAllowed(address,address,address,address,uint256)": FunctionFragment;
+        "liquidateCalculateSeizeTokens(address,address,uint256)": FunctionFragment;
+        "liquidationIncentiveMantissa()": FunctionFragment;
+        "markets(address)": FunctionFragment;
+        "mintAllowed(address,address,uint256)": FunctionFragment;
+        "mintGuardianPaused(address)": FunctionFragment;
+        "mintVerify(address,address,uint256,uint256)": FunctionFragment;
+        "oracle()": FunctionFragment;
+        "pauseGuardian()": FunctionFragment;
+        "pendingAdmin()": FunctionFragment;
+        "redeemAllowed(address,address,uint256)": FunctionFragment;
+        "redeemVerify(address,address,uint256,uint256)": FunctionFragment;
+        "repayBorrowAllowed(address,address,address,uint256)": FunctionFragment;
+        "rewardsDistributors(uint256)": FunctionFragment;
+        "seizeAllowed(address,address,address,address,uint256)": FunctionFragment;
+        "suppliers(address)": FunctionFragment;
+        "supplyCaps(address)": FunctionFragment;
+        "transferAllowed(address,address,address,uint256)": FunctionFragment;
+        "whitelist(address)": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "_acceptAdmin" | "_addRewardsDistributor" | "_afterNonReentrant" | "_becomeImplementation" | "_beforeNonReentrant" | "_blacklistBorrowingAgainstCollateral" | "_blacklistBorrowingAgainstCollateralWhitelist" | "_borrowCapWhitelist" | "_deployMarket" | "_removeFlywheel" | "_setBorrowCapForCollateral" | "_setBorrowCapForCollateralWhitelist" | "_setBorrowCapGuardian" | "_setBorrowPaused" | "_setCloseFactor" | "_setCollateralFactor" | "_setLiquidationIncentive" | "_setMarketBorrowCaps" | "_setMarketSupplyCaps" | "_setMintPaused" | "_setPauseGuardian" | "_setPendingAdmin" | "_setPriceOracle" | "_setSeizePaused" | "_setTransferPaused" | "_setWhitelistEnforcement" | "_setWhitelistStatuses" | "_supplyCapWhitelist" | "_toggleAdminRights" | "_unsupportMarket" | "_upgrade" | "accountAssets" | "addNonAccruingFlywheel" | "admin" | "adminHasRights" | "borrowAllowed" | "borrowCapForCollateral" | "borrowCaps" | "borrowGuardianPaused" | "borrowWithinLimits" | "borrowingAgainstCollateralBlacklist" | "cTokensByUnderlying" | "checkMembership" | "closeFactorMantissa" | "comptrollerImplementation" | "enforceWhitelist" | "enterMarkets" | "exitMarket" | "getAccountLiquidity" | "getAccruingFlywheels" | "getAllBorrowers" | "getAllMarkets" | "getAssetAsCollateralValueCap" | "getAssetsIn" | "getHypotheticalAccountLiquidity" | "getMaxRedeemOrBorrow" | "getRewardsDistributors" | "getWhitelist" | "getWhitelistedBorrowersBorrows" | "getWhitelistedSuppliersSupply" | "ionicAdmin" | "ionicAdminHasRights" | "isBlacklistBorrowingAgainstCollateralWhitelisted" | "isBorrowCapForCollateralWhitelisted" | "isBorrowCapWhitelisted" | "isDeprecated" | "isSupplyCapWhitelisted" | "isUserOfPool" | "liquidateBorrowAllowed" | "liquidateCalculateSeizeTokens" | "liquidationIncentiveMantissa" | "markets" | "mintAllowed" | "mintGuardianPaused" | "mintVerify" | "oracle" | "pauseGuardian" | "pendingAdmin" | "redeemAllowed" | "redeemVerify" | "repayBorrowAllowed" | "rewardsDistributors" | "seizeAllowed" | "suppliers" | "supplyCaps" | "transferAllowed" | "whitelist"): FunctionFragment;
     encodeFunctionData(functionFragment: "_acceptAdmin", values?: undefined): string;
-    encodeFunctionData(functionFragment: "_addRewardsDistributor", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "_addRewardsDistributor", values: [string]): string;
     encodeFunctionData(functionFragment: "_afterNonReentrant", values?: undefined): string;
     encodeFunctionData(functionFragment: "_becomeImplementation", values?: undefined): string;
     encodeFunctionData(functionFragment: "_beforeNonReentrant", values?: undefined): string;
-    encodeFunctionData(functionFragment: "_blacklistBorrowingAgainstCollateral", values: [AddressLike, AddressLike, boolean]): string;
-    encodeFunctionData(functionFragment: "_blacklistBorrowingAgainstCollateralWhitelist", values: [AddressLike, AddressLike, AddressLike, boolean]): string;
-    encodeFunctionData(functionFragment: "_borrowCapWhitelist", values: [AddressLike, AddressLike, boolean]): string;
+    encodeFunctionData(functionFragment: "_blacklistBorrowingAgainstCollateral", values: [string, string, boolean]): string;
+    encodeFunctionData(functionFragment: "_blacklistBorrowingAgainstCollateralWhitelist", values: [string, string, string, boolean]): string;
+    encodeFunctionData(functionFragment: "_borrowCapWhitelist", values: [string, string, boolean]): string;
     encodeFunctionData(functionFragment: "_deployMarket", values: [BigNumberish, BytesLike, BytesLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "_removeFlywheel", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "_setBorrowCapForCollateral", values: [AddressLike, AddressLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "_setBorrowCapForCollateralWhitelist", values: [AddressLike, AddressLike, AddressLike, boolean]): string;
-    encodeFunctionData(functionFragment: "_setBorrowCapGuardian", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "_setBorrowPaused", values: [AddressLike, boolean]): string;
+    encodeFunctionData(functionFragment: "_removeFlywheel", values: [string]): string;
+    encodeFunctionData(functionFragment: "_setBorrowCapForCollateral", values: [string, string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "_setBorrowCapForCollateralWhitelist", values: [string, string, string, boolean]): string;
+    encodeFunctionData(functionFragment: "_setBorrowCapGuardian", values: [string]): string;
+    encodeFunctionData(functionFragment: "_setBorrowPaused", values: [string, boolean]): string;
     encodeFunctionData(functionFragment: "_setCloseFactor", values: [BigNumberish]): string;
-    encodeFunctionData(functionFragment: "_setCollateralFactor", values: [AddressLike, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "_setCollateralFactor", values: [string, BigNumberish]): string;
     encodeFunctionData(functionFragment: "_setLiquidationIncentive", values: [BigNumberish]): string;
-    encodeFunctionData(functionFragment: "_setMarketBorrowCaps", values: [AddressLike[], BigNumberish[]]): string;
-    encodeFunctionData(functionFragment: "_setMarketSupplyCaps", values: [AddressLike[], BigNumberish[]]): string;
-    encodeFunctionData(functionFragment: "_setMintPaused", values: [AddressLike, boolean]): string;
-    encodeFunctionData(functionFragment: "_setPauseGuardian", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "_setPendingAdmin", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "_setPriceOracle", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "_setMarketBorrowCaps", values: [string[], BigNumberish[]]): string;
+    encodeFunctionData(functionFragment: "_setMarketSupplyCaps", values: [string[], BigNumberish[]]): string;
+    encodeFunctionData(functionFragment: "_setMintPaused", values: [string, boolean]): string;
+    encodeFunctionData(functionFragment: "_setPauseGuardian", values: [string]): string;
+    encodeFunctionData(functionFragment: "_setPendingAdmin", values: [string]): string;
+    encodeFunctionData(functionFragment: "_setPriceOracle", values: [string]): string;
     encodeFunctionData(functionFragment: "_setSeizePaused", values: [boolean]): string;
     encodeFunctionData(functionFragment: "_setTransferPaused", values: [boolean]): string;
     encodeFunctionData(functionFragment: "_setWhitelistEnforcement", values: [boolean]): string;
-    encodeFunctionData(functionFragment: "_setWhitelistStatuses", values: [AddressLike[], boolean[]]): string;
-    encodeFunctionData(functionFragment: "_supplyCapWhitelist", values: [AddressLike, AddressLike, boolean]): string;
+    encodeFunctionData(functionFragment: "_setWhitelistStatuses", values: [string[], boolean[]]): string;
+    encodeFunctionData(functionFragment: "_supplyCapWhitelist", values: [string, string, boolean]): string;
     encodeFunctionData(functionFragment: "_toggleAdminRights", values: [boolean]): string;
-    encodeFunctionData(functionFragment: "_unsupportMarket", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "_unsupportMarket", values: [string]): string;
     encodeFunctionData(functionFragment: "_upgrade", values?: undefined): string;
-    encodeFunctionData(functionFragment: "accountAssets", values: [AddressLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "addNonAccruingFlywheel", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "accountAssets", values: [string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "addNonAccruingFlywheel", values: [string]): string;
     encodeFunctionData(functionFragment: "admin", values?: undefined): string;
     encodeFunctionData(functionFragment: "adminHasRights", values?: undefined): string;
-    encodeFunctionData(functionFragment: "borrowAllowed", values: [AddressLike, AddressLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "borrowCapForCollateral", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "borrowCaps", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "borrowGuardianPaused", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "borrowWithinLimits", values: [AddressLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "borrowingAgainstCollateralBlacklist", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "cTokensByUnderlying", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "checkMembership", values: [AddressLike, AddressLike]): string;
+    encodeFunctionData(functionFragment: "borrowAllowed", values: [string, string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "borrowCapForCollateral", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "borrowCaps", values: [string]): string;
+    encodeFunctionData(functionFragment: "borrowGuardianPaused", values: [string]): string;
+    encodeFunctionData(functionFragment: "borrowWithinLimits", values: [string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "borrowingAgainstCollateralBlacklist", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "cTokensByUnderlying", values: [string]): string;
+    encodeFunctionData(functionFragment: "checkMembership", values: [string, string]): string;
     encodeFunctionData(functionFragment: "closeFactorMantissa", values?: undefined): string;
     encodeFunctionData(functionFragment: "comptrollerImplementation", values?: undefined): string;
     encodeFunctionData(functionFragment: "enforceWhitelist", values?: undefined): string;
-    encodeFunctionData(functionFragment: "enterMarkets", values: [AddressLike[]]): string;
-    encodeFunctionData(functionFragment: "exitMarket", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "getAccountLiquidity", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "enterMarkets", values: [string[]]): string;
+    encodeFunctionData(functionFragment: "exitMarket", values: [string]): string;
+    encodeFunctionData(functionFragment: "getAccountLiquidity", values: [string]): string;
     encodeFunctionData(functionFragment: "getAccruingFlywheels", values?: undefined): string;
     encodeFunctionData(functionFragment: "getAllBorrowers", values?: undefined): string;
     encodeFunctionData(functionFragment: "getAllMarkets", values?: undefined): string;
-    encodeFunctionData(functionFragment: "getAssetAsCollateralValueCap", values: [AddressLike, AddressLike, boolean, AddressLike]): string;
-    encodeFunctionData(functionFragment: "getAssetsIn", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "getHypotheticalAccountLiquidity", values: [AddressLike, AddressLike, BigNumberish, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "getMaxRedeemOrBorrow", values: [AddressLike, AddressLike, boolean]): string;
+    encodeFunctionData(functionFragment: "getAssetAsCollateralValueCap", values: [string, string, boolean, string]): string;
+    encodeFunctionData(functionFragment: "getAssetsIn", values: [string]): string;
+    encodeFunctionData(functionFragment: "getHypotheticalAccountLiquidity", values: [string, string, BigNumberish, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "getMaxRedeemOrBorrow", values: [string, string, boolean]): string;
     encodeFunctionData(functionFragment: "getRewardsDistributors", values?: undefined): string;
     encodeFunctionData(functionFragment: "getWhitelist", values?: undefined): string;
-    encodeFunctionData(functionFragment: "getWhitelistedBorrowersBorrows", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "getWhitelistedSuppliersSupply", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "getWhitelistedBorrowersBorrows", values: [string]): string;
+    encodeFunctionData(functionFragment: "getWhitelistedSuppliersSupply", values: [string]): string;
     encodeFunctionData(functionFragment: "ionicAdmin", values?: undefined): string;
     encodeFunctionData(functionFragment: "ionicAdminHasRights", values?: undefined): string;
-    encodeFunctionData(functionFragment: "isBlacklistBorrowingAgainstCollateralWhitelisted", values: [AddressLike, AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "isBorrowCapForCollateralWhitelisted", values: [AddressLike, AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "isBorrowCapWhitelisted", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "isDeprecated", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "isSupplyCapWhitelisted", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "isUserOfPool", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "liquidateBorrowAllowed", values: [AddressLike, AddressLike, AddressLike, AddressLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "liquidateCalculateSeizeTokens", values: [AddressLike, AddressLike, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "isBlacklistBorrowingAgainstCollateralWhitelisted", values: [string, string, string]): string;
+    encodeFunctionData(functionFragment: "isBorrowCapForCollateralWhitelisted", values: [string, string, string]): string;
+    encodeFunctionData(functionFragment: "isBorrowCapWhitelisted", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "isDeprecated", values: [string]): string;
+    encodeFunctionData(functionFragment: "isSupplyCapWhitelisted", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "isUserOfPool", values: [string]): string;
+    encodeFunctionData(functionFragment: "liquidateBorrowAllowed", values: [string, string, string, string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "liquidateCalculateSeizeTokens", values: [string, string, BigNumberish]): string;
     encodeFunctionData(functionFragment: "liquidationIncentiveMantissa", values?: undefined): string;
-    encodeFunctionData(functionFragment: "markets", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "mintAllowed", values: [AddressLike, AddressLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "mintGuardianPaused", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "mintVerify", values: [AddressLike, AddressLike, BigNumberish, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "markets", values: [string]): string;
+    encodeFunctionData(functionFragment: "mintAllowed", values: [string, string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "mintGuardianPaused", values: [string]): string;
+    encodeFunctionData(functionFragment: "mintVerify", values: [string, string, BigNumberish, BigNumberish]): string;
     encodeFunctionData(functionFragment: "oracle", values?: undefined): string;
     encodeFunctionData(functionFragment: "pauseGuardian", values?: undefined): string;
     encodeFunctionData(functionFragment: "pendingAdmin", values?: undefined): string;
-    encodeFunctionData(functionFragment: "redeemAllowed", values: [AddressLike, AddressLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "redeemVerify", values: [AddressLike, AddressLike, BigNumberish, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "repayBorrowAllowed", values: [AddressLike, AddressLike, AddressLike, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "redeemAllowed", values: [string, string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "redeemVerify", values: [string, string, BigNumberish, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "repayBorrowAllowed", values: [string, string, string, BigNumberish]): string;
     encodeFunctionData(functionFragment: "rewardsDistributors", values: [BigNumberish]): string;
-    encodeFunctionData(functionFragment: "seizeAllowed", values: [AddressLike, AddressLike, AddressLike, AddressLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "suppliers", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "supplyCaps", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "transferAllowed", values: [AddressLike, AddressLike, AddressLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "whitelist", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "seizeAllowed", values: [string, string, string, string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "suppliers", values: [string]): string;
+    encodeFunctionData(functionFragment: "supplyCaps", values: [string]): string;
+    encodeFunctionData(functionFragment: "transferAllowed", values: [string, string, string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "whitelist", values: [string]): string;
     decodeFunctionResult(functionFragment: "_acceptAdmin", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "_addRewardsDistributor", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "_afterNonReentrant", data: BytesLike): Result;
@@ -176,742 +267,842 @@ export interface IonicComptrollerInterface extends Interface {
     decodeFunctionResult(functionFragment: "supplyCaps", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "transferAllowed", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "whitelist", data: BytesLike): Result;
+    events: {};
 }
 export interface IonicComptroller extends BaseContract {
-    connect(runner?: ContractRunner | null): IonicComptroller;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: IonicComptrollerInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    _acceptAdmin: TypedContractMethod<[], [bigint], "nonpayable">;
-    _addRewardsDistributor: TypedContractMethod<[
-        distributor: AddressLike
-    ], [
-        bigint
-    ], "nonpayable">;
-    _afterNonReentrant: TypedContractMethod<[], [void], "nonpayable">;
-    _becomeImplementation: TypedContractMethod<[], [void], "nonpayable">;
-    _beforeNonReentrant: TypedContractMethod<[], [void], "nonpayable">;
-    _blacklistBorrowingAgainstCollateral: TypedContractMethod<[
-        cTokenBorrow: AddressLike,
-        cTokenCollateral: AddressLike,
-        blacklisted: boolean
-    ], [
-        void
-    ], "nonpayable">;
-    _blacklistBorrowingAgainstCollateralWhitelist: TypedContractMethod<[
-        cTokenBorrow: AddressLike,
-        cTokenCollateral: AddressLike,
-        account: AddressLike,
-        whitelisted: boolean
-    ], [
-        void
-    ], "nonpayable">;
-    _borrowCapWhitelist: TypedContractMethod<[
-        cToken: AddressLike,
-        account: AddressLike,
-        whitelisted: boolean
-    ], [
-        void
-    ], "nonpayable">;
-    _deployMarket: TypedContractMethod<[
-        delegateType: BigNumberish,
-        constructorData: BytesLike,
-        becomeImplData: BytesLike,
-        collateralFactorMantissa: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    _removeFlywheel: TypedContractMethod<[
-        flywheelAddress: AddressLike
-    ], [
-        boolean
-    ], "nonpayable">;
-    _setBorrowCapForCollateral: TypedContractMethod<[
-        cTokenBorrow: AddressLike,
-        cTokenCollateral: AddressLike,
-        borrowCap: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    _setBorrowCapForCollateralWhitelist: TypedContractMethod<[
-        cTokenBorrow: AddressLike,
-        cTokenCollateral: AddressLike,
-        account: AddressLike,
-        whitelisted: boolean
-    ], [
-        void
-    ], "nonpayable">;
-    _setBorrowCapGuardian: TypedContractMethod<[
-        newBorrowCapGuardian: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    _setBorrowPaused: TypedContractMethod<[
-        cToken: AddressLike,
-        state: boolean
-    ], [
-        boolean
-    ], "nonpayable">;
-    _setCloseFactor: TypedContractMethod<[
-        newCloseFactorMantissa: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    _setCollateralFactor: TypedContractMethod<[
-        market: AddressLike,
-        newCollateralFactorMantissa: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    _setLiquidationIncentive: TypedContractMethod<[
-        newLiquidationIncentiveMantissa: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    _setMarketBorrowCaps: TypedContractMethod<[
-        cTokens: AddressLike[],
-        newBorrowCaps: BigNumberish[]
-    ], [
-        void
-    ], "nonpayable">;
-    _setMarketSupplyCaps: TypedContractMethod<[
-        cTokens: AddressLike[],
-        newSupplyCaps: BigNumberish[]
-    ], [
-        void
-    ], "nonpayable">;
-    _setMintPaused: TypedContractMethod<[
-        cToken: AddressLike,
-        state: boolean
-    ], [
-        boolean
-    ], "nonpayable">;
-    _setPauseGuardian: TypedContractMethod<[
-        newPauseGuardian: AddressLike
-    ], [
-        bigint
-    ], "nonpayable">;
-    _setPendingAdmin: TypedContractMethod<[
-        newPendingAdmin: AddressLike
-    ], [
-        bigint
-    ], "nonpayable">;
-    _setPriceOracle: TypedContractMethod<[
-        newOracle: AddressLike
-    ], [
-        bigint
-    ], "nonpayable">;
-    _setSeizePaused: TypedContractMethod<[
-        state: boolean
-    ], [
-        boolean
-    ], "nonpayable">;
-    _setTransferPaused: TypedContractMethod<[
-        state: boolean
-    ], [
-        boolean
-    ], "nonpayable">;
-    _setWhitelistEnforcement: TypedContractMethod<[
-        enforce: boolean
-    ], [
-        bigint
-    ], "nonpayable">;
-    _setWhitelistStatuses: TypedContractMethod<[
-        _suppliers: AddressLike[],
-        statuses: boolean[]
-    ], [
-        bigint
-    ], "nonpayable">;
-    _supplyCapWhitelist: TypedContractMethod<[
-        cToken: AddressLike,
-        account: AddressLike,
-        whitelisted: boolean
-    ], [
-        void
-    ], "nonpayable">;
-    _toggleAdminRights: TypedContractMethod<[
-        hasRights: boolean
-    ], [
-        bigint
-    ], "nonpayable">;
-    _unsupportMarket: TypedContractMethod<[
-        cToken: AddressLike
-    ], [
-        bigint
-    ], "nonpayable">;
-    _upgrade: TypedContractMethod<[], [void], "nonpayable">;
-    accountAssets: TypedContractMethod<[
-        arg0: AddressLike,
-        arg1: BigNumberish
-    ], [
-        string
-    ], "view">;
-    addNonAccruingFlywheel: TypedContractMethod<[
-        flywheelAddress: AddressLike
-    ], [
-        boolean
-    ], "nonpayable">;
-    admin: TypedContractMethod<[], [string], "view">;
-    adminHasRights: TypedContractMethod<[], [boolean], "view">;
-    borrowAllowed: TypedContractMethod<[
-        cToken: AddressLike,
-        borrower: AddressLike,
-        borrowAmount: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    borrowCapForCollateral: TypedContractMethod<[
-        borrowed: AddressLike,
-        collateral: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    borrowCaps: TypedContractMethod<[cToken: AddressLike], [bigint], "view">;
-    borrowGuardianPaused: TypedContractMethod<[
-        cToken: AddressLike
-    ], [
-        boolean
-    ], "view">;
-    borrowWithinLimits: TypedContractMethod<[
-        cToken: AddressLike,
-        accountBorrowsNew: BigNumberish
-    ], [
-        bigint
-    ], "view">;
-    borrowingAgainstCollateralBlacklist: TypedContractMethod<[
-        borrowed: AddressLike,
-        collateral: AddressLike
-    ], [
-        boolean
-    ], "view">;
-    cTokensByUnderlying: TypedContractMethod<[
-        arg0: AddressLike
-    ], [
-        string
-    ], "view">;
-    checkMembership: TypedContractMethod<[
-        account: AddressLike,
-        cToken: AddressLike
-    ], [
-        boolean
-    ], "view">;
-    closeFactorMantissa: TypedContractMethod<[], [bigint], "view">;
-    comptrollerImplementation: TypedContractMethod<[], [string], "view">;
-    enforceWhitelist: TypedContractMethod<[], [boolean], "view">;
-    enterMarkets: TypedContractMethod<[
-        cTokens: AddressLike[]
-    ], [
-        bigint[]
-    ], "nonpayable">;
-    exitMarket: TypedContractMethod<[
-        cToken: AddressLike
-    ], [
-        bigint
-    ], "nonpayable">;
-    getAccountLiquidity: TypedContractMethod<[
-        account: AddressLike
-    ], [
-        [bigint, bigint, bigint, bigint]
-    ], "view">;
-    getAccruingFlywheels: TypedContractMethod<[], [string[]], "view">;
-    getAllBorrowers: TypedContractMethod<[], [string[]], "view">;
-    getAllMarkets: TypedContractMethod<[], [string[]], "view">;
-    getAssetAsCollateralValueCap: TypedContractMethod<[
-        collateral: AddressLike,
-        cTokenModify: AddressLike,
-        redeeming: boolean,
-        account: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getAssetsIn: TypedContractMethod<[account: AddressLike], [string[]], "view">;
-    getHypotheticalAccountLiquidity: TypedContractMethod<[
-        account: AddressLike,
-        cTokenModify: AddressLike,
-        redeemTokens: BigNumberish,
-        borrowAmount: BigNumberish
-    ], [
-        [bigint, bigint, bigint, bigint]
-    ], "view">;
-    getMaxRedeemOrBorrow: TypedContractMethod<[
-        account: AddressLike,
-        cToken: AddressLike,
-        isBorrow: boolean
-    ], [
-        bigint
-    ], "view">;
-    getRewardsDistributors: TypedContractMethod<[], [string[]], "view">;
-    getWhitelist: TypedContractMethod<[], [string[]], "view">;
-    getWhitelistedBorrowersBorrows: TypedContractMethod<[
-        cToken: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getWhitelistedSuppliersSupply: TypedContractMethod<[
-        cToken: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    ionicAdmin: TypedContractMethod<[], [string], "view">;
-    ionicAdminHasRights: TypedContractMethod<[], [boolean], "view">;
-    isBlacklistBorrowingAgainstCollateralWhitelisted: TypedContractMethod<[
-        cTokenBorrow: AddressLike,
-        cTokenCollateral: AddressLike,
-        account: AddressLike
-    ], [
-        boolean
-    ], "view">;
-    isBorrowCapForCollateralWhitelisted: TypedContractMethod<[
-        cTokenBorrow: AddressLike,
-        cTokenCollateral: AddressLike,
-        account: AddressLike
-    ], [
-        boolean
-    ], "view">;
-    isBorrowCapWhitelisted: TypedContractMethod<[
-        cToken: AddressLike,
-        account: AddressLike
-    ], [
-        boolean
-    ], "view">;
-    isDeprecated: TypedContractMethod<[cToken: AddressLike], [boolean], "view">;
-    isSupplyCapWhitelisted: TypedContractMethod<[
-        cToken: AddressLike,
-        account: AddressLike
-    ], [
-        boolean
-    ], "view">;
-    isUserOfPool: TypedContractMethod<[user: AddressLike], [boolean], "view">;
-    liquidateBorrowAllowed: TypedContractMethod<[
-        cTokenBorrowed: AddressLike,
-        cTokenCollateral: AddressLike,
-        liquidator: AddressLike,
-        borrower: AddressLike,
-        repayAmount: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    liquidateCalculateSeizeTokens: TypedContractMethod<[
-        cTokenBorrowed: AddressLike,
-        cTokenCollateral: AddressLike,
-        repayAmount: BigNumberish
-    ], [
-        [bigint, bigint]
-    ], "view">;
-    liquidationIncentiveMantissa: TypedContractMethod<[], [bigint], "view">;
-    markets: TypedContractMethod<[
-        cToken: AddressLike
-    ], [
-        [boolean, bigint]
-    ], "view">;
-    mintAllowed: TypedContractMethod<[
-        cToken: AddressLike,
-        minter: AddressLike,
-        mintAmount: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    mintGuardianPaused: TypedContractMethod<[
-        cToken: AddressLike
-    ], [
-        boolean
-    ], "view">;
-    mintVerify: TypedContractMethod<[
-        cToken: AddressLike,
-        minter: AddressLike,
-        actualMintAmount: BigNumberish,
-        mintTokens: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    oracle: TypedContractMethod<[], [string], "view">;
-    pauseGuardian: TypedContractMethod<[], [string], "view">;
-    pendingAdmin: TypedContractMethod<[], [string], "view">;
-    redeemAllowed: TypedContractMethod<[
-        cToken: AddressLike,
-        redeemer: AddressLike,
-        redeemTokens: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    redeemVerify: TypedContractMethod<[
-        cToken: AddressLike,
-        redeemer: AddressLike,
-        redeemAmount: BigNumberish,
-        redeemTokens: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    repayBorrowAllowed: TypedContractMethod<[
-        cToken: AddressLike,
-        payer: AddressLike,
-        borrower: AddressLike,
-        repayAmount: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    rewardsDistributors: TypedContractMethod<[
-        arg0: BigNumberish
-    ], [
-        string
-    ], "view">;
-    seizeAllowed: TypedContractMethod<[
-        cTokenCollateral: AddressLike,
-        cTokenBorrowed: AddressLike,
-        liquidator: AddressLike,
-        borrower: AddressLike,
-        seizeTokens: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    suppliers: TypedContractMethod<[account: AddressLike], [boolean], "view">;
-    supplyCaps: TypedContractMethod<[cToken: AddressLike], [bigint], "view">;
-    transferAllowed: TypedContractMethod<[
-        cToken: AddressLike,
-        src: AddressLike,
-        dst: AddressLike,
-        transferTokens: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    whitelist: TypedContractMethod<[account: AddressLike], [boolean], "view">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "_acceptAdmin"): TypedContractMethod<[], [bigint], "nonpayable">;
-    getFunction(nameOrSignature: "_addRewardsDistributor"): TypedContractMethod<[distributor: AddressLike], [bigint], "nonpayable">;
-    getFunction(nameOrSignature: "_afterNonReentrant"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "_becomeImplementation"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "_beforeNonReentrant"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "_blacklistBorrowingAgainstCollateral"): TypedContractMethod<[
-        cTokenBorrow: AddressLike,
-        cTokenCollateral: AddressLike,
-        blacklisted: boolean
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "_blacklistBorrowingAgainstCollateralWhitelist"): TypedContractMethod<[
-        cTokenBorrow: AddressLike,
-        cTokenCollateral: AddressLike,
-        account: AddressLike,
-        whitelisted: boolean
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "_borrowCapWhitelist"): TypedContractMethod<[
-        cToken: AddressLike,
-        account: AddressLike,
-        whitelisted: boolean
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "_deployMarket"): TypedContractMethod<[
-        delegateType: BigNumberish,
-        constructorData: BytesLike,
-        becomeImplData: BytesLike,
-        collateralFactorMantissa: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "_removeFlywheel"): TypedContractMethod<[
-        flywheelAddress: AddressLike
-    ], [
-        boolean
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "_setBorrowCapForCollateral"): TypedContractMethod<[
-        cTokenBorrow: AddressLike,
-        cTokenCollateral: AddressLike,
-        borrowCap: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "_setBorrowCapForCollateralWhitelist"): TypedContractMethod<[
-        cTokenBorrow: AddressLike,
-        cTokenCollateral: AddressLike,
-        account: AddressLike,
-        whitelisted: boolean
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "_setBorrowCapGuardian"): TypedContractMethod<[
-        newBorrowCapGuardian: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "_setBorrowPaused"): TypedContractMethod<[
-        cToken: AddressLike,
-        state: boolean
-    ], [
-        boolean
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "_setCloseFactor"): TypedContractMethod<[
-        newCloseFactorMantissa: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "_setCollateralFactor"): TypedContractMethod<[
-        market: AddressLike,
-        newCollateralFactorMantissa: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "_setLiquidationIncentive"): TypedContractMethod<[
-        newLiquidationIncentiveMantissa: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "_setMarketBorrowCaps"): TypedContractMethod<[
-        cTokens: AddressLike[],
-        newBorrowCaps: BigNumberish[]
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "_setMarketSupplyCaps"): TypedContractMethod<[
-        cTokens: AddressLike[],
-        newSupplyCaps: BigNumberish[]
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "_setMintPaused"): TypedContractMethod<[
-        cToken: AddressLike,
-        state: boolean
-    ], [
-        boolean
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "_setPauseGuardian"): TypedContractMethod<[
-        newPauseGuardian: AddressLike
-    ], [
-        bigint
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "_setPendingAdmin"): TypedContractMethod<[
-        newPendingAdmin: AddressLike
-    ], [
-        bigint
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "_setPriceOracle"): TypedContractMethod<[newOracle: AddressLike], [bigint], "nonpayable">;
-    getFunction(nameOrSignature: "_setSeizePaused"): TypedContractMethod<[state: boolean], [boolean], "nonpayable">;
-    getFunction(nameOrSignature: "_setTransferPaused"): TypedContractMethod<[state: boolean], [boolean], "nonpayable">;
-    getFunction(nameOrSignature: "_setWhitelistEnforcement"): TypedContractMethod<[enforce: boolean], [bigint], "nonpayable">;
-    getFunction(nameOrSignature: "_setWhitelistStatuses"): TypedContractMethod<[
-        _suppliers: AddressLike[],
-        statuses: boolean[]
-    ], [
-        bigint
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "_supplyCapWhitelist"): TypedContractMethod<[
-        cToken: AddressLike,
-        account: AddressLike,
-        whitelisted: boolean
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "_toggleAdminRights"): TypedContractMethod<[hasRights: boolean], [bigint], "nonpayable">;
-    getFunction(nameOrSignature: "_unsupportMarket"): TypedContractMethod<[cToken: AddressLike], [bigint], "nonpayable">;
-    getFunction(nameOrSignature: "_upgrade"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "accountAssets"): TypedContractMethod<[
-        arg0: AddressLike,
-        arg1: BigNumberish
-    ], [
-        string
-    ], "view">;
-    getFunction(nameOrSignature: "addNonAccruingFlywheel"): TypedContractMethod<[
-        flywheelAddress: AddressLike
-    ], [
-        boolean
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "admin"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "adminHasRights"): TypedContractMethod<[], [boolean], "view">;
-    getFunction(nameOrSignature: "borrowAllowed"): TypedContractMethod<[
-        cToken: AddressLike,
-        borrower: AddressLike,
-        borrowAmount: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "borrowCapForCollateral"): TypedContractMethod<[
-        borrowed: AddressLike,
-        collateral: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "borrowCaps"): TypedContractMethod<[cToken: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "borrowGuardianPaused"): TypedContractMethod<[cToken: AddressLike], [boolean], "view">;
-    getFunction(nameOrSignature: "borrowWithinLimits"): TypedContractMethod<[
-        cToken: AddressLike,
-        accountBorrowsNew: BigNumberish
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "borrowingAgainstCollateralBlacklist"): TypedContractMethod<[
-        borrowed: AddressLike,
-        collateral: AddressLike
-    ], [
-        boolean
-    ], "view">;
-    getFunction(nameOrSignature: "cTokensByUnderlying"): TypedContractMethod<[arg0: AddressLike], [string], "view">;
-    getFunction(nameOrSignature: "checkMembership"): TypedContractMethod<[
-        account: AddressLike,
-        cToken: AddressLike
-    ], [
-        boolean
-    ], "view">;
-    getFunction(nameOrSignature: "closeFactorMantissa"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "comptrollerImplementation"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "enforceWhitelist"): TypedContractMethod<[], [boolean], "view">;
-    getFunction(nameOrSignature: "enterMarkets"): TypedContractMethod<[cTokens: AddressLike[]], [bigint[]], "nonpayable">;
-    getFunction(nameOrSignature: "exitMarket"): TypedContractMethod<[cToken: AddressLike], [bigint], "nonpayable">;
-    getFunction(nameOrSignature: "getAccountLiquidity"): TypedContractMethod<[
-        account: AddressLike
-    ], [
-        [bigint, bigint, bigint, bigint]
-    ], "view">;
-    getFunction(nameOrSignature: "getAccruingFlywheels"): TypedContractMethod<[], [string[]], "view">;
-    getFunction(nameOrSignature: "getAllBorrowers"): TypedContractMethod<[], [string[]], "view">;
-    getFunction(nameOrSignature: "getAllMarkets"): TypedContractMethod<[], [string[]], "view">;
-    getFunction(nameOrSignature: "getAssetAsCollateralValueCap"): TypedContractMethod<[
-        collateral: AddressLike,
-        cTokenModify: AddressLike,
-        redeeming: boolean,
-        account: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "getAssetsIn"): TypedContractMethod<[account: AddressLike], [string[]], "view">;
-    getFunction(nameOrSignature: "getHypotheticalAccountLiquidity"): TypedContractMethod<[
-        account: AddressLike,
-        cTokenModify: AddressLike,
-        redeemTokens: BigNumberish,
-        borrowAmount: BigNumberish
-    ], [
-        [bigint, bigint, bigint, bigint]
-    ], "view">;
-    getFunction(nameOrSignature: "getMaxRedeemOrBorrow"): TypedContractMethod<[
-        account: AddressLike,
-        cToken: AddressLike,
-        isBorrow: boolean
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "getRewardsDistributors"): TypedContractMethod<[], [string[]], "view">;
-    getFunction(nameOrSignature: "getWhitelist"): TypedContractMethod<[], [string[]], "view">;
-    getFunction(nameOrSignature: "getWhitelistedBorrowersBorrows"): TypedContractMethod<[cToken: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "getWhitelistedSuppliersSupply"): TypedContractMethod<[cToken: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "ionicAdmin"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "ionicAdminHasRights"): TypedContractMethod<[], [boolean], "view">;
-    getFunction(nameOrSignature: "isBlacklistBorrowingAgainstCollateralWhitelisted"): TypedContractMethod<[
-        cTokenBorrow: AddressLike,
-        cTokenCollateral: AddressLike,
-        account: AddressLike
-    ], [
-        boolean
-    ], "view">;
-    getFunction(nameOrSignature: "isBorrowCapForCollateralWhitelisted"): TypedContractMethod<[
-        cTokenBorrow: AddressLike,
-        cTokenCollateral: AddressLike,
-        account: AddressLike
-    ], [
-        boolean
-    ], "view">;
-    getFunction(nameOrSignature: "isBorrowCapWhitelisted"): TypedContractMethod<[
-        cToken: AddressLike,
-        account: AddressLike
-    ], [
-        boolean
-    ], "view">;
-    getFunction(nameOrSignature: "isDeprecated"): TypedContractMethod<[cToken: AddressLike], [boolean], "view">;
-    getFunction(nameOrSignature: "isSupplyCapWhitelisted"): TypedContractMethod<[
-        cToken: AddressLike,
-        account: AddressLike
-    ], [
-        boolean
-    ], "view">;
-    getFunction(nameOrSignature: "isUserOfPool"): TypedContractMethod<[user: AddressLike], [boolean], "view">;
-    getFunction(nameOrSignature: "liquidateBorrowAllowed"): TypedContractMethod<[
-        cTokenBorrowed: AddressLike,
-        cTokenCollateral: AddressLike,
-        liquidator: AddressLike,
-        borrower: AddressLike,
-        repayAmount: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "liquidateCalculateSeizeTokens"): TypedContractMethod<[
-        cTokenBorrowed: AddressLike,
-        cTokenCollateral: AddressLike,
-        repayAmount: BigNumberish
-    ], [
-        [bigint, bigint]
-    ], "view">;
-    getFunction(nameOrSignature: "liquidationIncentiveMantissa"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "markets"): TypedContractMethod<[cToken: AddressLike], [[boolean, bigint]], "view">;
-    getFunction(nameOrSignature: "mintAllowed"): TypedContractMethod<[
-        cToken: AddressLike,
-        minter: AddressLike,
-        mintAmount: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "mintGuardianPaused"): TypedContractMethod<[cToken: AddressLike], [boolean], "view">;
-    getFunction(nameOrSignature: "mintVerify"): TypedContractMethod<[
-        cToken: AddressLike,
-        minter: AddressLike,
-        actualMintAmount: BigNumberish,
-        mintTokens: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "oracle"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "pauseGuardian"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "pendingAdmin"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "redeemAllowed"): TypedContractMethod<[
-        cToken: AddressLike,
-        redeemer: AddressLike,
-        redeemTokens: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "redeemVerify"): TypedContractMethod<[
-        cToken: AddressLike,
-        redeemer: AddressLike,
-        redeemAmount: BigNumberish,
-        redeemTokens: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "repayBorrowAllowed"): TypedContractMethod<[
-        cToken: AddressLike,
-        payer: AddressLike,
-        borrower: AddressLike,
-        repayAmount: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "rewardsDistributors"): TypedContractMethod<[arg0: BigNumberish], [string], "view">;
-    getFunction(nameOrSignature: "seizeAllowed"): TypedContractMethod<[
-        cTokenCollateral: AddressLike,
-        cTokenBorrowed: AddressLike,
-        liquidator: AddressLike,
-        borrower: AddressLike,
-        seizeTokens: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "suppliers"): TypedContractMethod<[account: AddressLike], [boolean], "view">;
-    getFunction(nameOrSignature: "supplyCaps"): TypedContractMethod<[cToken: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "transferAllowed"): TypedContractMethod<[
-        cToken: AddressLike,
-        src: AddressLike,
-        dst: AddressLike,
-        transferTokens: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "whitelist"): TypedContractMethod<[account: AddressLike], [boolean], "view">;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        _acceptAdmin(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _addRewardsDistributor(distributor: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _afterNonReentrant(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _becomeImplementation(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _beforeNonReentrant(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _blacklistBorrowingAgainstCollateral(cTokenBorrow: string, cTokenCollateral: string, blacklisted: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _blacklistBorrowingAgainstCollateralWhitelist(cTokenBorrow: string, cTokenCollateral: string, account: string, whitelisted: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _borrowCapWhitelist(cToken: string, account: string, whitelisted: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _deployMarket(delegateType: BigNumberish, constructorData: BytesLike, becomeImplData: BytesLike, collateralFactorMantissa: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _removeFlywheel(flywheelAddress: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _setBorrowCapForCollateral(cTokenBorrow: string, cTokenCollateral: string, borrowCap: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _setBorrowCapForCollateralWhitelist(cTokenBorrow: string, cTokenCollateral: string, account: string, whitelisted: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _setBorrowCapGuardian(newBorrowCapGuardian: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _setBorrowPaused(cToken: string, state: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _setCloseFactor(newCloseFactorMantissa: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _setCollateralFactor(market: string, newCollateralFactorMantissa: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _setLiquidationIncentive(newLiquidationIncentiveMantissa: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _setMarketBorrowCaps(cTokens: string[], newBorrowCaps: BigNumberish[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _setMarketSupplyCaps(cTokens: string[], newSupplyCaps: BigNumberish[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _setMintPaused(cToken: string, state: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _setPauseGuardian(newPauseGuardian: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _setPendingAdmin(newPendingAdmin: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _setPriceOracle(newOracle: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _setSeizePaused(state: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _setTransferPaused(state: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _setWhitelistEnforcement(enforce: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _setWhitelistStatuses(_suppliers: string[], statuses: boolean[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _supplyCapWhitelist(cToken: string, account: string, whitelisted: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _toggleAdminRights(hasRights: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _unsupportMarket(cToken: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _upgrade(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        accountAssets(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+        addNonAccruingFlywheel(flywheelAddress: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        admin(overrides?: CallOverrides): Promise<[string]>;
+        adminHasRights(overrides?: CallOverrides): Promise<[boolean]>;
+        borrowAllowed(cToken: string, borrower: string, borrowAmount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        borrowCapForCollateral(borrowed: string, collateral: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        borrowCaps(cToken: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        borrowGuardianPaused(cToken: string, overrides?: CallOverrides): Promise<[boolean]>;
+        borrowWithinLimits(cToken: string, accountBorrowsNew: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+        borrowingAgainstCollateralBlacklist(borrowed: string, collateral: string, overrides?: CallOverrides): Promise<[boolean]>;
+        cTokensByUnderlying(arg0: string, overrides?: CallOverrides): Promise<[string]>;
+        checkMembership(account: string, cToken: string, overrides?: CallOverrides): Promise<[boolean]>;
+        closeFactorMantissa(overrides?: CallOverrides): Promise<[BigNumber]>;
+        comptrollerImplementation(overrides?: CallOverrides): Promise<[string]>;
+        enforceWhitelist(overrides?: CallOverrides): Promise<[boolean]>;
+        enterMarkets(cTokens: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        exitMarket(cToken: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        getAccountLiquidity(account: string, overrides?: CallOverrides): Promise<[
+            BigNumber,
+            BigNumber,
+            BigNumber,
+            BigNumber
+        ] & {
+            error: BigNumber;
+            collateralValue: BigNumber;
+            liquidity: BigNumber;
+            shortfall: BigNumber;
+        }>;
+        getAccruingFlywheels(overrides?: CallOverrides): Promise<[string[]]>;
+        getAllBorrowers(overrides?: CallOverrides): Promise<[string[]]>;
+        getAllMarkets(overrides?: CallOverrides): Promise<[string[]]>;
+        getAssetAsCollateralValueCap(collateral: string, cTokenModify: string, redeeming: boolean, account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        getAssetsIn(account: string, overrides?: CallOverrides): Promise<[string[]]>;
+        getHypotheticalAccountLiquidity(account: string, cTokenModify: string, redeemTokens: BigNumberish, borrowAmount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, BigNumber, BigNumber]>;
+        getMaxRedeemOrBorrow(account: string, cToken: string, isBorrow: boolean, overrides?: CallOverrides): Promise<[BigNumber]>;
+        getRewardsDistributors(overrides?: CallOverrides): Promise<[string[]]>;
+        getWhitelist(overrides?: CallOverrides): Promise<[string[]]>;
+        getWhitelistedBorrowersBorrows(cToken: string, overrides?: CallOverrides): Promise<[BigNumber] & {
+            borrowed: BigNumber;
+        }>;
+        getWhitelistedSuppliersSupply(cToken: string, overrides?: CallOverrides): Promise<[BigNumber] & {
+            supplied: BigNumber;
+        }>;
+        ionicAdmin(overrides?: CallOverrides): Promise<[string]>;
+        ionicAdminHasRights(overrides?: CallOverrides): Promise<[boolean]>;
+        isBlacklistBorrowingAgainstCollateralWhitelisted(cTokenBorrow: string, cTokenCollateral: string, account: string, overrides?: CallOverrides): Promise<[boolean]>;
+        isBorrowCapForCollateralWhitelisted(cTokenBorrow: string, cTokenCollateral: string, account: string, overrides?: CallOverrides): Promise<[boolean]>;
+        isBorrowCapWhitelisted(cToken: string, account: string, overrides?: CallOverrides): Promise<[boolean]>;
+        isDeprecated(cToken: string, overrides?: CallOverrides): Promise<[boolean]>;
+        isSupplyCapWhitelisted(cToken: string, account: string, overrides?: CallOverrides): Promise<[boolean]>;
+        isUserOfPool(user: string, overrides?: CallOverrides): Promise<[boolean]>;
+        liquidateBorrowAllowed(cTokenBorrowed: string, cTokenCollateral: string, liquidator: string, borrower: string, repayAmount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        liquidateCalculateSeizeTokens(cTokenBorrowed: string, cTokenCollateral: string, repayAmount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+        liquidationIncentiveMantissa(overrides?: CallOverrides): Promise<[BigNumber]>;
+        markets(cToken: string, overrides?: CallOverrides): Promise<[boolean, BigNumber]>;
+        mintAllowed(cToken: string, minter: string, mintAmount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        mintGuardianPaused(cToken: string, overrides?: CallOverrides): Promise<[boolean]>;
+        mintVerify(cToken: string, minter: string, actualMintAmount: BigNumberish, mintTokens: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        oracle(overrides?: CallOverrides): Promise<[string]>;
+        pauseGuardian(overrides?: CallOverrides): Promise<[string]>;
+        pendingAdmin(overrides?: CallOverrides): Promise<[string]>;
+        redeemAllowed(cToken: string, redeemer: string, redeemTokens: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        redeemVerify(cToken: string, redeemer: string, redeemAmount: BigNumberish, redeemTokens: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        repayBorrowAllowed(cToken: string, payer: string, borrower: string, repayAmount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        rewardsDistributors(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+        seizeAllowed(cTokenCollateral: string, cTokenBorrowed: string, liquidator: string, borrower: string, seizeTokens: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        suppliers(account: string, overrides?: CallOverrides): Promise<[boolean]>;
+        supplyCaps(cToken: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        transferAllowed(cToken: string, src: string, dst: string, transferTokens: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        whitelist(account: string, overrides?: CallOverrides): Promise<[boolean]>;
+    };
+    _acceptAdmin(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _addRewardsDistributor(distributor: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _afterNonReentrant(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _becomeImplementation(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _beforeNonReentrant(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _blacklistBorrowingAgainstCollateral(cTokenBorrow: string, cTokenCollateral: string, blacklisted: boolean, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _blacklistBorrowingAgainstCollateralWhitelist(cTokenBorrow: string, cTokenCollateral: string, account: string, whitelisted: boolean, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _borrowCapWhitelist(cToken: string, account: string, whitelisted: boolean, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _deployMarket(delegateType: BigNumberish, constructorData: BytesLike, becomeImplData: BytesLike, collateralFactorMantissa: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _removeFlywheel(flywheelAddress: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _setBorrowCapForCollateral(cTokenBorrow: string, cTokenCollateral: string, borrowCap: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _setBorrowCapForCollateralWhitelist(cTokenBorrow: string, cTokenCollateral: string, account: string, whitelisted: boolean, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _setBorrowCapGuardian(newBorrowCapGuardian: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _setBorrowPaused(cToken: string, state: boolean, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _setCloseFactor(newCloseFactorMantissa: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _setCollateralFactor(market: string, newCollateralFactorMantissa: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _setLiquidationIncentive(newLiquidationIncentiveMantissa: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _setMarketBorrowCaps(cTokens: string[], newBorrowCaps: BigNumberish[], overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _setMarketSupplyCaps(cTokens: string[], newSupplyCaps: BigNumberish[], overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _setMintPaused(cToken: string, state: boolean, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _setPauseGuardian(newPauseGuardian: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _setPendingAdmin(newPendingAdmin: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _setPriceOracle(newOracle: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _setSeizePaused(state: boolean, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _setTransferPaused(state: boolean, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _setWhitelistEnforcement(enforce: boolean, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _setWhitelistStatuses(_suppliers: string[], statuses: boolean[], overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _supplyCapWhitelist(cToken: string, account: string, whitelisted: boolean, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _toggleAdminRights(hasRights: boolean, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _unsupportMarket(cToken: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _upgrade(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    accountAssets(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    addNonAccruingFlywheel(flywheelAddress: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    admin(overrides?: CallOverrides): Promise<string>;
+    adminHasRights(overrides?: CallOverrides): Promise<boolean>;
+    borrowAllowed(cToken: string, borrower: string, borrowAmount: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    borrowCapForCollateral(borrowed: string, collateral: string, overrides?: CallOverrides): Promise<BigNumber>;
+    borrowCaps(cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    borrowGuardianPaused(cToken: string, overrides?: CallOverrides): Promise<boolean>;
+    borrowWithinLimits(cToken: string, accountBorrowsNew: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    borrowingAgainstCollateralBlacklist(borrowed: string, collateral: string, overrides?: CallOverrides): Promise<boolean>;
+    cTokensByUnderlying(arg0: string, overrides?: CallOverrides): Promise<string>;
+    checkMembership(account: string, cToken: string, overrides?: CallOverrides): Promise<boolean>;
+    closeFactorMantissa(overrides?: CallOverrides): Promise<BigNumber>;
+    comptrollerImplementation(overrides?: CallOverrides): Promise<string>;
+    enforceWhitelist(overrides?: CallOverrides): Promise<boolean>;
+    enterMarkets(cTokens: string[], overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    exitMarket(cToken: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    getAccountLiquidity(account: string, overrides?: CallOverrides): Promise<[
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber
+    ] & {
+        error: BigNumber;
+        collateralValue: BigNumber;
+        liquidity: BigNumber;
+        shortfall: BigNumber;
+    }>;
+    getAccruingFlywheels(overrides?: CallOverrides): Promise<string[]>;
+    getAllBorrowers(overrides?: CallOverrides): Promise<string[]>;
+    getAllMarkets(overrides?: CallOverrides): Promise<string[]>;
+    getAssetAsCollateralValueCap(collateral: string, cTokenModify: string, redeeming: boolean, account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAssetsIn(account: string, overrides?: CallOverrides): Promise<string[]>;
+    getHypotheticalAccountLiquidity(account: string, cTokenModify: string, redeemTokens: BigNumberish, borrowAmount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, BigNumber, BigNumber]>;
+    getMaxRedeemOrBorrow(account: string, cToken: string, isBorrow: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+    getRewardsDistributors(overrides?: CallOverrides): Promise<string[]>;
+    getWhitelist(overrides?: CallOverrides): Promise<string[]>;
+    getWhitelistedBorrowersBorrows(cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getWhitelistedSuppliersSupply(cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    ionicAdmin(overrides?: CallOverrides): Promise<string>;
+    ionicAdminHasRights(overrides?: CallOverrides): Promise<boolean>;
+    isBlacklistBorrowingAgainstCollateralWhitelisted(cTokenBorrow: string, cTokenCollateral: string, account: string, overrides?: CallOverrides): Promise<boolean>;
+    isBorrowCapForCollateralWhitelisted(cTokenBorrow: string, cTokenCollateral: string, account: string, overrides?: CallOverrides): Promise<boolean>;
+    isBorrowCapWhitelisted(cToken: string, account: string, overrides?: CallOverrides): Promise<boolean>;
+    isDeprecated(cToken: string, overrides?: CallOverrides): Promise<boolean>;
+    isSupplyCapWhitelisted(cToken: string, account: string, overrides?: CallOverrides): Promise<boolean>;
+    isUserOfPool(user: string, overrides?: CallOverrides): Promise<boolean>;
+    liquidateBorrowAllowed(cTokenBorrowed: string, cTokenCollateral: string, liquidator: string, borrower: string, repayAmount: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    liquidateCalculateSeizeTokens(cTokenBorrowed: string, cTokenCollateral: string, repayAmount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    liquidationIncentiveMantissa(overrides?: CallOverrides): Promise<BigNumber>;
+    markets(cToken: string, overrides?: CallOverrides): Promise<[boolean, BigNumber]>;
+    mintAllowed(cToken: string, minter: string, mintAmount: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    mintGuardianPaused(cToken: string, overrides?: CallOverrides): Promise<boolean>;
+    mintVerify(cToken: string, minter: string, actualMintAmount: BigNumberish, mintTokens: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    oracle(overrides?: CallOverrides): Promise<string>;
+    pauseGuardian(overrides?: CallOverrides): Promise<string>;
+    pendingAdmin(overrides?: CallOverrides): Promise<string>;
+    redeemAllowed(cToken: string, redeemer: string, redeemTokens: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    redeemVerify(cToken: string, redeemer: string, redeemAmount: BigNumberish, redeemTokens: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    repayBorrowAllowed(cToken: string, payer: string, borrower: string, repayAmount: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    rewardsDistributors(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    seizeAllowed(cTokenCollateral: string, cTokenBorrowed: string, liquidator: string, borrower: string, seizeTokens: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    suppliers(account: string, overrides?: CallOverrides): Promise<boolean>;
+    supplyCaps(cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    transferAllowed(cToken: string, src: string, dst: string, transferTokens: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    whitelist(account: string, overrides?: CallOverrides): Promise<boolean>;
+    callStatic: {
+        _acceptAdmin(overrides?: CallOverrides): Promise<BigNumber>;
+        _addRewardsDistributor(distributor: string, overrides?: CallOverrides): Promise<BigNumber>;
+        _afterNonReentrant(overrides?: CallOverrides): Promise<void>;
+        _becomeImplementation(overrides?: CallOverrides): Promise<void>;
+        _beforeNonReentrant(overrides?: CallOverrides): Promise<void>;
+        _blacklistBorrowingAgainstCollateral(cTokenBorrow: string, cTokenCollateral: string, blacklisted: boolean, overrides?: CallOverrides): Promise<void>;
+        _blacklistBorrowingAgainstCollateralWhitelist(cTokenBorrow: string, cTokenCollateral: string, account: string, whitelisted: boolean, overrides?: CallOverrides): Promise<void>;
+        _borrowCapWhitelist(cToken: string, account: string, whitelisted: boolean, overrides?: CallOverrides): Promise<void>;
+        _deployMarket(delegateType: BigNumberish, constructorData: BytesLike, becomeImplData: BytesLike, collateralFactorMantissa: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        _removeFlywheel(flywheelAddress: string, overrides?: CallOverrides): Promise<boolean>;
+        _setBorrowCapForCollateral(cTokenBorrow: string, cTokenCollateral: string, borrowCap: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        _setBorrowCapForCollateralWhitelist(cTokenBorrow: string, cTokenCollateral: string, account: string, whitelisted: boolean, overrides?: CallOverrides): Promise<void>;
+        _setBorrowCapGuardian(newBorrowCapGuardian: string, overrides?: CallOverrides): Promise<void>;
+        _setBorrowPaused(cToken: string, state: boolean, overrides?: CallOverrides): Promise<boolean>;
+        _setCloseFactor(newCloseFactorMantissa: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        _setCollateralFactor(market: string, newCollateralFactorMantissa: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        _setLiquidationIncentive(newLiquidationIncentiveMantissa: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        _setMarketBorrowCaps(cTokens: string[], newBorrowCaps: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+        _setMarketSupplyCaps(cTokens: string[], newSupplyCaps: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+        _setMintPaused(cToken: string, state: boolean, overrides?: CallOverrides): Promise<boolean>;
+        _setPauseGuardian(newPauseGuardian: string, overrides?: CallOverrides): Promise<BigNumber>;
+        _setPendingAdmin(newPendingAdmin: string, overrides?: CallOverrides): Promise<BigNumber>;
+        _setPriceOracle(newOracle: string, overrides?: CallOverrides): Promise<BigNumber>;
+        _setSeizePaused(state: boolean, overrides?: CallOverrides): Promise<boolean>;
+        _setTransferPaused(state: boolean, overrides?: CallOverrides): Promise<boolean>;
+        _setWhitelistEnforcement(enforce: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+        _setWhitelistStatuses(_suppliers: string[], statuses: boolean[], overrides?: CallOverrides): Promise<BigNumber>;
+        _supplyCapWhitelist(cToken: string, account: string, whitelisted: boolean, overrides?: CallOverrides): Promise<void>;
+        _toggleAdminRights(hasRights: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+        _unsupportMarket(cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        _upgrade(overrides?: CallOverrides): Promise<void>;
+        accountAssets(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<string>;
+        addNonAccruingFlywheel(flywheelAddress: string, overrides?: CallOverrides): Promise<boolean>;
+        admin(overrides?: CallOverrides): Promise<string>;
+        adminHasRights(overrides?: CallOverrides): Promise<boolean>;
+        borrowAllowed(cToken: string, borrower: string, borrowAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        borrowCapForCollateral(borrowed: string, collateral: string, overrides?: CallOverrides): Promise<BigNumber>;
+        borrowCaps(cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        borrowGuardianPaused(cToken: string, overrides?: CallOverrides): Promise<boolean>;
+        borrowWithinLimits(cToken: string, accountBorrowsNew: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        borrowingAgainstCollateralBlacklist(borrowed: string, collateral: string, overrides?: CallOverrides): Promise<boolean>;
+        cTokensByUnderlying(arg0: string, overrides?: CallOverrides): Promise<string>;
+        checkMembership(account: string, cToken: string, overrides?: CallOverrides): Promise<boolean>;
+        closeFactorMantissa(overrides?: CallOverrides): Promise<BigNumber>;
+        comptrollerImplementation(overrides?: CallOverrides): Promise<string>;
+        enforceWhitelist(overrides?: CallOverrides): Promise<boolean>;
+        enterMarkets(cTokens: string[], overrides?: CallOverrides): Promise<BigNumber[]>;
+        exitMarket(cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getAccountLiquidity(account: string, overrides?: CallOverrides): Promise<[
+            BigNumber,
+            BigNumber,
+            BigNumber,
+            BigNumber
+        ] & {
+            error: BigNumber;
+            collateralValue: BigNumber;
+            liquidity: BigNumber;
+            shortfall: BigNumber;
+        }>;
+        getAccruingFlywheels(overrides?: CallOverrides): Promise<string[]>;
+        getAllBorrowers(overrides?: CallOverrides): Promise<string[]>;
+        getAllMarkets(overrides?: CallOverrides): Promise<string[]>;
+        getAssetAsCollateralValueCap(collateral: string, cTokenModify: string, redeeming: boolean, account: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getAssetsIn(account: string, overrides?: CallOverrides): Promise<string[]>;
+        getHypotheticalAccountLiquidity(account: string, cTokenModify: string, redeemTokens: BigNumberish, borrowAmount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, BigNumber, BigNumber]>;
+        getMaxRedeemOrBorrow(account: string, cToken: string, isBorrow: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+        getRewardsDistributors(overrides?: CallOverrides): Promise<string[]>;
+        getWhitelist(overrides?: CallOverrides): Promise<string[]>;
+        getWhitelistedBorrowersBorrows(cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getWhitelistedSuppliersSupply(cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        ionicAdmin(overrides?: CallOverrides): Promise<string>;
+        ionicAdminHasRights(overrides?: CallOverrides): Promise<boolean>;
+        isBlacklistBorrowingAgainstCollateralWhitelisted(cTokenBorrow: string, cTokenCollateral: string, account: string, overrides?: CallOverrides): Promise<boolean>;
+        isBorrowCapForCollateralWhitelisted(cTokenBorrow: string, cTokenCollateral: string, account: string, overrides?: CallOverrides): Promise<boolean>;
+        isBorrowCapWhitelisted(cToken: string, account: string, overrides?: CallOverrides): Promise<boolean>;
+        isDeprecated(cToken: string, overrides?: CallOverrides): Promise<boolean>;
+        isSupplyCapWhitelisted(cToken: string, account: string, overrides?: CallOverrides): Promise<boolean>;
+        isUserOfPool(user: string, overrides?: CallOverrides): Promise<boolean>;
+        liquidateBorrowAllowed(cTokenBorrowed: string, cTokenCollateral: string, liquidator: string, borrower: string, repayAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        liquidateCalculateSeizeTokens(cTokenBorrowed: string, cTokenCollateral: string, repayAmount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+        liquidationIncentiveMantissa(overrides?: CallOverrides): Promise<BigNumber>;
+        markets(cToken: string, overrides?: CallOverrides): Promise<[boolean, BigNumber]>;
+        mintAllowed(cToken: string, minter: string, mintAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        mintGuardianPaused(cToken: string, overrides?: CallOverrides): Promise<boolean>;
+        mintVerify(cToken: string, minter: string, actualMintAmount: BigNumberish, mintTokens: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        oracle(overrides?: CallOverrides): Promise<string>;
+        pauseGuardian(overrides?: CallOverrides): Promise<string>;
+        pendingAdmin(overrides?: CallOverrides): Promise<string>;
+        redeemAllowed(cToken: string, redeemer: string, redeemTokens: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        redeemVerify(cToken: string, redeemer: string, redeemAmount: BigNumberish, redeemTokens: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        repayBorrowAllowed(cToken: string, payer: string, borrower: string, repayAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        rewardsDistributors(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+        seizeAllowed(cTokenCollateral: string, cTokenBorrowed: string, liquidator: string, borrower: string, seizeTokens: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        suppliers(account: string, overrides?: CallOverrides): Promise<boolean>;
+        supplyCaps(cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        transferAllowed(cToken: string, src: string, dst: string, transferTokens: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        whitelist(account: string, overrides?: CallOverrides): Promise<boolean>;
+    };
     filters: {};
+    estimateGas: {
+        _acceptAdmin(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _addRewardsDistributor(distributor: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _afterNonReentrant(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _becomeImplementation(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _beforeNonReentrant(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _blacklistBorrowingAgainstCollateral(cTokenBorrow: string, cTokenCollateral: string, blacklisted: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _blacklistBorrowingAgainstCollateralWhitelist(cTokenBorrow: string, cTokenCollateral: string, account: string, whitelisted: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _borrowCapWhitelist(cToken: string, account: string, whitelisted: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _deployMarket(delegateType: BigNumberish, constructorData: BytesLike, becomeImplData: BytesLike, collateralFactorMantissa: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _removeFlywheel(flywheelAddress: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _setBorrowCapForCollateral(cTokenBorrow: string, cTokenCollateral: string, borrowCap: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _setBorrowCapForCollateralWhitelist(cTokenBorrow: string, cTokenCollateral: string, account: string, whitelisted: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _setBorrowCapGuardian(newBorrowCapGuardian: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _setBorrowPaused(cToken: string, state: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _setCloseFactor(newCloseFactorMantissa: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _setCollateralFactor(market: string, newCollateralFactorMantissa: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _setLiquidationIncentive(newLiquidationIncentiveMantissa: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _setMarketBorrowCaps(cTokens: string[], newBorrowCaps: BigNumberish[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _setMarketSupplyCaps(cTokens: string[], newSupplyCaps: BigNumberish[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _setMintPaused(cToken: string, state: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _setPauseGuardian(newPauseGuardian: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _setPendingAdmin(newPendingAdmin: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _setPriceOracle(newOracle: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _setSeizePaused(state: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _setTransferPaused(state: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _setWhitelistEnforcement(enforce: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _setWhitelistStatuses(_suppliers: string[], statuses: boolean[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _supplyCapWhitelist(cToken: string, account: string, whitelisted: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _toggleAdminRights(hasRights: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _unsupportMarket(cToken: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _upgrade(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        accountAssets(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        addNonAccruingFlywheel(flywheelAddress: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        admin(overrides?: CallOverrides): Promise<BigNumber>;
+        adminHasRights(overrides?: CallOverrides): Promise<BigNumber>;
+        borrowAllowed(cToken: string, borrower: string, borrowAmount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        borrowCapForCollateral(borrowed: string, collateral: string, overrides?: CallOverrides): Promise<BigNumber>;
+        borrowCaps(cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        borrowGuardianPaused(cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        borrowWithinLimits(cToken: string, accountBorrowsNew: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        borrowingAgainstCollateralBlacklist(borrowed: string, collateral: string, overrides?: CallOverrides): Promise<BigNumber>;
+        cTokensByUnderlying(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+        checkMembership(account: string, cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        closeFactorMantissa(overrides?: CallOverrides): Promise<BigNumber>;
+        comptrollerImplementation(overrides?: CallOverrides): Promise<BigNumber>;
+        enforceWhitelist(overrides?: CallOverrides): Promise<BigNumber>;
+        enterMarkets(cTokens: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        exitMarket(cToken: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        getAccountLiquidity(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getAccruingFlywheels(overrides?: CallOverrides): Promise<BigNumber>;
+        getAllBorrowers(overrides?: CallOverrides): Promise<BigNumber>;
+        getAllMarkets(overrides?: CallOverrides): Promise<BigNumber>;
+        getAssetAsCollateralValueCap(collateral: string, cTokenModify: string, redeeming: boolean, account: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getAssetsIn(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getHypotheticalAccountLiquidity(account: string, cTokenModify: string, redeemTokens: BigNumberish, borrowAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        getMaxRedeemOrBorrow(account: string, cToken: string, isBorrow: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+        getRewardsDistributors(overrides?: CallOverrides): Promise<BigNumber>;
+        getWhitelist(overrides?: CallOverrides): Promise<BigNumber>;
+        getWhitelistedBorrowersBorrows(cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getWhitelistedSuppliersSupply(cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        ionicAdmin(overrides?: CallOverrides): Promise<BigNumber>;
+        ionicAdminHasRights(overrides?: CallOverrides): Promise<BigNumber>;
+        isBlacklistBorrowingAgainstCollateralWhitelisted(cTokenBorrow: string, cTokenCollateral: string, account: string, overrides?: CallOverrides): Promise<BigNumber>;
+        isBorrowCapForCollateralWhitelisted(cTokenBorrow: string, cTokenCollateral: string, account: string, overrides?: CallOverrides): Promise<BigNumber>;
+        isBorrowCapWhitelisted(cToken: string, account: string, overrides?: CallOverrides): Promise<BigNumber>;
+        isDeprecated(cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        isSupplyCapWhitelisted(cToken: string, account: string, overrides?: CallOverrides): Promise<BigNumber>;
+        isUserOfPool(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+        liquidateBorrowAllowed(cTokenBorrowed: string, cTokenCollateral: string, liquidator: string, borrower: string, repayAmount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        liquidateCalculateSeizeTokens(cTokenBorrowed: string, cTokenCollateral: string, repayAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        liquidationIncentiveMantissa(overrides?: CallOverrides): Promise<BigNumber>;
+        markets(cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        mintAllowed(cToken: string, minter: string, mintAmount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        mintGuardianPaused(cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        mintVerify(cToken: string, minter: string, actualMintAmount: BigNumberish, mintTokens: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        oracle(overrides?: CallOverrides): Promise<BigNumber>;
+        pauseGuardian(overrides?: CallOverrides): Promise<BigNumber>;
+        pendingAdmin(overrides?: CallOverrides): Promise<BigNumber>;
+        redeemAllowed(cToken: string, redeemer: string, redeemTokens: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        redeemVerify(cToken: string, redeemer: string, redeemAmount: BigNumberish, redeemTokens: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        repayBorrowAllowed(cToken: string, payer: string, borrower: string, repayAmount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        rewardsDistributors(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        seizeAllowed(cTokenCollateral: string, cTokenBorrowed: string, liquidator: string, borrower: string, seizeTokens: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        suppliers(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+        supplyCaps(cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        transferAllowed(cToken: string, src: string, dst: string, transferTokens: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        whitelist(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        _acceptAdmin(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _addRewardsDistributor(distributor: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _afterNonReentrant(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _becomeImplementation(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _beforeNonReentrant(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _blacklistBorrowingAgainstCollateral(cTokenBorrow: string, cTokenCollateral: string, blacklisted: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _blacklistBorrowingAgainstCollateralWhitelist(cTokenBorrow: string, cTokenCollateral: string, account: string, whitelisted: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _borrowCapWhitelist(cToken: string, account: string, whitelisted: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _deployMarket(delegateType: BigNumberish, constructorData: BytesLike, becomeImplData: BytesLike, collateralFactorMantissa: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _removeFlywheel(flywheelAddress: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _setBorrowCapForCollateral(cTokenBorrow: string, cTokenCollateral: string, borrowCap: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _setBorrowCapForCollateralWhitelist(cTokenBorrow: string, cTokenCollateral: string, account: string, whitelisted: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _setBorrowCapGuardian(newBorrowCapGuardian: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _setBorrowPaused(cToken: string, state: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _setCloseFactor(newCloseFactorMantissa: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _setCollateralFactor(market: string, newCollateralFactorMantissa: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _setLiquidationIncentive(newLiquidationIncentiveMantissa: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _setMarketBorrowCaps(cTokens: string[], newBorrowCaps: BigNumberish[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _setMarketSupplyCaps(cTokens: string[], newSupplyCaps: BigNumberish[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _setMintPaused(cToken: string, state: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _setPauseGuardian(newPauseGuardian: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _setPendingAdmin(newPendingAdmin: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _setPriceOracle(newOracle: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _setSeizePaused(state: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _setTransferPaused(state: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _setWhitelistEnforcement(enforce: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _setWhitelistStatuses(_suppliers: string[], statuses: boolean[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _supplyCapWhitelist(cToken: string, account: string, whitelisted: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _toggleAdminRights(hasRights: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _unsupportMarket(cToken: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _upgrade(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        accountAssets(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        addNonAccruingFlywheel(flywheelAddress: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        admin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        adminHasRights(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        borrowAllowed(cToken: string, borrower: string, borrowAmount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        borrowCapForCollateral(borrowed: string, collateral: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        borrowCaps(cToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        borrowGuardianPaused(cToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        borrowWithinLimits(cToken: string, accountBorrowsNew: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        borrowingAgainstCollateralBlacklist(borrowed: string, collateral: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        cTokensByUnderlying(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        checkMembership(account: string, cToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        closeFactorMantissa(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        comptrollerImplementation(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        enforceWhitelist(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        enterMarkets(cTokens: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        exitMarket(cToken: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        getAccountLiquidity(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getAccruingFlywheels(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getAllBorrowers(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getAllMarkets(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getAssetAsCollateralValueCap(collateral: string, cTokenModify: string, redeeming: boolean, account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getAssetsIn(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getHypotheticalAccountLiquidity(account: string, cTokenModify: string, redeemTokens: BigNumberish, borrowAmount: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getMaxRedeemOrBorrow(account: string, cToken: string, isBorrow: boolean, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getRewardsDistributors(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getWhitelist(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getWhitelistedBorrowersBorrows(cToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getWhitelistedSuppliersSupply(cToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        ionicAdmin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        ionicAdminHasRights(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        isBlacklistBorrowingAgainstCollateralWhitelisted(cTokenBorrow: string, cTokenCollateral: string, account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        isBorrowCapForCollateralWhitelisted(cTokenBorrow: string, cTokenCollateral: string, account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        isBorrowCapWhitelisted(cToken: string, account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        isDeprecated(cToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        isSupplyCapWhitelisted(cToken: string, account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        isUserOfPool(user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        liquidateBorrowAllowed(cTokenBorrowed: string, cTokenCollateral: string, liquidator: string, borrower: string, repayAmount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        liquidateCalculateSeizeTokens(cTokenBorrowed: string, cTokenCollateral: string, repayAmount: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        liquidationIncentiveMantissa(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        markets(cToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        mintAllowed(cToken: string, minter: string, mintAmount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        mintGuardianPaused(cToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        mintVerify(cToken: string, minter: string, actualMintAmount: BigNumberish, mintTokens: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        oracle(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        pauseGuardian(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        pendingAdmin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        redeemAllowed(cToken: string, redeemer: string, redeemTokens: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        redeemVerify(cToken: string, redeemer: string, redeemAmount: BigNumberish, redeemTokens: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        repayBorrowAllowed(cToken: string, payer: string, borrower: string, repayAmount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        rewardsDistributors(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        seizeAllowed(cTokenCollateral: string, cTokenBorrowed: string, liquidator: string, borrower: string, seizeTokens: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        suppliers(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        supplyCaps(cToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        transferAllowed(cToken: string, src: string, dst: string, transferTokens: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        whitelist(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    };
 }

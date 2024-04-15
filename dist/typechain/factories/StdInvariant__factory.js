@@ -7,141 +7,141 @@ exports.StdInvariant__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        inputs: [],
+        type: "function",
         name: "excludeArtifacts",
+        inputs: [],
         outputs: [
             {
-                internalType: "string[]",
                 name: "excludedArtifacts_",
                 type: "string[]",
+                internalType: "string[]",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "excludeContracts",
+        inputs: [],
         outputs: [
             {
-                internalType: "address[]",
                 name: "excludedContracts_",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "excludeSenders",
+        inputs: [],
         outputs: [
             {
-                internalType: "address[]",
                 name: "excludedSenders_",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "targetArtifactSelectors",
+        inputs: [],
         outputs: [
             {
-                components: [
-                    {
-                        internalType: "address",
-                        name: "addr",
-                        type: "address",
-                    },
-                    {
-                        internalType: "bytes4[]",
-                        name: "selectors",
-                        type: "bytes4[]",
-                    },
-                ],
-                internalType: "struct StdInvariant.FuzzSelector[]",
                 name: "targetedArtifactSelectors_",
                 type: "tuple[]",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "targetArtifacts",
-        outputs: [
-            {
-                internalType: "string[]",
-                name: "targetedArtifacts_",
-                type: "string[]",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "targetContracts",
-        outputs: [
-            {
-                internalType: "address[]",
-                name: "targetedContracts_",
-                type: "address[]",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "targetSelectors",
-        outputs: [
-            {
+                internalType: "struct StdInvariant.FuzzSelector[]",
                 components: [
                     {
-                        internalType: "address",
                         name: "addr",
                         type: "address",
+                        internalType: "address",
                     },
                     {
-                        internalType: "bytes4[]",
                         name: "selectors",
                         type: "bytes4[]",
+                        internalType: "bytes4[]",
                     },
                 ],
-                internalType: "struct StdInvariant.FuzzSelector[]",
-                name: "targetedSelectors_",
-                type: "tuple[]",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "targetArtifacts",
         inputs: [],
-        name: "targetSenders",
         outputs: [
             {
-                internalType: "address[]",
-                name: "targetedSenders_",
-                type: "address[]",
+                name: "targetedArtifacts_",
+                type: "string[]",
+                internalType: "string[]",
             },
         ],
         stateMutability: "view",
+    },
+    {
         type: "function",
+        name: "targetContracts",
+        inputs: [],
+        outputs: [
+            {
+                name: "targetedContracts_",
+                type: "address[]",
+                internalType: "address[]",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "targetSelectors",
+        inputs: [],
+        outputs: [
+            {
+                name: "targetedSelectors_",
+                type: "tuple[]",
+                internalType: "struct StdInvariant.FuzzSelector[]",
+                components: [
+                    {
+                        name: "addr",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "selectors",
+                        type: "bytes4[]",
+                        internalType: "bytes4[]",
+                    },
+                ],
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "targetSenders",
+        inputs: [],
+        outputs: [
+            {
+                name: "targetedSenders_",
+                type: "address[]",
+                internalType: "address[]",
+            },
+        ],
+        stateMutability: "view",
     },
 ];
 class StdInvariant__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.StdInvariant__factory = StdInvariant__factory;

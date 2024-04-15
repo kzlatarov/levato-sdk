@@ -7,298 +7,298 @@ exports.DSTest__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "string",
-                name: "",
-                type: "string",
-            },
-        ],
-        name: "log",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        name: "log_address",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "bytes",
-                name: "",
-                type: "bytes",
-            },
-        ],
-        name: "log_bytes",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "bytes32",
-                name: "",
-                type: "bytes32",
-            },
-        ],
-        name: "log_bytes32",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "int256",
-                name: "",
-                type: "int256",
-            },
-        ],
-        name: "log_int",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "string",
-                name: "key",
-                type: "string",
-            },
-            {
-                indexed: false,
-                internalType: "address",
-                name: "val",
-                type: "address",
-            },
-        ],
-        name: "log_named_address",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "string",
-                name: "key",
-                type: "string",
-            },
-            {
-                indexed: false,
-                internalType: "bytes",
-                name: "val",
-                type: "bytes",
-            },
-        ],
-        name: "log_named_bytes",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "string",
-                name: "key",
-                type: "string",
-            },
-            {
-                indexed: false,
-                internalType: "bytes32",
-                name: "val",
-                type: "bytes32",
-            },
-        ],
-        name: "log_named_bytes32",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "string",
-                name: "key",
-                type: "string",
-            },
-            {
-                indexed: false,
-                internalType: "int256",
-                name: "val",
-                type: "int256",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "decimals",
-                type: "uint256",
-            },
-        ],
-        name: "log_named_decimal_int",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "string",
-                name: "key",
-                type: "string",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "val",
-                type: "uint256",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "decimals",
-                type: "uint256",
-            },
-        ],
-        name: "log_named_decimal_uint",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "string",
-                name: "key",
-                type: "string",
-            },
-            {
-                indexed: false,
-                internalType: "int256",
-                name: "val",
-                type: "int256",
-            },
-        ],
-        name: "log_named_int",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "string",
-                name: "key",
-                type: "string",
-            },
-            {
-                indexed: false,
-                internalType: "string",
-                name: "val",
-                type: "string",
-            },
-        ],
-        name: "log_named_string",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "string",
-                name: "key",
-                type: "string",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "val",
-                type: "uint256",
-            },
-        ],
-        name: "log_named_uint",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "string",
-                name: "",
-                type: "string",
-            },
-        ],
-        name: "log_string",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        name: "log_uint",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "bytes",
-                name: "",
-                type: "bytes",
-            },
-        ],
-        name: "logs",
-        type: "event",
-    },
-    {
-        inputs: [],
+        type: "function",
         name: "IS_TEST",
+        inputs: [],
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "failed",
+        inputs: [],
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
+    },
+    {
+        type: "event",
+        name: "log",
+        inputs: [
+            {
+                name: "",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_address",
+        inputs: [
+            {
+                name: "",
+                type: "address",
+                indexed: false,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_bytes",
+        inputs: [
+            {
+                name: "",
+                type: "bytes",
+                indexed: false,
+                internalType: "bytes",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_bytes32",
+        inputs: [
+            {
+                name: "",
+                type: "bytes32",
+                indexed: false,
+                internalType: "bytes32",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_int",
+        inputs: [
+            {
+                name: "",
+                type: "int256",
+                indexed: false,
+                internalType: "int256",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_named_address",
+        inputs: [
+            {
+                name: "key",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+            {
+                name: "val",
+                type: "address",
+                indexed: false,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_named_bytes",
+        inputs: [
+            {
+                name: "key",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+            {
+                name: "val",
+                type: "bytes",
+                indexed: false,
+                internalType: "bytes",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_named_bytes32",
+        inputs: [
+            {
+                name: "key",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+            {
+                name: "val",
+                type: "bytes32",
+                indexed: false,
+                internalType: "bytes32",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_named_decimal_int",
+        inputs: [
+            {
+                name: "key",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+            {
+                name: "val",
+                type: "int256",
+                indexed: false,
+                internalType: "int256",
+            },
+            {
+                name: "decimals",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_named_decimal_uint",
+        inputs: [
+            {
+                name: "key",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+            {
+                name: "val",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+            {
+                name: "decimals",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_named_int",
+        inputs: [
+            {
+                name: "key",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+            {
+                name: "val",
+                type: "int256",
+                indexed: false,
+                internalType: "int256",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_named_string",
+        inputs: [
+            {
+                name: "key",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+            {
+                name: "val",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_named_uint",
+        inputs: [
+            {
+                name: "key",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+            {
+                name: "val",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_string",
+        inputs: [
+            {
+                name: "",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_uint",
+        inputs: [
+            {
+                name: "",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "logs",
+        inputs: [
+            {
+                name: "",
+                type: "bytes",
+                indexed: false,
+                internalType: "bytes",
+            },
+        ],
+        anonymous: false,
     },
 ];
 const _bytecode = "0x60806040526000805460ff1916600117905534801561001d57600080fd5b506102308061002d6000396000f3fe608060405234801561001057600080fd5b50600436106100365760003560e01c8063ba414fa61461003b578063fa7626d414610057575b600080fd5b610043610064565b604051901515815260200160405180910390f35b6000546100439060ff1681565b60008054610100900460ff16156100845750600054610100900460ff1690565b6000737109709ecfa91a80626ff3989d68f67f5b1dd12d3b1561018a5760408051737109709ecfa91a80626ff3989d68f67f5b1dd12d602082018190526519985a5b195960d21b82840152825180830384018152606083019093526000929091610112917f667f9d70ca411d70ead50d8d5c22070dafc36ad75f3dcf5e7237b22ade9aecc4916080016101ca565b60408051601f198184030181529082905261012c916101ee565b6000604051808303816000865af19150503d8060008114610169576040519150601f19603f3d011682016040523d82523d6000602084013e61016e565b606091505b50915050808060200190518101906101869190610201565b9150505b919050565b6000815160005b818110156101b05760208185018101518683015201610196565b818111156101bf576000828601525b509290920192915050565b6001600160e01b03198316815260006101e6600483018461018f565b949350505050565b60006101fa828461018f565b9392505050565b60006020828403121561021357600080fd5b815180151581146101fa57600080fdfea164736f6c634300080a000a";
@@ -312,22 +312,25 @@ class DSTest__factory extends ethers_1.ContractFactory {
             super(_abi, _bytecode, args[0]);
         }
     }
-    getDeployTransaction(overrides) {
-        return super.getDeployTransaction(overrides || {});
-    }
     deploy(overrides) {
         return super.deploy(overrides || {});
     }
-    connect(runner) {
-        return super.connect(runner);
+    getDeployTransaction(overrides) {
+        return super.getDeployTransaction(overrides || {});
+    }
+    attach(address) {
+        return super.attach(address);
+    }
+    connect(signer) {
+        return super.connect(signer);
     }
     static bytecode = _bytecode;
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.DSTest__factory = DSTest__factory;

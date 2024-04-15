@@ -1,39 +1,50 @@
-import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedListener, TypedContractMethod } from "./common";
-export interface IUniswapV2CalleeInterface extends Interface {
-    getFunction(nameOrSignature: "uniswapV2Call"): FunctionFragment;
-    encodeFunctionData(functionFragment: "uniswapV2Call", values: [AddressLike, BigNumberish, BigNumberish, BytesLike]): string;
+import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, ContractTransaction, Overrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
+export interface IUniswapV2CalleeInterface extends utils.Interface {
+    functions: {
+        "uniswapV2Call(address,uint256,uint256,bytes)": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "uniswapV2Call"): FunctionFragment;
+    encodeFunctionData(functionFragment: "uniswapV2Call", values: [string, BigNumberish, BigNumberish, BytesLike]): string;
     decodeFunctionResult(functionFragment: "uniswapV2Call", data: BytesLike): Result;
+    events: {};
 }
 export interface IUniswapV2Callee extends BaseContract {
-    connect(runner?: ContractRunner | null): IUniswapV2Callee;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: IUniswapV2CalleeInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    uniswapV2Call: TypedContractMethod<[
-        sender: AddressLike,
-        amount0: BigNumberish,
-        amount1: BigNumberish,
-        data: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "uniswapV2Call"): TypedContractMethod<[
-        sender: AddressLike,
-        amount0: BigNumberish,
-        amount1: BigNumberish,
-        data: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        uniswapV2Call(sender: string, amount0: BigNumberish, amount1: BigNumberish, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+    };
+    uniswapV2Call(sender: string, amount0: BigNumberish, amount1: BigNumberish, data: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    callStatic: {
+        uniswapV2Call(sender: string, amount0: BigNumberish, amount1: BigNumberish, data: BytesLike, overrides?: CallOverrides): Promise<void>;
+    };
     filters: {};
+    estimateGas: {
+        uniswapV2Call(sender: string, amount0: BigNumberish, amount1: BigNumberish, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        uniswapV2Call(sender: string, amount0: BigNumberish, amount1: BigNumberish, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+    };
 }

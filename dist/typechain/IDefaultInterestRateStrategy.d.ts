@@ -1,5 +1,7 @@
-import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedListener, TypedContractMethod } from "./common";
+import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 export type CalculateInterestRatesParamsStruct = {
     availableLiqudity: BigNumberish;
     liquidityAdded: BigNumberish;
@@ -11,26 +13,41 @@ export type CalculateInterestRatesParamsStruct = {
     reserveLiquidity: BigNumberish;
 };
 export type CalculateInterestRatesParamsStructOutput = [
-    availableLiqudity: bigint,
-    liquidityAdded: bigint,
-    liquidityTaken: bigint,
-    totalStableDebt: bigint,
-    totalVariableDebt: bigint,
-    averageStableBorrowRate: bigint,
-    reserveFactor: bigint,
-    reserveLiquidity: bigint
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    BigNumber
 ] & {
-    availableLiqudity: bigint;
-    liquidityAdded: bigint;
-    liquidityTaken: bigint;
-    totalStableDebt: bigint;
-    totalVariableDebt: bigint;
-    averageStableBorrowRate: bigint;
-    reserveFactor: bigint;
-    reserveLiquidity: bigint;
+    availableLiqudity: BigNumber;
+    liquidityAdded: BigNumber;
+    liquidityTaken: BigNumber;
+    totalStableDebt: BigNumber;
+    totalVariableDebt: BigNumber;
+    averageStableBorrowRate: BigNumber;
+    reserveFactor: BigNumber;
+    reserveLiquidity: BigNumber;
 };
-export interface IDefaultInterestRateStrategyInterface extends Interface {
-    getFunction(nameOrSignature: "MAX_EXCESS_STABLE_TO_TOTAL_DEBT_RATIO" | "MAX_EXCESS_USAGE_RATIO" | "OPTIMAL_STABLE_TO_TOTAL_DEBT_RATIO" | "OPTIMAL_USAGE_RATIO" | "calculateInterestRates" | "getBaseStableBorrowRate" | "getBaseVariableBorrowRate" | "getMaxVariableBorrowRate" | "getStableRateExcessOffset" | "getStableRateSlope1" | "getStableRateSlope2" | "getVariableRateSlope1" | "getVariableRateSlope2"): FunctionFragment;
+export interface IDefaultInterestRateStrategyInterface extends utils.Interface {
+    functions: {
+        "MAX_EXCESS_STABLE_TO_TOTAL_DEBT_RATIO()": FunctionFragment;
+        "MAX_EXCESS_USAGE_RATIO()": FunctionFragment;
+        "OPTIMAL_STABLE_TO_TOTAL_DEBT_RATIO()": FunctionFragment;
+        "OPTIMAL_USAGE_RATIO()": FunctionFragment;
+        "calculateInterestRates((uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256))": FunctionFragment;
+        "getBaseStableBorrowRate()": FunctionFragment;
+        "getBaseVariableBorrowRate()": FunctionFragment;
+        "getMaxVariableBorrowRate()": FunctionFragment;
+        "getStableRateExcessOffset()": FunctionFragment;
+        "getStableRateSlope1()": FunctionFragment;
+        "getStableRateSlope2()": FunctionFragment;
+        "getVariableRateSlope1()": FunctionFragment;
+        "getVariableRateSlope2()": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "MAX_EXCESS_STABLE_TO_TOTAL_DEBT_RATIO" | "MAX_EXCESS_USAGE_RATIO" | "OPTIMAL_STABLE_TO_TOTAL_DEBT_RATIO" | "OPTIMAL_USAGE_RATIO" | "calculateInterestRates" | "getBaseStableBorrowRate" | "getBaseVariableBorrowRate" | "getMaxVariableBorrowRate" | "getStableRateExcessOffset" | "getStableRateSlope1" | "getStableRateSlope2" | "getVariableRateSlope1" | "getVariableRateSlope2"): FunctionFragment;
     encodeFunctionData(functionFragment: "MAX_EXCESS_STABLE_TO_TOTAL_DEBT_RATIO", values?: undefined): string;
     encodeFunctionData(functionFragment: "MAX_EXCESS_USAGE_RATIO", values?: undefined): string;
     encodeFunctionData(functionFragment: "OPTIMAL_STABLE_TO_TOTAL_DEBT_RATIO", values?: undefined): string;
@@ -57,57 +74,94 @@ export interface IDefaultInterestRateStrategyInterface extends Interface {
     decodeFunctionResult(functionFragment: "getStableRateSlope2", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getVariableRateSlope1", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getVariableRateSlope2", data: BytesLike): Result;
+    events: {};
 }
 export interface IDefaultInterestRateStrategy extends BaseContract {
-    connect(runner?: ContractRunner | null): IDefaultInterestRateStrategy;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: IDefaultInterestRateStrategyInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    MAX_EXCESS_STABLE_TO_TOTAL_DEBT_RATIO: TypedContractMethod<[
-    ], [
-        bigint
-    ], "view">;
-    MAX_EXCESS_USAGE_RATIO: TypedContractMethod<[], [bigint], "view">;
-    OPTIMAL_STABLE_TO_TOTAL_DEBT_RATIO: TypedContractMethod<[], [bigint], "view">;
-    OPTIMAL_USAGE_RATIO: TypedContractMethod<[], [bigint], "view">;
-    calculateInterestRates: TypedContractMethod<[
-        params: CalculateInterestRatesParamsStruct
-    ], [
-        [bigint, bigint, bigint]
-    ], "view">;
-    getBaseStableBorrowRate: TypedContractMethod<[], [bigint], "view">;
-    getBaseVariableBorrowRate: TypedContractMethod<[], [bigint], "view">;
-    getMaxVariableBorrowRate: TypedContractMethod<[], [bigint], "view">;
-    getStableRateExcessOffset: TypedContractMethod<[], [bigint], "view">;
-    getStableRateSlope1: TypedContractMethod<[], [bigint], "view">;
-    getStableRateSlope2: TypedContractMethod<[], [bigint], "view">;
-    getVariableRateSlope1: TypedContractMethod<[], [bigint], "view">;
-    getVariableRateSlope2: TypedContractMethod<[], [bigint], "view">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "MAX_EXCESS_STABLE_TO_TOTAL_DEBT_RATIO"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "MAX_EXCESS_USAGE_RATIO"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "OPTIMAL_STABLE_TO_TOTAL_DEBT_RATIO"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "OPTIMAL_USAGE_RATIO"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "calculateInterestRates"): TypedContractMethod<[
-        params: CalculateInterestRatesParamsStruct
-    ], [
-        [bigint, bigint, bigint]
-    ], "view">;
-    getFunction(nameOrSignature: "getBaseStableBorrowRate"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "getBaseVariableBorrowRate"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "getMaxVariableBorrowRate"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "getStableRateExcessOffset"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "getStableRateSlope1"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "getStableRateSlope2"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "getVariableRateSlope1"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "getVariableRateSlope2"): TypedContractMethod<[], [bigint], "view">;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        MAX_EXCESS_STABLE_TO_TOTAL_DEBT_RATIO(overrides?: CallOverrides): Promise<[BigNumber]>;
+        MAX_EXCESS_USAGE_RATIO(overrides?: CallOverrides): Promise<[BigNumber]>;
+        OPTIMAL_STABLE_TO_TOTAL_DEBT_RATIO(overrides?: CallOverrides): Promise<[BigNumber]>;
+        OPTIMAL_USAGE_RATIO(overrides?: CallOverrides): Promise<[BigNumber]>;
+        calculateInterestRates(params: CalculateInterestRatesParamsStruct, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, BigNumber]>;
+        getBaseStableBorrowRate(overrides?: CallOverrides): Promise<[BigNumber]>;
+        getBaseVariableBorrowRate(overrides?: CallOverrides): Promise<[BigNumber]>;
+        getMaxVariableBorrowRate(overrides?: CallOverrides): Promise<[BigNumber]>;
+        getStableRateExcessOffset(overrides?: CallOverrides): Promise<[BigNumber]>;
+        getStableRateSlope1(overrides?: CallOverrides): Promise<[BigNumber]>;
+        getStableRateSlope2(overrides?: CallOverrides): Promise<[BigNumber]>;
+        getVariableRateSlope1(overrides?: CallOverrides): Promise<[BigNumber]>;
+        getVariableRateSlope2(overrides?: CallOverrides): Promise<[BigNumber]>;
+    };
+    MAX_EXCESS_STABLE_TO_TOTAL_DEBT_RATIO(overrides?: CallOverrides): Promise<BigNumber>;
+    MAX_EXCESS_USAGE_RATIO(overrides?: CallOverrides): Promise<BigNumber>;
+    OPTIMAL_STABLE_TO_TOTAL_DEBT_RATIO(overrides?: CallOverrides): Promise<BigNumber>;
+    OPTIMAL_USAGE_RATIO(overrides?: CallOverrides): Promise<BigNumber>;
+    calculateInterestRates(params: CalculateInterestRatesParamsStruct, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, BigNumber]>;
+    getBaseStableBorrowRate(overrides?: CallOverrides): Promise<BigNumber>;
+    getBaseVariableBorrowRate(overrides?: CallOverrides): Promise<BigNumber>;
+    getMaxVariableBorrowRate(overrides?: CallOverrides): Promise<BigNumber>;
+    getStableRateExcessOffset(overrides?: CallOverrides): Promise<BigNumber>;
+    getStableRateSlope1(overrides?: CallOverrides): Promise<BigNumber>;
+    getStableRateSlope2(overrides?: CallOverrides): Promise<BigNumber>;
+    getVariableRateSlope1(overrides?: CallOverrides): Promise<BigNumber>;
+    getVariableRateSlope2(overrides?: CallOverrides): Promise<BigNumber>;
+    callStatic: {
+        MAX_EXCESS_STABLE_TO_TOTAL_DEBT_RATIO(overrides?: CallOverrides): Promise<BigNumber>;
+        MAX_EXCESS_USAGE_RATIO(overrides?: CallOverrides): Promise<BigNumber>;
+        OPTIMAL_STABLE_TO_TOTAL_DEBT_RATIO(overrides?: CallOverrides): Promise<BigNumber>;
+        OPTIMAL_USAGE_RATIO(overrides?: CallOverrides): Promise<BigNumber>;
+        calculateInterestRates(params: CalculateInterestRatesParamsStruct, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, BigNumber]>;
+        getBaseStableBorrowRate(overrides?: CallOverrides): Promise<BigNumber>;
+        getBaseVariableBorrowRate(overrides?: CallOverrides): Promise<BigNumber>;
+        getMaxVariableBorrowRate(overrides?: CallOverrides): Promise<BigNumber>;
+        getStableRateExcessOffset(overrides?: CallOverrides): Promise<BigNumber>;
+        getStableRateSlope1(overrides?: CallOverrides): Promise<BigNumber>;
+        getStableRateSlope2(overrides?: CallOverrides): Promise<BigNumber>;
+        getVariableRateSlope1(overrides?: CallOverrides): Promise<BigNumber>;
+        getVariableRateSlope2(overrides?: CallOverrides): Promise<BigNumber>;
+    };
     filters: {};
+    estimateGas: {
+        MAX_EXCESS_STABLE_TO_TOTAL_DEBT_RATIO(overrides?: CallOverrides): Promise<BigNumber>;
+        MAX_EXCESS_USAGE_RATIO(overrides?: CallOverrides): Promise<BigNumber>;
+        OPTIMAL_STABLE_TO_TOTAL_DEBT_RATIO(overrides?: CallOverrides): Promise<BigNumber>;
+        OPTIMAL_USAGE_RATIO(overrides?: CallOverrides): Promise<BigNumber>;
+        calculateInterestRates(params: CalculateInterestRatesParamsStruct, overrides?: CallOverrides): Promise<BigNumber>;
+        getBaseStableBorrowRate(overrides?: CallOverrides): Promise<BigNumber>;
+        getBaseVariableBorrowRate(overrides?: CallOverrides): Promise<BigNumber>;
+        getMaxVariableBorrowRate(overrides?: CallOverrides): Promise<BigNumber>;
+        getStableRateExcessOffset(overrides?: CallOverrides): Promise<BigNumber>;
+        getStableRateSlope1(overrides?: CallOverrides): Promise<BigNumber>;
+        getStableRateSlope2(overrides?: CallOverrides): Promise<BigNumber>;
+        getVariableRateSlope1(overrides?: CallOverrides): Promise<BigNumber>;
+        getVariableRateSlope2(overrides?: CallOverrides): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        MAX_EXCESS_STABLE_TO_TOTAL_DEBT_RATIO(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        MAX_EXCESS_USAGE_RATIO(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        OPTIMAL_STABLE_TO_TOTAL_DEBT_RATIO(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        OPTIMAL_USAGE_RATIO(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        calculateInterestRates(params: CalculateInterestRatesParamsStruct, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getBaseStableBorrowRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getBaseVariableBorrowRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getMaxVariableBorrowRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getStableRateExcessOffset(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getStableRateSlope1(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getStableRateSlope2(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getVariableRateSlope1(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getVariableRateSlope2(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    };
 }

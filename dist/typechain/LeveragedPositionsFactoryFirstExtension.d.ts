@@ -1,34 +1,63 @@
-import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, EventFragment, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedLogDescription, TypedListener, TypedContractMethod } from "./common";
-export interface LeveragedPositionsFactoryFirstExtensionInterface extends Interface {
-    getFunction(nameOrSignature: "AAVE" | "DELEGATED" | "IONIC" | "_getExtensionFunctions" | "_setIonicPairWhitelisted" | "acceptOwnership" | "blocksPerYear" | "createAndFundIonicPosition" | "createAndFundIonicPositionAtRatio" | "createIonicPosition" | "creditDelegator" | "flashloanRouter" | "fundersRegistry" | "getAssetBorrowRate" | "getAssetPrice" | "getPositionsByAccount" | "getPositionsTotalCollateralValue" | "initialize" | "isFactoryPosition" | "minBorrowNative" | "oracle" | "owner" | "pendingOwner" | "reinitialize" | "renounceOwnership" | "transferOwnership"): FunctionFragment;
-    getEvent(nameOrSignatureOrTopic: "Initialized" | "OwnershipTransferStarted" | "OwnershipTransferred" | "PositionCreated"): EventFragment;
+import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, ContractTransaction, Overrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
+export interface LeveragedPositionsFactoryFirstExtensionInterface extends utils.Interface {
+    functions: {
+        "AAVE()": FunctionFragment;
+        "DELEGATED()": FunctionFragment;
+        "IONIC()": FunctionFragment;
+        "_getExtensionFunctions()": FunctionFragment;
+        "_setIonicPairWhitelisted(address,address,bool)": FunctionFragment;
+        "acceptOwnership()": FunctionFragment;
+        "blocksPerYear()": FunctionFragment;
+        "createAndFundIonicPosition(address,address,address,uint256)": FunctionFragment;
+        "createAndFundIonicPositionAtRatio(address,address,address,uint256,uint256)": FunctionFragment;
+        "createIonicPosition(address,address)": FunctionFragment;
+        "creditDelegator()": FunctionFragment;
+        "flashloanRouter()": FunctionFragment;
+        "fundersRegistry()": FunctionFragment;
+        "getAssetBorrowRate(address)": FunctionFragment;
+        "getAssetPrice(address)": FunctionFragment;
+        "getPositionsByAccount(address)": FunctionFragment;
+        "getPositionsTotalCollateralValue()": FunctionFragment;
+        "initialize(address,address)": FunctionFragment;
+        "isFactoryPosition(address)": FunctionFragment;
+        "minBorrowNative()": FunctionFragment;
+        "oracle()": FunctionFragment;
+        "owner()": FunctionFragment;
+        "pendingOwner()": FunctionFragment;
+        "reinitialize(address)": FunctionFragment;
+        "renounceOwnership()": FunctionFragment;
+        "transferOwnership(address)": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "AAVE" | "DELEGATED" | "IONIC" | "_getExtensionFunctions" | "_setIonicPairWhitelisted" | "acceptOwnership" | "blocksPerYear" | "createAndFundIonicPosition" | "createAndFundIonicPositionAtRatio" | "createIonicPosition" | "creditDelegator" | "flashloanRouter" | "fundersRegistry" | "getAssetBorrowRate" | "getAssetPrice" | "getPositionsByAccount" | "getPositionsTotalCollateralValue" | "initialize" | "isFactoryPosition" | "minBorrowNative" | "oracle" | "owner" | "pendingOwner" | "reinitialize" | "renounceOwnership" | "transferOwnership"): FunctionFragment;
     encodeFunctionData(functionFragment: "AAVE", values?: undefined): string;
     encodeFunctionData(functionFragment: "DELEGATED", values?: undefined): string;
     encodeFunctionData(functionFragment: "IONIC", values?: undefined): string;
     encodeFunctionData(functionFragment: "_getExtensionFunctions", values?: undefined): string;
-    encodeFunctionData(functionFragment: "_setIonicPairWhitelisted", values: [AddressLike, AddressLike, boolean]): string;
+    encodeFunctionData(functionFragment: "_setIonicPairWhitelisted", values: [string, string, boolean]): string;
     encodeFunctionData(functionFragment: "acceptOwnership", values?: undefined): string;
     encodeFunctionData(functionFragment: "blocksPerYear", values?: undefined): string;
-    encodeFunctionData(functionFragment: "createAndFundIonicPosition", values: [AddressLike, AddressLike, AddressLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "createAndFundIonicPositionAtRatio", values: [AddressLike, AddressLike, AddressLike, BigNumberish, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "createIonicPosition", values: [AddressLike, AddressLike]): string;
+    encodeFunctionData(functionFragment: "createAndFundIonicPosition", values: [string, string, string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "createAndFundIonicPositionAtRatio", values: [string, string, string, BigNumberish, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "createIonicPosition", values: [string, string]): string;
     encodeFunctionData(functionFragment: "creditDelegator", values?: undefined): string;
     encodeFunctionData(functionFragment: "flashloanRouter", values?: undefined): string;
     encodeFunctionData(functionFragment: "fundersRegistry", values?: undefined): string;
-    encodeFunctionData(functionFragment: "getAssetBorrowRate", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "getAssetPrice", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "getPositionsByAccount", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "getAssetBorrowRate", values: [string]): string;
+    encodeFunctionData(functionFragment: "getAssetPrice", values: [string]): string;
+    encodeFunctionData(functionFragment: "getPositionsByAccount", values: [string]): string;
     encodeFunctionData(functionFragment: "getPositionsTotalCollateralValue", values?: undefined): string;
-    encodeFunctionData(functionFragment: "initialize", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "isFactoryPosition", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "initialize", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "isFactoryPosition", values: [string]): string;
     encodeFunctionData(functionFragment: "minBorrowNative", values?: undefined): string;
     encodeFunctionData(functionFragment: "oracle", values?: undefined): string;
     encodeFunctionData(functionFragment: "owner", values?: undefined): string;
     encodeFunctionData(functionFragment: "pendingOwner", values?: undefined): string;
-    encodeFunctionData(functionFragment: "reinitialize", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "reinitialize", values: [string]): string;
     encodeFunctionData(functionFragment: "renounceOwnership", values?: undefined): string;
-    encodeFunctionData(functionFragment: "transferOwnership", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "transferOwnership", values: [string]): string;
     decodeFunctionResult(functionFragment: "AAVE", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "DELEGATED", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "IONIC", data: BytesLike): Result;
@@ -55,239 +84,305 @@ export interface LeveragedPositionsFactoryFirstExtensionInterface extends Interf
     decodeFunctionResult(functionFragment: "reinitialize", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "renounceOwnership", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "transferOwnership", data: BytesLike): Result;
+    events: {
+        "Initialized(uint8)": EventFragment;
+        "OwnershipTransferStarted(address,address)": EventFragment;
+        "OwnershipTransferred(address,address)": EventFragment;
+        "PositionCreated(address,address,address,address,uint16)": EventFragment;
+    };
+    getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "OwnershipTransferStarted"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "PositionCreated"): EventFragment;
 }
-export declare namespace InitializedEvent {
-    type InputTuple = [version: BigNumberish];
-    type OutputTuple = [version: bigint];
-    interface OutputObject {
-        version: bigint;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export interface InitializedEventObject {
+    version: number;
 }
-export declare namespace OwnershipTransferStartedEvent {
-    type InputTuple = [previousOwner: AddressLike, newOwner: AddressLike];
-    type OutputTuple = [previousOwner: string, newOwner: string];
-    interface OutputObject {
-        previousOwner: string;
-        newOwner: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
+export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
+export interface OwnershipTransferStartedEventObject {
+    previousOwner: string;
+    newOwner: string;
 }
-export declare namespace OwnershipTransferredEvent {
-    type InputTuple = [previousOwner: AddressLike, newOwner: AddressLike];
-    type OutputTuple = [previousOwner: string, newOwner: string];
-    interface OutputObject {
-        previousOwner: string;
-        newOwner: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type OwnershipTransferStartedEvent = TypedEvent<[
+    string,
+    string
+], OwnershipTransferStartedEventObject>;
+export type OwnershipTransferStartedEventFilter = TypedEventFilter<OwnershipTransferStartedEvent>;
+export interface OwnershipTransferredEventObject {
+    previousOwner: string;
+    newOwner: string;
 }
-export declare namespace PositionCreatedEvent {
-    type InputTuple = [
-        user: AddressLike,
-        position: AddressLike,
-        collateral: AddressLike,
-        stable: AddressLike,
-        lendingProtocol: BigNumberish
-    ];
-    type OutputTuple = [
-        user: string,
-        position: string,
-        collateral: string,
-        stable: string,
-        lendingProtocol: bigint
-    ];
-    interface OutputObject {
-        user: string;
-        position: string;
-        collateral: string;
-        stable: string;
-        lendingProtocol: bigint;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type OwnershipTransferredEvent = TypedEvent<[
+    string,
+    string
+], OwnershipTransferredEventObject>;
+export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
+export interface PositionCreatedEventObject {
+    user: string;
+    position: string;
+    collateral: string;
+    stable: string;
+    lendingProtocol: number;
 }
+export type PositionCreatedEvent = TypedEvent<[
+    string,
+    string,
+    string,
+    string,
+    number
+], PositionCreatedEventObject>;
+export type PositionCreatedEventFilter = TypedEventFilter<PositionCreatedEvent>;
 export interface LeveragedPositionsFactoryFirstExtension extends BaseContract {
-    connect(runner?: ContractRunner | null): LeveragedPositionsFactoryFirstExtension;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: LeveragedPositionsFactoryFirstExtensionInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    AAVE: TypedContractMethod<[], [bigint], "view">;
-    DELEGATED: TypedContractMethod<[], [bigint], "view">;
-    IONIC: TypedContractMethod<[], [bigint], "view">;
-    _getExtensionFunctions: TypedContractMethod<[], [string[]], "view">;
-    _setIonicPairWhitelisted: TypedContractMethod<[
-        _collateralMarket: AddressLike,
-        _stableMarket: AddressLike,
-        _whitelisted: boolean
-    ], [
-        void
-    ], "nonpayable">;
-    acceptOwnership: TypedContractMethod<[], [void], "nonpayable">;
-    blocksPerYear: TypedContractMethod<[], [bigint], "view">;
-    createAndFundIonicPosition: TypedContractMethod<[
-        _collateralMarket: AddressLike,
-        _stableMarket: AddressLike,
-        _fundingAsset: AddressLike,
-        _fundingAmount: BigNumberish
-    ], [
-        string
-    ], "nonpayable">;
-    createAndFundIonicPositionAtRatio: TypedContractMethod<[
-        _collateralMarket: AddressLike,
-        _stableMarket: AddressLike,
-        _fundingAsset: AddressLike,
-        _fundingAmount: BigNumberish,
-        _leverageRatio: BigNumberish
-    ], [
-        string
-    ], "nonpayable">;
-    createIonicPosition: TypedContractMethod<[
-        _collateralMarket: AddressLike,
-        _stableMarket: AddressLike
-    ], [
-        string
-    ], "nonpayable">;
-    creditDelegator: TypedContractMethod<[], [string], "view">;
-    flashloanRouter: TypedContractMethod<[], [string], "view">;
-    fundersRegistry: TypedContractMethod<[], [string], "view">;
-    getAssetBorrowRate: TypedContractMethod<[
-        asset: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getAssetPrice: TypedContractMethod<[asset: AddressLike], [bigint], "view">;
-    getPositionsByAccount: TypedContractMethod<[
-        account: AddressLike
-    ], [
-        [string[], boolean[]] & {
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        AAVE(overrides?: CallOverrides): Promise<[number]>;
+        DELEGATED(overrides?: CallOverrides): Promise<[number]>;
+        IONIC(overrides?: CallOverrides): Promise<[number]>;
+        _getExtensionFunctions(overrides?: CallOverrides): Promise<[string[]]>;
+        _setIonicPairWhitelisted(_collateralMarket: string, _stableMarket: string, _whitelisted: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        acceptOwnership(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        blocksPerYear(overrides?: CallOverrides): Promise<[BigNumber]>;
+        createAndFundIonicPosition(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        createAndFundIonicPositionAtRatio(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        createIonicPosition(_collateralMarket: string, _stableMarket: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        creditDelegator(overrides?: CallOverrides): Promise<[string]>;
+        flashloanRouter(overrides?: CallOverrides): Promise<[string]>;
+        fundersRegistry(overrides?: CallOverrides): Promise<[string]>;
+        getAssetBorrowRate(asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        getAssetPrice(asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        getPositionsByAccount(account: string, overrides?: CallOverrides): Promise<[
+            string[],
+            boolean[]
+        ] & {
             positions: string[];
             closed: boolean[];
-        }
-    ], "view">;
-    getPositionsTotalCollateralValue: TypedContractMethod<[], [bigint], "view">;
-    initialize: TypedContractMethod<[
-        _delegator: AddressLike,
-        _oracle: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    isFactoryPosition: TypedContractMethod<[
-        position: AddressLike
-    ], [
-        boolean
-    ], "view">;
-    minBorrowNative: TypedContractMethod<[], [bigint], "view">;
-    oracle: TypedContractMethod<[], [string], "view">;
-    owner: TypedContractMethod<[], [string], "view">;
-    pendingOwner: TypedContractMethod<[], [string], "view">;
-    reinitialize: TypedContractMethod<[
-        _oracle: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    renounceOwnership: TypedContractMethod<[], [void], "nonpayable">;
-    transferOwnership: TypedContractMethod<[
-        newOwner: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "AAVE"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "DELEGATED"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "IONIC"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "_getExtensionFunctions"): TypedContractMethod<[], [string[]], "view">;
-    getFunction(nameOrSignature: "_setIonicPairWhitelisted"): TypedContractMethod<[
-        _collateralMarket: AddressLike,
-        _stableMarket: AddressLike,
-        _whitelisted: boolean
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "acceptOwnership"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "blocksPerYear"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "createAndFundIonicPosition"): TypedContractMethod<[
-        _collateralMarket: AddressLike,
-        _stableMarket: AddressLike,
-        _fundingAsset: AddressLike,
-        _fundingAmount: BigNumberish
-    ], [
-        string
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "createAndFundIonicPositionAtRatio"): TypedContractMethod<[
-        _collateralMarket: AddressLike,
-        _stableMarket: AddressLike,
-        _fundingAsset: AddressLike,
-        _fundingAmount: BigNumberish,
-        _leverageRatio: BigNumberish
-    ], [
-        string
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "createIonicPosition"): TypedContractMethod<[
-        _collateralMarket: AddressLike,
-        _stableMarket: AddressLike
-    ], [
-        string
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "creditDelegator"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "flashloanRouter"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "fundersRegistry"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "getAssetBorrowRate"): TypedContractMethod<[asset: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "getAssetPrice"): TypedContractMethod<[asset: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "getPositionsByAccount"): TypedContractMethod<[
-        account: AddressLike
-    ], [
-        [string[], boolean[]] & {
+        }>;
+        getPositionsTotalCollateralValue(overrides?: CallOverrides): Promise<[BigNumber]>;
+        initialize(_delegator: string, _oracle: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        isFactoryPosition(position: string, overrides?: CallOverrides): Promise<[boolean]>;
+        minBorrowNative(overrides?: CallOverrides): Promise<[BigNumber]>;
+        oracle(overrides?: CallOverrides): Promise<[string]>;
+        owner(overrides?: CallOverrides): Promise<[string]>;
+        pendingOwner(overrides?: CallOverrides): Promise<[string]>;
+        reinitialize(_oracle: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        renounceOwnership(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        transferOwnership(newOwner: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+    };
+    AAVE(overrides?: CallOverrides): Promise<number>;
+    DELEGATED(overrides?: CallOverrides): Promise<number>;
+    IONIC(overrides?: CallOverrides): Promise<number>;
+    _getExtensionFunctions(overrides?: CallOverrides): Promise<string[]>;
+    _setIonicPairWhitelisted(_collateralMarket: string, _stableMarket: string, _whitelisted: boolean, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    acceptOwnership(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    blocksPerYear(overrides?: CallOverrides): Promise<BigNumber>;
+    createAndFundIonicPosition(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    createAndFundIonicPositionAtRatio(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    createIonicPosition(_collateralMarket: string, _stableMarket: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    creditDelegator(overrides?: CallOverrides): Promise<string>;
+    flashloanRouter(overrides?: CallOverrides): Promise<string>;
+    fundersRegistry(overrides?: CallOverrides): Promise<string>;
+    getAssetBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getPositionsByAccount(account: string, overrides?: CallOverrides): Promise<[
+        string[],
+        boolean[]
+    ] & {
+        positions: string[];
+        closed: boolean[];
+    }>;
+    getPositionsTotalCollateralValue(overrides?: CallOverrides): Promise<BigNumber>;
+    initialize(_delegator: string, _oracle: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    isFactoryPosition(position: string, overrides?: CallOverrides): Promise<boolean>;
+    minBorrowNative(overrides?: CallOverrides): Promise<BigNumber>;
+    oracle(overrides?: CallOverrides): Promise<string>;
+    owner(overrides?: CallOverrides): Promise<string>;
+    pendingOwner(overrides?: CallOverrides): Promise<string>;
+    reinitialize(_oracle: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    transferOwnership(newOwner: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    callStatic: {
+        AAVE(overrides?: CallOverrides): Promise<number>;
+        DELEGATED(overrides?: CallOverrides): Promise<number>;
+        IONIC(overrides?: CallOverrides): Promise<number>;
+        _getExtensionFunctions(overrides?: CallOverrides): Promise<string[]>;
+        _setIonicPairWhitelisted(_collateralMarket: string, _stableMarket: string, _whitelisted: boolean, overrides?: CallOverrides): Promise<void>;
+        acceptOwnership(overrides?: CallOverrides): Promise<void>;
+        blocksPerYear(overrides?: CallOverrides): Promise<BigNumber>;
+        createAndFundIonicPosition(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: CallOverrides): Promise<string>;
+        createAndFundIonicPositionAtRatio(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: CallOverrides): Promise<string>;
+        createIonicPosition(_collateralMarket: string, _stableMarket: string, overrides?: CallOverrides): Promise<string>;
+        creditDelegator(overrides?: CallOverrides): Promise<string>;
+        flashloanRouter(overrides?: CallOverrides): Promise<string>;
+        fundersRegistry(overrides?: CallOverrides): Promise<string>;
+        getAssetBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getPositionsByAccount(account: string, overrides?: CallOverrides): Promise<[
+            string[],
+            boolean[]
+        ] & {
             positions: string[];
             closed: boolean[];
-        }
-    ], "view">;
-    getFunction(nameOrSignature: "getPositionsTotalCollateralValue"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "initialize"): TypedContractMethod<[
-        _delegator: AddressLike,
-        _oracle: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "isFactoryPosition"): TypedContractMethod<[position: AddressLike], [boolean], "view">;
-    getFunction(nameOrSignature: "minBorrowNative"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "oracle"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "owner"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "pendingOwner"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "reinitialize"): TypedContractMethod<[_oracle: AddressLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "renounceOwnership"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "transferOwnership"): TypedContractMethod<[newOwner: AddressLike], [void], "nonpayable">;
-    getEvent(key: "Initialized"): TypedContractEvent<InitializedEvent.InputTuple, InitializedEvent.OutputTuple, InitializedEvent.OutputObject>;
-    getEvent(key: "OwnershipTransferStarted"): TypedContractEvent<OwnershipTransferStartedEvent.InputTuple, OwnershipTransferStartedEvent.OutputTuple, OwnershipTransferStartedEvent.OutputObject>;
-    getEvent(key: "OwnershipTransferred"): TypedContractEvent<OwnershipTransferredEvent.InputTuple, OwnershipTransferredEvent.OutputTuple, OwnershipTransferredEvent.OutputObject>;
-    getEvent(key: "PositionCreated"): TypedContractEvent<PositionCreatedEvent.InputTuple, PositionCreatedEvent.OutputTuple, PositionCreatedEvent.OutputObject>;
+        }>;
+        getPositionsTotalCollateralValue(overrides?: CallOverrides): Promise<BigNumber>;
+        initialize(_delegator: string, _oracle: string, overrides?: CallOverrides): Promise<void>;
+        isFactoryPosition(position: string, overrides?: CallOverrides): Promise<boolean>;
+        minBorrowNative(overrides?: CallOverrides): Promise<BigNumber>;
+        oracle(overrides?: CallOverrides): Promise<string>;
+        owner(overrides?: CallOverrides): Promise<string>;
+        pendingOwner(overrides?: CallOverrides): Promise<string>;
+        reinitialize(_oracle: string, overrides?: CallOverrides): Promise<void>;
+        renounceOwnership(overrides?: CallOverrides): Promise<void>;
+        transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    };
     filters: {
-        "Initialized(uint8)": TypedContractEvent<InitializedEvent.InputTuple, InitializedEvent.OutputTuple, InitializedEvent.OutputObject>;
-        Initialized: TypedContractEvent<InitializedEvent.InputTuple, InitializedEvent.OutputTuple, InitializedEvent.OutputObject>;
-        "OwnershipTransferStarted(address,address)": TypedContractEvent<OwnershipTransferStartedEvent.InputTuple, OwnershipTransferStartedEvent.OutputTuple, OwnershipTransferStartedEvent.OutputObject>;
-        OwnershipTransferStarted: TypedContractEvent<OwnershipTransferStartedEvent.InputTuple, OwnershipTransferStartedEvent.OutputTuple, OwnershipTransferStartedEvent.OutputObject>;
-        "OwnershipTransferred(address,address)": TypedContractEvent<OwnershipTransferredEvent.InputTuple, OwnershipTransferredEvent.OutputTuple, OwnershipTransferredEvent.OutputObject>;
-        OwnershipTransferred: TypedContractEvent<OwnershipTransferredEvent.InputTuple, OwnershipTransferredEvent.OutputTuple, OwnershipTransferredEvent.OutputObject>;
-        "PositionCreated(address,address,address,address,uint16)": TypedContractEvent<PositionCreatedEvent.InputTuple, PositionCreatedEvent.OutputTuple, PositionCreatedEvent.OutputObject>;
-        PositionCreated: TypedContractEvent<PositionCreatedEvent.InputTuple, PositionCreatedEvent.OutputTuple, PositionCreatedEvent.OutputObject>;
+        "Initialized(uint8)"(version?: null): InitializedEventFilter;
+        Initialized(version?: null): InitializedEventFilter;
+        "OwnershipTransferStarted(address,address)"(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferStartedEventFilter;
+        OwnershipTransferStarted(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferStartedEventFilter;
+        "OwnershipTransferred(address,address)"(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+        OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+        "PositionCreated(address,address,address,address,uint16)"(user?: string | null, position?: null, collateral?: string | null, stable?: string | null, lendingProtocol?: null): PositionCreatedEventFilter;
+        PositionCreated(user?: string | null, position?: null, collateral?: string | null, stable?: string | null, lendingProtocol?: null): PositionCreatedEventFilter;
+    };
+    estimateGas: {
+        AAVE(overrides?: CallOverrides): Promise<BigNumber>;
+        DELEGATED(overrides?: CallOverrides): Promise<BigNumber>;
+        IONIC(overrides?: CallOverrides): Promise<BigNumber>;
+        _getExtensionFunctions(overrides?: CallOverrides): Promise<BigNumber>;
+        _setIonicPairWhitelisted(_collateralMarket: string, _stableMarket: string, _whitelisted: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        acceptOwnership(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        blocksPerYear(overrides?: CallOverrides): Promise<BigNumber>;
+        createAndFundIonicPosition(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        createAndFundIonicPositionAtRatio(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        createIonicPosition(_collateralMarket: string, _stableMarket: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        creditDelegator(overrides?: CallOverrides): Promise<BigNumber>;
+        flashloanRouter(overrides?: CallOverrides): Promise<BigNumber>;
+        fundersRegistry(overrides?: CallOverrides): Promise<BigNumber>;
+        getAssetBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getPositionsByAccount(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getPositionsTotalCollateralValue(overrides?: CallOverrides): Promise<BigNumber>;
+        initialize(_delegator: string, _oracle: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        isFactoryPosition(position: string, overrides?: CallOverrides): Promise<BigNumber>;
+        minBorrowNative(overrides?: CallOverrides): Promise<BigNumber>;
+        oracle(overrides?: CallOverrides): Promise<BigNumber>;
+        owner(overrides?: CallOverrides): Promise<BigNumber>;
+        pendingOwner(overrides?: CallOverrides): Promise<BigNumber>;
+        reinitialize(_oracle: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        renounceOwnership(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        transferOwnership(newOwner: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        AAVE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        DELEGATED(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        IONIC(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        _getExtensionFunctions(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        _setIonicPairWhitelisted(_collateralMarket: string, _stableMarket: string, _whitelisted: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        acceptOwnership(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        blocksPerYear(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        createAndFundIonicPosition(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        createAndFundIonicPositionAtRatio(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        createIonicPosition(_collateralMarket: string, _stableMarket: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        creditDelegator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        flashloanRouter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        fundersRegistry(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getAssetBorrowRate(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getAssetPrice(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getPositionsByAccount(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getPositionsTotalCollateralValue(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        initialize(_delegator: string, _oracle: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        isFactoryPosition(position: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        minBorrowNative(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        oracle(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        pendingOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        reinitialize(_oracle: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        renounceOwnership(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        transferOwnership(newOwner: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
     };
 }

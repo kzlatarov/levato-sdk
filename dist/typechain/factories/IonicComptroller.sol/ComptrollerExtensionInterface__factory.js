@@ -7,615 +7,615 @@ exports.ComptrollerExtensionInterface__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
+        type: "function",
+        name: "_blacklistBorrowingAgainstCollateral",
         inputs: [
             {
-                internalType: "address",
                 name: "cTokenBorrow",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "cTokenCollateral",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "bool",
                 name: "blacklisted",
                 type: "bool",
+                internalType: "bool",
             },
         ],
-        name: "_blacklistBorrowingAgainstCollateral",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_blacklistBorrowingAgainstCollateralWhitelist",
         inputs: [
             {
-                internalType: "address",
                 name: "cTokenBorrow",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "cTokenCollateral",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "account",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "bool",
                 name: "whitelisted",
                 type: "bool",
+                internalType: "bool",
             },
         ],
-        name: "_blacklistBorrowingAgainstCollateralWhitelist",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_borrowCapWhitelist",
         inputs: [
             {
-                internalType: "address",
                 name: "cToken",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "account",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "bool",
                 name: "whitelisted",
                 type: "bool",
+                internalType: "bool",
             },
         ],
-        name: "_borrowCapWhitelist",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_removeFlywheel",
         inputs: [
             {
-                internalType: "address",
                 name: "flywheelAddress",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "_removeFlywheel",
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_setBorrowCapForCollateral",
         inputs: [
             {
-                internalType: "address",
                 name: "cTokenBorrow",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "cTokenCollateral",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "borrowCap",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "_setBorrowCapForCollateral",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_setBorrowCapForCollateralWhitelist",
         inputs: [
             {
-                internalType: "address",
                 name: "cTokenBorrow",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "cTokenCollateral",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "account",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "bool",
                 name: "whitelisted",
                 type: "bool",
+                internalType: "bool",
             },
         ],
-        name: "_setBorrowCapForCollateralWhitelist",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_setBorrowCapGuardian",
         inputs: [
             {
-                internalType: "address",
                 name: "newBorrowCapGuardian",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "_setBorrowCapGuardian",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_setBorrowPaused",
         inputs: [
             {
-                internalType: "contract IonicCErc20",
                 name: "cToken",
                 type: "address",
+                internalType: "contract IonicCErc20",
             },
             {
-                internalType: "bool",
                 name: "state",
                 type: "bool",
+                internalType: "bool",
             },
         ],
-        name: "_setBorrowPaused",
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_setMarketBorrowCaps",
         inputs: [
             {
-                internalType: "contract IonicCErc20[]",
                 name: "cTokens",
                 type: "address[]",
+                internalType: "contract IonicCErc20[]",
             },
             {
-                internalType: "uint256[]",
                 name: "newBorrowCaps",
                 type: "uint256[]",
+                internalType: "uint256[]",
             },
         ],
-        name: "_setMarketBorrowCaps",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_setMarketSupplyCaps",
         inputs: [
             {
-                internalType: "contract IonicCErc20[]",
                 name: "cTokens",
                 type: "address[]",
+                internalType: "contract IonicCErc20[]",
             },
             {
-                internalType: "uint256[]",
                 name: "newSupplyCaps",
                 type: "uint256[]",
+                internalType: "uint256[]",
             },
         ],
-        name: "_setMarketSupplyCaps",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_setMintPaused",
         inputs: [
             {
-                internalType: "contract IonicCErc20",
                 name: "cToken",
                 type: "address",
+                internalType: "contract IonicCErc20",
             },
             {
-                internalType: "bool",
                 name: "state",
                 type: "bool",
+                internalType: "bool",
             },
         ],
-        name: "_setMintPaused",
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_setPauseGuardian",
         inputs: [
             {
-                internalType: "address",
                 name: "newPauseGuardian",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "_setPauseGuardian",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [
-            {
-                internalType: "bool",
-                name: "state",
-                type: "bool",
-            },
-        ],
+        type: "function",
         name: "_setSeizePaused",
-        outputs: [
-            {
-                internalType: "bool",
-                name: "",
-                type: "bool",
-            },
-        ],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
         inputs: [
             {
-                internalType: "bool",
                 name: "state",
                 type: "bool",
+                internalType: "bool",
             },
         ],
-        name: "_setTransferPaused",
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_setTransferPaused",
         inputs: [
             {
-                internalType: "address",
+                name: "state",
+                type: "bool",
+                internalType: "bool",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "bool",
+                internalType: "bool",
+            },
+        ],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "_supplyCapWhitelist",
+        inputs: [
+            {
                 name: "cToken",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "account",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "bool",
                 name: "whitelisted",
                 type: "bool",
+                internalType: "bool",
             },
         ],
-        name: "_supplyCapWhitelist",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_unsupportMarket",
         inputs: [
             {
-                internalType: "contract IonicCErc20",
                 name: "cToken",
                 type: "address",
+                internalType: "contract IonicCErc20",
             },
         ],
-        name: "_unsupportMarket",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "addNonAccruingFlywheel",
         inputs: [
             {
-                internalType: "address",
                 name: "flywheelAddress",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "addNonAccruingFlywheel",
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getAccruingFlywheels",
+        inputs: [],
         outputs: [
             {
-                internalType: "address[]",
                 name: "",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getAllBorrowers",
-        outputs: [
-            {
-                internalType: "address[]",
-                name: "",
-                type: "address[]",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
         inputs: [],
-        name: "getAllMarkets",
         outputs: [
             {
-                internalType: "contract IonicCErc20[]",
                 name: "",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getAllMarkets",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address[]",
+                internalType: "contract IonicCErc20[]",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getAssetAsCollateralValueCap",
         inputs: [
             {
-                internalType: "contract IonicCErc20",
                 name: "collateral",
                 type: "address",
+                internalType: "contract IonicCErc20",
             },
             {
-                internalType: "contract IonicCErc20",
                 name: "cTokenModify",
                 type: "address",
+                internalType: "contract IonicCErc20",
             },
             {
-                internalType: "bool",
                 name: "redeeming",
                 type: "bool",
+                internalType: "bool",
             },
             {
-                internalType: "address",
                 name: "account",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "getAssetAsCollateralValueCap",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getRewardsDistributors",
-        outputs: [
-            {
-                internalType: "address[]",
-                name: "",
-                type: "address[]",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
         inputs: [],
-        name: "getWhitelist",
         outputs: [
             {
-                internalType: "address[]",
                 name: "",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getWhitelist",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address[]",
+                internalType: "address[]",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getWhitelistedBorrowersBorrows",
         inputs: [
             {
-                internalType: "address",
                 name: "cToken",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "getWhitelistedBorrowersBorrows",
         outputs: [
             {
-                internalType: "uint256",
                 name: "borrowed",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getWhitelistedSuppliersSupply",
         inputs: [
             {
-                internalType: "address",
                 name: "cToken",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "getWhitelistedSuppliersSupply",
         outputs: [
             {
-                internalType: "uint256",
                 name: "supplied",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [
-            {
-                internalType: "address",
-                name: "cTokenBorrow",
-                type: "address",
-            },
-            {
-                internalType: "address",
-                name: "cTokenCollateral",
-                type: "address",
-            },
-            {
-                internalType: "address",
-                name: "account",
-                type: "address",
-            },
-        ],
+        type: "function",
         name: "isBlacklistBorrowingAgainstCollateralWhitelisted",
-        outputs: [
-            {
-                internalType: "bool",
-                name: "",
-                type: "bool",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
         inputs: [
             {
-                internalType: "address",
                 name: "cTokenBorrow",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "cTokenCollateral",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "account",
                 type: "address",
+                internalType: "address",
             },
         ],
+        outputs: [
+            {
+                name: "",
+                type: "bool",
+                internalType: "bool",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
         name: "isBorrowCapForCollateralWhitelisted",
+        inputs: [
+            {
+                name: "cTokenBorrow",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "cTokenCollateral",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "account",
+                type: "address",
+                internalType: "address",
+            },
+        ],
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [
-            {
-                internalType: "address",
-                name: "cToken",
-                type: "address",
-            },
-            {
-                internalType: "address",
-                name: "account",
-                type: "address",
-            },
-        ],
+        type: "function",
         name: "isBorrowCapWhitelisted",
-        outputs: [
-            {
-                internalType: "bool",
-                name: "",
-                type: "bool",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
         inputs: [
             {
-                internalType: "address",
                 name: "cToken",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "account",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "isSupplyCapWhitelisted",
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "view",
+    },
+    {
         type: "function",
+        name: "isSupplyCapWhitelisted",
+        inputs: [
+            {
+                name: "cToken",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "account",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "bool",
+                internalType: "bool",
+            },
+        ],
+        stateMutability: "view",
     },
 ];
 class ComptrollerExtensionInterface__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.ComptrollerExtensionInterface__factory = ComptrollerExtensionInterface__factory;

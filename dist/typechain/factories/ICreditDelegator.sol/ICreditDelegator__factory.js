@@ -7,734 +7,767 @@ exports.ICreditDelegator__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "position",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "asset",
-                type: "address",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "borrowAmount",
-                type: "uint256",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "scaledATokensMinted",
-                type: "uint256",
-            },
-        ],
-        name: "BorrowAsPosition",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "liquidator",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "contract LeveragedPosition",
-                name: "position",
-                type: "address",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "debtToRepay",
-                type: "uint256",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "actualSeizedStableAmount",
-                type: "uint256",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "collateralSeized",
-                type: "uint256",
-            },
-        ],
-        name: "Liquidation",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "position",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "asset",
-                type: "address",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "borrowAmount",
-                type: "uint256",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "scaledATokensBurnt",
-                type: "uint256",
-            },
-        ],
-        name: "RepayAsPosition",
-        type: "event",
-    },
-    {
-        inputs: [],
+        type: "function",
         name: "_listExtensions",
+        inputs: [],
         outputs: [
             {
-                internalType: "address[]",
                 name: "",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_registerExtension",
         inputs: [
             {
-                internalType: "contract DiamondExtension",
                 name: "extensionToAdd",
                 type: "address",
+                internalType: "contract DiamondExtension",
             },
             {
-                internalType: "contract DiamondExtension",
                 name: "extensionToReplace",
                 type: "address",
+                internalType: "contract DiamondExtension",
             },
         ],
-        name: "_registerExtension",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_replaceExtensions",
         inputs: [
             {
-                internalType: "address[]",
                 name: "extensions",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
-        name: "_replaceExtensions",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [],
-        name: "aaveAddressesProvider",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
         type: "function",
-    },
-    {
+        name: "borrowAllowance",
         inputs: [
             {
-                internalType: "address",
                 name: "position",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "asset",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "borrowAllowance",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "borrowAsPosition",
         inputs: [
             {
-                internalType: "address",
                 name: "asset",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "borrowAmount",
                 type: "uint256",
-            },
-        ],
-        name: "borrowAsPosition",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "contract LeveragedPosition",
-                name: "position",
-                type: "address",
-            },
-        ],
-        name: "callLiquidation",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "contract LeveragedPosition",
-                name: "position",
-                type: "address",
-            },
-            {
                 internalType: "uint256",
+            },
+        ],
+        outputs: [],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "borrowBalance",
+        inputs: [
+            {
+                name: "user",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "asset",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "callLiquidation",
+        inputs: [
+            {
+                name: "position",
+                type: "address",
+                internalType: "contract LeveragedPosition",
+            },
+        ],
+        outputs: [],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "callPartialLiquidation",
+        inputs: [
+            {
+                name: "position",
+                type: "address",
+                internalType: "contract LeveragedPosition",
+            },
+            {
                 name: "debtToRepay",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "callPartialLiquidation",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "changeBorrowAllowance",
         inputs: [
             {
-                internalType: "uint256",
                 name: "fromAllowance",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "toAllowance",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "address",
                 name: "user",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "asset",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "changeBorrowAllowance",
         outputs: [
             {
-                internalType: "uint256",
                 name: "fairAllowance",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [
+        type: "function",
+        name: "defaultRateModel",
+        inputs: [],
+        outputs: [
             {
-                internalType: "address",
-                name: "asset",
+                name: "",
                 type: "address",
+                internalType: "contract DefaultInterestRateStrategy",
             },
         ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "delegatedDebtAssetData",
+        inputs: [
+            {
+                name: "asset",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "tuple",
+                internalType: "struct CreditDelegatorStorageBase.DelegatedDebtAssetData",
+                components: [
+                    {
+                        name: "levatoCurrentBorrowRate",
+                        type: "uint256",
+                        internalType: "uint256",
+                    },
+                    {
+                        name: "borrowIndex",
+                        type: "uint256",
+                        internalType: "uint256",
+                    },
+                    {
+                        name: "lastTotalDebt",
+                        type: "uint256",
+                        internalType: "uint256",
+                    },
+                    {
+                        name: "lastUpdateTimestamp",
+                        type: "uint40",
+                        internalType: "uint40",
+                    },
+                    {
+                        name: "lpToken",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "debtToken",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "irm",
+                        type: "address",
+                        internalType: "contract IDefaultInterestRateStrategy",
+                    },
+                    {
+                        name: "accruedToTreasury",
+                        type: "uint256",
+                        internalType: "uint256",
+                    },
+                    {
+                        name: "reserveFactor",
+                        type: "uint128",
+                        internalType: "uint128",
+                    },
+                ],
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
         name: "depositLevatoFunds",
+        inputs: [
+            {
+                name: "asset",
+                type: "address",
+                internalType: "address",
+            },
+        ],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [],
-        name: "getAavePool",
-        outputs: [
-            {
-                internalType: "contract IPool",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
         type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "asset",
-                type: "address",
-            },
-        ],
         name: "getAccruedToTreasury",
+        inputs: [
+            {
+                name: "asset",
+                type: "address",
+                internalType: "address",
+            },
+        ],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [
-            {
-                internalType: "address",
-                name: "asset",
-                type: "address",
-            },
-        ],
+        type: "function",
         name: "getAssetBorrowRate",
+        inputs: [
+            {
+                name: "asset",
+                type: "address",
+                internalType: "address",
+            },
+        ],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [
-            {
-                internalType: "address",
-                name: "asset",
-                type: "address",
-            },
-        ],
+        type: "function",
         name: "getAssetPoolLtv",
+        inputs: [
+            {
+                name: "asset",
+                type: "address",
+                internalType: "address",
+            },
+        ],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [
-            {
-                internalType: "address",
-                name: "asset",
-                type: "address",
-            },
-        ],
+        type: "function",
         name: "getAssetPrice",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "getBorrowingPowerUtilization",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
         inputs: [
             {
-                internalType: "address",
                 name: "asset",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "getLevatoCurrentBorrowRate",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getBorrowingPowerUtilization",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getLevatoCurrentBorrowRate",
         inputs: [
             {
+                name: "asset",
+                type: "address",
                 internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getLiquidationThreshold",
+        inputs: [
+            {
                 name: "collateralAsset",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "delegatedDebtValue",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "getLiquidationThreshold",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [
-            {
-                internalType: "address",
-                name: "position",
-                type: "address",
-            },
-            {
-                internalType: "address",
-                name: "asset",
-                type: "address",
-            },
-        ],
-        name: "getPositionAvailableBorrows",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "view",
         type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "contract LeveragedPosition",
-                name: "position",
-                type: "address",
-            },
-        ],
         name: "getPositionDebt",
+        inputs: [
+            {
+                name: "position",
+                type: "address",
+                internalType: "contract LeveragedPosition",
+            },
+        ],
         outputs: [
             {
-                internalType: "uint256",
                 name: "internalDebt",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "externalDebt",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "address",
                 name: "borrowedAsset",
                 type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "contract LeveragedPosition",
-                name: "position",
-                type: "address",
-            },
-        ],
-        name: "getPositionLiquidationThreshold",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "contract LeveragedPosition",
-                name: "position",
-                type: "address",
-            },
-        ],
-        name: "getPositionScaledATokens",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
                 internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getPositionLiquidationThreshold",
+        inputs: [
+            {
+                name: "position",
+                type: "address",
+                internalType: "contract LeveragedPosition",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getTotalAvailableBorrows",
+        inputs: [
+            {
                 name: "asset",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "getTotalAvailableBorrows",
         outputs: [
             {
-                internalType: "uint256",
                 name: "availableBorrowsETH",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getUserBorrowAllowance",
         inputs: [
             {
-                internalType: "address",
                 name: "user",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "asset",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "getUserBorrowAllowance",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [
-            {
-                internalType: "contract IPoolAddressesProvider",
-                name: "_addressesProvider",
-                type: "address",
-            },
-            {
-                internalType: "contract ILeveragedPositionsFactory",
-                name: "_factory",
-                type: "address",
-            },
-            {
-                internalType: "contract DefaultInterestRateStrategy",
-                name: "_irm",
-                type: "address",
-            },
-        ],
-        name: "initialize",
-        outputs: [],
-        stateMutability: "nonpayable",
         type: "function",
-    },
-    {
+        name: "initializeReserve",
         inputs: [
             {
-                internalType: "contract ILeveragedPositionsFactory",
-                name: "_factory",
-                type: "address",
-            },
-        ],
-        name: "initialize",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
                 name: "_asset",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "_lpToken",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "initializeReserve",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [
-            {
-                internalType: "address",
-                name: "asset",
-                type: "address",
-            },
-        ],
+        type: "function",
         name: "isPoolSupportedAsset",
-        outputs: [
-            {
-                internalType: "bool",
-                name: "",
-                type: "bool",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
         inputs: [
             {
-                internalType: "contract LeveragedPosition",
-                name: "position",
-                type: "address",
-            },
-        ],
-        name: "isPositionLiquidateable",
-        outputs: [
-            {
-                internalType: "bool",
-                name: "",
-                type: "bool",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "owner",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "position",
-                type: "address",
-            },
-            {
-                internalType: "address",
                 name: "asset",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "positionScaledATokens",
         outputs: [
             {
-                internalType: "uint256",
+                name: "",
+                type: "bool",
+                internalType: "bool",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "isPositionLiquidateable",
+        inputs: [
+            {
+                name: "position",
+                type: "address",
+                internalType: "contract LeveragedPosition",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "bool",
+                internalType: "bool",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "owner",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "positionBorrowIndex",
+        inputs: [
+            {
+                name: "position",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "asset",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "positionBorrowIndexLastUpdate",
         inputs: [
             {
-                internalType: "contract DefaultInterestRateStrategy",
-                name: "_irm",
+                name: "position",
                 type: "address",
-            },
-        ],
-        name: "reinitialize",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
                 internalType: "address",
+            },
+            {
                 name: "asset",
                 type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "uint40",
+                internalType: "uint40",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "positionScaledATokens",
+        inputs: [
+            {
+                name: "position",
+                type: "address",
+                internalType: "address",
             },
             {
+                name: "asset",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "uint256",
                 internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "repayAsPosition",
+        inputs: [
+            {
+                name: "asset",
+                type: "address",
+                internalType: "address",
+            },
+            {
                 name: "repayAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "repayAsPosition",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
+    },
+    {
+        type: "event",
+        name: "BorrowAsPosition",
+        inputs: [
+            {
+                name: "position",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "asset",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "borrowAmount",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+            {
+                name: "scaledATokensMinted",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "Liquidation",
+        inputs: [
+            {
+                name: "liquidator",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "position",
+                type: "address",
+                indexed: true,
+                internalType: "contract LeveragedPosition",
+            },
+            {
+                name: "debtToRepay",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+            {
+                name: "actualSeizedStableAmount",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+            {
+                name: "collateralSeized",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "RepayAsPosition",
+        inputs: [
+            {
+                name: "position",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "asset",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "borrowAmount",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+            {
+                name: "scaledATokensBurnt",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+        ],
+        anonymous: false,
     },
 ];
 class ICreditDelegator__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.ICreditDelegator__factory = ICreditDelegator__factory;

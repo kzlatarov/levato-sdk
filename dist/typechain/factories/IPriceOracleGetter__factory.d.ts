@@ -1,41 +1,42 @@
-import { type ContractRunner } from "ethers";
+import { Signer } from "ethers";
+import type { Provider } from "@ethersproject/providers";
 import type { IPriceOracleGetter, IPriceOracleGetterInterface } from "../IPriceOracleGetter";
 export declare class IPriceOracleGetter__factory {
     static readonly abi: readonly [{
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "BASE_CURRENCY";
+        readonly inputs: readonly [];
         readonly outputs: readonly [{
-            readonly internalType: "address";
             readonly name: "";
             readonly type: "address";
+            readonly internalType: "address";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }, {
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "BASE_CURRENCY_UNIT";
+        readonly inputs: readonly [];
         readonly outputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "getAssetPrice";
         readonly inputs: readonly [{
-            readonly internalType: "address";
             readonly name: "asset";
             readonly type: "address";
+            readonly internalType: "address";
         }];
-        readonly name: "getAssetPrice";
         readonly outputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }];
     static createInterface(): IPriceOracleGetterInterface;
-    static connect(address: string, runner?: ContractRunner | null): IPriceOracleGetter;
+    static connect(address: string, signerOrProvider: Signer | Provider): IPriceOracleGetter;
 }

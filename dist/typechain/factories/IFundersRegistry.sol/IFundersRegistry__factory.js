@@ -7,529 +7,529 @@ exports.IFundersRegistry__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        inputs: [],
+        type: "function",
         name: "WNATIVE",
+        inputs: [],
         outputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "_listExtensions",
+        inputs: [],
         outputs: [
             {
-                internalType: "address[]",
                 name: "",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_registerExtension",
         inputs: [
             {
-                internalType: "contract DiamondExtension",
                 name: "extensionToAdd",
                 type: "address",
+                internalType: "contract DiamondExtension",
             },
             {
-                internalType: "contract DiamondExtension",
                 name: "extensionToReplace",
                 type: "address",
+                internalType: "contract DiamondExtension",
             },
         ],
-        name: "_registerExtension",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_removeFundingStrategyForPair",
         inputs: [
             {
-                internalType: "contract IFundingStrategy",
                 name: "strategy",
                 type: "address",
+                internalType: "contract IFundingStrategy",
             },
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "inputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "outputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
-        name: "_removeFundingStrategyForPair",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_replaceExtensions",
         inputs: [
             {
-                internalType: "address[]",
                 name: "extensions",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
-        name: "_replaceExtensions",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_setBalancerPoolForTokens",
         inputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "inputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "outputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "address",
                 name: "pool",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "_setBalancerPoolForTokens",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_setBestSwapPath",
         inputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "inputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "outputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "contract IERC20Upgradeable[]",
                 name: "bestPath",
                 type: "address[]",
+                internalType: "contract IERC20Upgradeable[]",
             },
         ],
-        name: "_setBestSwapPath",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_setFundingStrategy",
         inputs: [
             {
-                internalType: "contract IFundingStrategy",
                 name: "strategy",
                 type: "address",
+                internalType: "contract IFundingStrategy",
             },
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "inputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "outputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
-        name: "_setFundingStrategy",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_setUniV3PoolFee",
         inputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "inputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "outputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "uint24",
                 name: "fee",
                 type: "uint24",
+                internalType: "uint24",
             },
         ],
-        name: "_setUniV3PoolFee",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "amountOutAndSlippageOfSwap",
         inputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "inputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "uint256",
                 name: "inputAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "outputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
-        name: "amountOutAndSlippageOfSwap",
         outputs: [
             {
-                internalType: "uint256",
                 name: "outputAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "slippage",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "balancerPoolForTokens",
         inputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "inputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "outputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
-        name: "balancerPoolForTokens",
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "bestSwapPath",
         inputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "inputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "outputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
-        name: "bestSwapPath",
         outputs: [
             {
-                internalType: "contract IERC20Upgradeable[]",
                 name: "",
                 type: "address[]",
+                internalType: "contract IERC20Upgradeable[]",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "customUniV3Router",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "defaultOutputToken",
         inputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "inputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
-        name: "defaultOutputToken",
         outputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "fundingStrategiesByName",
         inputs: [
             {
-                internalType: "string",
                 name: "name",
                 type: "string",
+                internalType: "string",
             },
         ],
-        name: "fundingStrategiesByName",
         outputs: [
             {
-                internalType: "contract IFundingStrategy",
                 name: "",
                 type: "address",
+                internalType: "contract IFundingStrategy",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [
-            {
-                internalType: "contract IERC20Upgradeable",
-                name: "inputToken",
-                type: "address",
-            },
-            {
-                internalType: "contract IERC20Upgradeable",
-                name: "outputToken",
-                type: "address",
-            },
-        ],
+        type: "function",
         name: "fundingStrategiesByTokens",
+        inputs: [
+            {
+                name: "inputToken",
+                type: "address",
+                internalType: "contract IERC20Upgradeable",
+            },
+            {
+                name: "outputToken",
+                type: "address",
+                internalType: "contract IERC20Upgradeable",
+            },
+        ],
         outputs: [
             {
-                internalType: "contract IFundingStrategy",
                 name: "",
                 type: "address",
+                internalType: "contract IFundingStrategy",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getBestSwapPath",
         inputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "inputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "outputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
-        name: "getBestSwapPath",
         outputs: [
             {
-                internalType: "contract IERC20Upgradeable[]",
                 name: "",
                 type: "address[]",
+                internalType: "contract IERC20Upgradeable[]",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getFundingStrategies",
         inputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "inputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "outputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
-        name: "getFundingStrategies",
         outputs: [
             {
-                internalType: "contract IFundingStrategy[]",
                 name: "strategies",
                 type: "address[]",
+                internalType: "contract IFundingStrategy[]",
             },
             {
-                internalType: "bytes[]",
                 name: "strategiesData",
                 type: "bytes[]",
+                internalType: "bytes[]",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getFundingStrategy",
         inputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "inputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "outputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
-        name: "getFundingStrategy",
         outputs: [
             {
-                internalType: "contract IFundingStrategy",
                 name: "strategy",
                 type: "address",
+                internalType: "contract IFundingStrategy",
             },
             {
-                internalType: "bytes",
                 name: "strategyData",
                 type: "bytes",
+                internalType: "bytes",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getSlippage",
         inputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "inputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "outputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
-        name: "getSlippage",
         outputs: [
             {
-                internalType: "uint256",
                 name: "slippage",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "initialize",
         inputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "_wnative",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
-        name: "initialize",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "owner",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "reinitialize",
         inputs: [
             {
-                internalType: "contract ICreditDelegator",
                 name: "_creditDelegator",
                 type: "address",
+                internalType: "contract ICreditDelegator",
             },
         ],
-        name: "reinitialize",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "swap",
         inputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "inputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "uint256",
                 name: "inputAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "outputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
-        name: "swap",
         outputs: [
             {
-                internalType: "uint256",
                 name: "outputAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "uniswapV3Fees",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint24",
                 name: "",
                 type: "uint24",
+                internalType: "uint24",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
 ];
 class IFundersRegistry__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.IFundersRegistry__factory = IFundersRegistry__factory;

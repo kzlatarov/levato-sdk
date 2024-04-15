@@ -1,4 +1,5 @@
-import { type ContractRunner } from "ethers";
+import { Signer } from "ethers";
+import type { Provider } from "@ethersproject/providers";
 import type { IAuthRegistry, IAuthRegistryInterface } from "../../LeveragedPositionsTest.t.sol/IAuthRegistry";
 export declare class IAuthRegistry__factory {
     static readonly abi: readonly [{
@@ -35,5 +36,5 @@ export declare class IAuthRegistry__factory {
         readonly type: "function";
     }];
     static createInterface(): IAuthRegistryInterface;
-    static connect(address: string, runner?: ContractRunner | null): IAuthRegistry;
+    static connect(address: string, signerOrProvider: Signer | Provider): IAuthRegistry;
 }

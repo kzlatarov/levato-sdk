@@ -1,8 +1,19 @@
-import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, EventFragment, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedLogDescription, TypedListener, TypedContractMethod } from "./common";
-export interface JumpRateModelInterface extends Interface {
-    getFunction(nameOrSignature: "baseRate" | "blocksPerYear" | "getBorrowRate" | "getSupplyRate" | "jumpMultiplier" | "kink" | "multiplier" | "utilizationRate"): FunctionFragment;
-    getEvent(nameOrSignatureOrTopic: "NewInterestParams"): EventFragment;
+import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
+export interface JumpRateModelInterface extends utils.Interface {
+    functions: {
+        "baseRate()": FunctionFragment;
+        "blocksPerYear()": FunctionFragment;
+        "getBorrowRate(uint256,uint256,uint256)": FunctionFragment;
+        "getSupplyRate(uint256,uint256,uint256,uint256)": FunctionFragment;
+        "jumpMultiplier()": FunctionFragment;
+        "kink()": FunctionFragment;
+        "multiplier()": FunctionFragment;
+        "utilizationRate(uint256,uint256,uint256)": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "baseRate" | "blocksPerYear" | "getBorrowRate" | "getSupplyRate" | "jumpMultiplier" | "kink" | "multiplier" | "utilizationRate"): FunctionFragment;
     encodeFunctionData(functionFragment: "baseRate", values?: undefined): string;
     encodeFunctionData(functionFragment: "blocksPerYear", values?: undefined): string;
     encodeFunctionData(functionFragment: "getBorrowRate", values: [BigNumberish, BigNumberish, BigNumberish]): string;
@@ -19,102 +30,88 @@ export interface JumpRateModelInterface extends Interface {
     decodeFunctionResult(functionFragment: "kink", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "multiplier", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "utilizationRate", data: BytesLike): Result;
+    events: {
+        "NewInterestParams(uint256,uint256,uint256,uint256)": EventFragment;
+    };
+    getEvent(nameOrSignatureOrTopic: "NewInterestParams"): EventFragment;
 }
-export declare namespace NewInterestParamsEvent {
-    type InputTuple = [
-        baseRate: BigNumberish,
-        multiplier: BigNumberish,
-        jumpMultiplier: BigNumberish,
-        kink: BigNumberish
-    ];
-    type OutputTuple = [
-        baseRate: bigint,
-        multiplier: bigint,
-        jumpMultiplier: bigint,
-        kink: bigint
-    ];
-    interface OutputObject {
-        baseRate: bigint;
-        multiplier: bigint;
-        jumpMultiplier: bigint;
-        kink: bigint;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export interface NewInterestParamsEventObject {
+    baseRate: BigNumber;
+    multiplier: BigNumber;
+    jumpMultiplier: BigNumber;
+    kink: BigNumber;
 }
+export type NewInterestParamsEvent = TypedEvent<[
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    BigNumber
+], NewInterestParamsEventObject>;
+export type NewInterestParamsEventFilter = TypedEventFilter<NewInterestParamsEvent>;
 export interface JumpRateModel extends BaseContract {
-    connect(runner?: ContractRunner | null): JumpRateModel;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: JumpRateModelInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    baseRate: TypedContractMethod<[], [bigint], "view">;
-    blocksPerYear: TypedContractMethod<[], [bigint], "view">;
-    getBorrowRate: TypedContractMethod<[
-        cash: BigNumberish,
-        borrows: BigNumberish,
-        reserves: BigNumberish
-    ], [
-        bigint
-    ], "view">;
-    getSupplyRate: TypedContractMethod<[
-        cash: BigNumberish,
-        borrows: BigNumberish,
-        reserves: BigNumberish,
-        reserveFactorMantissa: BigNumberish
-    ], [
-        bigint
-    ], "view">;
-    jumpMultiplier: TypedContractMethod<[], [bigint], "view">;
-    kink: TypedContractMethod<[], [bigint], "view">;
-    multiplier: TypedContractMethod<[], [bigint], "view">;
-    utilizationRate: TypedContractMethod<[
-        cash: BigNumberish,
-        borrows: BigNumberish,
-        reserves: BigNumberish
-    ], [
-        bigint
-    ], "view">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "baseRate"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "blocksPerYear"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "getBorrowRate"): TypedContractMethod<[
-        cash: BigNumberish,
-        borrows: BigNumberish,
-        reserves: BigNumberish
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "getSupplyRate"): TypedContractMethod<[
-        cash: BigNumberish,
-        borrows: BigNumberish,
-        reserves: BigNumberish,
-        reserveFactorMantissa: BigNumberish
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "jumpMultiplier"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "kink"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "multiplier"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "utilizationRate"): TypedContractMethod<[
-        cash: BigNumberish,
-        borrows: BigNumberish,
-        reserves: BigNumberish
-    ], [
-        bigint
-    ], "view">;
-    getEvent(key: "NewInterestParams"): TypedContractEvent<NewInterestParamsEvent.InputTuple, NewInterestParamsEvent.OutputTuple, NewInterestParamsEvent.OutputObject>;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        baseRate(overrides?: CallOverrides): Promise<[BigNumber]>;
+        blocksPerYear(overrides?: CallOverrides): Promise<[BigNumber]>;
+        getBorrowRate(cash: BigNumberish, borrows: BigNumberish, reserves: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+        getSupplyRate(cash: BigNumberish, borrows: BigNumberish, reserves: BigNumberish, reserveFactorMantissa: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+        jumpMultiplier(overrides?: CallOverrides): Promise<[BigNumber]>;
+        kink(overrides?: CallOverrides): Promise<[BigNumber]>;
+        multiplier(overrides?: CallOverrides): Promise<[BigNumber]>;
+        utilizationRate(cash: BigNumberish, borrows: BigNumberish, reserves: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    };
+    baseRate(overrides?: CallOverrides): Promise<BigNumber>;
+    blocksPerYear(overrides?: CallOverrides): Promise<BigNumber>;
+    getBorrowRate(cash: BigNumberish, borrows: BigNumberish, reserves: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getSupplyRate(cash: BigNumberish, borrows: BigNumberish, reserves: BigNumberish, reserveFactorMantissa: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    jumpMultiplier(overrides?: CallOverrides): Promise<BigNumber>;
+    kink(overrides?: CallOverrides): Promise<BigNumber>;
+    multiplier(overrides?: CallOverrides): Promise<BigNumber>;
+    utilizationRate(cash: BigNumberish, borrows: BigNumberish, reserves: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    callStatic: {
+        baseRate(overrides?: CallOverrides): Promise<BigNumber>;
+        blocksPerYear(overrides?: CallOverrides): Promise<BigNumber>;
+        getBorrowRate(cash: BigNumberish, borrows: BigNumberish, reserves: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        getSupplyRate(cash: BigNumberish, borrows: BigNumberish, reserves: BigNumberish, reserveFactorMantissa: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        jumpMultiplier(overrides?: CallOverrides): Promise<BigNumber>;
+        kink(overrides?: CallOverrides): Promise<BigNumber>;
+        multiplier(overrides?: CallOverrides): Promise<BigNumber>;
+        utilizationRate(cash: BigNumberish, borrows: BigNumberish, reserves: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    };
     filters: {
-        "NewInterestParams(uint256,uint256,uint256,uint256)": TypedContractEvent<NewInterestParamsEvent.InputTuple, NewInterestParamsEvent.OutputTuple, NewInterestParamsEvent.OutputObject>;
-        NewInterestParams: TypedContractEvent<NewInterestParamsEvent.InputTuple, NewInterestParamsEvent.OutputTuple, NewInterestParamsEvent.OutputObject>;
+        "NewInterestParams(uint256,uint256,uint256,uint256)"(baseRate?: null, multiplier?: null, jumpMultiplier?: null, kink?: null): NewInterestParamsEventFilter;
+        NewInterestParams(baseRate?: null, multiplier?: null, jumpMultiplier?: null, kink?: null): NewInterestParamsEventFilter;
+    };
+    estimateGas: {
+        baseRate(overrides?: CallOverrides): Promise<BigNumber>;
+        blocksPerYear(overrides?: CallOverrides): Promise<BigNumber>;
+        getBorrowRate(cash: BigNumberish, borrows: BigNumberish, reserves: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        getSupplyRate(cash: BigNumberish, borrows: BigNumberish, reserves: BigNumberish, reserveFactorMantissa: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        jumpMultiplier(overrides?: CallOverrides): Promise<BigNumber>;
+        kink(overrides?: CallOverrides): Promise<BigNumber>;
+        multiplier(overrides?: CallOverrides): Promise<BigNumber>;
+        utilizationRate(cash: BigNumberish, borrows: BigNumberish, reserves: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        baseRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        blocksPerYear(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getBorrowRate(cash: BigNumberish, borrows: BigNumberish, reserves: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getSupplyRate(cash: BigNumberish, borrows: BigNumberish, reserves: BigNumberish, reserveFactorMantissa: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        jumpMultiplier(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        kink(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        multiplier(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        utilizationRate(cash: BigNumberish, borrows: BigNumberish, reserves: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
     };
 }

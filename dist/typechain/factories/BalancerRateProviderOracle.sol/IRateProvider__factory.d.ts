@@ -1,17 +1,18 @@
-import { type ContractRunner } from "ethers";
+import { Signer } from "ethers";
+import type { Provider } from "@ethersproject/providers";
 import type { IRateProvider, IRateProviderInterface } from "../../BalancerRateProviderOracle.sol/IRateProvider";
 export declare class IRateProvider__factory {
     static readonly abi: readonly [{
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "getRate";
+        readonly inputs: readonly [];
         readonly outputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }];
     static createInterface(): IRateProviderInterface;
-    static connect(address: string, runner?: ContractRunner | null): IRateProvider;
+    static connect(address: string, signerOrProvider: Signer | Provider): IRateProvider;
 }

@@ -7,176 +7,176 @@ exports.IUniswapV2Factory__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        anonymous: false,
+        type: "function",
+        name: "allPairs",
         inputs: [
             {
-                indexed: true,
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        outputs: [
+            {
+                name: "pair",
+                type: "address",
                 internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "allPairsLength",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "createPair",
+        inputs: [
+            {
+                name: "tokenA",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "tokenB",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "pair",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "feeTo",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "feeToSetter",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getPair",
+        inputs: [
+            {
+                name: "tokenA",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "tokenB",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "pair",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "setFeeTo",
+        inputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "setFeeToSetter",
+        inputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "event",
+        name: "PairCreated",
+        inputs: [
+            {
                 name: "token0",
                 type: "address",
-            },
-            {
                 indexed: true,
                 internalType: "address",
+            },
+            {
                 name: "token1",
                 type: "address",
+                indexed: true,
+                internalType: "address",
             },
             {
+                name: "pair",
+                type: "address",
                 indexed: false,
                 internalType: "address",
-                name: "pair",
-                type: "address",
             },
             {
+                name: "",
+                type: "uint256",
                 indexed: false,
                 internalType: "uint256",
-                name: "",
-                type: "uint256",
             },
         ],
-        name: "PairCreated",
-        type: "event",
-    },
-    {
-        inputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        name: "allPairs",
-        outputs: [
-            {
-                internalType: "address",
-                name: "pair",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "allPairsLength",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "tokenA",
-                type: "address",
-            },
-            {
-                internalType: "address",
-                name: "tokenB",
-                type: "address",
-            },
-        ],
-        name: "createPair",
-        outputs: [
-            {
-                internalType: "address",
-                name: "pair",
-                type: "address",
-            },
-        ],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "feeTo",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "feeToSetter",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "tokenA",
-                type: "address",
-            },
-            {
-                internalType: "address",
-                name: "tokenB",
-                type: "address",
-            },
-        ],
-        name: "getPair",
-        outputs: [
-            {
-                internalType: "address",
-                name: "pair",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        name: "setFeeTo",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        name: "setFeeToSetter",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
+        anonymous: false,
     },
 ];
 class IUniswapV2Factory__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.IUniswapV2Factory__factory = IUniswapV2Factory__factory;

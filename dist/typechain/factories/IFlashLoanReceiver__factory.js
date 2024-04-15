@@ -7,41 +7,41 @@ exports.IFlashLoanReceiver__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
+        type: "function",
+        name: "receiveFlashLoan",
         inputs: [
             {
-                internalType: "address",
                 name: "borrowedAsset",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "borrowedAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "premium",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "bytes",
                 name: "data",
                 type: "bytes",
+                internalType: "bytes",
             },
         ],
-        name: "receiveFlashLoan",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
 ];
 class IFlashLoanReceiver__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.IFlashLoanReceiver__factory = IFlashLoanReceiver__factory;

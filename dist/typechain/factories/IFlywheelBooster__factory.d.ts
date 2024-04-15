@@ -1,39 +1,40 @@
-import { type ContractRunner } from "ethers";
+import { Signer } from "ethers";
+import type { Provider } from "@ethersproject/providers";
 import type { IFlywheelBooster, IFlywheelBoosterInterface } from "../IFlywheelBooster";
 export declare class IFlywheelBooster__factory {
     static readonly abi: readonly [{
+        readonly type: "function";
+        readonly name: "boostedBalanceOf";
         readonly inputs: readonly [{
-            readonly internalType: "contract ERC20";
             readonly name: "strategy";
             readonly type: "address";
+            readonly internalType: "contract ERC20";
         }, {
-            readonly internalType: "address";
             readonly name: "user";
             readonly type: "address";
+            readonly internalType: "address";
         }];
-        readonly name: "boostedBalanceOf";
         readonly outputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "boostedTotalSupply";
         readonly inputs: readonly [{
-            readonly internalType: "contract ERC20";
             readonly name: "strategy";
             readonly type: "address";
+            readonly internalType: "contract ERC20";
         }];
-        readonly name: "boostedTotalSupply";
         readonly outputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }];
     static createInterface(): IFlywheelBoosterInterface;
-    static connect(address: string, runner?: ContractRunner | null): IFlywheelBooster;
+    static connect(address: string, signerOrProvider: Signer | Provider): IFlywheelBooster;
 }

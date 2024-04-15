@@ -7,509 +7,509 @@ exports.IPoolAddressesProvider__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "oldAddress",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "newAddress",
-                type: "address",
-            },
-        ],
-        name: "ACLAdminUpdated",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "oldAddress",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "newAddress",
-                type: "address",
-            },
-        ],
-        name: "ACLManagerUpdated",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "bytes32",
-                name: "id",
-                type: "bytes32",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "oldAddress",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "newAddress",
-                type: "address",
-            },
-        ],
-        name: "AddressSet",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "bytes32",
-                name: "id",
-                type: "bytes32",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "proxyAddress",
-                type: "address",
-            },
-            {
-                indexed: false,
-                internalType: "address",
-                name: "oldImplementationAddress",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "newImplementationAddress",
-                type: "address",
-            },
-        ],
-        name: "AddressSetAsProxy",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "string",
-                name: "oldMarketId",
-                type: "string",
-            },
-            {
-                indexed: true,
-                internalType: "string",
-                name: "newMarketId",
-                type: "string",
-            },
-        ],
-        name: "MarketIdSet",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "oldAddress",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "newAddress",
-                type: "address",
-            },
-        ],
-        name: "PoolConfiguratorUpdated",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "oldAddress",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "newAddress",
-                type: "address",
-            },
-        ],
-        name: "PoolDataProviderUpdated",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "oldAddress",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "newAddress",
-                type: "address",
-            },
-        ],
-        name: "PoolUpdated",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "oldAddress",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "newAddress",
-                type: "address",
-            },
-        ],
-        name: "PriceOracleSentinelUpdated",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "oldAddress",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "newAddress",
-                type: "address",
-            },
-        ],
-        name: "PriceOracleUpdated",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "bytes32",
-                name: "id",
-                type: "bytes32",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "proxyAddress",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "implementationAddress",
-                type: "address",
-            },
-        ],
-        name: "ProxyCreated",
-        type: "event",
-    },
-    {
-        inputs: [],
+        type: "function",
         name: "getACLAdmin",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
         inputs: [],
-        name: "getACLManager",
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getACLManager",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getAddress",
         inputs: [
             {
-                internalType: "bytes32",
                 name: "id",
                 type: "bytes32",
+                internalType: "bytes32",
             },
         ],
-        name: "getAddress",
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getMarketId",
+        inputs: [],
         outputs: [
             {
-                internalType: "string",
                 name: "",
                 type: "string",
+                internalType: "string",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getPool",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getPoolConfigurator",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getPoolDataProvider",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getPriceOracle",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
         inputs: [],
-        name: "getPriceOracleSentinel",
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getPriceOracleSentinel",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "setACLAdmin",
         inputs: [
             {
-                internalType: "address",
                 name: "newAclAdmin",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "setACLAdmin",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "setACLManager",
         inputs: [
             {
-                internalType: "address",
                 name: "newAclManager",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "setACLManager",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "setAddress",
         inputs: [
             {
-                internalType: "bytes32",
                 name: "id",
                 type: "bytes32",
+                internalType: "bytes32",
             },
             {
-                internalType: "address",
                 name: "newAddress",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "setAddress",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "setAddressAsProxy",
         inputs: [
             {
-                internalType: "bytes32",
                 name: "id",
                 type: "bytes32",
+                internalType: "bytes32",
             },
             {
-                internalType: "address",
                 name: "newImplementationAddress",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "setAddressAsProxy",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "setMarketId",
         inputs: [
             {
-                internalType: "string",
                 name: "newMarketId",
                 type: "string",
+                internalType: "string",
             },
         ],
-        name: "setMarketId",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "setPoolConfiguratorImpl",
         inputs: [
             {
-                internalType: "address",
                 name: "newPoolConfiguratorImpl",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "setPoolConfiguratorImpl",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "setPoolDataProvider",
         inputs: [
             {
-                internalType: "address",
                 name: "newDataProvider",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "setPoolDataProvider",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "setPoolImpl",
         inputs: [
             {
-                internalType: "address",
                 name: "newPoolImpl",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "setPoolImpl",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "setPriceOracle",
         inputs: [
             {
-                internalType: "address",
                 name: "newPriceOracle",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "setPriceOracle",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "setPriceOracleSentinel",
         inputs: [
             {
-                internalType: "address",
                 name: "newPriceOracleSentinel",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "setPriceOracleSentinel",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
+    },
+    {
+        type: "event",
+        name: "ACLAdminUpdated",
+        inputs: [
+            {
+                name: "oldAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "newAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "ACLManagerUpdated",
+        inputs: [
+            {
+                name: "oldAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "newAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "AddressSet",
+        inputs: [
+            {
+                name: "id",
+                type: "bytes32",
+                indexed: true,
+                internalType: "bytes32",
+            },
+            {
+                name: "oldAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "newAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "AddressSetAsProxy",
+        inputs: [
+            {
+                name: "id",
+                type: "bytes32",
+                indexed: true,
+                internalType: "bytes32",
+            },
+            {
+                name: "proxyAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "oldImplementationAddress",
+                type: "address",
+                indexed: false,
+                internalType: "address",
+            },
+            {
+                name: "newImplementationAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "MarketIdSet",
+        inputs: [
+            {
+                name: "oldMarketId",
+                type: "string",
+                indexed: true,
+                internalType: "string",
+            },
+            {
+                name: "newMarketId",
+                type: "string",
+                indexed: true,
+                internalType: "string",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "PoolConfiguratorUpdated",
+        inputs: [
+            {
+                name: "oldAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "newAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "PoolDataProviderUpdated",
+        inputs: [
+            {
+                name: "oldAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "newAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "PoolUpdated",
+        inputs: [
+            {
+                name: "oldAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "newAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "PriceOracleSentinelUpdated",
+        inputs: [
+            {
+                name: "oldAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "newAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "PriceOracleUpdated",
+        inputs: [
+            {
+                name: "oldAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "newAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "ProxyCreated",
+        inputs: [
+            {
+                name: "id",
+                type: "bytes32",
+                indexed: true,
+                internalType: "bytes32",
+            },
+            {
+                name: "proxyAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "implementationAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
     },
 ];
 class IPoolAddressesProvider__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.IPoolAddressesProvider__factory = IPoolAddressesProvider__factory;

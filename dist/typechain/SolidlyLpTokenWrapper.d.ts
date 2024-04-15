@@ -1,47 +1,64 @@
-import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedListener, TypedContractMethod } from "./common";
-export interface SolidlyLpTokenWrapperInterface extends Interface {
-    getFunction(nameOrSignature: "name" | "redeem"): FunctionFragment;
+import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, ContractTransaction, Overrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
+export interface SolidlyLpTokenWrapperInterface extends utils.Interface {
+    functions: {
+        "name()": FunctionFragment;
+        "redeem(address,uint256,bytes)": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "name" | "redeem"): FunctionFragment;
     encodeFunctionData(functionFragment: "name", values?: undefined): string;
-    encodeFunctionData(functionFragment: "redeem", values: [AddressLike, BigNumberish, BytesLike]): string;
+    encodeFunctionData(functionFragment: "redeem", values: [string, BigNumberish, BytesLike]): string;
     decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "redeem", data: BytesLike): Result;
+    events: {};
 }
 export interface SolidlyLpTokenWrapper extends BaseContract {
-    connect(runner?: ContractRunner | null): SolidlyLpTokenWrapper;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: SolidlyLpTokenWrapperInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    name: TypedContractMethod<[], [string], "view">;
-    redeem: TypedContractMethod<[
-        inputToken: AddressLike,
-        inputAmount: BigNumberish,
-        strategyData: BytesLike
-    ], [
-        [string, bigint] & {
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        name(overrides?: CallOverrides): Promise<[string]>;
+        redeem(inputToken: string, inputAmount: BigNumberish, strategyData: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+    };
+    name(overrides?: CallOverrides): Promise<string>;
+    redeem(inputToken: string, inputAmount: BigNumberish, strategyData: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    callStatic: {
+        name(overrides?: CallOverrides): Promise<string>;
+        redeem(inputToken: string, inputAmount: BigNumberish, strategyData: BytesLike, overrides?: CallOverrides): Promise<[
+            string,
+            BigNumber
+        ] & {
             outputToken: string;
-            outputAmount: bigint;
-        }
-    ], "nonpayable">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "name"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "redeem"): TypedContractMethod<[
-        inputToken: AddressLike,
-        inputAmount: BigNumberish,
-        strategyData: BytesLike
-    ], [
-        [string, bigint] & {
-            outputToken: string;
-            outputAmount: bigint;
-        }
-    ], "nonpayable">;
+            outputAmount: BigNumber;
+        }>;
+    };
     filters: {};
+    estimateGas: {
+        name(overrides?: CallOverrides): Promise<BigNumber>;
+        redeem(inputToken: string, inputAmount: BigNumberish, strategyData: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        redeem(inputToken: string, inputAmount: BigNumberish, strategyData: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+    };
 }

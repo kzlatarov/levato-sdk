@@ -1,199 +1,243 @@
-import { type ContractRunner } from "ethers";
+import { Signer } from "ethers";
+import type { Provider } from "@ethersproject/providers";
 import type { ISwapRouter, ISwapRouterInterface } from "../ISwapRouter";
 export declare class ISwapRouter__factory {
     static readonly abi: readonly [{
+        readonly type: "function";
+        readonly name: "exactInput";
         readonly inputs: readonly [{
+            readonly name: "params";
+            readonly type: "tuple";
+            readonly internalType: "struct ISwapRouter.ExactInputParams";
             readonly components: readonly [{
-                readonly internalType: "bytes";
                 readonly name: "path";
                 readonly type: "bytes";
+                readonly internalType: "bytes";
             }, {
-                readonly internalType: "address";
                 readonly name: "recipient";
                 readonly type: "address";
+                readonly internalType: "address";
             }, {
-                readonly internalType: "uint256";
                 readonly name: "deadline";
                 readonly type: "uint256";
-            }, {
                 readonly internalType: "uint256";
+            }, {
                 readonly name: "amountIn";
                 readonly type: "uint256";
-            }, {
                 readonly internalType: "uint256";
+            }, {
                 readonly name: "amountOutMinimum";
                 readonly type: "uint256";
+                readonly internalType: "uint256";
             }];
-            readonly internalType: "struct ISwapRouter.ExactInputParams";
-            readonly name: "params";
-            readonly type: "tuple";
         }];
-        readonly name: "exactInput";
         readonly outputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "amountOut";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "exactInputSingle";
         readonly inputs: readonly [{
-            readonly components: readonly [{
-                readonly internalType: "address";
-                readonly name: "tokenIn";
-                readonly type: "address";
-            }, {
-                readonly internalType: "address";
-                readonly name: "tokenOut";
-                readonly type: "address";
-            }, {
-                readonly internalType: "uint24";
-                readonly name: "fee";
-                readonly type: "uint24";
-            }, {
-                readonly internalType: "address";
-                readonly name: "recipient";
-                readonly type: "address";
-            }, {
-                readonly internalType: "uint256";
-                readonly name: "deadline";
-                readonly type: "uint256";
-            }, {
-                readonly internalType: "uint256";
-                readonly name: "amountIn";
-                readonly type: "uint256";
-            }, {
-                readonly internalType: "uint256";
-                readonly name: "amountOutMinimum";
-                readonly type: "uint256";
-            }, {
-                readonly internalType: "uint160";
-                readonly name: "sqrtPriceLimitX96";
-                readonly type: "uint160";
-            }];
-            readonly internalType: "struct ISwapRouter.ExactInputSingleParams";
             readonly name: "params";
             readonly type: "tuple";
+            readonly internalType: "struct ISwapRouter.ExactInputSingleParams";
+            readonly components: readonly [{
+                readonly name: "tokenIn";
+                readonly type: "address";
+                readonly internalType: "address";
+            }, {
+                readonly name: "tokenOut";
+                readonly type: "address";
+                readonly internalType: "address";
+            }, {
+                readonly name: "fee";
+                readonly type: "uint24";
+                readonly internalType: "uint24";
+            }, {
+                readonly name: "recipient";
+                readonly type: "address";
+                readonly internalType: "address";
+            }, {
+                readonly name: "amountIn";
+                readonly type: "uint256";
+                readonly internalType: "uint256";
+            }, {
+                readonly name: "amountOutMinimum";
+                readonly type: "uint256";
+                readonly internalType: "uint256";
+            }, {
+                readonly name: "sqrtPriceLimitX96";
+                readonly type: "uint160";
+                readonly internalType: "uint160";
+            }];
         }];
-        readonly name: "exactInputSingle";
         readonly outputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "amountOut";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "payable";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "exactInputSingle";
         readonly inputs: readonly [{
-            readonly components: readonly [{
-                readonly internalType: "bytes";
-                readonly name: "path";
-                readonly type: "bytes";
-            }, {
-                readonly internalType: "address";
-                readonly name: "recipient";
-                readonly type: "address";
-            }, {
-                readonly internalType: "uint256";
-                readonly name: "deadline";
-                readonly type: "uint256";
-            }, {
-                readonly internalType: "uint256";
-                readonly name: "amountOut";
-                readonly type: "uint256";
-            }, {
-                readonly internalType: "uint256";
-                readonly name: "amountInMaximum";
-                readonly type: "uint256";
-            }];
-            readonly internalType: "struct ISwapRouter.ExactOutputParams";
             readonly name: "params";
             readonly type: "tuple";
-        }];
-        readonly name: "exactOutput";
-        readonly outputs: readonly [{
-            readonly internalType: "uint256";
-            readonly name: "amountIn";
-            readonly type: "uint256";
-        }];
-        readonly stateMutability: "nonpayable";
-        readonly type: "function";
-    }, {
-        readonly inputs: readonly [{
+            readonly internalType: "struct ISwapRouter.ExactInputSingleParamsWithDeadline";
             readonly components: readonly [{
-                readonly internalType: "address";
                 readonly name: "tokenIn";
                 readonly type: "address";
-            }, {
                 readonly internalType: "address";
+            }, {
                 readonly name: "tokenOut";
                 readonly type: "address";
+                readonly internalType: "address";
             }, {
-                readonly internalType: "uint24";
                 readonly name: "fee";
                 readonly type: "uint24";
+                readonly internalType: "uint24";
             }, {
-                readonly internalType: "address";
                 readonly name: "recipient";
                 readonly type: "address";
+                readonly internalType: "address";
             }, {
-                readonly internalType: "uint256";
                 readonly name: "deadline";
                 readonly type: "uint256";
-            }, {
                 readonly internalType: "uint256";
-                readonly name: "amountOut";
-                readonly type: "uint256";
             }, {
+                readonly name: "amountIn";
+                readonly type: "uint256";
                 readonly internalType: "uint256";
-                readonly name: "amountInMaximum";
-                readonly type: "uint256";
             }, {
-                readonly internalType: "uint160";
+                readonly name: "amountOutMinimum";
+                readonly type: "uint256";
+                readonly internalType: "uint256";
+            }, {
                 readonly name: "sqrtPriceLimitX96";
                 readonly type: "uint160";
+                readonly internalType: "uint160";
             }];
-            readonly internalType: "struct ISwapRouter.ExactOutputSingleParams";
+        }];
+        readonly outputs: readonly [{
+            readonly name: "amountOut";
+            readonly type: "uint256";
+            readonly internalType: "uint256";
+        }];
+        readonly stateMutability: "payable";
+    }, {
+        readonly type: "function";
+        readonly name: "exactOutput";
+        readonly inputs: readonly [{
             readonly name: "params";
             readonly type: "tuple";
+            readonly internalType: "struct ISwapRouter.ExactOutputParams";
+            readonly components: readonly [{
+                readonly name: "path";
+                readonly type: "bytes";
+                readonly internalType: "bytes";
+            }, {
+                readonly name: "recipient";
+                readonly type: "address";
+                readonly internalType: "address";
+            }, {
+                readonly name: "deadline";
+                readonly type: "uint256";
+                readonly internalType: "uint256";
+            }, {
+                readonly name: "amountOut";
+                readonly type: "uint256";
+                readonly internalType: "uint256";
+            }, {
+                readonly name: "amountInMaximum";
+                readonly type: "uint256";
+                readonly internalType: "uint256";
+            }];
         }];
-        readonly name: "exactOutputSingle";
         readonly outputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "amountIn";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }, {
-        readonly inputs: readonly [];
-        readonly name: "factory";
+        readonly type: "function";
+        readonly name: "exactOutputSingle";
+        readonly inputs: readonly [{
+            readonly name: "params";
+            readonly type: "tuple";
+            readonly internalType: "struct ISwapRouter.ExactOutputSingleParams";
+            readonly components: readonly [{
+                readonly name: "tokenIn";
+                readonly type: "address";
+                readonly internalType: "address";
+            }, {
+                readonly name: "tokenOut";
+                readonly type: "address";
+                readonly internalType: "address";
+            }, {
+                readonly name: "fee";
+                readonly type: "uint24";
+                readonly internalType: "uint24";
+            }, {
+                readonly name: "recipient";
+                readonly type: "address";
+                readonly internalType: "address";
+            }, {
+                readonly name: "deadline";
+                readonly type: "uint256";
+                readonly internalType: "uint256";
+            }, {
+                readonly name: "amountOut";
+                readonly type: "uint256";
+                readonly internalType: "uint256";
+            }, {
+                readonly name: "amountInMaximum";
+                readonly type: "uint256";
+                readonly internalType: "uint256";
+            }, {
+                readonly name: "sqrtPriceLimitX96";
+                readonly type: "uint160";
+                readonly internalType: "uint160";
+            }];
+        }];
         readonly outputs: readonly [{
-            readonly internalType: "address";
+            readonly name: "amountIn";
+            readonly type: "uint256";
+            readonly internalType: "uint256";
+        }];
+        readonly stateMutability: "nonpayable";
+    }, {
+        readonly type: "function";
+        readonly name: "factory";
+        readonly inputs: readonly [];
+        readonly outputs: readonly [{
             readonly name: "";
             readonly type: "address";
+            readonly internalType: "address";
         }];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "multicall";
         readonly inputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "deadline";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }, {
-            readonly internalType: "bytes[]";
             readonly name: "data";
             readonly type: "bytes[]";
-        }];
-        readonly name: "multicall";
-        readonly outputs: readonly [{
             readonly internalType: "bytes[]";
+        }];
+        readonly outputs: readonly [{
             readonly name: "";
             readonly type: "bytes[]";
+            readonly internalType: "bytes[]";
         }];
         readonly stateMutability: "payable";
-        readonly type: "function";
     }];
     static createInterface(): ISwapRouterInterface;
-    static connect(address: string, runner?: ContractRunner | null): ISwapRouter;
+    static connect(address: string, signerOrProvider: Signer | Provider): ISwapRouter;
 }

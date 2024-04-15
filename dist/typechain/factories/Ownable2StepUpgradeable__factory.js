@@ -7,117 +7,117 @@ exports.Ownable2StepUpgradeable__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        anonymous: false,
+        type: "function",
+        name: "acceptOwnership",
+        inputs: [],
+        outputs: [],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "owner",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "pendingOwner",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "renounceOwnership",
+        inputs: [],
+        outputs: [],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "transferOwnership",
         inputs: [
             {
-                indexed: false,
-                internalType: "uint8",
+                name: "newOwner",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "event",
+        name: "Initialized",
+        inputs: [
+            {
                 name: "version",
                 type: "uint8",
+                indexed: false,
+                internalType: "uint8",
             },
         ],
-        name: "Initialized",
-        type: "event",
+        anonymous: false,
     },
     {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "previousOwner",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "newOwner",
-                type: "address",
-            },
-        ],
+        type: "event",
         name: "OwnershipTransferStarted",
-        type: "event",
-    },
-    {
-        anonymous: false,
         inputs: [
             {
-                indexed: true,
-                internalType: "address",
                 name: "previousOwner",
                 type: "address",
-            },
-            {
                 indexed: true,
                 internalType: "address",
+            },
+            {
                 name: "newOwner",
                 type: "address",
+                indexed: true,
+                internalType: "address",
             },
         ],
-        name: "OwnershipTransferred",
+        anonymous: false,
+    },
+    {
         type: "event",
-    },
-    {
-        inputs: [],
-        name: "acceptOwnership",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "owner",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "pendingOwner",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "renounceOwnership",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
+        name: "OwnershipTransferred",
         inputs: [
             {
+                name: "previousOwner",
+                type: "address",
+                indexed: true,
                 internalType: "address",
+            },
+            {
                 name: "newOwner",
                 type: "address",
+                indexed: true,
+                internalType: "address",
             },
         ],
-        name: "transferOwnership",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
+        anonymous: false,
     },
 ];
 class Ownable2StepUpgradeable__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.Ownable2StepUpgradeable__factory = Ownable2StepUpgradeable__factory;

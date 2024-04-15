@@ -7,770 +7,770 @@ exports.ComptrollerInterface__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
+        type: "function",
+        name: "_addRewardsDistributor",
         inputs: [
             {
-                internalType: "address",
                 name: "distributor",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "_addRewardsDistributor",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "_afterNonReentrant",
+        inputs: [],
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "_becomeImplementation",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
         inputs: [],
-        name: "_beforeNonReentrant",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_beforeNonReentrant",
+        inputs: [],
+        outputs: [],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "_deployMarket",
         inputs: [
             {
-                internalType: "uint8",
                 name: "delegateType",
                 type: "uint8",
+                internalType: "uint8",
             },
             {
-                internalType: "bytes",
                 name: "constructorData",
                 type: "bytes",
+                internalType: "bytes",
             },
             {
-                internalType: "bytes",
                 name: "becomeImplData",
                 type: "bytes",
+                internalType: "bytes",
             },
             {
-                internalType: "uint256",
                 name: "collateralFactorMantissa",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "_deployMarket",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_setCloseFactor",
         inputs: [
             {
-                internalType: "uint256",
                 name: "newCloseFactorMantissa",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "_setCloseFactor",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_setCollateralFactor",
         inputs: [
             {
-                internalType: "contract IonicCErc20",
                 name: "market",
                 type: "address",
+                internalType: "contract IonicCErc20",
             },
             {
-                internalType: "uint256",
                 name: "newCollateralFactorMantissa",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "_setCollateralFactor",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_setLiquidationIncentive",
         inputs: [
             {
-                internalType: "uint256",
                 name: "newLiquidationIncentiveMantissa",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "_setLiquidationIncentive",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_setPriceOracle",
         inputs: [
             {
-                internalType: "contract IonicCErc20",
                 name: "newOracle",
                 type: "address",
+                internalType: "contract IonicCErc20",
             },
         ],
-        name: "_setPriceOracle",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_setWhitelistEnforcement",
         inputs: [
             {
-                internalType: "bool",
                 name: "enforce",
                 type: "bool",
+                internalType: "bool",
             },
         ],
-        name: "_setWhitelistEnforcement",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_setWhitelistStatuses",
         inputs: [
             {
-                internalType: "address[]",
                 name: "_suppliers",
                 type: "address[]",
+                internalType: "address[]",
             },
             {
-                internalType: "bool[]",
                 name: "statuses",
                 type: "bool[]",
+                internalType: "bool[]",
             },
         ],
-        name: "_setWhitelistStatuses",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "borrowAllowed",
         inputs: [
             {
-                internalType: "address",
                 name: "cToken",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "borrower",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "borrowAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "borrowAllowed",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "borrowWithinLimits",
         inputs: [
             {
-                internalType: "address",
                 name: "cToken",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "accountBorrowsNew",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "borrowWithinLimits",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "checkMembership",
         inputs: [
             {
-                internalType: "address",
                 name: "account",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "contract IonicCErc20",
                 name: "cToken",
                 type: "address",
+                internalType: "contract IonicCErc20",
             },
         ],
-        name: "checkMembership",
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "enterMarkets",
         inputs: [
             {
-                internalType: "address[]",
                 name: "cTokens",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
-        name: "enterMarkets",
         outputs: [
             {
-                internalType: "uint256[]",
                 name: "",
                 type: "uint256[]",
+                internalType: "uint256[]",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "exitMarket",
         inputs: [
             {
-                internalType: "address",
                 name: "cToken",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "exitMarket",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getAccountLiquidity",
         inputs: [
             {
-                internalType: "address",
                 name: "account",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "getAccountLiquidity",
         outputs: [
             {
-                internalType: "uint256",
-                name: "",
+                name: "error",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
-                name: "",
+                name: "collateralValue",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
-                name: "",
+                name: "liquidity",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
-                name: "",
+                name: "shortfall",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getAssetsIn",
         inputs: [
             {
-                internalType: "address",
                 name: "account",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "getAssetsIn",
         outputs: [
             {
-                internalType: "contract IonicCErc20[]",
                 name: "",
                 type: "address[]",
+                internalType: "contract IonicCErc20[]",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getHypotheticalAccountLiquidity",
         inputs: [
             {
-                internalType: "address",
                 name: "account",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "cTokenModify",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "redeemTokens",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "borrowAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "getHypotheticalAccountLiquidity",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getMaxRedeemOrBorrow",
         inputs: [
             {
-                internalType: "address",
                 name: "account",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "contract IonicCErc20",
                 name: "cToken",
                 type: "address",
+                internalType: "contract IonicCErc20",
             },
             {
-                internalType: "bool",
                 name: "isBorrow",
                 type: "bool",
+                internalType: "bool",
             },
         ],
-        name: "getMaxRedeemOrBorrow",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "isDeprecated",
         inputs: [
             {
-                internalType: "contract IonicCErc20",
                 name: "cToken",
                 type: "address",
+                internalType: "contract IonicCErc20",
             },
         ],
-        name: "isDeprecated",
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "liquidateBorrowAllowed",
         inputs: [
             {
-                internalType: "address",
                 name: "cTokenBorrowed",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "cTokenCollateral",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "liquidator",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "borrower",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "repayAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "liquidateBorrowAllowed",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "liquidateCalculateSeizeTokens",
         inputs: [
             {
-                internalType: "address",
                 name: "cTokenBorrowed",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "cTokenCollateral",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "repayAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "liquidateCalculateSeizeTokens",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "mintAllowed",
         inputs: [
             {
-                internalType: "address",
                 name: "cToken",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "minter",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "mintAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "mintAllowed",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "mintVerify",
         inputs: [
             {
-                internalType: "address",
                 name: "cToken",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "minter",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "actualMintAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "mintTokens",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "mintVerify",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "redeemAllowed",
         inputs: [
             {
-                internalType: "address",
                 name: "cToken",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "redeemer",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "redeemTokens",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "redeemAllowed",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "redeemVerify",
         inputs: [
             {
-                internalType: "address",
                 name: "cToken",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "redeemer",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "redeemAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "redeemTokens",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "redeemVerify",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "repayBorrowAllowed",
         inputs: [
             {
-                internalType: "address",
                 name: "cToken",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "payer",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "borrower",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "repayAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "repayBorrowAllowed",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "seizeAllowed",
         inputs: [
             {
-                internalType: "address",
                 name: "cTokenCollateral",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "cTokenBorrowed",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "liquidator",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "borrower",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "seizeTokens",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "seizeAllowed",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "transferAllowed",
         inputs: [
             {
-                internalType: "address",
                 name: "cToken",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "src",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "dst",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "transferTokens",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "transferAllowed",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
 ];
 class ComptrollerInterface__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.ComptrollerInterface__factory = ComptrollerInterface__factory;

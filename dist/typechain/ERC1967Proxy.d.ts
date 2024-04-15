@@ -1,65 +1,63 @@
-import type { BaseContract, FunctionFragment, Interface, EventFragment, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedLogDescription, TypedListener } from "./common";
-export interface ERC1967ProxyInterface extends Interface {
-    getEvent(nameOrSignatureOrTopic: "AdminChanged" | "BeaconUpgraded" | "Upgraded"): EventFragment;
-}
-export declare namespace AdminChangedEvent {
-    type InputTuple = [previousAdmin: AddressLike, newAdmin: AddressLike];
-    type OutputTuple = [previousAdmin: string, newAdmin: string];
-    interface OutputObject {
-        previousAdmin: string;
-        newAdmin: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
-}
-export declare namespace BeaconUpgradedEvent {
-    type InputTuple = [beacon: AddressLike];
-    type OutputTuple = [beacon: string];
-    interface OutputObject {
-        beacon: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
-}
-export declare namespace UpgradedEvent {
-    type InputTuple = [implementation: AddressLike];
-    type OutputTuple = [implementation: string];
-    interface OutputObject {
-        implementation: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
-}
-export interface ERC1967Proxy extends BaseContract {
-    connect(runner?: ContractRunner | null): ERC1967Proxy;
-    waitForDeployment(): Promise<this>;
-    interface: ERC1967ProxyInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getEvent(key: "AdminChanged"): TypedContractEvent<AdminChangedEvent.InputTuple, AdminChangedEvent.OutputTuple, AdminChangedEvent.OutputObject>;
-    getEvent(key: "BeaconUpgraded"): TypedContractEvent<BeaconUpgradedEvent.InputTuple, BeaconUpgradedEvent.OutputTuple, BeaconUpgradedEvent.OutputObject>;
-    getEvent(key: "Upgraded"): TypedContractEvent<UpgradedEvent.InputTuple, UpgradedEvent.OutputTuple, UpgradedEvent.OutputObject>;
-    filters: {
-        "AdminChanged(address,address)": TypedContractEvent<AdminChangedEvent.InputTuple, AdminChangedEvent.OutputTuple, AdminChangedEvent.OutputObject>;
-        AdminChanged: TypedContractEvent<AdminChangedEvent.InputTuple, AdminChangedEvent.OutputTuple, AdminChangedEvent.OutputObject>;
-        "BeaconUpgraded(address)": TypedContractEvent<BeaconUpgradedEvent.InputTuple, BeaconUpgradedEvent.OutputTuple, BeaconUpgradedEvent.OutputObject>;
-        BeaconUpgraded: TypedContractEvent<BeaconUpgradedEvent.InputTuple, BeaconUpgradedEvent.OutputTuple, BeaconUpgradedEvent.OutputObject>;
-        "Upgraded(address)": TypedContractEvent<UpgradedEvent.InputTuple, UpgradedEvent.OutputTuple, UpgradedEvent.OutputObject>;
-        Upgraded: TypedContractEvent<UpgradedEvent.InputTuple, UpgradedEvent.OutputTuple, UpgradedEvent.OutputObject>;
+import type { BaseContract, Signer, utils } from "ethers";
+import type { EventFragment } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
+export interface ERC1967ProxyInterface extends utils.Interface {
+    functions: {};
+    events: {
+        "AdminChanged(address,address)": EventFragment;
+        "BeaconUpgraded(address)": EventFragment;
+        "Upgraded(address)": EventFragment;
     };
+    getEvent(nameOrSignatureOrTopic: "AdminChanged"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "BeaconUpgraded"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "Upgraded"): EventFragment;
+}
+export interface AdminChangedEventObject {
+    previousAdmin: string;
+    newAdmin: string;
+}
+export type AdminChangedEvent = TypedEvent<[
+    string,
+    string
+], AdminChangedEventObject>;
+export type AdminChangedEventFilter = TypedEventFilter<AdminChangedEvent>;
+export interface BeaconUpgradedEventObject {
+    beacon: string;
+}
+export type BeaconUpgradedEvent = TypedEvent<[
+    string
+], BeaconUpgradedEventObject>;
+export type BeaconUpgradedEventFilter = TypedEventFilter<BeaconUpgradedEvent>;
+export interface UpgradedEventObject {
+    implementation: string;
+}
+export type UpgradedEvent = TypedEvent<[string], UpgradedEventObject>;
+export type UpgradedEventFilter = TypedEventFilter<UpgradedEvent>;
+export interface ERC1967Proxy extends BaseContract {
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
+    interface: ERC1967ProxyInterface;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {};
+    callStatic: {};
+    filters: {
+        "AdminChanged(address,address)"(previousAdmin?: null, newAdmin?: null): AdminChangedEventFilter;
+        AdminChanged(previousAdmin?: null, newAdmin?: null): AdminChangedEventFilter;
+        "BeaconUpgraded(address)"(beacon?: string | null): BeaconUpgradedEventFilter;
+        BeaconUpgraded(beacon?: string | null): BeaconUpgradedEventFilter;
+        "Upgraded(address)"(implementation?: string | null): UpgradedEventFilter;
+        Upgraded(implementation?: string | null): UpgradedEventFilter;
+    };
+    estimateGas: {};
+    populateTransaction: {};
 }

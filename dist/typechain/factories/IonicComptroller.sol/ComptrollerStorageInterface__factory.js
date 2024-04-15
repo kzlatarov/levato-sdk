@@ -7,410 +7,410 @@ exports.ComptrollerStorageInterface__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        inputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
+        type: "function",
         name: "accountAssets",
-        outputs: [
+        inputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
+            },
+            {
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "admin",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "adminHasRights",
+        inputs: [],
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [
-            {
-                internalType: "address",
-                name: "borrowed",
-                type: "address",
-            },
-            {
-                internalType: "address",
-                name: "collateral",
-                type: "address",
-            },
-        ],
+        type: "function",
         name: "borrowCapForCollateral",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
         inputs: [
             {
-                internalType: "address",
-                name: "cToken",
-                type: "address",
-            },
-        ],
-        name: "borrowCaps",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "cToken",
-                type: "address",
-            },
-        ],
-        name: "borrowGuardianPaused",
-        outputs: [
-            {
-                internalType: "bool",
-                name: "",
-                type: "bool",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
                 name: "borrowed",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "collateral",
                 type: "address",
-            },
-        ],
-        name: "borrowingAgainstCollateralBlacklist",
-        outputs: [
-            {
-                internalType: "bool",
-                name: "",
-                type: "bool",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
                 internalType: "address",
-                name: "",
-                type: "address",
             },
         ],
-        name: "cTokensByUnderlying",
         outputs: [
             {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "closeFactorMantissa",
-        outputs: [
-            {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
-        name: "enforceWhitelist",
-        outputs: [
-            {
-                internalType: "bool",
-                name: "",
-                type: "bool",
-            },
-        ],
-        stateMutability: "view",
         type: "function",
-    },
-    {
-        inputs: [],
-        name: "ionicAdmin",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "ionicAdminHasRights",
-        outputs: [
-            {
-                internalType: "bool",
-                name: "",
-                type: "bool",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
+        name: "borrowCaps",
         inputs: [
             {
+                name: "cToken",
+                type: "address",
                 internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "borrowGuardianPaused",
+        inputs: [
+            {
+                name: "cToken",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "bool",
+                internalType: "bool",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "borrowingAgainstCollateralBlacklist",
+        inputs: [
+            {
+                name: "borrowed",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "collateral",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "bool",
+                internalType: "bool",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "cTokensByUnderlying",
+        inputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "closeFactorMantissa",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "enforceWhitelist",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "bool",
+                internalType: "bool",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "ionicAdmin",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "ionicAdminHasRights",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "bool",
+                internalType: "bool",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "isUserOfPool",
+        inputs: [
+            {
                 name: "user",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "isUserOfPool",
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "liquidationIncentiveMantissa",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [
-            {
-                internalType: "address",
-                name: "cToken",
-                type: "address",
-            },
-        ],
+        type: "function",
         name: "markets",
+        inputs: [
+            {
+                name: "cToken",
+                type: "address",
+                internalType: "address",
+            },
+        ],
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [
-            {
-                internalType: "address",
-                name: "cToken",
-                type: "address",
-            },
-        ],
+        type: "function",
         name: "mintGuardianPaused",
-        outputs: [
-            {
-                internalType: "bool",
-                name: "",
-                type: "bool",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "oracle",
-        outputs: [
-            {
-                internalType: "contract BasePriceOracle",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "pauseGuardian",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "pendingAdmin",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
         inputs: [
             {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        name: "rewardsDistributors",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "account",
-                type: "address",
-            },
-        ],
-        name: "suppliers",
-        outputs: [
-            {
-                internalType: "bool",
-                name: "",
-                type: "bool",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
                 name: "cToken",
                 type: "address",
-            },
-        ],
-        name: "supplyCaps",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
                 internalType: "address",
-                name: "account",
-                type: "address",
             },
         ],
-        name: "whitelist",
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "view",
+    },
+    {
         type: "function",
+        name: "oracle",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "contract BasePriceOracle",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "pauseGuardian",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "pendingAdmin",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "rewardsDistributors",
+        inputs: [
+            {
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "suppliers",
+        inputs: [
+            {
+                name: "account",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "bool",
+                internalType: "bool",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "supplyCaps",
+        inputs: [
+            {
+                name: "cToken",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "whitelist",
+        inputs: [
+            {
+                name: "account",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "bool",
+                internalType: "bool",
+            },
+        ],
+        stateMutability: "view",
     },
 ];
 class ComptrollerStorageInterface__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.ComptrollerStorageInterface__factory = ComptrollerStorageInterface__factory;

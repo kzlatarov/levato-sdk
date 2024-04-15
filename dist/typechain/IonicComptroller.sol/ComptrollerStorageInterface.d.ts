@@ -1,30 +1,57 @@
-import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedListener, TypedContractMethod } from "../common";
-export interface ComptrollerStorageInterfaceInterface extends Interface {
-    getFunction(nameOrSignature: "accountAssets" | "admin" | "adminHasRights" | "borrowCapForCollateral" | "borrowCaps" | "borrowGuardianPaused" | "borrowingAgainstCollateralBlacklist" | "cTokensByUnderlying" | "closeFactorMantissa" | "enforceWhitelist" | "ionicAdmin" | "ionicAdminHasRights" | "isUserOfPool" | "liquidationIncentiveMantissa" | "markets" | "mintGuardianPaused" | "oracle" | "pauseGuardian" | "pendingAdmin" | "rewardsDistributors" | "suppliers" | "supplyCaps" | "whitelist"): FunctionFragment;
-    encodeFunctionData(functionFragment: "accountAssets", values: [AddressLike, BigNumberish]): string;
+import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "../common";
+export interface ComptrollerStorageInterfaceInterface extends utils.Interface {
+    functions: {
+        "accountAssets(address,uint256)": FunctionFragment;
+        "admin()": FunctionFragment;
+        "adminHasRights()": FunctionFragment;
+        "borrowCapForCollateral(address,address)": FunctionFragment;
+        "borrowCaps(address)": FunctionFragment;
+        "borrowGuardianPaused(address)": FunctionFragment;
+        "borrowingAgainstCollateralBlacklist(address,address)": FunctionFragment;
+        "cTokensByUnderlying(address)": FunctionFragment;
+        "closeFactorMantissa()": FunctionFragment;
+        "enforceWhitelist()": FunctionFragment;
+        "ionicAdmin()": FunctionFragment;
+        "ionicAdminHasRights()": FunctionFragment;
+        "isUserOfPool(address)": FunctionFragment;
+        "liquidationIncentiveMantissa()": FunctionFragment;
+        "markets(address)": FunctionFragment;
+        "mintGuardianPaused(address)": FunctionFragment;
+        "oracle()": FunctionFragment;
+        "pauseGuardian()": FunctionFragment;
+        "pendingAdmin()": FunctionFragment;
+        "rewardsDistributors(uint256)": FunctionFragment;
+        "suppliers(address)": FunctionFragment;
+        "supplyCaps(address)": FunctionFragment;
+        "whitelist(address)": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "accountAssets" | "admin" | "adminHasRights" | "borrowCapForCollateral" | "borrowCaps" | "borrowGuardianPaused" | "borrowingAgainstCollateralBlacklist" | "cTokensByUnderlying" | "closeFactorMantissa" | "enforceWhitelist" | "ionicAdmin" | "ionicAdminHasRights" | "isUserOfPool" | "liquidationIncentiveMantissa" | "markets" | "mintGuardianPaused" | "oracle" | "pauseGuardian" | "pendingAdmin" | "rewardsDistributors" | "suppliers" | "supplyCaps" | "whitelist"): FunctionFragment;
+    encodeFunctionData(functionFragment: "accountAssets", values: [string, BigNumberish]): string;
     encodeFunctionData(functionFragment: "admin", values?: undefined): string;
     encodeFunctionData(functionFragment: "adminHasRights", values?: undefined): string;
-    encodeFunctionData(functionFragment: "borrowCapForCollateral", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "borrowCaps", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "borrowGuardianPaused", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "borrowingAgainstCollateralBlacklist", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "cTokensByUnderlying", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "borrowCapForCollateral", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "borrowCaps", values: [string]): string;
+    encodeFunctionData(functionFragment: "borrowGuardianPaused", values: [string]): string;
+    encodeFunctionData(functionFragment: "borrowingAgainstCollateralBlacklist", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "cTokensByUnderlying", values: [string]): string;
     encodeFunctionData(functionFragment: "closeFactorMantissa", values?: undefined): string;
     encodeFunctionData(functionFragment: "enforceWhitelist", values?: undefined): string;
     encodeFunctionData(functionFragment: "ionicAdmin", values?: undefined): string;
     encodeFunctionData(functionFragment: "ionicAdminHasRights", values?: undefined): string;
-    encodeFunctionData(functionFragment: "isUserOfPool", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "isUserOfPool", values: [string]): string;
     encodeFunctionData(functionFragment: "liquidationIncentiveMantissa", values?: undefined): string;
-    encodeFunctionData(functionFragment: "markets", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "mintGuardianPaused", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "markets", values: [string]): string;
+    encodeFunctionData(functionFragment: "mintGuardianPaused", values: [string]): string;
     encodeFunctionData(functionFragment: "oracle", values?: undefined): string;
     encodeFunctionData(functionFragment: "pauseGuardian", values?: undefined): string;
     encodeFunctionData(functionFragment: "pendingAdmin", values?: undefined): string;
     encodeFunctionData(functionFragment: "rewardsDistributors", values: [BigNumberish]): string;
-    encodeFunctionData(functionFragment: "suppliers", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "supplyCaps", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "whitelist", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "suppliers", values: [string]): string;
+    encodeFunctionData(functionFragment: "supplyCaps", values: [string]): string;
+    encodeFunctionData(functionFragment: "whitelist", values: [string]): string;
     decodeFunctionResult(functionFragment: "accountAssets", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "admin", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "adminHasRights", data: BytesLike): Result;
@@ -48,116 +75,144 @@ export interface ComptrollerStorageInterfaceInterface extends Interface {
     decodeFunctionResult(functionFragment: "suppliers", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "supplyCaps", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "whitelist", data: BytesLike): Result;
+    events: {};
 }
 export interface ComptrollerStorageInterface extends BaseContract {
-    connect(runner?: ContractRunner | null): ComptrollerStorageInterface;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: ComptrollerStorageInterfaceInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    accountAssets: TypedContractMethod<[
-        arg0: AddressLike,
-        arg1: BigNumberish
-    ], [
-        string
-    ], "view">;
-    admin: TypedContractMethod<[], [string], "view">;
-    adminHasRights: TypedContractMethod<[], [boolean], "view">;
-    borrowCapForCollateral: TypedContractMethod<[
-        borrowed: AddressLike,
-        collateral: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    borrowCaps: TypedContractMethod<[cToken: AddressLike], [bigint], "view">;
-    borrowGuardianPaused: TypedContractMethod<[
-        cToken: AddressLike
-    ], [
-        boolean
-    ], "view">;
-    borrowingAgainstCollateralBlacklist: TypedContractMethod<[
-        borrowed: AddressLike,
-        collateral: AddressLike
-    ], [
-        boolean
-    ], "view">;
-    cTokensByUnderlying: TypedContractMethod<[
-        arg0: AddressLike
-    ], [
-        string
-    ], "view">;
-    closeFactorMantissa: TypedContractMethod<[], [bigint], "view">;
-    enforceWhitelist: TypedContractMethod<[], [boolean], "view">;
-    ionicAdmin: TypedContractMethod<[], [string], "view">;
-    ionicAdminHasRights: TypedContractMethod<[], [boolean], "view">;
-    isUserOfPool: TypedContractMethod<[user: AddressLike], [boolean], "view">;
-    liquidationIncentiveMantissa: TypedContractMethod<[], [bigint], "view">;
-    markets: TypedContractMethod<[
-        cToken: AddressLike
-    ], [
-        [boolean, bigint]
-    ], "view">;
-    mintGuardianPaused: TypedContractMethod<[
-        cToken: AddressLike
-    ], [
-        boolean
-    ], "view">;
-    oracle: TypedContractMethod<[], [string], "view">;
-    pauseGuardian: TypedContractMethod<[], [string], "view">;
-    pendingAdmin: TypedContractMethod<[], [string], "view">;
-    rewardsDistributors: TypedContractMethod<[
-        arg0: BigNumberish
-    ], [
-        string
-    ], "view">;
-    suppliers: TypedContractMethod<[account: AddressLike], [boolean], "view">;
-    supplyCaps: TypedContractMethod<[cToken: AddressLike], [bigint], "view">;
-    whitelist: TypedContractMethod<[account: AddressLike], [boolean], "view">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "accountAssets"): TypedContractMethod<[
-        arg0: AddressLike,
-        arg1: BigNumberish
-    ], [
-        string
-    ], "view">;
-    getFunction(nameOrSignature: "admin"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "adminHasRights"): TypedContractMethod<[], [boolean], "view">;
-    getFunction(nameOrSignature: "borrowCapForCollateral"): TypedContractMethod<[
-        borrowed: AddressLike,
-        collateral: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "borrowCaps"): TypedContractMethod<[cToken: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "borrowGuardianPaused"): TypedContractMethod<[cToken: AddressLike], [boolean], "view">;
-    getFunction(nameOrSignature: "borrowingAgainstCollateralBlacklist"): TypedContractMethod<[
-        borrowed: AddressLike,
-        collateral: AddressLike
-    ], [
-        boolean
-    ], "view">;
-    getFunction(nameOrSignature: "cTokensByUnderlying"): TypedContractMethod<[arg0: AddressLike], [string], "view">;
-    getFunction(nameOrSignature: "closeFactorMantissa"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "enforceWhitelist"): TypedContractMethod<[], [boolean], "view">;
-    getFunction(nameOrSignature: "ionicAdmin"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "ionicAdminHasRights"): TypedContractMethod<[], [boolean], "view">;
-    getFunction(nameOrSignature: "isUserOfPool"): TypedContractMethod<[user: AddressLike], [boolean], "view">;
-    getFunction(nameOrSignature: "liquidationIncentiveMantissa"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "markets"): TypedContractMethod<[cToken: AddressLike], [[boolean, bigint]], "view">;
-    getFunction(nameOrSignature: "mintGuardianPaused"): TypedContractMethod<[cToken: AddressLike], [boolean], "view">;
-    getFunction(nameOrSignature: "oracle"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "pauseGuardian"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "pendingAdmin"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "rewardsDistributors"): TypedContractMethod<[arg0: BigNumberish], [string], "view">;
-    getFunction(nameOrSignature: "suppliers"): TypedContractMethod<[account: AddressLike], [boolean], "view">;
-    getFunction(nameOrSignature: "supplyCaps"): TypedContractMethod<[cToken: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "whitelist"): TypedContractMethod<[account: AddressLike], [boolean], "view">;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        accountAssets(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+        admin(overrides?: CallOverrides): Promise<[string]>;
+        adminHasRights(overrides?: CallOverrides): Promise<[boolean]>;
+        borrowCapForCollateral(borrowed: string, collateral: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        borrowCaps(cToken: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        borrowGuardianPaused(cToken: string, overrides?: CallOverrides): Promise<[boolean]>;
+        borrowingAgainstCollateralBlacklist(borrowed: string, collateral: string, overrides?: CallOverrides): Promise<[boolean]>;
+        cTokensByUnderlying(arg0: string, overrides?: CallOverrides): Promise<[string]>;
+        closeFactorMantissa(overrides?: CallOverrides): Promise<[BigNumber]>;
+        enforceWhitelist(overrides?: CallOverrides): Promise<[boolean]>;
+        ionicAdmin(overrides?: CallOverrides): Promise<[string]>;
+        ionicAdminHasRights(overrides?: CallOverrides): Promise<[boolean]>;
+        isUserOfPool(user: string, overrides?: CallOverrides): Promise<[boolean]>;
+        liquidationIncentiveMantissa(overrides?: CallOverrides): Promise<[BigNumber]>;
+        markets(cToken: string, overrides?: CallOverrides): Promise<[boolean, BigNumber]>;
+        mintGuardianPaused(cToken: string, overrides?: CallOverrides): Promise<[boolean]>;
+        oracle(overrides?: CallOverrides): Promise<[string]>;
+        pauseGuardian(overrides?: CallOverrides): Promise<[string]>;
+        pendingAdmin(overrides?: CallOverrides): Promise<[string]>;
+        rewardsDistributors(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+        suppliers(account: string, overrides?: CallOverrides): Promise<[boolean]>;
+        supplyCaps(cToken: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        whitelist(account: string, overrides?: CallOverrides): Promise<[boolean]>;
+    };
+    accountAssets(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    admin(overrides?: CallOverrides): Promise<string>;
+    adminHasRights(overrides?: CallOverrides): Promise<boolean>;
+    borrowCapForCollateral(borrowed: string, collateral: string, overrides?: CallOverrides): Promise<BigNumber>;
+    borrowCaps(cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    borrowGuardianPaused(cToken: string, overrides?: CallOverrides): Promise<boolean>;
+    borrowingAgainstCollateralBlacklist(borrowed: string, collateral: string, overrides?: CallOverrides): Promise<boolean>;
+    cTokensByUnderlying(arg0: string, overrides?: CallOverrides): Promise<string>;
+    closeFactorMantissa(overrides?: CallOverrides): Promise<BigNumber>;
+    enforceWhitelist(overrides?: CallOverrides): Promise<boolean>;
+    ionicAdmin(overrides?: CallOverrides): Promise<string>;
+    ionicAdminHasRights(overrides?: CallOverrides): Promise<boolean>;
+    isUserOfPool(user: string, overrides?: CallOverrides): Promise<boolean>;
+    liquidationIncentiveMantissa(overrides?: CallOverrides): Promise<BigNumber>;
+    markets(cToken: string, overrides?: CallOverrides): Promise<[boolean, BigNumber]>;
+    mintGuardianPaused(cToken: string, overrides?: CallOverrides): Promise<boolean>;
+    oracle(overrides?: CallOverrides): Promise<string>;
+    pauseGuardian(overrides?: CallOverrides): Promise<string>;
+    pendingAdmin(overrides?: CallOverrides): Promise<string>;
+    rewardsDistributors(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    suppliers(account: string, overrides?: CallOverrides): Promise<boolean>;
+    supplyCaps(cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    whitelist(account: string, overrides?: CallOverrides): Promise<boolean>;
+    callStatic: {
+        accountAssets(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<string>;
+        admin(overrides?: CallOverrides): Promise<string>;
+        adminHasRights(overrides?: CallOverrides): Promise<boolean>;
+        borrowCapForCollateral(borrowed: string, collateral: string, overrides?: CallOverrides): Promise<BigNumber>;
+        borrowCaps(cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        borrowGuardianPaused(cToken: string, overrides?: CallOverrides): Promise<boolean>;
+        borrowingAgainstCollateralBlacklist(borrowed: string, collateral: string, overrides?: CallOverrides): Promise<boolean>;
+        cTokensByUnderlying(arg0: string, overrides?: CallOverrides): Promise<string>;
+        closeFactorMantissa(overrides?: CallOverrides): Promise<BigNumber>;
+        enforceWhitelist(overrides?: CallOverrides): Promise<boolean>;
+        ionicAdmin(overrides?: CallOverrides): Promise<string>;
+        ionicAdminHasRights(overrides?: CallOverrides): Promise<boolean>;
+        isUserOfPool(user: string, overrides?: CallOverrides): Promise<boolean>;
+        liquidationIncentiveMantissa(overrides?: CallOverrides): Promise<BigNumber>;
+        markets(cToken: string, overrides?: CallOverrides): Promise<[boolean, BigNumber]>;
+        mintGuardianPaused(cToken: string, overrides?: CallOverrides): Promise<boolean>;
+        oracle(overrides?: CallOverrides): Promise<string>;
+        pauseGuardian(overrides?: CallOverrides): Promise<string>;
+        pendingAdmin(overrides?: CallOverrides): Promise<string>;
+        rewardsDistributors(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+        suppliers(account: string, overrides?: CallOverrides): Promise<boolean>;
+        supplyCaps(cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        whitelist(account: string, overrides?: CallOverrides): Promise<boolean>;
+    };
     filters: {};
+    estimateGas: {
+        accountAssets(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        admin(overrides?: CallOverrides): Promise<BigNumber>;
+        adminHasRights(overrides?: CallOverrides): Promise<BigNumber>;
+        borrowCapForCollateral(borrowed: string, collateral: string, overrides?: CallOverrides): Promise<BigNumber>;
+        borrowCaps(cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        borrowGuardianPaused(cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        borrowingAgainstCollateralBlacklist(borrowed: string, collateral: string, overrides?: CallOverrides): Promise<BigNumber>;
+        cTokensByUnderlying(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+        closeFactorMantissa(overrides?: CallOverrides): Promise<BigNumber>;
+        enforceWhitelist(overrides?: CallOverrides): Promise<BigNumber>;
+        ionicAdmin(overrides?: CallOverrides): Promise<BigNumber>;
+        ionicAdminHasRights(overrides?: CallOverrides): Promise<BigNumber>;
+        isUserOfPool(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+        liquidationIncentiveMantissa(overrides?: CallOverrides): Promise<BigNumber>;
+        markets(cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        mintGuardianPaused(cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        oracle(overrides?: CallOverrides): Promise<BigNumber>;
+        pauseGuardian(overrides?: CallOverrides): Promise<BigNumber>;
+        pendingAdmin(overrides?: CallOverrides): Promise<BigNumber>;
+        rewardsDistributors(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        suppliers(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+        supplyCaps(cToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        whitelist(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        accountAssets(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        admin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        adminHasRights(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        borrowCapForCollateral(borrowed: string, collateral: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        borrowCaps(cToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        borrowGuardianPaused(cToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        borrowingAgainstCollateralBlacklist(borrowed: string, collateral: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        cTokensByUnderlying(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        closeFactorMantissa(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        enforceWhitelist(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        ionicAdmin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        ionicAdminHasRights(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        isUserOfPool(user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        liquidationIncentiveMantissa(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        markets(cToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        mintGuardianPaused(cToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        oracle(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        pauseGuardian(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        pendingAdmin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        rewardsDistributors(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        suppliers(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        supplyCaps(cToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        whitelist(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    };
 }

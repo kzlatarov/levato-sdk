@@ -1,25 +1,42 @@
-import type { BaseContract, BytesLike, FunctionFragment, Result, Interface, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedListener, TypedContractMethod } from "./common";
-export interface IPriceOracleInterface extends Interface {
-    getFunction(nameOrSignature: "price"): FunctionFragment;
-    encodeFunctionData(functionFragment: "price", values: [AddressLike]): string;
+import type { BaseContract, BigNumber, BytesLike, CallOverrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
+export interface IPriceOracleInterface extends utils.Interface {
+    functions: {
+        "price(address)": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "price"): FunctionFragment;
+    encodeFunctionData(functionFragment: "price", values: [string]): string;
     decodeFunctionResult(functionFragment: "price", data: BytesLike): Result;
+    events: {};
 }
 export interface IPriceOracle extends BaseContract {
-    connect(runner?: ContractRunner | null): IPriceOracle;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: IPriceOracleInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    price: TypedContractMethod<[asset: AddressLike], [bigint], "view">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "price"): TypedContractMethod<[asset: AddressLike], [bigint], "view">;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        price(asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    };
+    price(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    callStatic: {
+        price(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    };
     filters: {};
+    estimateGas: {
+        price(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        price(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    };
 }

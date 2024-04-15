@@ -7,424 +7,424 @@ exports.ILendingPoolAddressesProvider__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "bytes32",
-                name: "id",
-                type: "bytes32",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "newAddress",
-                type: "address",
-            },
-            {
-                indexed: false,
-                internalType: "bool",
-                name: "hasProxy",
-                type: "bool",
-            },
-        ],
-        name: "AddressSet",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "newAddress",
-                type: "address",
-            },
-        ],
-        name: "ConfigurationAdminUpdated",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "newAddress",
-                type: "address",
-            },
-        ],
-        name: "EmergencyAdminUpdated",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "newAddress",
-                type: "address",
-            },
-        ],
-        name: "LendingPoolCollateralManagerUpdated",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "newAddress",
-                type: "address",
-            },
-        ],
-        name: "LendingPoolConfiguratorUpdated",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "newAddress",
-                type: "address",
-            },
-        ],
-        name: "LendingPoolUpdated",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "newAddress",
-                type: "address",
-            },
-        ],
-        name: "LendingRateOracleUpdated",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "string",
-                name: "newMarketId",
-                type: "string",
-            },
-        ],
-        name: "MarketIdSet",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "newAddress",
-                type: "address",
-            },
-        ],
-        name: "PriceOracleUpdated",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "bytes32",
-                name: "id",
-                type: "bytes32",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "newAddress",
-                type: "address",
-            },
-        ],
-        name: "ProxyCreated",
-        type: "event",
-    },
-    {
-        inputs: [
-            {
-                internalType: "bytes32",
-                name: "id",
-                type: "bytes32",
-            },
-        ],
+        type: "function",
         name: "getAddress",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "getEmergencyAdmin",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "getLendingPool",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "getLendingPoolCollateralManager",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "getLendingPoolConfigurator",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "getLendingRateOracle",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "getMarketId",
-        outputs: [
-            {
-                internalType: "string",
-                name: "",
-                type: "string",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "getPoolAdmin",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "getPriceOracle",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
         inputs: [
             {
-                internalType: "bytes32",
                 name: "id",
                 type: "bytes32",
-            },
-            {
-                internalType: "address",
-                name: "newAddress",
-                type: "address",
+                internalType: "bytes32",
             },
         ],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getEmergencyAdmin",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getLendingPool",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getLendingPoolCollateralManager",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getLendingPoolConfigurator",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getLendingRateOracle",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getMarketId",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "string",
+                internalType: "string",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getPoolAdmin",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getPriceOracle",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
         name: "setAddress",
+        inputs: [
+            {
+                name: "id",
+                type: "bytes32",
+                internalType: "bytes32",
+            },
+            {
+                name: "newAddress",
+                type: "address",
+                internalType: "address",
+            },
+        ],
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "setAddressAsProxy",
         inputs: [
             {
-                internalType: "bytes32",
                 name: "id",
                 type: "bytes32",
+                internalType: "bytes32",
             },
             {
-                internalType: "address",
                 name: "impl",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "setAddressAsProxy",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "setEmergencyAdmin",
         inputs: [
             {
-                internalType: "address",
                 name: "admin",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "setEmergencyAdmin",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "setLendingPoolCollateralManager",
         inputs: [
             {
-                internalType: "address",
                 name: "manager",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "setLendingPoolCollateralManager",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "setLendingPoolConfiguratorImpl",
         inputs: [
             {
-                internalType: "address",
                 name: "configurator",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "setLendingPoolConfiguratorImpl",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "setLendingPoolImpl",
         inputs: [
             {
-                internalType: "address",
                 name: "pool",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "setLendingPoolImpl",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "setLendingRateOracle",
         inputs: [
             {
-                internalType: "address",
                 name: "lendingRateOracle",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "setLendingRateOracle",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "setMarketId",
         inputs: [
             {
-                internalType: "string",
                 name: "marketId",
                 type: "string",
+                internalType: "string",
             },
         ],
-        name: "setMarketId",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "setPoolAdmin",
         inputs: [
             {
-                internalType: "address",
                 name: "admin",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "setPoolAdmin",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "setPriceOracle",
         inputs: [
             {
-                internalType: "address",
                 name: "priceOracle",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "setPriceOracle",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
+    },
+    {
+        type: "event",
+        name: "AddressSet",
+        inputs: [
+            {
+                name: "id",
+                type: "bytes32",
+                indexed: false,
+                internalType: "bytes32",
+            },
+            {
+                name: "newAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "hasProxy",
+                type: "bool",
+                indexed: false,
+                internalType: "bool",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "ConfigurationAdminUpdated",
+        inputs: [
+            {
+                name: "newAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "EmergencyAdminUpdated",
+        inputs: [
+            {
+                name: "newAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "LendingPoolCollateralManagerUpdated",
+        inputs: [
+            {
+                name: "newAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "LendingPoolConfiguratorUpdated",
+        inputs: [
+            {
+                name: "newAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "LendingPoolUpdated",
+        inputs: [
+            {
+                name: "newAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "LendingRateOracleUpdated",
+        inputs: [
+            {
+                name: "newAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "MarketIdSet",
+        inputs: [
+            {
+                name: "newMarketId",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "PriceOracleUpdated",
+        inputs: [
+            {
+                name: "newAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "ProxyCreated",
+        inputs: [
+            {
+                name: "id",
+                type: "bytes32",
+                indexed: false,
+                internalType: "bytes32",
+            },
+            {
+                name: "newAddress",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
     },
 ];
 class ILendingPoolAddressesProvider__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.ILendingPoolAddressesProvider__factory = ILendingPoolAddressesProvider__factory;

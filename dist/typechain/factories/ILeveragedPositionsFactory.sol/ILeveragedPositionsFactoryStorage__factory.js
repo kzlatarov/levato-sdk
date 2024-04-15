@@ -7,110 +7,110 @@ exports.ILeveragedPositionsFactoryStorage__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        inputs: [],
+        type: "function",
         name: "creditDelegator",
+        inputs: [],
         outputs: [
             {
+                name: "",
+                type: "address",
                 internalType: "contract ICreditDelegator",
-                name: "",
-                type: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "flashloanRouter",
+        inputs: [],
         outputs: [
             {
+                name: "",
+                type: "address",
                 internalType: "contract IFlashloanRouter",
-                name: "",
-                type: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "fundersRegistry",
+        inputs: [],
         outputs: [
             {
-                internalType: "contract IFundersRegistry",
                 name: "",
                 type: "address",
+                internalType: "contract IFundersRegistry",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "minBorrowNative",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "oracle",
-        outputs: [
-            {
-                internalType: "contract MasterPriceOracle",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
         inputs: [],
-        name: "owner",
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "contract MasterPriceOracle",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "owner",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "vaultOfPosition",
         inputs: [
             {
-                internalType: "address",
                 name: "position",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "vaultOfPosition",
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
 ];
 class ILeveragedPositionsFactoryStorage__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.ILeveragedPositionsFactoryStorage__factory = ILeveragedPositionsFactoryStorage__factory;

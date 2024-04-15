@@ -7,434 +7,434 @@ exports.CTokenFirstExtensionInterface__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
+        type: "function",
+        name: "_setAdminFee",
         inputs: [
             {
-                internalType: "uint256",
                 name: "newAdminFeeMantissa",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "_setAdminFee",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_setInterestRateModel",
         inputs: [
             {
-                internalType: "address",
                 name: "newInterestRateModel",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "_setInterestRateModel",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_setReserveFactor",
         inputs: [
             {
-                internalType: "uint256",
                 name: "newReserveFactorMantissa",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "_setReserveFactor",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "accrueInterest",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "allowance",
         inputs: [
             {
-                internalType: "address",
                 name: "owner",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "spender",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "allowance",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "approve",
         inputs: [
             {
-                internalType: "address",
                 name: "spender",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "amount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "approve",
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [
-            {
-                internalType: "address",
-                name: "owner",
-                type: "address",
-            },
-        ],
+        type: "function",
         name: "balanceOf",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
         inputs: [
             {
-                internalType: "address",
                 name: "owner",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "balanceOfUnderlying",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "balanceOfUnderlying",
         inputs: [
             {
+                name: "owner",
+                type: "address",
                 internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "borrowBalanceCurrent",
+        inputs: [
+            {
                 name: "account",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "borrowBalanceCurrent",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "borrowRatePerBlock",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "borrowRatePerBlockAfterBorrow",
         inputs: [
             {
-                internalType: "uint256",
                 name: "borrowAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "borrowRatePerBlockAfterBorrow",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "exchangeRateCurrent",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "flash",
         inputs: [
             {
-                internalType: "uint256",
                 name: "amount",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "bytes",
                 name: "data",
                 type: "bytes",
+                internalType: "bytes",
             },
         ],
-        name: "flash",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getAccountSnapshot",
         inputs: [
             {
-                internalType: "address",
                 name: "account",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "getAccountSnapshot",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getTotalUnderlyingSupplied",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "multicall",
         inputs: [
             {
-                internalType: "bytes[]",
                 name: "data",
                 type: "bytes[]",
+                internalType: "bytes[]",
             },
         ],
-        name: "multicall",
         outputs: [
             {
-                internalType: "bytes[]",
                 name: "results",
                 type: "bytes[]",
+                internalType: "bytes[]",
             },
         ],
         stateMutability: "payable",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "supplyRatePerBlock",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "supplyRatePerBlockAfterDeposit",
         inputs: [
             {
-                internalType: "uint256",
                 name: "mintAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "supplyRatePerBlockAfterDeposit",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "supplyRatePerBlockAfterWithdraw",
         inputs: [
             {
-                internalType: "uint256",
                 name: "withdrawAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "supplyRatePerBlockAfterWithdraw",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "totalBorrowsCurrent",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "transfer",
         inputs: [
             {
-                internalType: "address",
                 name: "dst",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "amount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "transfer",
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "transferFrom",
         inputs: [
             {
-                internalType: "address",
                 name: "src",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "dst",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "amount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "transferFrom",
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
 ];
 class CTokenFirstExtensionInterface__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.CTokenFirstExtensionInterface__factory = CTokenFirstExtensionInterface__factory;

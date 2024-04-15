@@ -1,35 +1,36 @@
-import { type ContractRunner } from "ethers";
+import { Signer } from "ethers";
+import type { Provider } from "@ethersproject/providers";
 import type { BasePriceOracle, BasePriceOracleInterface } from "../BasePriceOracle";
 export declare class BasePriceOracle__factory {
     static readonly abi: readonly [{
+        readonly type: "function";
+        readonly name: "getUnderlyingPrice";
         readonly inputs: readonly [{
-            readonly internalType: "contract IonicCErc20";
             readonly name: "cToken";
             readonly type: "address";
+            readonly internalType: "contract IonicCErc20";
         }];
-        readonly name: "getUnderlyingPrice";
         readonly outputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "price";
         readonly inputs: readonly [{
-            readonly internalType: "address";
             readonly name: "underlying";
             readonly type: "address";
+            readonly internalType: "address";
         }];
-        readonly name: "price";
         readonly outputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }];
     static createInterface(): BasePriceOracleInterface;
-    static connect(address: string, runner?: ContractRunner | null): BasePriceOracle;
+    static connect(address: string, signerOrProvider: Signer | Provider): BasePriceOracle;
 }

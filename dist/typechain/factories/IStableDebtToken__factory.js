@@ -7,418 +7,418 @@ exports.IStableDebtToken__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "from",
-                type: "address",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "amount",
-                type: "uint256",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "currentBalance",
-                type: "uint256",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "balanceIncrease",
-                type: "uint256",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "avgStableRate",
-                type: "uint256",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "newTotalSupply",
-                type: "uint256",
-            },
-        ],
-        name: "Burn",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "underlyingAsset",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "pool",
-                type: "address",
-            },
-            {
-                indexed: false,
-                internalType: "address",
-                name: "incentivesController",
-                type: "address",
-            },
-            {
-                indexed: false,
-                internalType: "uint8",
-                name: "debtTokenDecimals",
-                type: "uint8",
-            },
-            {
-                indexed: false,
-                internalType: "string",
-                name: "debtTokenName",
-                type: "string",
-            },
-            {
-                indexed: false,
-                internalType: "string",
-                name: "debtTokenSymbol",
-                type: "string",
-            },
-            {
-                indexed: false,
-                internalType: "bytes",
-                name: "params",
-                type: "bytes",
-            },
-        ],
-        name: "Initialized",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "user",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "onBehalfOf",
-                type: "address",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "amount",
-                type: "uint256",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "currentBalance",
-                type: "uint256",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "balanceIncrease",
-                type: "uint256",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "newRate",
-                type: "uint256",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "avgStableRate",
-                type: "uint256",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "newTotalSupply",
-                type: "uint256",
-            },
-        ],
-        name: "Mint",
-        type: "event",
-    },
-    {
-        inputs: [],
+        type: "function",
         name: "UNDERLYING_ASSET_ADDRESS",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "burn",
         inputs: [
             {
-                internalType: "address",
                 name: "from",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "amount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "burn",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getAverageStableRate",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getSupplyData",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint40",
                 name: "",
                 type: "uint40",
+                internalType: "uint40",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getTotalSupplyAndAvgRate",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
         inputs: [],
-        name: "getTotalSupplyLastUpdated",
         outputs: [
             {
-                internalType: "uint40",
-                name: "",
-                type: "uint40",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "user",
-                type: "address",
-            },
-        ],
-        name: "getUserLastUpdated",
-        outputs: [
-            {
-                internalType: "uint40",
-                name: "",
-                type: "uint40",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "user",
-                type: "address",
-            },
-        ],
-        name: "getUserStableRate",
-        outputs: [
-            {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getTotalSupplyLastUpdated",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "uint40",
+                internalType: "uint40",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getUserLastUpdated",
         inputs: [
             {
-                internalType: "contract IPool",
+                name: "user",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "uint40",
+                internalType: "uint40",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getUserStableRate",
+        inputs: [
+            {
+                name: "user",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "initialize",
+        inputs: [
+            {
                 name: "pool",
                 type: "address",
+                internalType: "contract IPool",
             },
             {
-                internalType: "address",
                 name: "underlyingAsset",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "contract IAaveIncentivesController",
                 name: "incentivesController",
                 type: "address",
+                internalType: "contract IAaveIncentivesController",
             },
             {
-                internalType: "uint8",
                 name: "debtTokenDecimals",
                 type: "uint8",
+                internalType: "uint8",
             },
             {
-                internalType: "string",
                 name: "debtTokenName",
                 type: "string",
+                internalType: "string",
             },
             {
-                internalType: "string",
                 name: "debtTokenSymbol",
                 type: "string",
+                internalType: "string",
             },
             {
-                internalType: "bytes",
                 name: "params",
                 type: "bytes",
+                internalType: "bytes",
             },
         ],
-        name: "initialize",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "mint",
         inputs: [
             {
-                internalType: "address",
                 name: "user",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "onBehalfOf",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "amount",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "rate",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "mint",
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "principalBalanceOf",
         inputs: [
             {
-                internalType: "address",
                 name: "user",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "principalBalanceOf",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
+    },
+    {
+        type: "event",
+        name: "Burn",
+        inputs: [
+            {
+                name: "from",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "amount",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+            {
+                name: "currentBalance",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+            {
+                name: "balanceIncrease",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+            {
+                name: "avgStableRate",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+            {
+                name: "newTotalSupply",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "Initialized",
+        inputs: [
+            {
+                name: "underlyingAsset",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "pool",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "incentivesController",
+                type: "address",
+                indexed: false,
+                internalType: "address",
+            },
+            {
+                name: "debtTokenDecimals",
+                type: "uint8",
+                indexed: false,
+                internalType: "uint8",
+            },
+            {
+                name: "debtTokenName",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+            {
+                name: "debtTokenSymbol",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+            {
+                name: "params",
+                type: "bytes",
+                indexed: false,
+                internalType: "bytes",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "Mint",
+        inputs: [
+            {
+                name: "user",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "onBehalfOf",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "amount",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+            {
+                name: "currentBalance",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+            {
+                name: "balanceIncrease",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+            {
+                name: "newRate",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+            {
+                name: "avgStableRate",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+            {
+                name: "newTotalSupply",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+        ],
+        anonymous: false,
     },
 ];
 class IStableDebtToken__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.IStableDebtToken__factory = IStableDebtToken__factory;

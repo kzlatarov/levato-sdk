@@ -630,22 +630,25 @@ class DelegatedAaveLeveragedPosition__factory extends ethers_1.ContractFactory {
             super(_abi, _bytecode, args[0]);
         }
     }
-    getDeployTransaction(_positionOwner, _collateralAsset, _stableAsset, overrides) {
-        return super.getDeployTransaction(_positionOwner, _collateralAsset, _stableAsset, overrides || {});
-    }
     deploy(_positionOwner, _collateralAsset, _stableAsset, overrides) {
         return super.deploy(_positionOwner, _collateralAsset, _stableAsset, overrides || {});
     }
-    connect(runner) {
-        return super.connect(runner);
+    getDeployTransaction(_positionOwner, _collateralAsset, _stableAsset, overrides) {
+        return super.getDeployTransaction(_positionOwner, _collateralAsset, _stableAsset, overrides || {});
+    }
+    attach(address) {
+        return super.attach(address);
+    }
+    connect(signer) {
+        return super.connect(signer);
     }
     static bytecode = _bytecode;
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.DelegatedAaveLeveragedPosition__factory = DelegatedAaveLeveragedPosition__factory;

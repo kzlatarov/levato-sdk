@@ -1,153 +1,154 @@
-import { type ContractRunner } from "ethers";
+import { Signer } from "ethers";
+import type { Provider } from "@ethersproject/providers";
 import type { IAToken, IATokenInterface } from "../IAToken";
 export declare class IAToken__factory {
     static readonly abi: readonly [{
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "POOL";
-        readonly outputs: readonly [{
-            readonly internalType: "contract ILendingPool";
-            readonly name: "";
-            readonly type: "address";
-        }];
-        readonly stateMutability: "view";
-        readonly type: "function";
-    }, {
         readonly inputs: readonly [];
-        readonly name: "UNDERLYING_ASSET_ADDRESS";
         readonly outputs: readonly [{
-            readonly internalType: "address";
             readonly name: "";
             readonly type: "address";
+            readonly internalType: "contract ILendingPool";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }, {
-        readonly inputs: readonly [{
+        readonly type: "function";
+        readonly name: "UNDERLYING_ASSET_ADDRESS";
+        readonly inputs: readonly [];
+        readonly outputs: readonly [{
+            readonly name: "";
+            readonly type: "address";
             readonly internalType: "address";
+        }];
+        readonly stateMutability: "view";
+    }, {
+        readonly type: "function";
+        readonly name: "burn";
+        readonly inputs: readonly [{
             readonly name: "from";
             readonly type: "address";
-        }, {
             readonly internalType: "address";
+        }, {
             readonly name: "receiverOfUnderlying";
             readonly type: "address";
+            readonly internalType: "address";
         }, {
-            readonly internalType: "uint256";
             readonly name: "amount";
             readonly type: "uint256";
-        }, {
             readonly internalType: "uint256";
+        }, {
             readonly name: "index";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
-        readonly name: "burn";
         readonly outputs: readonly [];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "getPreviousIndex";
         readonly inputs: readonly [{
-            readonly internalType: "address";
             readonly name: "user";
             readonly type: "address";
+            readonly internalType: "address";
         }];
-        readonly name: "getPreviousIndex";
         readonly outputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "handleRepayment";
         readonly inputs: readonly [{
-            readonly internalType: "address";
             readonly name: "user";
             readonly type: "address";
-        }, {
             readonly internalType: "address";
+        }, {
             readonly name: "onBehalfOf";
             readonly type: "address";
+            readonly internalType: "address";
         }, {
-            readonly internalType: "uint256";
             readonly name: "amount";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
-        readonly name: "handleRepayment";
         readonly outputs: readonly [];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "mint";
         readonly inputs: readonly [{
-            readonly internalType: "address";
             readonly name: "caller";
             readonly type: "address";
-        }, {
             readonly internalType: "address";
+        }, {
             readonly name: "onBehalfOf";
             readonly type: "address";
+            readonly internalType: "address";
         }, {
-            readonly internalType: "uint256";
             readonly name: "amount";
             readonly type: "uint256";
-        }, {
             readonly internalType: "uint256";
+        }, {
             readonly name: "index";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
-        readonly name: "mint";
         readonly outputs: readonly [{
-            readonly internalType: "bool";
             readonly name: "";
             readonly type: "bool";
+            readonly internalType: "bool";
         }];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "mintToTreasury";
         readonly inputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "amount";
             readonly type: "uint256";
-        }, {
             readonly internalType: "uint256";
+        }, {
             readonly name: "index";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
-        readonly name: "mintToTreasury";
         readonly outputs: readonly [];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "transferOnLiquidation";
         readonly inputs: readonly [{
-            readonly internalType: "address";
             readonly name: "from";
             readonly type: "address";
-        }, {
             readonly internalType: "address";
+        }, {
             readonly name: "to";
             readonly type: "address";
+            readonly internalType: "address";
         }, {
-            readonly internalType: "uint256";
             readonly name: "value";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
-        readonly name: "transferOnLiquidation";
         readonly outputs: readonly [];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "transferUnderlyingTo";
         readonly inputs: readonly [{
-            readonly internalType: "address";
             readonly name: "target";
             readonly type: "address";
+            readonly internalType: "address";
         }, {
-            readonly internalType: "uint256";
             readonly name: "amount";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
-        readonly name: "transferUnderlyingTo";
         readonly outputs: readonly [];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }];
     static createInterface(): IATokenInterface;
-    static connect(address: string, runner?: ContractRunner | null): IAToken;
+    static connect(address: string, signerOrProvider: Signer | Provider): IAToken;
 }

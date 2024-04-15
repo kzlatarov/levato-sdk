@@ -7,283 +7,283 @@ exports.CTokenSecondExtensionInterface__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        inputs: [
-            {
-                internalType: "uint256",
-                name: "withdrawAmount",
-                type: "uint256",
-            },
-        ],
+        type: "function",
         name: "_withdrawAdminFees",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
         inputs: [
             {
-                internalType: "uint256",
                 name: "withdrawAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "_withdrawIonicFees",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_withdrawIonicFees",
         inputs: [
             {
+                name: "withdrawAmount",
+                type: "uint256",
                 internalType: "uint256",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "borrow",
+        inputs: [
+            {
                 name: "borrowAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "borrow",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getCash",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "liquidateBorrow",
         inputs: [
             {
-                internalType: "address",
                 name: "borrower",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "repayAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "address",
                 name: "cTokenCollateral",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "liquidateBorrow",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "mint",
         inputs: [
             {
-                internalType: "uint256",
                 name: "mintAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "mint",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "redeem",
         inputs: [
             {
-                internalType: "uint256",
                 name: "redeemTokens",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "redeem",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "redeemUnderlying",
         inputs: [
             {
-                internalType: "uint256",
                 name: "redeemAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "redeemUnderlying",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "repayBorrow",
         inputs: [
             {
-                internalType: "uint256",
                 name: "repayAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "repayBorrow",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "repayBorrowBehalf",
         inputs: [
             {
-                internalType: "address",
                 name: "borrower",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "repayAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "repayBorrowBehalf",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "seize",
         inputs: [
             {
-                internalType: "address",
                 name: "liquidator",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "borrower",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "seizeTokens",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "seize",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "selfTransferIn",
         inputs: [
             {
-                internalType: "address",
                 name: "from",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "amount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "selfTransferIn",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "selfTransferOut",
         inputs: [
             {
-                internalType: "address",
                 name: "to",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "amount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "selfTransferOut",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
 ];
 class CTokenSecondExtensionInterface__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.CTokenSecondExtensionInterface__factory = CTokenSecondExtensionInterface__factory;

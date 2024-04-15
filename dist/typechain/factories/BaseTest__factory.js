@@ -7,870 +7,909 @@ exports.BaseTest__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "string",
-                name: "",
-                type: "string",
-            },
-        ],
-        name: "log",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        name: "log_address",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "uint256[]",
-                name: "val",
-                type: "uint256[]",
-            },
-        ],
-        name: "log_array",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "int256[]",
-                name: "val",
-                type: "int256[]",
-            },
-        ],
-        name: "log_array",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "address[]",
-                name: "val",
-                type: "address[]",
-            },
-        ],
-        name: "log_array",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "bytes",
-                name: "",
-                type: "bytes",
-            },
-        ],
-        name: "log_bytes",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "bytes32",
-                name: "",
-                type: "bytes32",
-            },
-        ],
-        name: "log_bytes32",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "int256",
-                name: "",
-                type: "int256",
-            },
-        ],
-        name: "log_int",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "string",
-                name: "key",
-                type: "string",
-            },
-            {
-                indexed: false,
-                internalType: "address",
-                name: "val",
-                type: "address",
-            },
-        ],
-        name: "log_named_address",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "string",
-                name: "key",
-                type: "string",
-            },
-            {
-                indexed: false,
-                internalType: "uint256[]",
-                name: "val",
-                type: "uint256[]",
-            },
-        ],
-        name: "log_named_array",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "string",
-                name: "key",
-                type: "string",
-            },
-            {
-                indexed: false,
-                internalType: "int256[]",
-                name: "val",
-                type: "int256[]",
-            },
-        ],
-        name: "log_named_array",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "string",
-                name: "key",
-                type: "string",
-            },
-            {
-                indexed: false,
-                internalType: "address[]",
-                name: "val",
-                type: "address[]",
-            },
-        ],
-        name: "log_named_array",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "string",
-                name: "key",
-                type: "string",
-            },
-            {
-                indexed: false,
-                internalType: "bytes",
-                name: "val",
-                type: "bytes",
-            },
-        ],
-        name: "log_named_bytes",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "string",
-                name: "key",
-                type: "string",
-            },
-            {
-                indexed: false,
-                internalType: "bytes32",
-                name: "val",
-                type: "bytes32",
-            },
-        ],
-        name: "log_named_bytes32",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "string",
-                name: "key",
-                type: "string",
-            },
-            {
-                indexed: false,
-                internalType: "int256",
-                name: "val",
-                type: "int256",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "decimals",
-                type: "uint256",
-            },
-        ],
-        name: "log_named_decimal_int",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "string",
-                name: "key",
-                type: "string",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "val",
-                type: "uint256",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "decimals",
-                type: "uint256",
-            },
-        ],
-        name: "log_named_decimal_uint",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "string",
-                name: "key",
-                type: "string",
-            },
-            {
-                indexed: false,
-                internalType: "int256",
-                name: "val",
-                type: "int256",
-            },
-        ],
-        name: "log_named_int",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "string",
-                name: "key",
-                type: "string",
-            },
-            {
-                indexed: false,
-                internalType: "string",
-                name: "val",
-                type: "string",
-            },
-        ],
-        name: "log_named_string",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "string",
-                name: "key",
-                type: "string",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "val",
-                type: "uint256",
-            },
-        ],
-        name: "log_named_uint",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "string",
-                name: "",
-                type: "string",
-            },
-        ],
-        name: "log_string",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        name: "log_uint",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "bytes",
-                name: "",
-                type: "bytes",
-            },
-        ],
-        name: "logs",
-        type: "event",
-    },
-    {
-        inputs: [],
+        type: "function",
         name: "IS_TEST",
+        inputs: [],
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "asArray",
         inputs: [
             {
-                internalType: "address",
                 name: "value0",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "value1",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "value2",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "value3",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "value4",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "asArray",
         outputs: [
             {
-                internalType: "address[]",
                 name: "",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
         stateMutability: "pure",
-        type: "function",
     },
     {
+        type: "function",
+        name: "asArray",
         inputs: [
             {
-                internalType: "address",
                 name: "value0",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "value1",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "value2",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "asArray",
         outputs: [
             {
-                internalType: "address[]",
                 name: "",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
         stateMutability: "pure",
-        type: "function",
     },
     {
+        type: "function",
+        name: "asArray",
         inputs: [
             {
-                internalType: "address",
                 name: "value0",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "value1",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "asArray",
         outputs: [
             {
-                internalType: "address[]",
                 name: "",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
         stateMutability: "pure",
-        type: "function",
     },
     {
+        type: "function",
+        name: "asArray",
         inputs: [
             {
-                internalType: "address",
                 name: "value",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "asArray",
         outputs: [
             {
-                internalType: "address[]",
                 name: "",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
         stateMutability: "pure",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "dai",
+        inputs: [],
         outputs: [
             {
+                name: "",
+                type: "address",
                 internalType: "address",
-                name: "",
-                type: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "delegator",
+        inputs: [],
         outputs: [
             {
-                internalType: "contract ICreditDelegator",
                 name: "",
                 type: "address",
+                internalType: "contract ICreditDelegator",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "excludeArtifacts",
+        inputs: [],
         outputs: [
             {
-                internalType: "string[]",
                 name: "excludedArtifacts_",
                 type: "string[]",
+                internalType: "string[]",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "excludeContracts",
+        inputs: [],
         outputs: [
             {
-                internalType: "address[]",
                 name: "excludedContracts_",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "excludeSenders",
+        inputs: [],
         outputs: [
             {
-                internalType: "address[]",
                 name: "excludedSenders_",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "failed",
+        inputs: [],
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "irm",
+        inputs: [],
         outputs: [
             {
+                name: "",
+                type: "address",
                 internalType: "contract DefaultInterestRateStrategy",
-                name: "",
-                type: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "lens",
+        inputs: [],
         outputs: [
             {
+                name: "",
+                type: "address",
                 internalType: "contract LeveragedPositionsLens",
-                name: "",
-                type: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "lpf",
+        inputs: [],
         outputs: [
             {
+                name: "",
+                type: "address",
                 internalType: "contract ILeveragedPositionsFactory",
-                name: "",
-                type: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "maticx",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "modePool",
         inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "modeUsdc",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "modeWeth",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
         name: "mpo",
+        inputs: [],
         outputs: [
             {
+                name: "",
+                type: "address",
                 internalType: "contract MasterPriceOracle",
-                name: "",
-                type: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "proxyAdmin",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "registry",
+        inputs: [],
         outputs: [
             {
+                name: "",
+                type: "address",
                 internalType: "contract IFundersRegistry",
-                name: "",
-                type: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "router",
+        inputs: [],
         outputs: [
             {
+                name: "",
+                type: "address",
                 internalType: "contract IFlashloanRouter",
-                name: "",
-                type: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "sammUsdrUsdc",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "stmatic",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "targetArtifactSelectors",
+        inputs: [],
         outputs: [
             {
-                components: [
-                    {
-                        internalType: "address",
-                        name: "addr",
-                        type: "address",
-                    },
-                    {
-                        internalType: "bytes4[]",
-                        name: "selectors",
-                        type: "bytes4[]",
-                    },
-                ],
-                internalType: "struct StdInvariant.FuzzSelector[]",
                 name: "targetedArtifactSelectors_",
                 type: "tuple[]",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "targetArtifacts",
-        outputs: [
-            {
-                internalType: "string[]",
-                name: "targetedArtifacts_",
-                type: "string[]",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "targetContracts",
-        outputs: [
-            {
-                internalType: "address[]",
-                name: "targetedContracts_",
-                type: "address[]",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "targetSelectors",
-        outputs: [
-            {
+                internalType: "struct StdInvariant.FuzzSelector[]",
                 components: [
                     {
-                        internalType: "address",
                         name: "addr",
                         type: "address",
+                        internalType: "address",
                     },
                     {
-                        internalType: "bytes4[]",
                         name: "selectors",
                         type: "bytes4[]",
+                        internalType: "bytes4[]",
                     },
                 ],
-                internalType: "struct StdInvariant.FuzzSelector[]",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "targetArtifacts",
+        inputs: [],
+        outputs: [
+            {
+                name: "targetedArtifacts_",
+                type: "string[]",
+                internalType: "string[]",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "targetContracts",
+        inputs: [],
+        outputs: [
+            {
+                name: "targetedContracts_",
+                type: "address[]",
+                internalType: "address[]",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "targetSelectors",
+        inputs: [],
+        outputs: [
+            {
                 name: "targetedSelectors_",
                 type: "tuple[]",
+                internalType: "struct StdInvariant.FuzzSelector[]",
+                components: [
+                    {
+                        name: "addr",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "selectors",
+                        type: "bytes4[]",
+                        internalType: "bytes4[]",
+                    },
+                ],
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "targetSenders",
+        inputs: [],
         outputs: [
             {
-                internalType: "address[]",
                 name: "targetedSenders_",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "usdc",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "usdt",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "wbtc",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "weth",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "wmatic",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "wsteth",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
+    },
+    {
+        type: "event",
+        name: "log",
+        inputs: [
+            {
+                name: "",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_address",
+        inputs: [
+            {
+                name: "",
+                type: "address",
+                indexed: false,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_array",
+        inputs: [
+            {
+                name: "val",
+                type: "uint256[]",
+                indexed: false,
+                internalType: "uint256[]",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_array",
+        inputs: [
+            {
+                name: "val",
+                type: "int256[]",
+                indexed: false,
+                internalType: "int256[]",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_array",
+        inputs: [
+            {
+                name: "val",
+                type: "address[]",
+                indexed: false,
+                internalType: "address[]",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_bytes",
+        inputs: [
+            {
+                name: "",
+                type: "bytes",
+                indexed: false,
+                internalType: "bytes",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_bytes32",
+        inputs: [
+            {
+                name: "",
+                type: "bytes32",
+                indexed: false,
+                internalType: "bytes32",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_int",
+        inputs: [
+            {
+                name: "",
+                type: "int256",
+                indexed: false,
+                internalType: "int256",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_named_address",
+        inputs: [
+            {
+                name: "key",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+            {
+                name: "val",
+                type: "address",
+                indexed: false,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_named_array",
+        inputs: [
+            {
+                name: "key",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+            {
+                name: "val",
+                type: "uint256[]",
+                indexed: false,
+                internalType: "uint256[]",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_named_array",
+        inputs: [
+            {
+                name: "key",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+            {
+                name: "val",
+                type: "int256[]",
+                indexed: false,
+                internalType: "int256[]",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_named_array",
+        inputs: [
+            {
+                name: "key",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+            {
+                name: "val",
+                type: "address[]",
+                indexed: false,
+                internalType: "address[]",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_named_bytes",
+        inputs: [
+            {
+                name: "key",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+            {
+                name: "val",
+                type: "bytes",
+                indexed: false,
+                internalType: "bytes",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_named_bytes32",
+        inputs: [
+            {
+                name: "key",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+            {
+                name: "val",
+                type: "bytes32",
+                indexed: false,
+                internalType: "bytes32",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_named_decimal_int",
+        inputs: [
+            {
+                name: "key",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+            {
+                name: "val",
+                type: "int256",
+                indexed: false,
+                internalType: "int256",
+            },
+            {
+                name: "decimals",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_named_decimal_uint",
+        inputs: [
+            {
+                name: "key",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+            {
+                name: "val",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+            {
+                name: "decimals",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_named_int",
+        inputs: [
+            {
+                name: "key",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+            {
+                name: "val",
+                type: "int256",
+                indexed: false,
+                internalType: "int256",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_named_string",
+        inputs: [
+            {
+                name: "key",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+            {
+                name: "val",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_named_uint",
+        inputs: [
+            {
+                name: "key",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+            {
+                name: "val",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_string",
+        inputs: [
+            {
+                name: "",
+                type: "string",
+                indexed: false,
+                internalType: "string",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "log_uint",
+        inputs: [
+            {
+                name: "",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "logs",
+        inputs: [
+            {
+                name: "",
+                type: "bytes",
+                indexed: false,
+                internalType: "bytes",
+            },
+        ],
+        anonymous: false,
     },
 ];
-const _bytecode = "0x60806040526000805460ff199081166001908117909255600480549091169091179055602480546001600160a01b0319908116730d500b1d8e8ef31e21c99d1db9a6444d3adf127017909155602580548216732791bca1f2de4661ed88a30c99a7a9449aa84174179055602680548216738f3cf7ad23cd3cadbd9735aff958023239c6a06317905560278054821673fa68fb4628dff1028cfec22b4162fccd0d45efb6179055602880548216731bfd67037b42cf73acf2047067bd4f2c47d9bfd617905560298054821673c2132d05d31c914a87c6611c10748aeb04b58e8f179055602a80548216737ceb23fd6bc0add59e62ac25578270cff1b9f619179055602b80548216733a58a54c066fdc0f2d55fc9c89f0415c92ebf3c4179055602c805482167303b54a6e9a984069379fae1a4fc4dbae93b3bccd179055602d805490911673d17cb0f162f133e339c0bbfc18c36c357e681d6b17905534801561016657600080fd5b506110c3806101766000396000f3fe608060405234801561001057600080fd5b50600436106101f05760003560e01c806385226c811161010f578063d1d8bce7116100a2578063f8bbc87511610071578063f8bbc875146103fa578063fa6c4ea61461040d578063fa7626d414610420578063fb41be161461042d57600080fd5b8063d1d8bce7146103b9578063e20c9f71146103cc578063f4b9fa75146103d4578063f887ea40146103e757600080fd5b8063b44f6052116100de578063b44f605214610373578063b5508aa914610386578063ba414fa61461038e578063ce9b7930146103a657600080fd5b806385226c8114610330578063916a17c61461034557806395ff40751461034d5780639a574de61461036057600080fd5b80633e47158c1161018757806366d9a9a01161015657806366d9a9a0146102e2578063751f7456146102f75780637b1039991461030a578063827906a91461031d57600080fd5b80633e47158c146102ac5780633e5e3c23146102bf5780633f7286f4146102c75780633fc8cef3146102cf57600080fd5b80632f48ab7d116101c35780632f48ab7d146102605780633cdc5389146102735780633d3b6f35146102865780633e413bee1461029957600080fd5b8063112666b7146101f55780631ed7831c1461022557806328e8fe7d1461023a5780632a7848d11461024d575b600080fd5b602154610208906001600160a01b031681565b6040516001600160a01b0390911681526020015b60405180910390f35b61022d610440565b60405161021c9190610d38565b602254610208906001600160a01b031681565b602b54610208906001600160a01b031681565b602954610208906001600160a01b031681565b602854610208906001600160a01b031681565b602054610208906001600160a01b031681565b602554610208906001600160a01b031681565b602354610208906001600160a01b031681565b61022d6104a2565b61022d610502565b602a54610208906001600160a01b031681565b6102ea610562565b60405161021c9190610d85565b601c54610208906001600160a01b031681565b601d54610208906001600160a01b031681565b602754610208906001600160a01b031681565b610338610651565b60405161021c9190610e68565b6102ea610721565b61022d61035b366004610ef9565b610807565b61022d61036e366004610f5e565b610935565b61022d610381366004610fa1565b6109f8565b610338610a85565b610396610b55565b604051901515815260200161021c565b601f54610208906001600160a01b031681565b602c54610208906001600160a01b031681565b61022d610c80565b602654610208906001600160a01b031681565b601e54610208906001600160a01b031681565b602d54610208906001600160a01b031681565b61022d61041b366004610fd4565b610ce0565b6000546103969060ff1681565b602454610208906001600160a01b031681565b6060600d80548060200260200160405190810160405280929190818152602001828054801561049857602002820191906000526020600020905b81546001600160a01b0316815260019091019060200180831161047a575b5050505050905090565b6060600f805480602002602001604051908101604052809291908181526020018280548015610498576020028201919060005260206000209081546001600160a01b0316815260019091019060200180831161047a575050505050905090565b6060600e805480602002602001604051908101604052809291908181526020018280548015610498576020028201919060005260206000209081546001600160a01b0316815260019091019060200180831161047a575050505050905090565b60606012805480602002602001604051908101604052809291908181526020016000905b828210156106485760008481526020908190206040805180820182526002860290920180546001600160a01b0316835260018101805483518187028101870190945280845293949193858301939283018282801561063057602002820191906000526020600020906000905b82829054906101000a900460e01b6001600160e01b031916815260200190600401906020826003010492830192600103820291508084116105f25790505b50505050508152505081526020019060010190610586565b50505050905090565b60606011805480602002602001604051908101604052809291908181526020016000905b8282101561064857838290600052602060002001805461069490610ff6565b80601f01602080910402602001604051908101604052809291908181526020018280546106c090610ff6565b801561070d5780601f106106e25761010080835404028352916020019161070d565b820191906000526020600020905b8154815290600101906020018083116106f057829003601f168201915b505050505081526020019060010190610675565b60606013805480602002602001604051908101604052809291908181526020016000905b828210156106485760008481526020908190206040805180820182526002860290920180546001600160a01b031683526001810180548351818702810187019094528084529394919385830193928301828280156107ef57602002820191906000526020600020906000905b82829054906101000a900460e01b6001600160e01b031916815260200190600401906020826003010492830192600103820291508084116107b15790505b50505050508152505081526020019060010190610745565b60408051600580825260c08201909252606091600091906020820160a080368337019050509050868160008151811061084257610842611031565b60200260200101906001600160a01b031690816001600160a01b031681525050858160018151811061087657610876611031565b60200260200101906001600160a01b031690816001600160a01b03168152505084816002815181106108aa576108aa611031565b60200260200101906001600160a01b031690816001600160a01b03168152505083816003815181106108de576108de611031565b60200260200101906001600160a01b031690816001600160a01b031681525050828160048151811061091257610912611031565b6001600160a01b0390921660209283029190910190910152905095945050505050565b6040805160038082526080820190925260609160009190602082018480368337019050509050848160008151811061096f5761096f611031565b60200260200101906001600160a01b031690816001600160a01b03168152505083816001815181106109a3576109a3611031565b60200260200101906001600160a01b031690816001600160a01b03168152505082816002815181106109d7576109d7611031565b6001600160a01b039092166020928302919091019091015290509392505050565b604080516002808252606080830184529260009291906020830190803683370190505090508381600081518110610a3157610a31611031565b60200260200101906001600160a01b031690816001600160a01b0316815250508281600181518110610a6557610a65611031565b6001600160a01b0390921660209283029190910190910152905092915050565b60606010805480602002602001604051908101604052809291908181526020016000905b82821015610648578382906000526020600020018054610ac890610ff6565b80601f0160208091040260200160405190810160405280929190818152602001828054610af490610ff6565b8015610b415780601f10610b1657610100808354040283529160200191610b41565b820191906000526020600020905b815481529060010190602001808311610b2457829003601f168201915b505050505081526020019060010190610aa9565b60008054610100900460ff1615610b755750600054610100900460ff1690565b6000737109709ecfa91a80626ff3989d68f67f5b1dd12d3b15610c7b5760408051737109709ecfa91a80626ff3989d68f67f5b1dd12d602082018190526519985a5b195960d21b82840152825180830384018152606083019093526000929091610c03917f667f9d70ca411d70ead50d8d5c22070dafc36ad75f3dcf5e7237b22ade9aecc491608001611047565b60408051601f1981840301815290829052610c1d91611078565b6000604051808303816000865af19150503d8060008114610c5a576040519150601f19603f3d011682016040523d82523d6000602084013e610c5f565b606091505b5091505080806020019051810190610c779190611094565b9150505b919050565b6060600c805480602002602001604051908101604052809291908181526020018280548015610498576020028201919060005260206000209081546001600160a01b0316815260019091019060200180831161047a575050505050905090565b60408051600180825281830190925260609160009190602080830190803683370190505090508281600081518110610d1a57610d1a611031565b6001600160a01b039092166020928302919091019091015292915050565b6020808252825182820181905260009190848201906040850190845b81811015610d795783516001600160a01b031683529284019291840191600101610d54565b50909695505050505050565b60006020808301818452808551808352604092508286019150828160051b8701018488016000805b84811015610e2957898403603f19018652825180516001600160a01b03168552880151888501889052805188860181905290890190839060608701905b80831015610e145783516001600160e01b0319168252928b019260019290920191908b0190610dea565b50978a01979550505091870191600101610dad565b50919998505050505050505050565b60005b83811015610e53578181015183820152602001610e3b565b83811115610e62576000848401525b50505050565b6000602080830181845280855180835260408601915060408160051b870101925083870160005b82811015610ed557878503603f1901845281518051808752610eb6818989018a8501610e38565b601f01601f191695909501860194509285019290850190600101610e8f565b5092979650505050505050565b80356001600160a01b0381168114610c7b57600080fd5b600080600080600060a08688031215610f1157600080fd5b610f1a86610ee2565b9450610f2860208701610ee2565b9350610f3660408701610ee2565b9250610f4460608701610ee2565b9150610f5260808701610ee2565b90509295509295909350565b600080600060608486031215610f7357600080fd5b610f7c84610ee2565b9250610f8a60208501610ee2565b9150610f9860408501610ee2565b90509250925092565b60008060408385031215610fb457600080fd5b610fbd83610ee2565b9150610fcb60208401610ee2565b90509250929050565b600060208284031215610fe657600080fd5b610fef82610ee2565b9392505050565b600181811c9082168061100a57607f821691505b6020821081141561102b57634e487b7160e01b600052602260045260246000fd5b50919050565b634e487b7160e01b600052603260045260246000fd5b6001600160e01b031983168152815160009061106a816004850160208701610e38565b919091016004019392505050565b6000825161108a818460208701610e38565b9190910192915050565b6000602082840312156110a657600080fd5b81518015158114610fef57600080fdfea164736f6c634300080a000a";
+const _bytecode = "0x60806040526000805460ff199081166001908117909255600480549091169091179055602480546001600160a01b0319908116730d500b1d8e8ef31e21c99d1db9a6444d3adf127017909155602580548216732791bca1f2de4661ed88a30c99a7a9449aa84174179055602680548216738f3cf7ad23cd3cadbd9735aff958023239c6a06317905560278054821673fa68fb4628dff1028cfec22b4162fccd0d45efb6179055602880548216731bfd67037b42cf73acf2047067bd4f2c47d9bfd617905560298054821673c2132d05d31c914a87c6611c10748aeb04b58e8f179055602a80548216737ceb23fd6bc0add59e62ac25578270cff1b9f619179055602b80548216733a58a54c066fdc0f2d55fc9c89f0415c92ebf3c4179055602c805482167303b54a6e9a984069379fae1a4fc4dbae93b3bccd179055602d8054821673d17cb0f162f133e339c0bbfc18c36c357e681d6b179055602e80548216734200000000000000000000000000000000000006179055602f8054821673d988097fb8612cc24eec14542bc03424c656005f1790556030805490911673fb3323e24743caf4add0fdccfb268565c06855561790553480156101c057600080fd5b5061111d806101d06000396000f3fe608060405234801561001057600080fd5b50600436106102115760003560e01c8063827906a911610125578063ce9b7930116100ad578063f887ea401161007c578063f887ea4014610441578063f8bbc87514610454578063fa6c4ea614610467578063fa7626d41461047a578063fb41be161461048757600080fd5b8063ce9b793014610400578063d1d8bce714610413578063e20c9f7114610426578063f4b9fa751461042e57600080fd5b806395ff4075116100f457806395ff4075146103a75780639a574de6146103ba578063b44f6052146103cd578063b5508aa9146103e0578063ba414fa6146103e857600080fd5b8063827906a914610364578063839c51b81461037757806385226c811461038a578063916a17c61461039f57600080fd5b80633d3b6f35116101a85780633f7286f4116101775780633f7286f41461030e5780633fc8cef31461031657806366d9a9a014610329578063751f74561461033e5780637b1039991461035157600080fd5b80633d3b6f35146102cd5780633e413bee146102e05780633e47158c146102f35780633e5e3c231461030657600080fd5b806328e8fe7d116101e457806328e8fe7d146102815780632a7848d1146102945780632f48ab7d146102a75780633cdc5389146102ba57600080fd5b80630c08af4a1461021657806310e8ef4714610246578063112666b7146102595780631ed7831c1461026c575b600080fd5b602f54610229906001600160a01b031681565b6040516001600160a01b0390911681526020015b60405180910390f35b603054610229906001600160a01b031681565b602154610229906001600160a01b031681565b61027461049a565b60405161023d9190610d92565b602254610229906001600160a01b031681565b602b54610229906001600160a01b031681565b602954610229906001600160a01b031681565b602854610229906001600160a01b031681565b602054610229906001600160a01b031681565b602554610229906001600160a01b031681565b602354610229906001600160a01b031681565b6102746104fc565b61027461055c565b602a54610229906001600160a01b031681565b6103316105bc565b60405161023d9190610ddf565b601c54610229906001600160a01b031681565b601d54610229906001600160a01b031681565b602754610229906001600160a01b031681565b602e54610229906001600160a01b031681565b6103926106ab565b60405161023d9190610ec2565b61033161077b565b6102746103b5366004610f53565b610861565b6102746103c8366004610fb8565b61098f565b6102746103db366004610ffb565b610a52565b610392610adf565b6103f0610baf565b604051901515815260200161023d565b601f54610229906001600160a01b031681565b602c54610229906001600160a01b031681565b610274610cda565b602654610229906001600160a01b031681565b601e54610229906001600160a01b031681565b602d54610229906001600160a01b031681565b61027461047536600461102e565b610d3a565b6000546103f09060ff1681565b602454610229906001600160a01b031681565b6060600d8054806020026020016040519081016040528092919081815260200182805480156104f257602002820191906000526020600020905b81546001600160a01b031681526001909101906020018083116104d4575b5050505050905090565b6060600f8054806020026020016040519081016040528092919081815260200182805480156104f2576020028201919060005260206000209081546001600160a01b031681526001909101906020018083116104d4575050505050905090565b6060600e8054806020026020016040519081016040528092919081815260200182805480156104f2576020028201919060005260206000209081546001600160a01b031681526001909101906020018083116104d4575050505050905090565b60606012805480602002602001604051908101604052809291908181526020016000905b828210156106a25760008481526020908190206040805180820182526002860290920180546001600160a01b0316835260018101805483518187028101870190945280845293949193858301939283018282801561068a57602002820191906000526020600020906000905b82829054906101000a900460e01b6001600160e01b0319168152602001906004019060208260030104928301926001038202915080841161064c5790505b505050505081525050815260200190600101906105e0565b50505050905090565b60606011805480602002602001604051908101604052809291908181526020016000905b828210156106a25783829060005260206000200180546106ee90611050565b80601f016020809104026020016040519081016040528092919081815260200182805461071a90611050565b80156107675780601f1061073c57610100808354040283529160200191610767565b820191906000526020600020905b81548152906001019060200180831161074a57829003601f168201915b5050505050815260200190600101906106cf565b60606013805480602002602001604051908101604052809291908181526020016000905b828210156106a25760008481526020908190206040805180820182526002860290920180546001600160a01b0316835260018101805483518187028101870190945280845293949193858301939283018282801561084957602002820191906000526020600020906000905b82829054906101000a900460e01b6001600160e01b0319168152602001906004019060208260030104928301926001038202915080841161080b5790505b5050505050815250508152602001906001019061079f565b60408051600580825260c08201909252606091600091906020820160a080368337019050509050868160008151811061089c5761089c61108b565b60200260200101906001600160a01b031690816001600160a01b03168152505085816001815181106108d0576108d061108b565b60200260200101906001600160a01b031690816001600160a01b03168152505084816002815181106109045761090461108b565b60200260200101906001600160a01b031690816001600160a01b03168152505083816003815181106109385761093861108b565b60200260200101906001600160a01b031690816001600160a01b031681525050828160048151811061096c5761096c61108b565b6001600160a01b0390921660209283029190910190910152905095945050505050565b604080516003808252608082019092526060916000919060208201848036833701905050905084816000815181106109c9576109c961108b565b60200260200101906001600160a01b031690816001600160a01b03168152505083816001815181106109fd576109fd61108b565b60200260200101906001600160a01b031690816001600160a01b0316815250508281600281518110610a3157610a3161108b565b6001600160a01b039092166020928302919091019091015290509392505050565b604080516002808252606080830184529260009291906020830190803683370190505090508381600081518110610a8b57610a8b61108b565b60200260200101906001600160a01b031690816001600160a01b0316815250508281600181518110610abf57610abf61108b565b6001600160a01b0390921660209283029190910190910152905092915050565b60606010805480602002602001604051908101604052809291908181526020016000905b828210156106a2578382906000526020600020018054610b2290611050565b80601f0160208091040260200160405190810160405280929190818152602001828054610b4e90611050565b8015610b9b5780601f10610b7057610100808354040283529160200191610b9b565b820191906000526020600020905b815481529060010190602001808311610b7e57829003601f168201915b505050505081526020019060010190610b03565b60008054610100900460ff1615610bcf5750600054610100900460ff1690565b6000737109709ecfa91a80626ff3989d68f67f5b1dd12d3b15610cd55760408051737109709ecfa91a80626ff3989d68f67f5b1dd12d602082018190526519985a5b195960d21b82840152825180830384018152606083019093526000929091610c5d917f667f9d70ca411d70ead50d8d5c22070dafc36ad75f3dcf5e7237b22ade9aecc4916080016110a1565b60408051601f1981840301815290829052610c77916110d2565b6000604051808303816000865af19150503d8060008114610cb4576040519150601f19603f3d011682016040523d82523d6000602084013e610cb9565b606091505b5091505080806020019051810190610cd191906110ee565b9150505b919050565b6060600c8054806020026020016040519081016040528092919081815260200182805480156104f2576020028201919060005260206000209081546001600160a01b031681526001909101906020018083116104d4575050505050905090565b60408051600180825281830190925260609160009190602080830190803683370190505090508281600081518110610d7457610d7461108b565b6001600160a01b039092166020928302919091019091015292915050565b6020808252825182820181905260009190848201906040850190845b81811015610dd35783516001600160a01b031683529284019291840191600101610dae565b50909695505050505050565b60006020808301818452808551808352604092508286019150828160051b8701018488016000805b84811015610e8357898403603f19018652825180516001600160a01b03168552880151888501889052805188860181905290890190839060608701905b80831015610e6e5783516001600160e01b0319168252928b019260019290920191908b0190610e44565b50978a01979550505091870191600101610e07565b50919998505050505050505050565b60005b83811015610ead578181015183820152602001610e95565b83811115610ebc576000848401525b50505050565b6000602080830181845280855180835260408601915060408160051b870101925083870160005b82811015610f2f57878503603f1901845281518051808752610f10818989018a8501610e92565b601f01601f191695909501860194509285019290850190600101610ee9565b5092979650505050505050565b80356001600160a01b0381168114610cd557600080fd5b600080600080600060a08688031215610f6b57600080fd5b610f7486610f3c565b9450610f8260208701610f3c565b9350610f9060408701610f3c565b9250610f9e60608701610f3c565b9150610fac60808701610f3c565b90509295509295909350565b600080600060608486031215610fcd57600080fd5b610fd684610f3c565b9250610fe460208501610f3c565b9150610ff260408501610f3c565b90509250925092565b6000806040838503121561100e57600080fd5b61101783610f3c565b915061102560208401610f3c565b90509250929050565b60006020828403121561104057600080fd5b61104982610f3c565b9392505050565b600181811c9082168061106457607f821691505b6020821081141561108557634e487b7160e01b600052602260045260246000fd5b50919050565b634e487b7160e01b600052603260045260246000fd5b6001600160e01b03198316815281516000906110c4816004850160208701610e92565b919091016004019392505050565b600082516110e4818460208701610e92565b9190910192915050565b60006020828403121561110057600080fd5b8151801515811461104957600080fdfea164736f6c634300080a000a";
 const isSuperArgs = (xs) => xs.length > 1;
 class BaseTest__factory extends ethers_1.ContractFactory {
     constructor(...args) {
@@ -881,22 +920,25 @@ class BaseTest__factory extends ethers_1.ContractFactory {
             super(_abi, _bytecode, args[0]);
         }
     }
-    getDeployTransaction(overrides) {
-        return super.getDeployTransaction(overrides || {});
-    }
     deploy(overrides) {
         return super.deploy(overrides || {});
     }
-    connect(runner) {
-        return super.connect(runner);
+    getDeployTransaction(overrides) {
+        return super.getDeployTransaction(overrides || {});
+    }
+    attach(address) {
+        return super.attach(address);
+    }
+    connect(signer) {
+        return super.connect(signer);
     }
     static bytecode = _bytecode;
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.BaseTest__factory = BaseTest__factory;

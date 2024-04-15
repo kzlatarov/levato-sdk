@@ -7,240 +7,240 @@ exports.IDefaultInterestRateStrategy__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        inputs: [],
+        type: "function",
         name: "MAX_EXCESS_STABLE_TO_TOTAL_DEBT_RATIO",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "MAX_EXCESS_USAGE_RATIO",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "OPTIMAL_STABLE_TO_TOTAL_DEBT_RATIO",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
         inputs: [],
-        name: "OPTIMAL_USAGE_RATIO",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "OPTIMAL_USAGE_RATIO",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "calculateInterestRates",
         inputs: [
             {
-                components: [
-                    {
-                        internalType: "uint256",
-                        name: "availableLiqudity",
-                        type: "uint256",
-                    },
-                    {
-                        internalType: "uint256",
-                        name: "liquidityAdded",
-                        type: "uint256",
-                    },
-                    {
-                        internalType: "uint256",
-                        name: "liquidityTaken",
-                        type: "uint256",
-                    },
-                    {
-                        internalType: "uint256",
-                        name: "totalStableDebt",
-                        type: "uint256",
-                    },
-                    {
-                        internalType: "uint256",
-                        name: "totalVariableDebt",
-                        type: "uint256",
-                    },
-                    {
-                        internalType: "uint256",
-                        name: "averageStableBorrowRate",
-                        type: "uint256",
-                    },
-                    {
-                        internalType: "uint256",
-                        name: "reserveFactor",
-                        type: "uint256",
-                    },
-                    {
-                        internalType: "uint256",
-                        name: "reserveLiquidity",
-                        type: "uint256",
-                    },
-                ],
-                internalType: "struct CalculateInterestRatesParams",
                 name: "params",
                 type: "tuple",
+                internalType: "struct CalculateInterestRatesParams",
+                components: [
+                    {
+                        name: "availableLiqudity",
+                        type: "uint256",
+                        internalType: "uint256",
+                    },
+                    {
+                        name: "liquidityAdded",
+                        type: "uint256",
+                        internalType: "uint256",
+                    },
+                    {
+                        name: "liquidityTaken",
+                        type: "uint256",
+                        internalType: "uint256",
+                    },
+                    {
+                        name: "totalStableDebt",
+                        type: "uint256",
+                        internalType: "uint256",
+                    },
+                    {
+                        name: "totalVariableDebt",
+                        type: "uint256",
+                        internalType: "uint256",
+                    },
+                    {
+                        name: "averageStableBorrowRate",
+                        type: "uint256",
+                        internalType: "uint256",
+                    },
+                    {
+                        name: "reserveFactor",
+                        type: "uint256",
+                        internalType: "uint256",
+                    },
+                    {
+                        name: "reserveLiquidity",
+                        type: "uint256",
+                        internalType: "uint256",
+                    },
+                ],
             },
         ],
-        name: "calculateInterestRates",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getBaseStableBorrowRate",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getBaseVariableBorrowRate",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getMaxVariableBorrowRate",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getStableRateExcessOffset",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getStableRateSlope1",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getStableRateSlope2",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getVariableRateSlope1",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getVariableRateSlope2",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
 ];
 class IDefaultInterestRateStrategy__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.IDefaultInterestRateStrategy__factory = IDefaultInterestRateStrategy__factory;

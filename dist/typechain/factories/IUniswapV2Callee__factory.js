@@ -7,41 +7,41 @@ exports.IUniswapV2Callee__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
+        type: "function",
+        name: "uniswapV2Call",
         inputs: [
             {
-                internalType: "address",
                 name: "sender",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "amount0",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "amount1",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "bytes",
                 name: "data",
                 type: "bytes",
+                internalType: "bytes",
             },
         ],
-        name: "uniswapV2Call",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
 ];
 class IUniswapV2Callee__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.IUniswapV2Callee__factory = IUniswapV2Callee__factory;

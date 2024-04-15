@@ -7,89 +7,89 @@ exports.IReserveInterestRateStrategy__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
+        type: "function",
+        name: "calculateInterestRates",
         inputs: [
             {
-                components: [
-                    {
-                        internalType: "uint256",
-                        name: "unbacked",
-                        type: "uint256",
-                    },
-                    {
-                        internalType: "uint256",
-                        name: "liquidityAdded",
-                        type: "uint256",
-                    },
-                    {
-                        internalType: "uint256",
-                        name: "liquidityTaken",
-                        type: "uint256",
-                    },
-                    {
-                        internalType: "uint256",
-                        name: "totalStableDebt",
-                        type: "uint256",
-                    },
-                    {
-                        internalType: "uint256",
-                        name: "totalVariableDebt",
-                        type: "uint256",
-                    },
-                    {
-                        internalType: "uint256",
-                        name: "averageStableBorrowRate",
-                        type: "uint256",
-                    },
-                    {
-                        internalType: "uint256",
-                        name: "reserveFactor",
-                        type: "uint256",
-                    },
-                    {
-                        internalType: "address",
-                        name: "reserve",
-                        type: "address",
-                    },
-                    {
-                        internalType: "address",
-                        name: "aToken",
-                        type: "address",
-                    },
-                ],
-                internalType: "struct DataTypes.CalculateInterestRatesParams",
                 name: "params",
                 type: "tuple",
+                internalType: "struct DataTypes.CalculateInterestRatesParams",
+                components: [
+                    {
+                        name: "unbacked",
+                        type: "uint256",
+                        internalType: "uint256",
+                    },
+                    {
+                        name: "liquidityAdded",
+                        type: "uint256",
+                        internalType: "uint256",
+                    },
+                    {
+                        name: "liquidityTaken",
+                        type: "uint256",
+                        internalType: "uint256",
+                    },
+                    {
+                        name: "totalStableDebt",
+                        type: "uint256",
+                        internalType: "uint256",
+                    },
+                    {
+                        name: "totalVariableDebt",
+                        type: "uint256",
+                        internalType: "uint256",
+                    },
+                    {
+                        name: "averageStableBorrowRate",
+                        type: "uint256",
+                        internalType: "uint256",
+                    },
+                    {
+                        name: "reserveFactor",
+                        type: "uint256",
+                        internalType: "uint256",
+                    },
+                    {
+                        name: "reserve",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "aToken",
+                        type: "address",
+                        internalType: "address",
+                    },
+                ],
             },
         ],
-        name: "calculateInterestRates",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
 ];
 class IReserveInterestRateStrategy__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.IReserveInterestRateStrategy__factory = IReserveInterestRateStrategy__factory;

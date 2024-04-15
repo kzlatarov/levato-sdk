@@ -7,202 +7,202 @@ exports.IAToken__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        inputs: [],
+        type: "function",
         name: "POOL",
-        outputs: [
-            {
-                internalType: "contract ILendingPool",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
         inputs: [],
-        name: "UNDERLYING_ASSET_ADDRESS",
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "contract ILendingPool",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "UNDERLYING_ASSET_ADDRESS",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "burn",
         inputs: [
             {
-                internalType: "address",
                 name: "from",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "receiverOfUnderlying",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "amount",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "index",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "burn",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getPreviousIndex",
         inputs: [
             {
-                internalType: "address",
                 name: "user",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "getPreviousIndex",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "handleRepayment",
         inputs: [
             {
-                internalType: "address",
                 name: "user",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "onBehalfOf",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "amount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "handleRepayment",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "mint",
         inputs: [
             {
-                internalType: "address",
                 name: "caller",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "onBehalfOf",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "amount",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "index",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "mint",
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "mintToTreasury",
         inputs: [
             {
-                internalType: "uint256",
                 name: "amount",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "index",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "mintToTreasury",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "transferOnLiquidation",
         inputs: [
             {
-                internalType: "address",
                 name: "from",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "to",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "value",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "transferOnLiquidation",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "transferUnderlyingTo",
         inputs: [
             {
-                internalType: "address",
                 name: "target",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "amount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "transferUnderlyingTo",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
 ];
 class IAToken__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.IAToken__factory = IAToken__factory;

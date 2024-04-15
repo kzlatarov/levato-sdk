@@ -7,51 +7,51 @@ exports.BasePriceOracle__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
+        type: "function",
+        name: "getUnderlyingPrice",
         inputs: [
             {
-                internalType: "contract IonicCErc20",
                 name: "cToken",
                 type: "address",
+                internalType: "contract IonicCErc20",
             },
         ],
-        name: "getUnderlyingPrice",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "price",
         inputs: [
             {
-                internalType: "address",
                 name: "underlying",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "price",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
 ];
 class BasePriceOracle__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.BasePriceOracle__factory = BasePriceOracle__factory;
