@@ -1,7 +1,16 @@
-import type { BaseContract, BytesLike, FunctionFragment, Result, Interface, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedListener, TypedContractMethod } from "../common";
-export interface DeployScriptInterface extends Interface {
-    getFunction(nameOrSignature: "IS_SCRIPT" | "POLYGON" | "run" | "setUp" | "wnative"): FunctionFragment;
+import type { BaseContract, BigNumber, BytesLike, CallOverrides, ContractTransaction, Overrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "../common";
+export interface DeployScriptInterface extends utils.Interface {
+    functions: {
+        "IS_SCRIPT()": FunctionFragment;
+        "POLYGON()": FunctionFragment;
+        "run()": FunctionFragment;
+        "setUp()": FunctionFragment;
+        "wnative()": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "IS_SCRIPT" | "POLYGON" | "run" | "setUp" | "wnative"): FunctionFragment;
     encodeFunctionData(functionFragment: "IS_SCRIPT", values?: undefined): string;
     encodeFunctionData(functionFragment: "POLYGON", values?: undefined): string;
     encodeFunctionData(functionFragment: "run", values?: undefined): string;
@@ -12,30 +21,70 @@ export interface DeployScriptInterface extends Interface {
     decodeFunctionResult(functionFragment: "run", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "setUp", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "wnative", data: BytesLike): Result;
+    events: {};
 }
 export interface DeployScript extends BaseContract {
-    connect(runner?: ContractRunner | null): DeployScript;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: DeployScriptInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    IS_SCRIPT: TypedContractMethod<[], [boolean], "view">;
-    POLYGON: TypedContractMethod<[], [bigint], "view">;
-    run: TypedContractMethod<[], [void], "nonpayable">;
-    setUp: TypedContractMethod<[], [void], "nonpayable">;
-    wnative: TypedContractMethod<[], [string], "view">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "IS_SCRIPT"): TypedContractMethod<[], [boolean], "view">;
-    getFunction(nameOrSignature: "POLYGON"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "run"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "setUp"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "wnative"): TypedContractMethod<[], [string], "view">;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        IS_SCRIPT(overrides?: CallOverrides): Promise<[boolean]>;
+        POLYGON(overrides?: CallOverrides): Promise<[BigNumber]>;
+        run(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        setUp(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        wnative(overrides?: CallOverrides): Promise<[string]>;
+    };
+    IS_SCRIPT(overrides?: CallOverrides): Promise<boolean>;
+    POLYGON(overrides?: CallOverrides): Promise<BigNumber>;
+    run(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    setUp(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    wnative(overrides?: CallOverrides): Promise<string>;
+    callStatic: {
+        IS_SCRIPT(overrides?: CallOverrides): Promise<boolean>;
+        POLYGON(overrides?: CallOverrides): Promise<BigNumber>;
+        run(overrides?: CallOverrides): Promise<void>;
+        setUp(overrides?: CallOverrides): Promise<void>;
+        wnative(overrides?: CallOverrides): Promise<string>;
+    };
     filters: {};
+    estimateGas: {
+        IS_SCRIPT(overrides?: CallOverrides): Promise<BigNumber>;
+        POLYGON(overrides?: CallOverrides): Promise<BigNumber>;
+        run(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        setUp(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        wnative(overrides?: CallOverrides): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        IS_SCRIPT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        POLYGON(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        run(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        setUp(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        wnative(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    };
 }

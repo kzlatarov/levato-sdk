@@ -7,175 +7,175 @@ exports.IFundersRegistryStorage__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        inputs: [],
+        type: "function",
         name: "WNATIVE",
+        inputs: [],
         outputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [
-            {
-                internalType: "contract IERC20Upgradeable",
-                name: "inputToken",
-                type: "address",
-            },
-            {
-                internalType: "contract IERC20Upgradeable",
-                name: "outputToken",
-                type: "address",
-            },
-        ],
+        type: "function",
         name: "balancerPoolForTokens",
+        inputs: [
+            {
+                name: "inputToken",
+                type: "address",
+                internalType: "contract IERC20Upgradeable",
+            },
+            {
+                name: "outputToken",
+                type: "address",
+                internalType: "contract IERC20Upgradeable",
+            },
+        ],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "bestSwapPath",
         inputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "inputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "outputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
-        name: "bestSwapPath",
         outputs: [
             {
-                internalType: "contract IERC20Upgradeable[]",
                 name: "",
                 type: "address[]",
+                internalType: "contract IERC20Upgradeable[]",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "customUniV3Router",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "defaultOutputToken",
         inputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "inputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
-        name: "defaultOutputToken",
         outputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "fundingStrategiesByName",
         inputs: [
             {
-                internalType: "string",
                 name: "name",
                 type: "string",
+                internalType: "string",
             },
         ],
-        name: "fundingStrategiesByName",
         outputs: [
             {
-                internalType: "contract IFundingStrategy",
                 name: "",
                 type: "address",
+                internalType: "contract IFundingStrategy",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "fundingStrategiesByTokens",
         inputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "inputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "outputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
-        name: "fundingStrategiesByTokens",
         outputs: [
             {
+                name: "",
+                type: "address",
                 internalType: "contract IFundingStrategy",
-                name: "",
-                type: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "owner",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "uniswapV3Fees",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint24",
                 name: "",
                 type: "uint24",
+                internalType: "uint24",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
 ];
 class IFundersRegistryStorage__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.IFundersRegistryStorage__factory = IFundersRegistryStorage__factory;

@@ -1,13 +1,19 @@
-import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, EventFragment, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedLogDescription, TypedListener, TypedContractMethod } from "./common";
-export interface ICreditDelegationTokenInterface extends Interface {
-    getFunction(nameOrSignature: "approveDelegation" | "borrowAllowance" | "delegationWithSig"): FunctionFragment;
-    getEvent(nameOrSignatureOrTopic: "BorrowAllowanceDelegated"): EventFragment;
-    encodeFunctionData(functionFragment: "approveDelegation", values: [AddressLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "borrowAllowance", values: [AddressLike, AddressLike]): string;
+import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, ContractTransaction, Overrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
+export interface ICreditDelegationTokenInterface extends utils.Interface {
+    functions: {
+        "approveDelegation(address,uint256)": FunctionFragment;
+        "borrowAllowance(address,address)": FunctionFragment;
+        "delegationWithSig(address,address,uint256,uint256,uint8,bytes32,bytes32)": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "approveDelegation" | "borrowAllowance" | "delegationWithSig"): FunctionFragment;
+    encodeFunctionData(functionFragment: "approveDelegation", values: [string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "borrowAllowance", values: [string, string]): string;
     encodeFunctionData(functionFragment: "delegationWithSig", values: [
-        AddressLike,
-        AddressLike,
+        string,
+        string,
         BigNumberish,
         BigNumberish,
         BigNumberish,
@@ -17,94 +23,79 @@ export interface ICreditDelegationTokenInterface extends Interface {
     decodeFunctionResult(functionFragment: "approveDelegation", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "borrowAllowance", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "delegationWithSig", data: BytesLike): Result;
+    events: {
+        "BorrowAllowanceDelegated(address,address,address,uint256)": EventFragment;
+    };
+    getEvent(nameOrSignatureOrTopic: "BorrowAllowanceDelegated"): EventFragment;
 }
-export declare namespace BorrowAllowanceDelegatedEvent {
-    type InputTuple = [
-        fromUser: AddressLike,
-        toUser: AddressLike,
-        asset: AddressLike,
-        amount: BigNumberish
-    ];
-    type OutputTuple = [
-        fromUser: string,
-        toUser: string,
-        asset: string,
-        amount: bigint
-    ];
-    interface OutputObject {
-        fromUser: string;
-        toUser: string;
-        asset: string;
-        amount: bigint;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export interface BorrowAllowanceDelegatedEventObject {
+    fromUser: string;
+    toUser: string;
+    asset: string;
+    amount: BigNumber;
 }
+export type BorrowAllowanceDelegatedEvent = TypedEvent<[
+    string,
+    string,
+    string,
+    BigNumber
+], BorrowAllowanceDelegatedEventObject>;
+export type BorrowAllowanceDelegatedEventFilter = TypedEventFilter<BorrowAllowanceDelegatedEvent>;
 export interface ICreditDelegationToken extends BaseContract {
-    connect(runner?: ContractRunner | null): ICreditDelegationToken;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: ICreditDelegationTokenInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    approveDelegation: TypedContractMethod<[
-        delegatee: AddressLike,
-        amount: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    borrowAllowance: TypedContractMethod<[
-        fromUser: AddressLike,
-        toUser: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    delegationWithSig: TypedContractMethod<[
-        delegator: AddressLike,
-        delegatee: AddressLike,
-        value: BigNumberish,
-        deadline: BigNumberish,
-        v: BigNumberish,
-        r: BytesLike,
-        s: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "approveDelegation"): TypedContractMethod<[
-        delegatee: AddressLike,
-        amount: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "borrowAllowance"): TypedContractMethod<[
-        fromUser: AddressLike,
-        toUser: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "delegationWithSig"): TypedContractMethod<[
-        delegator: AddressLike,
-        delegatee: AddressLike,
-        value: BigNumberish,
-        deadline: BigNumberish,
-        v: BigNumberish,
-        r: BytesLike,
-        s: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    getEvent(key: "BorrowAllowanceDelegated"): TypedContractEvent<BorrowAllowanceDelegatedEvent.InputTuple, BorrowAllowanceDelegatedEvent.OutputTuple, BorrowAllowanceDelegatedEvent.OutputObject>;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        approveDelegation(delegatee: string, amount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        borrowAllowance(fromUser: string, toUser: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        delegationWithSig(delegator: string, delegatee: string, value: BigNumberish, deadline: BigNumberish, v: BigNumberish, r: BytesLike, s: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+    };
+    approveDelegation(delegatee: string, amount: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    borrowAllowance(fromUser: string, toUser: string, overrides?: CallOverrides): Promise<BigNumber>;
+    delegationWithSig(delegator: string, delegatee: string, value: BigNumberish, deadline: BigNumberish, v: BigNumberish, r: BytesLike, s: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    callStatic: {
+        approveDelegation(delegatee: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        borrowAllowance(fromUser: string, toUser: string, overrides?: CallOverrides): Promise<BigNumber>;
+        delegationWithSig(delegator: string, delegatee: string, value: BigNumberish, deadline: BigNumberish, v: BigNumberish, r: BytesLike, s: BytesLike, overrides?: CallOverrides): Promise<void>;
+    };
     filters: {
-        "BorrowAllowanceDelegated(address,address,address,uint256)": TypedContractEvent<BorrowAllowanceDelegatedEvent.InputTuple, BorrowAllowanceDelegatedEvent.OutputTuple, BorrowAllowanceDelegatedEvent.OutputObject>;
-        BorrowAllowanceDelegated: TypedContractEvent<BorrowAllowanceDelegatedEvent.InputTuple, BorrowAllowanceDelegatedEvent.OutputTuple, BorrowAllowanceDelegatedEvent.OutputObject>;
+        "BorrowAllowanceDelegated(address,address,address,uint256)"(fromUser?: string | null, toUser?: string | null, asset?: string | null, amount?: null): BorrowAllowanceDelegatedEventFilter;
+        BorrowAllowanceDelegated(fromUser?: string | null, toUser?: string | null, asset?: string | null, amount?: null): BorrowAllowanceDelegatedEventFilter;
+    };
+    estimateGas: {
+        approveDelegation(delegatee: string, amount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        borrowAllowance(fromUser: string, toUser: string, overrides?: CallOverrides): Promise<BigNumber>;
+        delegationWithSig(delegator: string, delegatee: string, value: BigNumberish, deadline: BigNumberish, v: BigNumberish, r: BytesLike, s: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        approveDelegation(delegatee: string, amount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        borrowAllowance(fromUser: string, toUser: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        delegationWithSig(delegator: string, delegatee: string, value: BigNumberish, deadline: BigNumberish, v: BigNumberish, r: BytesLike, s: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
     };
 }

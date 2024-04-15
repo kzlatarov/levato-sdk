@@ -1,7 +1,15 @@
-import type { BaseContract, BytesLike, FunctionFragment, Result, Interface, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedListener, TypedContractMethod } from "../common";
-export interface IBeefyStrategyInterface extends Interface {
-    getFunction(nameOrSignature: "harvestOnDeposit" | "keeper" | "owner" | "setHarvestOnDeposit"): FunctionFragment;
+import type { BaseContract, BigNumber, BytesLike, CallOverrides, ContractTransaction, Overrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "../common";
+export interface IBeefyStrategyInterface extends utils.Interface {
+    functions: {
+        "harvestOnDeposit()": FunctionFragment;
+        "keeper()": FunctionFragment;
+        "owner()": FunctionFragment;
+        "setHarvestOnDeposit(bool)": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "harvestOnDeposit" | "keeper" | "owner" | "setHarvestOnDeposit"): FunctionFragment;
     encodeFunctionData(functionFragment: "harvestOnDeposit", values?: undefined): string;
     encodeFunctionData(functionFragment: "keeper", values?: undefined): string;
     encodeFunctionData(functionFragment: "owner", values?: undefined): string;
@@ -10,32 +18,57 @@ export interface IBeefyStrategyInterface extends Interface {
     decodeFunctionResult(functionFragment: "keeper", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "setHarvestOnDeposit", data: BytesLike): Result;
+    events: {};
 }
 export interface IBeefyStrategy extends BaseContract {
-    connect(runner?: ContractRunner | null): IBeefyStrategy;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: IBeefyStrategyInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    harvestOnDeposit: TypedContractMethod<[], [boolean], "view">;
-    keeper: TypedContractMethod<[], [string], "view">;
-    owner: TypedContractMethod<[], [string], "view">;
-    setHarvestOnDeposit: TypedContractMethod<[
-        arg0: boolean
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "harvestOnDeposit"): TypedContractMethod<[], [boolean], "view">;
-    getFunction(nameOrSignature: "keeper"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "owner"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "setHarvestOnDeposit"): TypedContractMethod<[arg0: boolean], [void], "nonpayable">;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        harvestOnDeposit(overrides?: CallOverrides): Promise<[boolean]>;
+        keeper(overrides?: CallOverrides): Promise<[string]>;
+        owner(overrides?: CallOverrides): Promise<[string]>;
+        setHarvestOnDeposit(arg0: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+    };
+    harvestOnDeposit(overrides?: CallOverrides): Promise<boolean>;
+    keeper(overrides?: CallOverrides): Promise<string>;
+    owner(overrides?: CallOverrides): Promise<string>;
+    setHarvestOnDeposit(arg0: boolean, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    callStatic: {
+        harvestOnDeposit(overrides?: CallOverrides): Promise<boolean>;
+        keeper(overrides?: CallOverrides): Promise<string>;
+        owner(overrides?: CallOverrides): Promise<string>;
+        setHarvestOnDeposit(arg0: boolean, overrides?: CallOverrides): Promise<void>;
+    };
     filters: {};
+    estimateGas: {
+        harvestOnDeposit(overrides?: CallOverrides): Promise<BigNumber>;
+        keeper(overrides?: CallOverrides): Promise<BigNumber>;
+        owner(overrides?: CallOverrides): Promise<BigNumber>;
+        setHarvestOnDeposit(arg0: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        harvestOnDeposit(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        keeper(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        setHarvestOnDeposit(arg0: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+    };
 }

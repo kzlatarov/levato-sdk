@@ -7,32 +7,32 @@ exports.VoterV3__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
+        type: "function",
+        name: "gauges",
         inputs: [
             {
-                internalType: "contract ERC20Upgradeable",
                 name: "",
                 type: "address",
+                internalType: "contract ERC20Upgradeable",
             },
         ],
-        name: "gauges",
         outputs: [
             {
-                internalType: "contract GaugeV2",
                 name: "",
                 type: "address",
+                internalType: "contract GaugeV2",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
 ];
 class VoterV3__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.VoterV3__factory = VoterV3__factory;

@@ -1,30 +1,55 @@
-import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, EventFragment, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedLogDescription, TypedListener, TypedContractMethod } from "./common";
-export interface LevatoFlywheelInterface extends Interface {
-    getFunction(nameOrSignature: "acceptOwnership" | "accrue(address)" | "accrue(address,address)" | "claimRewards" | "feeRecipient" | "flywheelBooster" | "flywheelRewards" | "initialize" | "owner" | "pendingOwner" | "performanceFee" | "renounceOwnership" | "rewardToken" | "rewardsAccrued" | "setBooster" | "setFlywheelRewards" | "setStrategyForRewards" | "strategy" | "strategyState" | "transferOwnership" | "updateFeeSettings" | "userIndex"): FunctionFragment;
-    getEvent(nameOrSignatureOrTopic: "AccrueRewards" | "ClaimRewards" | "FlywheelBoosterUpdate" | "FlywheelRewardsUpdate" | "Initialized" | "OwnershipTransferStarted" | "OwnershipTransferred" | "SetStrategy" | "UpdatedFeeSettings"): EventFragment;
+import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, ContractTransaction, Overrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
+export interface LevatoFlywheelInterface extends utils.Interface {
+    functions: {
+        "acceptOwnership()": FunctionFragment;
+        "accrue(address)": FunctionFragment;
+        "accrue(address,address)": FunctionFragment;
+        "claimRewards(address)": FunctionFragment;
+        "feeRecipient()": FunctionFragment;
+        "flywheelBooster()": FunctionFragment;
+        "flywheelRewards()": FunctionFragment;
+        "initialize(address,address,address,address,address)": FunctionFragment;
+        "owner()": FunctionFragment;
+        "pendingOwner()": FunctionFragment;
+        "performanceFee()": FunctionFragment;
+        "renounceOwnership()": FunctionFragment;
+        "rewardToken()": FunctionFragment;
+        "rewardsAccrued(address)": FunctionFragment;
+        "setBooster(address)": FunctionFragment;
+        "setFlywheelRewards(address)": FunctionFragment;
+        "setStrategyForRewards(address)": FunctionFragment;
+        "strategy()": FunctionFragment;
+        "strategyState()": FunctionFragment;
+        "transferOwnership(address)": FunctionFragment;
+        "updateFeeSettings(uint256,address)": FunctionFragment;
+        "userIndex(address)": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "acceptOwnership" | "accrue(address)" | "accrue(address,address)" | "claimRewards" | "feeRecipient" | "flywheelBooster" | "flywheelRewards" | "initialize" | "owner" | "pendingOwner" | "performanceFee" | "renounceOwnership" | "rewardToken" | "rewardsAccrued" | "setBooster" | "setFlywheelRewards" | "setStrategyForRewards" | "strategy" | "strategyState" | "transferOwnership" | "updateFeeSettings" | "userIndex"): FunctionFragment;
     encodeFunctionData(functionFragment: "acceptOwnership", values?: undefined): string;
-    encodeFunctionData(functionFragment: "accrue(address)", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "accrue(address,address)", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "claimRewards", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "accrue(address)", values: [string]): string;
+    encodeFunctionData(functionFragment: "accrue(address,address)", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "claimRewards", values: [string]): string;
     encodeFunctionData(functionFragment: "feeRecipient", values?: undefined): string;
     encodeFunctionData(functionFragment: "flywheelBooster", values?: undefined): string;
     encodeFunctionData(functionFragment: "flywheelRewards", values?: undefined): string;
-    encodeFunctionData(functionFragment: "initialize", values: [AddressLike, AddressLike, AddressLike, AddressLike, AddressLike]): string;
+    encodeFunctionData(functionFragment: "initialize", values: [string, string, string, string, string]): string;
     encodeFunctionData(functionFragment: "owner", values?: undefined): string;
     encodeFunctionData(functionFragment: "pendingOwner", values?: undefined): string;
     encodeFunctionData(functionFragment: "performanceFee", values?: undefined): string;
     encodeFunctionData(functionFragment: "renounceOwnership", values?: undefined): string;
     encodeFunctionData(functionFragment: "rewardToken", values?: undefined): string;
-    encodeFunctionData(functionFragment: "rewardsAccrued", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "setBooster", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "setFlywheelRewards", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "setStrategyForRewards", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "rewardsAccrued", values: [string]): string;
+    encodeFunctionData(functionFragment: "setBooster", values: [string]): string;
+    encodeFunctionData(functionFragment: "setFlywheelRewards", values: [string]): string;
+    encodeFunctionData(functionFragment: "setStrategyForRewards", values: [string]): string;
     encodeFunctionData(functionFragment: "strategy", values?: undefined): string;
     encodeFunctionData(functionFragment: "strategyState", values?: undefined): string;
-    encodeFunctionData(functionFragment: "transferOwnership", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "updateFeeSettings", values: [BigNumberish, AddressLike]): string;
-    encodeFunctionData(functionFragment: "userIndex", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "transferOwnership", values: [string]): string;
+    encodeFunctionData(functionFragment: "updateFeeSettings", values: [BigNumberish, string]): string;
+    encodeFunctionData(functionFragment: "userIndex", values: [string]): string;
     decodeFunctionResult(functionFragment: "acceptOwnership", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "accrue(address)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "accrue(address,address)", data: BytesLike): Result;
@@ -47,296 +72,372 @@ export interface LevatoFlywheelInterface extends Interface {
     decodeFunctionResult(functionFragment: "transferOwnership", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "updateFeeSettings", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "userIndex", data: BytesLike): Result;
+    events: {
+        "AccrueRewards(address,address,uint256,uint256)": EventFragment;
+        "ClaimRewards(address,uint256)": EventFragment;
+        "FlywheelBoosterUpdate(address)": EventFragment;
+        "FlywheelRewardsUpdate(address)": EventFragment;
+        "Initialized(uint8)": EventFragment;
+        "OwnershipTransferStarted(address,address)": EventFragment;
+        "OwnershipTransferred(address,address)": EventFragment;
+        "SetStrategy(address)": EventFragment;
+        "UpdatedFeeSettings(uint256,uint256,address,address)": EventFragment;
+    };
+    getEvent(nameOrSignatureOrTopic: "AccrueRewards"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "ClaimRewards"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "FlywheelBoosterUpdate"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "FlywheelRewardsUpdate"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "OwnershipTransferStarted"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "SetStrategy"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "UpdatedFeeSettings"): EventFragment;
 }
-export declare namespace AccrueRewardsEvent {
-    type InputTuple = [
-        strategy: AddressLike,
-        user: AddressLike,
-        rewardsDelta: BigNumberish,
-        rewardsIndex: BigNumberish
-    ];
-    type OutputTuple = [
-        strategy: string,
-        user: string,
-        rewardsDelta: bigint,
-        rewardsIndex: bigint
-    ];
-    interface OutputObject {
-        strategy: string;
-        user: string;
-        rewardsDelta: bigint;
-        rewardsIndex: bigint;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export interface AccrueRewardsEventObject {
+    strategy: string;
+    user: string;
+    rewardsDelta: BigNumber;
+    rewardsIndex: BigNumber;
 }
-export declare namespace ClaimRewardsEvent {
-    type InputTuple = [user: AddressLike, amount: BigNumberish];
-    type OutputTuple = [user: string, amount: bigint];
-    interface OutputObject {
-        user: string;
-        amount: bigint;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type AccrueRewardsEvent = TypedEvent<[
+    string,
+    string,
+    BigNumber,
+    BigNumber
+], AccrueRewardsEventObject>;
+export type AccrueRewardsEventFilter = TypedEventFilter<AccrueRewardsEvent>;
+export interface ClaimRewardsEventObject {
+    user: string;
+    amount: BigNumber;
 }
-export declare namespace FlywheelBoosterUpdateEvent {
-    type InputTuple = [newBooster: AddressLike];
-    type OutputTuple = [newBooster: string];
-    interface OutputObject {
-        newBooster: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type ClaimRewardsEvent = TypedEvent<[
+    string,
+    BigNumber
+], ClaimRewardsEventObject>;
+export type ClaimRewardsEventFilter = TypedEventFilter<ClaimRewardsEvent>;
+export interface FlywheelBoosterUpdateEventObject {
+    newBooster: string;
 }
-export declare namespace FlywheelRewardsUpdateEvent {
-    type InputTuple = [newFlywheelRewards: AddressLike];
-    type OutputTuple = [newFlywheelRewards: string];
-    interface OutputObject {
-        newFlywheelRewards: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type FlywheelBoosterUpdateEvent = TypedEvent<[
+    string
+], FlywheelBoosterUpdateEventObject>;
+export type FlywheelBoosterUpdateEventFilter = TypedEventFilter<FlywheelBoosterUpdateEvent>;
+export interface FlywheelRewardsUpdateEventObject {
+    newFlywheelRewards: string;
 }
-export declare namespace InitializedEvent {
-    type InputTuple = [version: BigNumberish];
-    type OutputTuple = [version: bigint];
-    interface OutputObject {
-        version: bigint;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type FlywheelRewardsUpdateEvent = TypedEvent<[
+    string
+], FlywheelRewardsUpdateEventObject>;
+export type FlywheelRewardsUpdateEventFilter = TypedEventFilter<FlywheelRewardsUpdateEvent>;
+export interface InitializedEventObject {
+    version: number;
 }
-export declare namespace OwnershipTransferStartedEvent {
-    type InputTuple = [previousOwner: AddressLike, newOwner: AddressLike];
-    type OutputTuple = [previousOwner: string, newOwner: string];
-    interface OutputObject {
-        previousOwner: string;
-        newOwner: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
+export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
+export interface OwnershipTransferStartedEventObject {
+    previousOwner: string;
+    newOwner: string;
 }
-export declare namespace OwnershipTransferredEvent {
-    type InputTuple = [previousOwner: AddressLike, newOwner: AddressLike];
-    type OutputTuple = [previousOwner: string, newOwner: string];
-    interface OutputObject {
-        previousOwner: string;
-        newOwner: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type OwnershipTransferStartedEvent = TypedEvent<[
+    string,
+    string
+], OwnershipTransferStartedEventObject>;
+export type OwnershipTransferStartedEventFilter = TypedEventFilter<OwnershipTransferStartedEvent>;
+export interface OwnershipTransferredEventObject {
+    previousOwner: string;
+    newOwner: string;
 }
-export declare namespace SetStrategyEvent {
-    type InputTuple = [newStrategy: AddressLike];
-    type OutputTuple = [newStrategy: string];
-    interface OutputObject {
-        newStrategy: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type OwnershipTransferredEvent = TypedEvent<[
+    string,
+    string
+], OwnershipTransferredEventObject>;
+export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
+export interface SetStrategyEventObject {
+    newStrategy: string;
 }
-export declare namespace UpdatedFeeSettingsEvent {
-    type InputTuple = [
-        oldPerformanceFee: BigNumberish,
-        newPerformanceFee: BigNumberish,
-        oldFeeRecipient: AddressLike,
-        newFeeRecipient: AddressLike
-    ];
-    type OutputTuple = [
-        oldPerformanceFee: bigint,
-        newPerformanceFee: bigint,
-        oldFeeRecipient: string,
-        newFeeRecipient: string
-    ];
-    interface OutputObject {
-        oldPerformanceFee: bigint;
-        newPerformanceFee: bigint;
-        oldFeeRecipient: string;
-        newFeeRecipient: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type SetStrategyEvent = TypedEvent<[string], SetStrategyEventObject>;
+export type SetStrategyEventFilter = TypedEventFilter<SetStrategyEvent>;
+export interface UpdatedFeeSettingsEventObject {
+    oldPerformanceFee: BigNumber;
+    newPerformanceFee: BigNumber;
+    oldFeeRecipient: string;
+    newFeeRecipient: string;
 }
+export type UpdatedFeeSettingsEvent = TypedEvent<[
+    BigNumber,
+    BigNumber,
+    string,
+    string
+], UpdatedFeeSettingsEventObject>;
+export type UpdatedFeeSettingsEventFilter = TypedEventFilter<UpdatedFeeSettingsEvent>;
 export interface LevatoFlywheel extends BaseContract {
-    connect(runner?: ContractRunner | null): LevatoFlywheel;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: LevatoFlywheelInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    acceptOwnership: TypedContractMethod<[], [void], "nonpayable">;
-    "accrue(address)": TypedContractMethod<[
-        user: AddressLike
-    ], [
-        bigint
-    ], "nonpayable">;
-    "accrue(address,address)": TypedContractMethod<[
-        user: AddressLike,
-        secondUser: AddressLike
-    ], [
-        [bigint, bigint]
-    ], "nonpayable">;
-    claimRewards: TypedContractMethod<[user: AddressLike], [void], "nonpayable">;
-    feeRecipient: TypedContractMethod<[], [string], "view">;
-    flywheelBooster: TypedContractMethod<[], [string], "view">;
-    flywheelRewards: TypedContractMethod<[], [string], "view">;
-    initialize: TypedContractMethod<[
-        _rewardToken: AddressLike,
-        _flywheelRewards: AddressLike,
-        _flywheelBooster: AddressLike,
-        _owner: AddressLike,
-        _strategy: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    owner: TypedContractMethod<[], [string], "view">;
-    pendingOwner: TypedContractMethod<[], [string], "view">;
-    performanceFee: TypedContractMethod<[], [bigint], "view">;
-    renounceOwnership: TypedContractMethod<[], [void], "nonpayable">;
-    rewardToken: TypedContractMethod<[], [string], "view">;
-    rewardsAccrued: TypedContractMethod<[
-        user: AddressLike
-    ], [
-        bigint
-    ], "nonpayable">;
-    setBooster: TypedContractMethod<[
-        newBooster: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    setFlywheelRewards: TypedContractMethod<[
-        newFlywheelRewards: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    setStrategyForRewards: TypedContractMethod<[
-        _strategy: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    strategy: TypedContractMethod<[], [string], "view">;
-    strategyState: TypedContractMethod<[
-    ], [
-        [bigint, bigint] & {
-            index: bigint;
-            lastUpdatedTimestamp: bigint;
-        }
-    ], "nonpayable">;
-    transferOwnership: TypedContractMethod<[
-        newOwner: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    updateFeeSettings: TypedContractMethod<[
-        _performanceFee: BigNumberish,
-        _feeRecipient: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    userIndex: TypedContractMethod<[user: AddressLike], [bigint], "nonpayable">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "acceptOwnership"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "accrue(address)"): TypedContractMethod<[user: AddressLike], [bigint], "nonpayable">;
-    getFunction(nameOrSignature: "accrue(address,address)"): TypedContractMethod<[
-        user: AddressLike,
-        secondUser: AddressLike
-    ], [
-        [bigint, bigint]
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "claimRewards"): TypedContractMethod<[user: AddressLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "feeRecipient"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "flywheelBooster"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "flywheelRewards"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "initialize"): TypedContractMethod<[
-        _rewardToken: AddressLike,
-        _flywheelRewards: AddressLike,
-        _flywheelBooster: AddressLike,
-        _owner: AddressLike,
-        _strategy: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "owner"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "pendingOwner"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "performanceFee"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "renounceOwnership"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "rewardToken"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "rewardsAccrued"): TypedContractMethod<[user: AddressLike], [bigint], "nonpayable">;
-    getFunction(nameOrSignature: "setBooster"): TypedContractMethod<[newBooster: AddressLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "setFlywheelRewards"): TypedContractMethod<[
-        newFlywheelRewards: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "setStrategyForRewards"): TypedContractMethod<[_strategy: AddressLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "strategy"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "strategyState"): TypedContractMethod<[
-    ], [
-        [bigint, bigint] & {
-            index: bigint;
-            lastUpdatedTimestamp: bigint;
-        }
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "transferOwnership"): TypedContractMethod<[newOwner: AddressLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "updateFeeSettings"): TypedContractMethod<[
-        _performanceFee: BigNumberish,
-        _feeRecipient: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "userIndex"): TypedContractMethod<[user: AddressLike], [bigint], "nonpayable">;
-    getEvent(key: "AccrueRewards"): TypedContractEvent<AccrueRewardsEvent.InputTuple, AccrueRewardsEvent.OutputTuple, AccrueRewardsEvent.OutputObject>;
-    getEvent(key: "ClaimRewards"): TypedContractEvent<ClaimRewardsEvent.InputTuple, ClaimRewardsEvent.OutputTuple, ClaimRewardsEvent.OutputObject>;
-    getEvent(key: "FlywheelBoosterUpdate"): TypedContractEvent<FlywheelBoosterUpdateEvent.InputTuple, FlywheelBoosterUpdateEvent.OutputTuple, FlywheelBoosterUpdateEvent.OutputObject>;
-    getEvent(key: "FlywheelRewardsUpdate"): TypedContractEvent<FlywheelRewardsUpdateEvent.InputTuple, FlywheelRewardsUpdateEvent.OutputTuple, FlywheelRewardsUpdateEvent.OutputObject>;
-    getEvent(key: "Initialized"): TypedContractEvent<InitializedEvent.InputTuple, InitializedEvent.OutputTuple, InitializedEvent.OutputObject>;
-    getEvent(key: "OwnershipTransferStarted"): TypedContractEvent<OwnershipTransferStartedEvent.InputTuple, OwnershipTransferStartedEvent.OutputTuple, OwnershipTransferStartedEvent.OutputObject>;
-    getEvent(key: "OwnershipTransferred"): TypedContractEvent<OwnershipTransferredEvent.InputTuple, OwnershipTransferredEvent.OutputTuple, OwnershipTransferredEvent.OutputObject>;
-    getEvent(key: "SetStrategy"): TypedContractEvent<SetStrategyEvent.InputTuple, SetStrategyEvent.OutputTuple, SetStrategyEvent.OutputObject>;
-    getEvent(key: "UpdatedFeeSettings"): TypedContractEvent<UpdatedFeeSettingsEvent.InputTuple, UpdatedFeeSettingsEvent.OutputTuple, UpdatedFeeSettingsEvent.OutputObject>;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        acceptOwnership(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "accrue(address)"(user: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "accrue(address,address)"(user: string, secondUser: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        claimRewards(user: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        feeRecipient(overrides?: CallOverrides): Promise<[string]>;
+        flywheelBooster(overrides?: CallOverrides): Promise<[string]>;
+        flywheelRewards(overrides?: CallOverrides): Promise<[string]>;
+        initialize(_rewardToken: string, _flywheelRewards: string, _flywheelBooster: string, _owner: string, _strategy: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        owner(overrides?: CallOverrides): Promise<[string]>;
+        pendingOwner(overrides?: CallOverrides): Promise<[string]>;
+        performanceFee(overrides?: CallOverrides): Promise<[BigNumber]>;
+        renounceOwnership(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        rewardToken(overrides?: CallOverrides): Promise<[string]>;
+        rewardsAccrued(user: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        setBooster(newBooster: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        setFlywheelRewards(newFlywheelRewards: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        setStrategyForRewards(_strategy: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        strategy(overrides?: CallOverrides): Promise<[string]>;
+        strategyState(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        transferOwnership(newOwner: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        updateFeeSettings(_performanceFee: BigNumberish, _feeRecipient: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        userIndex(user: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+    };
+    acceptOwnership(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "accrue(address)"(user: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "accrue(address,address)"(user: string, secondUser: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    claimRewards(user: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    feeRecipient(overrides?: CallOverrides): Promise<string>;
+    flywheelBooster(overrides?: CallOverrides): Promise<string>;
+    flywheelRewards(overrides?: CallOverrides): Promise<string>;
+    initialize(_rewardToken: string, _flywheelRewards: string, _flywheelBooster: string, _owner: string, _strategy: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    owner(overrides?: CallOverrides): Promise<string>;
+    pendingOwner(overrides?: CallOverrides): Promise<string>;
+    performanceFee(overrides?: CallOverrides): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    rewardToken(overrides?: CallOverrides): Promise<string>;
+    rewardsAccrued(user: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    setBooster(newBooster: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    setFlywheelRewards(newFlywheelRewards: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    setStrategyForRewards(_strategy: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    strategy(overrides?: CallOverrides): Promise<string>;
+    strategyState(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    transferOwnership(newOwner: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    updateFeeSettings(_performanceFee: BigNumberish, _feeRecipient: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    userIndex(user: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    callStatic: {
+        acceptOwnership(overrides?: CallOverrides): Promise<void>;
+        "accrue(address)"(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+        "accrue(address,address)"(user: string, secondUser: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+        claimRewards(user: string, overrides?: CallOverrides): Promise<void>;
+        feeRecipient(overrides?: CallOverrides): Promise<string>;
+        flywheelBooster(overrides?: CallOverrides): Promise<string>;
+        flywheelRewards(overrides?: CallOverrides): Promise<string>;
+        initialize(_rewardToken: string, _flywheelRewards: string, _flywheelBooster: string, _owner: string, _strategy: string, overrides?: CallOverrides): Promise<void>;
+        owner(overrides?: CallOverrides): Promise<string>;
+        pendingOwner(overrides?: CallOverrides): Promise<string>;
+        performanceFee(overrides?: CallOverrides): Promise<BigNumber>;
+        renounceOwnership(overrides?: CallOverrides): Promise<void>;
+        rewardToken(overrides?: CallOverrides): Promise<string>;
+        rewardsAccrued(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+        setBooster(newBooster: string, overrides?: CallOverrides): Promise<void>;
+        setFlywheelRewards(newFlywheelRewards: string, overrides?: CallOverrides): Promise<void>;
+        setStrategyForRewards(_strategy: string, overrides?: CallOverrides): Promise<void>;
+        strategy(overrides?: CallOverrides): Promise<string>;
+        strategyState(overrides?: CallOverrides): Promise<[
+            BigNumber,
+            number
+        ] & {
+            index: BigNumber;
+            lastUpdatedTimestamp: number;
+        }>;
+        transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+        updateFeeSettings(_performanceFee: BigNumberish, _feeRecipient: string, overrides?: CallOverrides): Promise<void>;
+        userIndex(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    };
     filters: {
-        "AccrueRewards(address,address,uint256,uint256)": TypedContractEvent<AccrueRewardsEvent.InputTuple, AccrueRewardsEvent.OutputTuple, AccrueRewardsEvent.OutputObject>;
-        AccrueRewards: TypedContractEvent<AccrueRewardsEvent.InputTuple, AccrueRewardsEvent.OutputTuple, AccrueRewardsEvent.OutputObject>;
-        "ClaimRewards(address,uint256)": TypedContractEvent<ClaimRewardsEvent.InputTuple, ClaimRewardsEvent.OutputTuple, ClaimRewardsEvent.OutputObject>;
-        ClaimRewards: TypedContractEvent<ClaimRewardsEvent.InputTuple, ClaimRewardsEvent.OutputTuple, ClaimRewardsEvent.OutputObject>;
-        "FlywheelBoosterUpdate(address)": TypedContractEvent<FlywheelBoosterUpdateEvent.InputTuple, FlywheelBoosterUpdateEvent.OutputTuple, FlywheelBoosterUpdateEvent.OutputObject>;
-        FlywheelBoosterUpdate: TypedContractEvent<FlywheelBoosterUpdateEvent.InputTuple, FlywheelBoosterUpdateEvent.OutputTuple, FlywheelBoosterUpdateEvent.OutputObject>;
-        "FlywheelRewardsUpdate(address)": TypedContractEvent<FlywheelRewardsUpdateEvent.InputTuple, FlywheelRewardsUpdateEvent.OutputTuple, FlywheelRewardsUpdateEvent.OutputObject>;
-        FlywheelRewardsUpdate: TypedContractEvent<FlywheelRewardsUpdateEvent.InputTuple, FlywheelRewardsUpdateEvent.OutputTuple, FlywheelRewardsUpdateEvent.OutputObject>;
-        "Initialized(uint8)": TypedContractEvent<InitializedEvent.InputTuple, InitializedEvent.OutputTuple, InitializedEvent.OutputObject>;
-        Initialized: TypedContractEvent<InitializedEvent.InputTuple, InitializedEvent.OutputTuple, InitializedEvent.OutputObject>;
-        "OwnershipTransferStarted(address,address)": TypedContractEvent<OwnershipTransferStartedEvent.InputTuple, OwnershipTransferStartedEvent.OutputTuple, OwnershipTransferStartedEvent.OutputObject>;
-        OwnershipTransferStarted: TypedContractEvent<OwnershipTransferStartedEvent.InputTuple, OwnershipTransferStartedEvent.OutputTuple, OwnershipTransferStartedEvent.OutputObject>;
-        "OwnershipTransferred(address,address)": TypedContractEvent<OwnershipTransferredEvent.InputTuple, OwnershipTransferredEvent.OutputTuple, OwnershipTransferredEvent.OutputObject>;
-        OwnershipTransferred: TypedContractEvent<OwnershipTransferredEvent.InputTuple, OwnershipTransferredEvent.OutputTuple, OwnershipTransferredEvent.OutputObject>;
-        "SetStrategy(address)": TypedContractEvent<SetStrategyEvent.InputTuple, SetStrategyEvent.OutputTuple, SetStrategyEvent.OutputObject>;
-        SetStrategy: TypedContractEvent<SetStrategyEvent.InputTuple, SetStrategyEvent.OutputTuple, SetStrategyEvent.OutputObject>;
-        "UpdatedFeeSettings(uint256,uint256,address,address)": TypedContractEvent<UpdatedFeeSettingsEvent.InputTuple, UpdatedFeeSettingsEvent.OutputTuple, UpdatedFeeSettingsEvent.OutputObject>;
-        UpdatedFeeSettings: TypedContractEvent<UpdatedFeeSettingsEvent.InputTuple, UpdatedFeeSettingsEvent.OutputTuple, UpdatedFeeSettingsEvent.OutputObject>;
+        "AccrueRewards(address,address,uint256,uint256)"(strategy?: string | null, user?: string | null, rewardsDelta?: null, rewardsIndex?: null): AccrueRewardsEventFilter;
+        AccrueRewards(strategy?: string | null, user?: string | null, rewardsDelta?: null, rewardsIndex?: null): AccrueRewardsEventFilter;
+        "ClaimRewards(address,uint256)"(user?: string | null, amount?: null): ClaimRewardsEventFilter;
+        ClaimRewards(user?: string | null, amount?: null): ClaimRewardsEventFilter;
+        "FlywheelBoosterUpdate(address)"(newBooster?: string | null): FlywheelBoosterUpdateEventFilter;
+        FlywheelBoosterUpdate(newBooster?: string | null): FlywheelBoosterUpdateEventFilter;
+        "FlywheelRewardsUpdate(address)"(newFlywheelRewards?: string | null): FlywheelRewardsUpdateEventFilter;
+        FlywheelRewardsUpdate(newFlywheelRewards?: string | null): FlywheelRewardsUpdateEventFilter;
+        "Initialized(uint8)"(version?: null): InitializedEventFilter;
+        Initialized(version?: null): InitializedEventFilter;
+        "OwnershipTransferStarted(address,address)"(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferStartedEventFilter;
+        OwnershipTransferStarted(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferStartedEventFilter;
+        "OwnershipTransferred(address,address)"(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+        OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+        "SetStrategy(address)"(newStrategy?: string | null): SetStrategyEventFilter;
+        SetStrategy(newStrategy?: string | null): SetStrategyEventFilter;
+        "UpdatedFeeSettings(uint256,uint256,address,address)"(oldPerformanceFee?: null, newPerformanceFee?: null, oldFeeRecipient?: null, newFeeRecipient?: null): UpdatedFeeSettingsEventFilter;
+        UpdatedFeeSettings(oldPerformanceFee?: null, newPerformanceFee?: null, oldFeeRecipient?: null, newFeeRecipient?: null): UpdatedFeeSettingsEventFilter;
+    };
+    estimateGas: {
+        acceptOwnership(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "accrue(address)"(user: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "accrue(address,address)"(user: string, secondUser: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        claimRewards(user: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        feeRecipient(overrides?: CallOverrides): Promise<BigNumber>;
+        flywheelBooster(overrides?: CallOverrides): Promise<BigNumber>;
+        flywheelRewards(overrides?: CallOverrides): Promise<BigNumber>;
+        initialize(_rewardToken: string, _flywheelRewards: string, _flywheelBooster: string, _owner: string, _strategy: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        owner(overrides?: CallOverrides): Promise<BigNumber>;
+        pendingOwner(overrides?: CallOverrides): Promise<BigNumber>;
+        performanceFee(overrides?: CallOverrides): Promise<BigNumber>;
+        renounceOwnership(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        rewardToken(overrides?: CallOverrides): Promise<BigNumber>;
+        rewardsAccrued(user: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        setBooster(newBooster: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        setFlywheelRewards(newFlywheelRewards: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        setStrategyForRewards(_strategy: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        strategy(overrides?: CallOverrides): Promise<BigNumber>;
+        strategyState(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        transferOwnership(newOwner: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        updateFeeSettings(_performanceFee: BigNumberish, _feeRecipient: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        userIndex(user: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        acceptOwnership(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "accrue(address)"(user: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "accrue(address,address)"(user: string, secondUser: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        claimRewards(user: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        feeRecipient(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        flywheelBooster(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        flywheelRewards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        initialize(_rewardToken: string, _flywheelRewards: string, _flywheelBooster: string, _owner: string, _strategy: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        pendingOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        performanceFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        renounceOwnership(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        rewardToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        rewardsAccrued(user: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        setBooster(newBooster: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        setFlywheelRewards(newFlywheelRewards: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        setStrategyForRewards(_strategy: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        strategy(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        strategyState(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        transferOwnership(newOwner: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        updateFeeSettings(_performanceFee: BigNumberish, _feeRecipient: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        userIndex(user: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
     };
 }

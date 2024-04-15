@@ -1,14 +1,25 @@
-import type { BaseContract, BytesLike, FunctionFragment, Result, Interface, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedListener, TypedContractMethod } from "../common";
-export interface ILeveragedPositionsFactoryStorageInterface extends Interface {
-    getFunction(nameOrSignature: "creditDelegator" | "flashloanRouter" | "fundersRegistry" | "minBorrowNative" | "oracle" | "owner" | "vaultOfPosition"): FunctionFragment;
+import type { BaseContract, BigNumber, BytesLike, CallOverrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "../common";
+export interface ILeveragedPositionsFactoryStorageInterface extends utils.Interface {
+    functions: {
+        "creditDelegator()": FunctionFragment;
+        "flashloanRouter()": FunctionFragment;
+        "fundersRegistry()": FunctionFragment;
+        "minBorrowNative()": FunctionFragment;
+        "oracle()": FunctionFragment;
+        "owner()": FunctionFragment;
+        "vaultOfPosition(address)": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "creditDelegator" | "flashloanRouter" | "fundersRegistry" | "minBorrowNative" | "oracle" | "owner" | "vaultOfPosition"): FunctionFragment;
     encodeFunctionData(functionFragment: "creditDelegator", values?: undefined): string;
     encodeFunctionData(functionFragment: "flashloanRouter", values?: undefined): string;
     encodeFunctionData(functionFragment: "fundersRegistry", values?: undefined): string;
     encodeFunctionData(functionFragment: "minBorrowNative", values?: undefined): string;
     encodeFunctionData(functionFragment: "oracle", values?: undefined): string;
     encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-    encodeFunctionData(functionFragment: "vaultOfPosition", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "vaultOfPosition", values: [string]): string;
     decodeFunctionResult(functionFragment: "creditDelegator", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "flashloanRouter", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "fundersRegistry", data: BytesLike): Result;
@@ -16,38 +27,64 @@ export interface ILeveragedPositionsFactoryStorageInterface extends Interface {
     decodeFunctionResult(functionFragment: "oracle", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "vaultOfPosition", data: BytesLike): Result;
+    events: {};
 }
 export interface ILeveragedPositionsFactoryStorage extends BaseContract {
-    connect(runner?: ContractRunner | null): ILeveragedPositionsFactoryStorage;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: ILeveragedPositionsFactoryStorageInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    creditDelegator: TypedContractMethod<[], [string], "view">;
-    flashloanRouter: TypedContractMethod<[], [string], "view">;
-    fundersRegistry: TypedContractMethod<[], [string], "view">;
-    minBorrowNative: TypedContractMethod<[], [bigint], "view">;
-    oracle: TypedContractMethod<[], [string], "view">;
-    owner: TypedContractMethod<[], [string], "view">;
-    vaultOfPosition: TypedContractMethod<[
-        position: AddressLike
-    ], [
-        string
-    ], "view">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "creditDelegator"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "flashloanRouter"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "fundersRegistry"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "minBorrowNative"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "oracle"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "owner"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "vaultOfPosition"): TypedContractMethod<[position: AddressLike], [string], "view">;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        creditDelegator(overrides?: CallOverrides): Promise<[string]>;
+        flashloanRouter(overrides?: CallOverrides): Promise<[string]>;
+        fundersRegistry(overrides?: CallOverrides): Promise<[string]>;
+        minBorrowNative(overrides?: CallOverrides): Promise<[BigNumber]>;
+        oracle(overrides?: CallOverrides): Promise<[string]>;
+        owner(overrides?: CallOverrides): Promise<[string]>;
+        vaultOfPosition(position: string, overrides?: CallOverrides): Promise<[string]>;
+    };
+    creditDelegator(overrides?: CallOverrides): Promise<string>;
+    flashloanRouter(overrides?: CallOverrides): Promise<string>;
+    fundersRegistry(overrides?: CallOverrides): Promise<string>;
+    minBorrowNative(overrides?: CallOverrides): Promise<BigNumber>;
+    oracle(overrides?: CallOverrides): Promise<string>;
+    owner(overrides?: CallOverrides): Promise<string>;
+    vaultOfPosition(position: string, overrides?: CallOverrides): Promise<string>;
+    callStatic: {
+        creditDelegator(overrides?: CallOverrides): Promise<string>;
+        flashloanRouter(overrides?: CallOverrides): Promise<string>;
+        fundersRegistry(overrides?: CallOverrides): Promise<string>;
+        minBorrowNative(overrides?: CallOverrides): Promise<BigNumber>;
+        oracle(overrides?: CallOverrides): Promise<string>;
+        owner(overrides?: CallOverrides): Promise<string>;
+        vaultOfPosition(position: string, overrides?: CallOverrides): Promise<string>;
+    };
     filters: {};
+    estimateGas: {
+        creditDelegator(overrides?: CallOverrides): Promise<BigNumber>;
+        flashloanRouter(overrides?: CallOverrides): Promise<BigNumber>;
+        fundersRegistry(overrides?: CallOverrides): Promise<BigNumber>;
+        minBorrowNative(overrides?: CallOverrides): Promise<BigNumber>;
+        oracle(overrides?: CallOverrides): Promise<BigNumber>;
+        owner(overrides?: CallOverrides): Promise<BigNumber>;
+        vaultOfPosition(position: string, overrides?: CallOverrides): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        creditDelegator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        flashloanRouter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        fundersRegistry(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        minBorrowNative(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        oracle(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        vaultOfPosition(position: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    };
 }

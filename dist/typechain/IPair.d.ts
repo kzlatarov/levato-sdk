@@ -1,39 +1,65 @@
-import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedListener, TypedContractMethod } from "./common";
+import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, ContractTransaction, Overrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 export type ObservationStruct = {
     timestamp: BigNumberish;
     reserve0Cumulative: BigNumberish;
     reserve1Cumulative: BigNumberish;
 };
-export type ObservationStructOutput = [
-    timestamp: bigint,
-    reserve0Cumulative: bigint,
-    reserve1Cumulative: bigint
-] & {
-    timestamp: bigint;
-    reserve0Cumulative: bigint;
-    reserve1Cumulative: bigint;
+export type ObservationStructOutput = [BigNumber, BigNumber, BigNumber] & {
+    timestamp: BigNumber;
+    reserve0Cumulative: BigNumber;
+    reserve1Cumulative: BigNumber;
 };
-export interface IPairInterface extends Interface {
-    getFunction(nameOrSignature: "balanceOf" | "burn" | "claimFees" | "current" | "currentCumulativePrices" | "decimals" | "factory" | "getAmountOut" | "getReserves" | "lastObservation" | "metadata" | "mint" | "name" | "observationLength" | "observations" | "permit" | "stable" | "swap" | "symbol" | "sync" | "token0" | "token1" | "tokens" | "totalSupply" | "transfer" | "transferFrom"): FunctionFragment;
-    encodeFunctionData(functionFragment: "balanceOf", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "burn", values: [AddressLike]): string;
+export interface IPairInterface extends utils.Interface {
+    functions: {
+        "balanceOf(address)": FunctionFragment;
+        "burn(address)": FunctionFragment;
+        "claimFees()": FunctionFragment;
+        "current(address,uint256)": FunctionFragment;
+        "currentCumulativePrices()": FunctionFragment;
+        "decimals()": FunctionFragment;
+        "factory()": FunctionFragment;
+        "getAmountOut(uint256,address)": FunctionFragment;
+        "getReserves()": FunctionFragment;
+        "lastObservation()": FunctionFragment;
+        "metadata()": FunctionFragment;
+        "mint(address)": FunctionFragment;
+        "name()": FunctionFragment;
+        "observationLength()": FunctionFragment;
+        "observations(uint256)": FunctionFragment;
+        "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)": FunctionFragment;
+        "stable()": FunctionFragment;
+        "swap(uint256,uint256,address,bytes)": FunctionFragment;
+        "symbol()": FunctionFragment;
+        "sync()": FunctionFragment;
+        "token0()": FunctionFragment;
+        "token1()": FunctionFragment;
+        "tokens()": FunctionFragment;
+        "totalSupply()": FunctionFragment;
+        "transfer(address,uint256)": FunctionFragment;
+        "transferFrom(address,address,uint256)": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "balanceOf" | "burn" | "claimFees" | "current" | "currentCumulativePrices" | "decimals" | "factory" | "getAmountOut" | "getReserves" | "lastObservation" | "metadata" | "mint" | "name" | "observationLength" | "observations" | "permit" | "stable" | "swap" | "symbol" | "sync" | "token0" | "token1" | "tokens" | "totalSupply" | "transfer" | "transferFrom"): FunctionFragment;
+    encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
+    encodeFunctionData(functionFragment: "burn", values: [string]): string;
     encodeFunctionData(functionFragment: "claimFees", values?: undefined): string;
-    encodeFunctionData(functionFragment: "current", values: [AddressLike, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "current", values: [string, BigNumberish]): string;
     encodeFunctionData(functionFragment: "currentCumulativePrices", values?: undefined): string;
     encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
     encodeFunctionData(functionFragment: "factory", values?: undefined): string;
-    encodeFunctionData(functionFragment: "getAmountOut", values: [BigNumberish, AddressLike]): string;
+    encodeFunctionData(functionFragment: "getAmountOut", values: [BigNumberish, string]): string;
     encodeFunctionData(functionFragment: "getReserves", values?: undefined): string;
     encodeFunctionData(functionFragment: "lastObservation", values?: undefined): string;
     encodeFunctionData(functionFragment: "metadata", values?: undefined): string;
-    encodeFunctionData(functionFragment: "mint", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "mint", values: [string]): string;
     encodeFunctionData(functionFragment: "name", values?: undefined): string;
     encodeFunctionData(functionFragment: "observationLength", values?: undefined): string;
     encodeFunctionData(functionFragment: "observations", values: [BigNumberish]): string;
     encodeFunctionData(functionFragment: "permit", values: [
-        AddressLike,
-        AddressLike,
+        string,
+        string,
         BigNumberish,
         BigNumberish,
         BigNumberish,
@@ -41,15 +67,15 @@ export interface IPairInterface extends Interface {
         BytesLike
     ]): string;
     encodeFunctionData(functionFragment: "stable", values?: undefined): string;
-    encodeFunctionData(functionFragment: "swap", values: [BigNumberish, BigNumberish, AddressLike, BytesLike]): string;
+    encodeFunctionData(functionFragment: "swap", values: [BigNumberish, BigNumberish, string, BytesLike]): string;
     encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
     encodeFunctionData(functionFragment: "sync", values?: undefined): string;
     encodeFunctionData(functionFragment: "token0", values?: undefined): string;
     encodeFunctionData(functionFragment: "token1", values?: undefined): string;
     encodeFunctionData(functionFragment: "tokens", values?: undefined): string;
     encodeFunctionData(functionFragment: "totalSupply", values?: undefined): string;
-    encodeFunctionData(functionFragment: "transfer", values: [AddressLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "transferFrom", values: [AddressLike, AddressLike, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "transfer", values: [string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "transferFrom", values: [string, string, BigNumberish]): string;
     decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "claimFees", data: BytesLike): Result;
@@ -76,252 +102,335 @@ export interface IPairInterface extends Interface {
     decodeFunctionResult(functionFragment: "totalSupply", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "transferFrom", data: BytesLike): Result;
+    events: {};
 }
 export interface IPair extends BaseContract {
-    connect(runner?: ContractRunner | null): IPair;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: IPairInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    balanceOf: TypedContractMethod<[owner: AddressLike], [bigint], "view">;
-    burn: TypedContractMethod<[
-        to: AddressLike
-    ], [
-        [bigint, bigint] & {
-            amount0: bigint;
-            amount1: bigint;
-        }
-    ], "nonpayable">;
-    claimFees: TypedContractMethod<[], [[bigint, bigint]], "nonpayable">;
-    current: TypedContractMethod<[
-        tokenIn: AddressLike,
-        amountIn: BigNumberish
-    ], [
-        bigint
-    ], "view">;
-    currentCumulativePrices: TypedContractMethod<[
-    ], [
-        [
-            bigint,
-            bigint,
-            bigint
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        burn(to: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        claimFees(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        current(tokenIn: string, amountIn: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber] & {
+            amountOut: BigNumber;
+        }>;
+        currentCumulativePrices(overrides?: CallOverrides): Promise<[
+            BigNumber,
+            BigNumber,
+            BigNumber
         ] & {
-            reserve0Cumulative: bigint;
-            reserve1Cumulative: bigint;
-            blockTimestamp: bigint;
-        }
-    ], "view">;
-    decimals: TypedContractMethod<[], [bigint], "view">;
-    factory: TypedContractMethod<[], [string], "view">;
-    getAmountOut: TypedContractMethod<[
-        arg0: BigNumberish,
-        arg1: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getReserves: TypedContractMethod<[
-    ], [
-        [
-            bigint,
-            bigint,
-            bigint
+            reserve0Cumulative: BigNumber;
+            reserve1Cumulative: BigNumber;
+            blockTimestamp: BigNumber;
+        }>;
+        decimals(overrides?: CallOverrides): Promise<[number]>;
+        factory(overrides?: CallOverrides): Promise<[string]>;
+        getAmountOut(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        getReserves(overrides?: CallOverrides): Promise<[
+            BigNumber,
+            BigNumber,
+            BigNumber
         ] & {
-            _reserve0: bigint;
-            _reserve1: bigint;
-            _blockTimestampLast: bigint;
-        }
-    ], "view">;
-    lastObservation: TypedContractMethod<[], [ObservationStructOutput], "view">;
-    metadata: TypedContractMethod<[
-    ], [
-        [
-            bigint,
-            bigint,
-            bigint,
-            bigint,
+            _reserve0: BigNumber;
+            _reserve1: BigNumber;
+            _blockTimestampLast: BigNumber;
+        }>;
+        lastObservation(overrides?: CallOverrides): Promise<[ObservationStructOutput]>;
+        metadata(overrides?: CallOverrides): Promise<[
+            BigNumber,
+            BigNumber,
+            BigNumber,
+            BigNumber,
             boolean,
             string,
             string
         ] & {
-            dec0: bigint;
-            dec1: bigint;
-            r0: bigint;
-            r1: bigint;
+            dec0: BigNumber;
+            dec1: BigNumber;
+            r0: BigNumber;
+            r1: BigNumber;
             st: boolean;
             t0: string;
             t1: string;
-        }
-    ], "view">;
-    mint: TypedContractMethod<[to: AddressLike], [bigint], "nonpayable">;
-    name: TypedContractMethod<[], [string], "view">;
-    observationLength: TypedContractMethod<[], [bigint], "view">;
-    observations: TypedContractMethod<[
-        index: BigNumberish
-    ], [
-        ObservationStructOutput
-    ], "view">;
-    permit: TypedContractMethod<[
-        owner: AddressLike,
-        spender: AddressLike,
-        value: BigNumberish,
-        deadline: BigNumberish,
-        v: BigNumberish,
-        r: BytesLike,
-        s: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    stable: TypedContractMethod<[], [boolean], "view">;
-    swap: TypedContractMethod<[
-        amount0Out: BigNumberish,
-        amount1Out: BigNumberish,
-        to: AddressLike,
-        data: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    symbol: TypedContractMethod<[], [string], "view">;
-    sync: TypedContractMethod<[], [void], "nonpayable">;
-    token0: TypedContractMethod<[], [string], "view">;
-    token1: TypedContractMethod<[], [string], "view">;
-    tokens: TypedContractMethod<[], [[string, string]], "nonpayable">;
-    totalSupply: TypedContractMethod<[], [bigint], "view">;
-    transfer: TypedContractMethod<[
-        dst: AddressLike,
-        amount: BigNumberish
-    ], [
-        boolean
-    ], "nonpayable">;
-    transferFrom: TypedContractMethod<[
-        src: AddressLike,
-        dst: AddressLike,
-        amount: BigNumberish
-    ], [
-        boolean
-    ], "nonpayable">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "balanceOf"): TypedContractMethod<[owner: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "burn"): TypedContractMethod<[
-        to: AddressLike
-    ], [
-        [bigint, bigint] & {
-            amount0: bigint;
-            amount1: bigint;
-        }
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "claimFees"): TypedContractMethod<[], [[bigint, bigint]], "nonpayable">;
-    getFunction(nameOrSignature: "current"): TypedContractMethod<[
-        tokenIn: AddressLike,
-        amountIn: BigNumberish
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "currentCumulativePrices"): TypedContractMethod<[
-    ], [
-        [
-            bigint,
-            bigint,
-            bigint
+        }>;
+        mint(to: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        name(overrides?: CallOverrides): Promise<[string]>;
+        observationLength(overrides?: CallOverrides): Promise<[BigNumber]>;
+        observations(index: BigNumberish, overrides?: CallOverrides): Promise<[ObservationStructOutput]>;
+        permit(owner: string, spender: string, value: BigNumberish, deadline: BigNumberish, v: BigNumberish, r: BytesLike, s: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        stable(overrides?: CallOverrides): Promise<[boolean]>;
+        swap(amount0Out: BigNumberish, amount1Out: BigNumberish, to: string, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        symbol(overrides?: CallOverrides): Promise<[string]>;
+        sync(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        token0(overrides?: CallOverrides): Promise<[string]>;
+        token1(overrides?: CallOverrides): Promise<[string]>;
+        tokens(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
+        transfer(dst: string, amount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        transferFrom(src: string, dst: string, amount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+    };
+    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    burn(to: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    claimFees(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    current(tokenIn: string, amountIn: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    currentCumulativePrices(overrides?: CallOverrides): Promise<[
+        BigNumber,
+        BigNumber,
+        BigNumber
+    ] & {
+        reserve0Cumulative: BigNumber;
+        reserve1Cumulative: BigNumber;
+        blockTimestamp: BigNumber;
+    }>;
+    decimals(overrides?: CallOverrides): Promise<number>;
+    factory(overrides?: CallOverrides): Promise<string>;
+    getAmountOut(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getReserves(overrides?: CallOverrides): Promise<[
+        BigNumber,
+        BigNumber,
+        BigNumber
+    ] & {
+        _reserve0: BigNumber;
+        _reserve1: BigNumber;
+        _blockTimestampLast: BigNumber;
+    }>;
+    lastObservation(overrides?: CallOverrides): Promise<ObservationStructOutput>;
+    metadata(overrides?: CallOverrides): Promise<[
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        boolean,
+        string,
+        string
+    ] & {
+        dec0: BigNumber;
+        dec1: BigNumber;
+        r0: BigNumber;
+        r1: BigNumber;
+        st: boolean;
+        t0: string;
+        t1: string;
+    }>;
+    mint(to: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    name(overrides?: CallOverrides): Promise<string>;
+    observationLength(overrides?: CallOverrides): Promise<BigNumber>;
+    observations(index: BigNumberish, overrides?: CallOverrides): Promise<ObservationStructOutput>;
+    permit(owner: string, spender: string, value: BigNumberish, deadline: BigNumberish, v: BigNumberish, r: BytesLike, s: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    stable(overrides?: CallOverrides): Promise<boolean>;
+    swap(amount0Out: BigNumberish, amount1Out: BigNumberish, to: string, data: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    symbol(overrides?: CallOverrides): Promise<string>;
+    sync(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    token0(overrides?: CallOverrides): Promise<string>;
+    token1(overrides?: CallOverrides): Promise<string>;
+    tokens(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+    transfer(dst: string, amount: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    transferFrom(src: string, dst: string, amount: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    callStatic: {
+        balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+        burn(to: string, overrides?: CallOverrides): Promise<[
+            BigNumber,
+            BigNumber
         ] & {
-            reserve0Cumulative: bigint;
-            reserve1Cumulative: bigint;
-            blockTimestamp: bigint;
-        }
-    ], "view">;
-    getFunction(nameOrSignature: "decimals"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "factory"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "getAmountOut"): TypedContractMethod<[
-        arg0: BigNumberish,
-        arg1: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "getReserves"): TypedContractMethod<[
-    ], [
-        [
-            bigint,
-            bigint,
-            bigint
+            amount0: BigNumber;
+            amount1: BigNumber;
+        }>;
+        claimFees(overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+        current(tokenIn: string, amountIn: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        currentCumulativePrices(overrides?: CallOverrides): Promise<[
+            BigNumber,
+            BigNumber,
+            BigNumber
         ] & {
-            _reserve0: bigint;
-            _reserve1: bigint;
-            _blockTimestampLast: bigint;
-        }
-    ], "view">;
-    getFunction(nameOrSignature: "lastObservation"): TypedContractMethod<[], [ObservationStructOutput], "view">;
-    getFunction(nameOrSignature: "metadata"): TypedContractMethod<[
-    ], [
-        [
-            bigint,
-            bigint,
-            bigint,
-            bigint,
+            reserve0Cumulative: BigNumber;
+            reserve1Cumulative: BigNumber;
+            blockTimestamp: BigNumber;
+        }>;
+        decimals(overrides?: CallOverrides): Promise<number>;
+        factory(overrides?: CallOverrides): Promise<string>;
+        getAmountOut(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getReserves(overrides?: CallOverrides): Promise<[
+            BigNumber,
+            BigNumber,
+            BigNumber
+        ] & {
+            _reserve0: BigNumber;
+            _reserve1: BigNumber;
+            _blockTimestampLast: BigNumber;
+        }>;
+        lastObservation(overrides?: CallOverrides): Promise<ObservationStructOutput>;
+        metadata(overrides?: CallOverrides): Promise<[
+            BigNumber,
+            BigNumber,
+            BigNumber,
+            BigNumber,
             boolean,
             string,
             string
         ] & {
-            dec0: bigint;
-            dec1: bigint;
-            r0: bigint;
-            r1: bigint;
+            dec0: BigNumber;
+            dec1: BigNumber;
+            r0: BigNumber;
+            r1: BigNumber;
             st: boolean;
             t0: string;
             t1: string;
-        }
-    ], "view">;
-    getFunction(nameOrSignature: "mint"): TypedContractMethod<[to: AddressLike], [bigint], "nonpayable">;
-    getFunction(nameOrSignature: "name"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "observationLength"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "observations"): TypedContractMethod<[
-        index: BigNumberish
-    ], [
-        ObservationStructOutput
-    ], "view">;
-    getFunction(nameOrSignature: "permit"): TypedContractMethod<[
-        owner: AddressLike,
-        spender: AddressLike,
-        value: BigNumberish,
-        deadline: BigNumberish,
-        v: BigNumberish,
-        r: BytesLike,
-        s: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "stable"): TypedContractMethod<[], [boolean], "view">;
-    getFunction(nameOrSignature: "swap"): TypedContractMethod<[
-        amount0Out: BigNumberish,
-        amount1Out: BigNumberish,
-        to: AddressLike,
-        data: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "symbol"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "sync"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "token0"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "token1"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "tokens"): TypedContractMethod<[], [[string, string]], "nonpayable">;
-    getFunction(nameOrSignature: "totalSupply"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "transfer"): TypedContractMethod<[
-        dst: AddressLike,
-        amount: BigNumberish
-    ], [
-        boolean
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "transferFrom"): TypedContractMethod<[
-        src: AddressLike,
-        dst: AddressLike,
-        amount: BigNumberish
-    ], [
-        boolean
-    ], "nonpayable">;
+        }>;
+        mint(to: string, overrides?: CallOverrides): Promise<BigNumber>;
+        name(overrides?: CallOverrides): Promise<string>;
+        observationLength(overrides?: CallOverrides): Promise<BigNumber>;
+        observations(index: BigNumberish, overrides?: CallOverrides): Promise<ObservationStructOutput>;
+        permit(owner: string, spender: string, value: BigNumberish, deadline: BigNumberish, v: BigNumberish, r: BytesLike, s: BytesLike, overrides?: CallOverrides): Promise<void>;
+        stable(overrides?: CallOverrides): Promise<boolean>;
+        swap(amount0Out: BigNumberish, amount1Out: BigNumberish, to: string, data: BytesLike, overrides?: CallOverrides): Promise<void>;
+        symbol(overrides?: CallOverrides): Promise<string>;
+        sync(overrides?: CallOverrides): Promise<void>;
+        token0(overrides?: CallOverrides): Promise<string>;
+        token1(overrides?: CallOverrides): Promise<string>;
+        tokens(overrides?: CallOverrides): Promise<[string, string]>;
+        totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+        transfer(dst: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+        transferFrom(src: string, dst: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    };
     filters: {};
+    estimateGas: {
+        balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+        burn(to: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        claimFees(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        current(tokenIn: string, amountIn: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        currentCumulativePrices(overrides?: CallOverrides): Promise<BigNumber>;
+        decimals(overrides?: CallOverrides): Promise<BigNumber>;
+        factory(overrides?: CallOverrides): Promise<BigNumber>;
+        getAmountOut(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getReserves(overrides?: CallOverrides): Promise<BigNumber>;
+        lastObservation(overrides?: CallOverrides): Promise<BigNumber>;
+        metadata(overrides?: CallOverrides): Promise<BigNumber>;
+        mint(to: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        name(overrides?: CallOverrides): Promise<BigNumber>;
+        observationLength(overrides?: CallOverrides): Promise<BigNumber>;
+        observations(index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        permit(owner: string, spender: string, value: BigNumberish, deadline: BigNumberish, v: BigNumberish, r: BytesLike, s: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        stable(overrides?: CallOverrides): Promise<BigNumber>;
+        swap(amount0Out: BigNumberish, amount1Out: BigNumberish, to: string, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        symbol(overrides?: CallOverrides): Promise<BigNumber>;
+        sync(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        token0(overrides?: CallOverrides): Promise<BigNumber>;
+        token1(overrides?: CallOverrides): Promise<BigNumber>;
+        tokens(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+        transfer(dst: string, amount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        transferFrom(src: string, dst: string, amount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        balanceOf(owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        burn(to: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        claimFees(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        current(tokenIn: string, amountIn: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        currentCumulativePrices(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        factory(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getAmountOut(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getReserves(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        lastObservation(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        metadata(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        mint(to: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        observationLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        observations(index: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        permit(owner: string, spender: string, value: BigNumberish, deadline: BigNumberish, v: BigNumberish, r: BytesLike, s: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        stable(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        swap(amount0Out: BigNumberish, amount1Out: BigNumberish, to: string, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        sync(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        token0(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        token1(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        tokens(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        transfer(dst: string, amount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        transferFrom(src: string, dst: string, amount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+    };
 }

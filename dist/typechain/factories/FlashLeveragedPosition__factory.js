@@ -7,648 +7,648 @@ exports.FlashLeveragedPosition__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        inputs: [
-            {
-                internalType: "uint256",
-                name: "errorCode",
-                type: "uint256",
-            },
-        ],
-        name: "BorrowStablesFailed",
-        type: "error",
-    },
-    {
-        inputs: [
-            {
-                internalType: "bytes4",
-                name: "_functionSelector",
-                type: "bytes4",
-            },
-        ],
-        name: "ExtNotFound",
-        type: "error",
-    },
-    {
-        inputs: [],
-        name: "NoFundingStrategies",
-        type: "error",
-    },
-    {
-        inputs: [],
-        name: "NotPositionOwner",
-        type: "error",
-    },
-    {
-        inputs: [],
-        name: "OnlyWhenClosed",
-        type: "error",
-    },
-    {
-        inputs: [
-            {
-                internalType: "uint256",
-                name: "errorCode",
-                type: "uint256",
-            },
-        ],
-        name: "RedeemCollateralFailed",
-        type: "error",
-    },
-    {
-        inputs: [
-            {
-                internalType: "uint256",
-                name: "errorCode",
-                type: "uint256",
-            },
-        ],
-        name: "RedeemFailed",
-        type: "error",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "asset",
-                type: "address",
-            },
-            {
-                internalType: "uint256",
-                name: "currentBalance",
-                type: "uint256",
-            },
-            {
-                internalType: "uint256",
-                name: "repayAmount",
-                type: "uint256",
-            },
-        ],
-        name: "RepayFlashLoanFailed",
-        type: "error",
-    },
-    {
-        inputs: [
-            {
-                internalType: "uint256",
-                name: "errorCode",
-                type: "uint256",
-            },
-        ],
-        name: "SupplyCollateralFailed",
-        type: "error",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "contract LeveragedPosition",
-                name: "position",
-                type: "address",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "withdrawAmount",
-                type: "uint256",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "equityAmountBefore",
-                type: "uint256",
-            },
-        ],
-        name: "PositionClosed",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "contract LeveragedPosition",
-                name: "position",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "contract IERC20Upgradeable",
-                name: "fundingAsset",
-                type: "address",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "fundingAmount",
-                type: "uint256",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "totalCollateralAmountAfter",
-                type: "uint256",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "collateralAmountFunded",
-                type: "uint256",
-            },
-        ],
-        name: "PositionFunded",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "contract LeveragedPosition",
-                name: "position",
-                type: "address",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "targetRatio",
-                type: "uint256",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "realizedRatio",
-                type: "uint256",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "ratioBefore",
-                type: "uint256",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "equityAmountBefore",
-                type: "uint256",
-            },
-        ],
-        name: "PositionRatioAdjusted",
-        type: "event",
-    },
-    {
-        stateMutability: "nonpayable",
         type: "fallback",
+        stateMutability: "nonpayable",
     },
     {
-        inputs: [],
+        type: "function",
         name: "SUPPLY_DELTA_ERROR",
-        outputs: [
-            {
-                internalType: "uint8",
-                name: "",
-                type: "uint8",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
         inputs: [],
-        name: "SUPPLY_DELTA_NO_ERROR",
         outputs: [
             {
-                internalType: "uint8",
                 name: "",
                 type: "uint8",
+                internalType: "uint8",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "SUPPLY_DELTA_NO_ERROR",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "uint8",
+                internalType: "uint8",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "adjustLeverageRatio",
         inputs: [
             {
-                internalType: "uint256",
                 name: "targetRatioMantissa",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "adjustLeverageRatio",
         outputs: [
             {
-                internalType: "uint256",
                 name: "realizedRatio",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "claimRewards",
         inputs: [],
-        name: "claimRewards",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "claimRewards",
         inputs: [
             {
-                internalType: "address",
                 name: "withdrawTo",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "claimRewards",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [
-            {
-                internalType: "address",
-                name: "withdrawTo",
-                type: "address",
-            },
-        ],
+        type: "function",
         name: "closePosition",
+        inputs: [
+            {
+                name: "withdrawTo",
+                type: "address",
+                internalType: "address",
+            },
+        ],
         outputs: [
             {
-                internalType: "uint256",
                 name: "withdrawAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "closePosition",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "collateralAsset",
-        outputs: [
-            {
-                internalType: "contract IERC20Upgradeable",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
         inputs: [],
-        name: "factory",
         outputs: [
             {
-                internalType: "contract ILeveragedPositionsFactory",
                 name: "",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "factory",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "contract ILeveragedPositionsFactory",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "fundPosition",
         inputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "fundingAsset",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "uint256",
                 name: "amount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "fundPosition",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getAccruedRewards",
+        inputs: [],
         outputs: [
             {
-                internalType: "contract ERC20Upgradeable[]",
                 name: "rewardTokens",
                 type: "address[]",
+                internalType: "contract ERC20Upgradeable[]",
             },
             {
-                internalType: "uint256[]",
                 name: "amounts",
                 type: "uint256[]",
+                internalType: "uint256[]",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getBorrowRate",
         inputs: [
             {
-                internalType: "address",
                 name: "asset",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "getBorrowRate",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getCurrentLeverageRatio",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getEquityAmount",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getEquityValue",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "equityValue",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getMaxLeverageRatio",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getMinLeverageRatio",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getPositionBorrowAmount",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
         inputs: [],
-        name: "getPositionSupplyAmount",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getPositionSupplyAmount",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getPrice",
         inputs: [
             {
-                internalType: "address",
                 name: "asset",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "getPrice",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getSupplyAmountDelta",
         inputs: [
             {
-                internalType: "uint256",
                 name: "targetRatio",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "getSupplyAmountDelta",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getSupplyRate",
         inputs: [
             {
-                internalType: "address",
                 name: "asset",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "getSupplyRate",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "isPositionClosed",
+        inputs: [],
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "positionOwner",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "receiveFlashLoan",
         inputs: [
             {
-                internalType: "address",
                 name: "assetAddress",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "flashBorrowedAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "premium",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "bytes",
                 name: "data",
                 type: "bytes",
+                internalType: "bytes",
             },
         ],
-        name: "receiveFlashLoan",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "seizeOnLiquidation",
         inputs: [
             {
-                internalType: "uint256",
                 name: "stablesToSeize",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "seizeOnLiquidation",
         outputs: [
             {
-                internalType: "uint256",
                 name: "seizedStableAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "seizedCollateralAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "stableAsset",
+        inputs: [],
         outputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "withdrawStableLeftovers",
         inputs: [
             {
-                internalType: "address",
                 name: "withdrawTo",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "withdrawStableLeftovers",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
+    },
+    {
+        type: "event",
+        name: "PositionClosed",
+        inputs: [
+            {
+                name: "position",
+                type: "address",
+                indexed: true,
+                internalType: "contract LeveragedPosition",
+            },
+            {
+                name: "withdrawAmount",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+            {
+                name: "equityAmountBefore",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "PositionFunded",
+        inputs: [
+            {
+                name: "position",
+                type: "address",
+                indexed: true,
+                internalType: "contract LeveragedPosition",
+            },
+            {
+                name: "fundingAsset",
+                type: "address",
+                indexed: true,
+                internalType: "contract IERC20Upgradeable",
+            },
+            {
+                name: "fundingAmount",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+            {
+                name: "totalCollateralAmountAfter",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+            {
+                name: "collateralAmountFunded",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "PositionRatioAdjusted",
+        inputs: [
+            {
+                name: "position",
+                type: "address",
+                indexed: true,
+                internalType: "contract LeveragedPosition",
+            },
+            {
+                name: "targetRatio",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+            {
+                name: "realizedRatio",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+            {
+                name: "ratioBefore",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+            {
+                name: "equityAmountBefore",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "error",
+        name: "BorrowStablesFailed",
+        inputs: [
+            {
+                name: "errorCode",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+    },
+    {
+        type: "error",
+        name: "ExtNotFound",
+        inputs: [
+            {
+                name: "_functionSelector",
+                type: "bytes4",
+                internalType: "bytes4",
+            },
+        ],
+    },
+    {
+        type: "error",
+        name: "NoFundingStrategies",
+        inputs: [],
+    },
+    {
+        type: "error",
+        name: "NotPositionOwner",
+        inputs: [],
+    },
+    {
+        type: "error",
+        name: "OnlyWhenClosed",
+        inputs: [],
+    },
+    {
+        type: "error",
+        name: "RedeemCollateralFailed",
+        inputs: [
+            {
+                name: "errorCode",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+    },
+    {
+        type: "error",
+        name: "RedeemFailed",
+        inputs: [
+            {
+                name: "errorCode",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+    },
+    {
+        type: "error",
+        name: "RepayFlashLoanFailed",
+        inputs: [
+            {
+                name: "asset",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "currentBalance",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "repayAmount",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+    },
+    {
+        type: "error",
+        name: "SupplyCollateralFailed",
+        inputs: [
+            {
+                name: "errorCode",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
     },
 ];
 class FlashLeveragedPosition__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.FlashLeveragedPosition__factory = FlashLeveragedPosition__factory;

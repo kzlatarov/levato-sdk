@@ -7,223 +7,223 @@ exports.IonicFlywheel__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        inputs: [
-            {
-                internalType: "contract ERC20",
-                name: "strategy",
-                type: "address",
-            },
-            {
-                internalType: "address",
-                name: "user",
-                type: "address",
-            },
-        ],
+        type: "function",
         name: "accrue",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
         inputs: [
             {
-                internalType: "contract ERC20",
                 name: "strategy",
                 type: "address",
+                internalType: "contract ERC20",
             },
-        ],
-        name: "addMarketForRewards",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
             {
-                internalType: "address",
                 name: "user",
                 type: "address",
-            },
-        ],
-        name: "claimRewards",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
                 internalType: "address",
-                name: "user",
-                type: "address",
             },
         ],
-        name: "compAccrued",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "addMarketForRewards",
+        inputs: [
+            {
+                name: "strategy",
+                type: "address",
+                internalType: "contract ERC20",
+            },
+        ],
+        outputs: [],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "claimRewards",
+        inputs: [
+            {
+                name: "user",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "compAccrued",
+        inputs: [
+            {
+                name: "user",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "flywheelPreBorrowerAction",
         inputs: [
             {
-                internalType: "address",
                 name: "market",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "borrower",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "flywheelPreBorrowerAction",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "flywheelPreSupplierAction",
         inputs: [
             {
-                internalType: "address",
                 name: "market",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "supplier",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "flywheelPreSupplierAction",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "flywheelPreTransferAction",
         inputs: [
             {
-                internalType: "address",
                 name: "market",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "src",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "dst",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "flywheelPreTransferAction",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "isFlywheel",
-        outputs: [
-            {
-                internalType: "bool",
-                name: "",
-                type: "bool",
-            },
-        ],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
         inputs: [],
-        name: "isRewardsDistributor",
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "isRewardsDistributor",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "bool",
+                internalType: "bool",
+            },
+        ],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "marketState",
         inputs: [
             {
-                internalType: "contract ERC20",
                 name: "strategy",
                 type: "address",
+                internalType: "contract ERC20",
             },
         ],
-        name: "marketState",
         outputs: [
             {
-                internalType: "uint224",
                 name: "index",
                 type: "uint224",
+                internalType: "uint224",
             },
             {
-                internalType: "uint32",
                 name: "lastUpdatedTimestamp",
                 type: "uint32",
+                internalType: "uint32",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "rewardToken",
+        inputs: [],
         outputs: [
             {
-                internalType: "contract ERC20",
                 name: "",
                 type: "address",
+                internalType: "contract ERC20",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "rewardsAccrued",
         inputs: [
             {
-                internalType: "address",
                 name: "user",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "rewardsAccrued",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
 ];
 class IonicFlywheel__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.IonicFlywheel__factory = IonicFlywheel__factory;

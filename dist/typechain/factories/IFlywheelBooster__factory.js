@@ -7,56 +7,56 @@ exports.IFlywheelBooster__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
+        type: "function",
+        name: "boostedBalanceOf",
         inputs: [
             {
-                internalType: "contract ERC20",
                 name: "strategy",
                 type: "address",
+                internalType: "contract ERC20",
             },
             {
-                internalType: "address",
                 name: "user",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "boostedBalanceOf",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "boostedTotalSupply",
         inputs: [
             {
-                internalType: "contract ERC20",
                 name: "strategy",
                 type: "address",
+                internalType: "contract ERC20",
             },
         ],
-        name: "boostedTotalSupply",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
 ];
 class IFlywheelBooster__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.IFlywheelBooster__factory = IFlywheelBooster__factory;

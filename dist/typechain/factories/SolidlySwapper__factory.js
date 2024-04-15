@@ -7,51 +7,51 @@ exports.SolidlySwapper__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        inputs: [],
+        type: "function",
         name: "name",
+        inputs: [],
         outputs: [
             {
-                internalType: "string",
                 name: "",
                 type: "string",
+                internalType: "string",
             },
         ],
         stateMutability: "pure",
-        type: "function",
     },
     {
+        type: "function",
+        name: "redeem",
         inputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "inputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "uint256",
                 name: "inputAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "bytes",
                 name: "strategyData",
                 type: "bytes",
+                internalType: "bytes",
             },
         ],
-        name: "redeem",
         outputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "outputToken",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "uint256",
                 name: "outputAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
 ];
 const _bytecode = "0x608060405234801561001057600080fd5b5061051e806100206000396000f3fe608060405234801561001057600080fd5b50600436106100365760003560e01c806306fdde031461003b57806310badf4e14610074575b600080fd5b604080518082018252600e81526d29b7b634b2363ca9bbb0b83832b960911b6020820152905161006b919061026e565b60405180910390f35b610087610082366004610322565b6100a6565b604080516001600160a01b03909316835260208301919091520161006b565b6000806100b48585856100c0565b91509150935093915050565b6000806000806000858060200190518101906100dc91906103e8565b60405163095ea7b360e01b81526001600160a01b038085166004830152602482018c905293965091945092509089169063095ea7b3906044016020604051808303816000875af1158015610134573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906101589190610430565b506040516313dcfc5960e01b815260048101889052600060248201526001600160a01b038981166044830152838116606483015282151560848301523060a48301524260c48301528416906313dcfc599060e4016000604051808303816000875af11580156101cb573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f191682016040526101f39190810190610452565b506040516370a0823160e01b815230600482015291945084916001600160a01b038316906370a0823190602401602060405180830381865afa15801561023d573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061026191906104f8565b9350505050935093915050565b600060208083528351808285015260005b8181101561029b5785810183015185820160400152820161027f565b818111156102ad576000604083870101525b50601f01601f1916929092016040019392505050565b6001600160a01b03811681146102d857600080fd5b50565b634e487b7160e01b600052604160045260246000fd5b604051601f8201601f1916810167ffffffffffffffff8111828210171561031a5761031a6102db565b604052919050565b60008060006060848603121561033757600080fd5b8335610342816102c3565b92506020848101359250604085013567ffffffffffffffff8082111561036757600080fd5b818701915087601f83011261037b57600080fd5b81358181111561038d5761038d6102db565b61039f601f8201601f191685016102f1565b915080825288848285010111156103b557600080fd5b80848401858401376000848284010152508093505050509250925092565b805180151581146103e357600080fd5b919050565b6000806000606084860312156103fd57600080fd5b8351610408816102c3565b6020850151909350610419816102c3565b9150610427604085016103d3565b90509250925092565b60006020828403121561044257600080fd5b61044b826103d3565b9392505050565b6000602080838503121561046557600080fd5b825167ffffffffffffffff8082111561047d57600080fd5b818501915085601f83011261049157600080fd5b8151818111156104a3576104a36102db565b8060051b91506104b48483016102f1565b81815291830184019184810190888411156104ce57600080fd5b938501935b838510156104ec578451825293850193908501906104d3565b98975050505050505050565b60006020828403121561050a57600080fd5b505191905056fea164736f6c634300080a000a";
@@ -65,22 +65,25 @@ class SolidlySwapper__factory extends ethers_1.ContractFactory {
             super(_abi, _bytecode, args[0]);
         }
     }
-    getDeployTransaction(overrides) {
-        return super.getDeployTransaction(overrides || {});
-    }
     deploy(overrides) {
         return super.deploy(overrides || {});
     }
-    connect(runner) {
-        return super.connect(runner);
+    getDeployTransaction(overrides) {
+        return super.getDeployTransaction(overrides || {});
+    }
+    attach(address) {
+        return super.attach(address);
+    }
+    connect(signer) {
+        return super.connect(signer);
     }
     static bytecode = _bytecode;
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.SolidlySwapper__factory = SolidlySwapper__factory;

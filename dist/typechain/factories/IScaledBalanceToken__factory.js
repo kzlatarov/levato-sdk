@@ -7,162 +7,162 @@ exports.IScaledBalanceToken__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        anonymous: false,
+        type: "function",
+        name: "getPreviousIndex",
         inputs: [
             {
-                indexed: true,
+                name: "user",
+                type: "address",
                 internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getScaledUserBalanceAndSupply",
+        inputs: [
+            {
+                name: "user",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "scaledBalanceOf",
+        inputs: [
+            {
+                name: "user",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "scaledTotalSupply",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "event",
+        name: "Burn",
+        inputs: [
+            {
                 name: "from",
                 type: "address",
-            },
-            {
                 indexed: true,
                 internalType: "address",
+            },
+            {
                 name: "target",
                 type: "address",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "value",
-                type: "uint256",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "balanceIncrease",
-                type: "uint256",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "index",
-                type: "uint256",
-            },
-        ],
-        name: "Burn",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
                 indexed: true,
                 internalType: "address",
+            },
+            {
+                name: "value",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+            {
+                name: "balanceIncrease",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+            {
+                name: "index",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "Mint",
+        inputs: [
+            {
                 name: "caller",
                 type: "address",
-            },
-            {
                 indexed: true,
                 internalType: "address",
+            },
+            {
                 name: "onBehalfOf",
                 type: "address",
+                indexed: true,
+                internalType: "address",
             },
             {
-                indexed: false,
-                internalType: "uint256",
                 name: "value",
                 type: "uint256",
-            },
-            {
                 indexed: false,
                 internalType: "uint256",
+            },
+            {
                 name: "balanceIncrease",
                 type: "uint256",
-            },
-            {
                 indexed: false,
                 internalType: "uint256",
+            },
+            {
                 name: "index",
                 type: "uint256",
-            },
-        ],
-        name: "Mint",
-        type: "event",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "user",
-                type: "address",
-            },
-        ],
-        name: "getPreviousIndex",
-        outputs: [
-            {
+                indexed: false,
                 internalType: "uint256",
-                name: "",
-                type: "uint256",
             },
         ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "user",
-                type: "address",
-            },
-        ],
-        name: "getScaledUserBalanceAndSupply",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "user",
-                type: "address",
-            },
-        ],
-        name: "scaledBalanceOf",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "scaledTotalSupply",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
+        anonymous: false,
     },
 ];
 class IScaledBalanceToken__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.IScaledBalanceToken__factory = IScaledBalanceToken__factory;

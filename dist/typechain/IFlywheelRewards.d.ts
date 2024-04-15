@@ -1,43 +1,66 @@
-import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedListener, TypedContractMethod } from "./common";
-export interface IFlywheelRewardsInterface extends Interface {
-    getFunction(nameOrSignature: "flywheel" | "getAccruedRewards" | "rewardToken"): FunctionFragment;
+import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, ContractTransaction, Overrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
+export interface IFlywheelRewardsInterface extends utils.Interface {
+    functions: {
+        "flywheel()": FunctionFragment;
+        "getAccruedRewards(address,uint32)": FunctionFragment;
+        "rewardToken()": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "flywheel" | "getAccruedRewards" | "rewardToken"): FunctionFragment;
     encodeFunctionData(functionFragment: "flywheel", values?: undefined): string;
-    encodeFunctionData(functionFragment: "getAccruedRewards", values: [AddressLike, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "getAccruedRewards", values: [string, BigNumberish]): string;
     encodeFunctionData(functionFragment: "rewardToken", values?: undefined): string;
     decodeFunctionResult(functionFragment: "flywheel", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getAccruedRewards", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "rewardToken", data: BytesLike): Result;
+    events: {};
 }
 export interface IFlywheelRewards extends BaseContract {
-    connect(runner?: ContractRunner | null): IFlywheelRewards;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: IFlywheelRewardsInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    flywheel: TypedContractMethod<[], [string], "view">;
-    getAccruedRewards: TypedContractMethod<[
-        strategy: AddressLike,
-        lastUpdatedTimestamp: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    rewardToken: TypedContractMethod<[], [string], "view">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "flywheel"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "getAccruedRewards"): TypedContractMethod<[
-        strategy: AddressLike,
-        lastUpdatedTimestamp: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "rewardToken"): TypedContractMethod<[], [string], "view">;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        flywheel(overrides?: CallOverrides): Promise<[string]>;
+        getAccruedRewards(strategy: string, lastUpdatedTimestamp: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        rewardToken(overrides?: CallOverrides): Promise<[string]>;
+    };
+    flywheel(overrides?: CallOverrides): Promise<string>;
+    getAccruedRewards(strategy: string, lastUpdatedTimestamp: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    rewardToken(overrides?: CallOverrides): Promise<string>;
+    callStatic: {
+        flywheel(overrides?: CallOverrides): Promise<string>;
+        getAccruedRewards(strategy: string, lastUpdatedTimestamp: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        rewardToken(overrides?: CallOverrides): Promise<string>;
+    };
     filters: {};
+    estimateGas: {
+        flywheel(overrides?: CallOverrides): Promise<BigNumber>;
+        getAccruedRewards(strategy: string, lastUpdatedTimestamp: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        rewardToken(overrides?: CallOverrides): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        flywheel(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getAccruedRewards(strategy: string, lastUpdatedTimestamp: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        rewardToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    };
 }

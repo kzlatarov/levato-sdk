@@ -7,50 +7,50 @@ exports.ILeveragedPositionsFactoryExtension__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        anonymous: false,
+        type: "event",
+        name: "PositionCreated",
         inputs: [
             {
-                indexed: true,
-                internalType: "address",
                 name: "user",
                 type: "address",
+                indexed: true,
+                internalType: "address",
             },
             {
-                indexed: false,
-                internalType: "contract LeveragedPosition",
                 name: "position",
                 type: "address",
+                indexed: false,
+                internalType: "contract LeveragedPosition",
             },
             {
-                indexed: true,
-                internalType: "address",
                 name: "collateral",
                 type: "address",
-            },
-            {
                 indexed: true,
                 internalType: "address",
-                name: "stable",
-                type: "address",
             },
             {
-                indexed: false,
-                internalType: "uint16",
+                name: "stable",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
                 name: "lendingProtocol",
                 type: "uint16",
+                indexed: false,
+                internalType: "uint16",
             },
         ],
-        name: "PositionCreated",
-        type: "event",
+        anonymous: false,
     },
 ];
 class ILeveragedPositionsFactoryExtension__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.ILeveragedPositionsFactoryExtension__factory = ILeveragedPositionsFactoryExtension__factory;

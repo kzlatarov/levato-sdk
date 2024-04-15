@@ -7,45 +7,45 @@ exports.IFlashloanRouterStorage__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
+        type: "function",
+        name: "ionicMarketOfAsset",
         inputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "asset",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
-        name: "ionicMarketOfAsset",
         outputs: [
             {
-                internalType: "contract IonicCErc20",
                 name: "",
                 type: "address",
+                internalType: "contract IonicCErc20",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "owner",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
 ];
 class IFlashloanRouterStorage__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.IFlashloanRouterStorage__factory = IFlashloanRouterStorage__factory;

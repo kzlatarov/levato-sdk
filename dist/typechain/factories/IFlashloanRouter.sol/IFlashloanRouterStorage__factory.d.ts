@@ -1,31 +1,32 @@
-import { type ContractRunner } from "ethers";
+import { Signer } from "ethers";
+import type { Provider } from "@ethersproject/providers";
 import type { IFlashloanRouterStorage, IFlashloanRouterStorageInterface } from "../../IFlashloanRouter.sol/IFlashloanRouterStorage";
 export declare class IFlashloanRouterStorage__factory {
     static readonly abi: readonly [{
+        readonly type: "function";
+        readonly name: "ionicMarketOfAsset";
         readonly inputs: readonly [{
-            readonly internalType: "contract IERC20Upgradeable";
             readonly name: "asset";
             readonly type: "address";
+            readonly internalType: "contract IERC20Upgradeable";
         }];
-        readonly name: "ionicMarketOfAsset";
         readonly outputs: readonly [{
+            readonly name: "";
+            readonly type: "address";
             readonly internalType: "contract IonicCErc20";
-            readonly name: "";
-            readonly type: "address";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }, {
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "owner";
+        readonly inputs: readonly [];
         readonly outputs: readonly [{
-            readonly internalType: "address";
             readonly name: "";
             readonly type: "address";
+            readonly internalType: "address";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }];
     static createInterface(): IFlashloanRouterStorageInterface;
-    static connect(address: string, runner?: ContractRunner | null): IFlashloanRouterStorage;
+    static connect(address: string, signerOrProvider: Signer | Provider): IFlashloanRouterStorage;
 }

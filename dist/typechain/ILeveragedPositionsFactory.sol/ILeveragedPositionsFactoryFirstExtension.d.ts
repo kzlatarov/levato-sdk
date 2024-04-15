@@ -1,19 +1,33 @@
-import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, EventFragment, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedLogDescription, TypedListener, TypedContractMethod } from "../common";
-export interface ILeveragedPositionsFactoryFirstExtensionInterface extends Interface {
-    getFunction(nameOrSignature: "_setIonicPairWhitelisted" | "createAndFundIonicPosition" | "createAndFundIonicPositionAtRatio" | "createIonicPosition" | "getAssetBorrowRate" | "getAssetPrice" | "getPositionsByAccount" | "getPositionsTotalCollateralValue" | "initialize" | "isFactoryPosition" | "reinitialize"): FunctionFragment;
-    getEvent(nameOrSignatureOrTopic: "PositionCreated"): EventFragment;
-    encodeFunctionData(functionFragment: "_setIonicPairWhitelisted", values: [AddressLike, AddressLike, boolean]): string;
-    encodeFunctionData(functionFragment: "createAndFundIonicPosition", values: [AddressLike, AddressLike, AddressLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "createAndFundIonicPositionAtRatio", values: [AddressLike, AddressLike, AddressLike, BigNumberish, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "createIonicPosition", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "getAssetBorrowRate", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "getAssetPrice", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "getPositionsByAccount", values: [AddressLike]): string;
+import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, ContractTransaction, Overrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "../common";
+export interface ILeveragedPositionsFactoryFirstExtensionInterface extends utils.Interface {
+    functions: {
+        "_setIonicPairWhitelisted(address,address,bool)": FunctionFragment;
+        "createAndFundIonicPosition(address,address,address,uint256)": FunctionFragment;
+        "createAndFundIonicPositionAtRatio(address,address,address,uint256,uint256)": FunctionFragment;
+        "createIonicPosition(address,address)": FunctionFragment;
+        "getAssetBorrowRate(address)": FunctionFragment;
+        "getAssetPrice(address)": FunctionFragment;
+        "getPositionsByAccount(address)": FunctionFragment;
+        "getPositionsTotalCollateralValue()": FunctionFragment;
+        "initialize(address,address)": FunctionFragment;
+        "isFactoryPosition(address)": FunctionFragment;
+        "reinitialize(address)": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "_setIonicPairWhitelisted" | "createAndFundIonicPosition" | "createAndFundIonicPositionAtRatio" | "createIonicPosition" | "getAssetBorrowRate" | "getAssetPrice" | "getPositionsByAccount" | "getPositionsTotalCollateralValue" | "initialize" | "isFactoryPosition" | "reinitialize"): FunctionFragment;
+    encodeFunctionData(functionFragment: "_setIonicPairWhitelisted", values: [string, string, boolean]): string;
+    encodeFunctionData(functionFragment: "createAndFundIonicPosition", values: [string, string, string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "createAndFundIonicPositionAtRatio", values: [string, string, string, BigNumberish, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "createIonicPosition", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "getAssetBorrowRate", values: [string]): string;
+    encodeFunctionData(functionFragment: "getAssetPrice", values: [string]): string;
+    encodeFunctionData(functionFragment: "getPositionsByAccount", values: [string]): string;
     encodeFunctionData(functionFragment: "getPositionsTotalCollateralValue", values?: undefined): string;
-    encodeFunctionData(functionFragment: "initialize", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "isFactoryPosition", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "reinitialize", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "initialize", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "isFactoryPosition", values: [string]): string;
+    encodeFunctionData(functionFragment: "reinitialize", values: [string]): string;
     decodeFunctionResult(functionFragment: "_setIonicPairWhitelisted", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "createAndFundIonicPosition", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "createAndFundIonicPositionAtRatio", data: BytesLike): Result;
@@ -25,155 +39,153 @@ export interface ILeveragedPositionsFactoryFirstExtensionInterface extends Inter
     decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "isFactoryPosition", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "reinitialize", data: BytesLike): Result;
+    events: {
+        "PositionCreated(address,address,address,address,uint16)": EventFragment;
+    };
+    getEvent(nameOrSignatureOrTopic: "PositionCreated"): EventFragment;
 }
-export declare namespace PositionCreatedEvent {
-    type InputTuple = [
-        user: AddressLike,
-        position: AddressLike,
-        collateral: AddressLike,
-        stable: AddressLike,
-        lendingProtocol: BigNumberish
-    ];
-    type OutputTuple = [
-        user: string,
-        position: string,
-        collateral: string,
-        stable: string,
-        lendingProtocol: bigint
-    ];
-    interface OutputObject {
-        user: string;
-        position: string;
-        collateral: string;
-        stable: string;
-        lendingProtocol: bigint;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export interface PositionCreatedEventObject {
+    user: string;
+    position: string;
+    collateral: string;
+    stable: string;
+    lendingProtocol: number;
 }
+export type PositionCreatedEvent = TypedEvent<[
+    string,
+    string,
+    string,
+    string,
+    number
+], PositionCreatedEventObject>;
+export type PositionCreatedEventFilter = TypedEventFilter<PositionCreatedEvent>;
 export interface ILeveragedPositionsFactoryFirstExtension extends BaseContract {
-    connect(runner?: ContractRunner | null): ILeveragedPositionsFactoryFirstExtension;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: ILeveragedPositionsFactoryFirstExtensionInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    _setIonicPairWhitelisted: TypedContractMethod<[
-        _collateralMarket: AddressLike,
-        _stableMarket: AddressLike,
-        _whitelisted: boolean
-    ], [
-        void
-    ], "nonpayable">;
-    createAndFundIonicPosition: TypedContractMethod<[
-        _collateralMarket: AddressLike,
-        _stableMarket: AddressLike,
-        _fundingAsset: AddressLike,
-        _fundingAmount: BigNumberish
-    ], [
-        string
-    ], "nonpayable">;
-    createAndFundIonicPositionAtRatio: TypedContractMethod<[
-        _collateralMarket: AddressLike,
-        _stableMarket: AddressLike,
-        _fundingAsset: AddressLike,
-        _fundingAmount: BigNumberish,
-        _leverageRatio: BigNumberish
-    ], [
-        string
-    ], "nonpayable">;
-    createIonicPosition: TypedContractMethod<[
-        _collateralMarket: AddressLike,
-        _stableMarket: AddressLike
-    ], [
-        string
-    ], "nonpayable">;
-    getAssetBorrowRate: TypedContractMethod<[
-        asset: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getAssetPrice: TypedContractMethod<[asset: AddressLike], [bigint], "view">;
-    getPositionsByAccount: TypedContractMethod<[
-        account: AddressLike
-    ], [
-        [string[], boolean[]]
-    ], "view">;
-    getPositionsTotalCollateralValue: TypedContractMethod<[], [bigint], "view">;
-    initialize: TypedContractMethod<[
-        _delegator: AddressLike,
-        _oracle: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    isFactoryPosition: TypedContractMethod<[
-        position: AddressLike
-    ], [
-        boolean
-    ], "view">;
-    reinitialize: TypedContractMethod<[
-        _oracle: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "_setIonicPairWhitelisted"): TypedContractMethod<[
-        _collateralMarket: AddressLike,
-        _stableMarket: AddressLike,
-        _whitelisted: boolean
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "createAndFundIonicPosition"): TypedContractMethod<[
-        _collateralMarket: AddressLike,
-        _stableMarket: AddressLike,
-        _fundingAsset: AddressLike,
-        _fundingAmount: BigNumberish
-    ], [
-        string
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "createAndFundIonicPositionAtRatio"): TypedContractMethod<[
-        _collateralMarket: AddressLike,
-        _stableMarket: AddressLike,
-        _fundingAsset: AddressLike,
-        _fundingAmount: BigNumberish,
-        _leverageRatio: BigNumberish
-    ], [
-        string
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "createIonicPosition"): TypedContractMethod<[
-        _collateralMarket: AddressLike,
-        _stableMarket: AddressLike
-    ], [
-        string
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "getAssetBorrowRate"): TypedContractMethod<[asset: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "getAssetPrice"): TypedContractMethod<[asset: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "getPositionsByAccount"): TypedContractMethod<[
-        account: AddressLike
-    ], [
-        [string[], boolean[]]
-    ], "view">;
-    getFunction(nameOrSignature: "getPositionsTotalCollateralValue"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "initialize"): TypedContractMethod<[
-        _delegator: AddressLike,
-        _oracle: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "isFactoryPosition"): TypedContractMethod<[position: AddressLike], [boolean], "view">;
-    getFunction(nameOrSignature: "reinitialize"): TypedContractMethod<[_oracle: AddressLike], [void], "nonpayable">;
-    getEvent(key: "PositionCreated"): TypedContractEvent<PositionCreatedEvent.InputTuple, PositionCreatedEvent.OutputTuple, PositionCreatedEvent.OutputObject>;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        _setIonicPairWhitelisted(_collateralMarket: string, _stableMarket: string, _whitelisted: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        createAndFundIonicPosition(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        createAndFundIonicPositionAtRatio(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        createIonicPosition(_collateralMarket: string, _stableMarket: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        getAssetBorrowRate(asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        getAssetPrice(asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        getPositionsByAccount(account: string, overrides?: CallOverrides): Promise<[string[], boolean[]]>;
+        getPositionsTotalCollateralValue(overrides?: CallOverrides): Promise<[BigNumber]>;
+        initialize(_delegator: string, _oracle: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        isFactoryPosition(position: string, overrides?: CallOverrides): Promise<[boolean]>;
+        reinitialize(_oracle: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+    };
+    _setIonicPairWhitelisted(_collateralMarket: string, _stableMarket: string, _whitelisted: boolean, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    createAndFundIonicPosition(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    createAndFundIonicPositionAtRatio(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    createIonicPosition(_collateralMarket: string, _stableMarket: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    getAssetBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getPositionsByAccount(account: string, overrides?: CallOverrides): Promise<[string[], boolean[]]>;
+    getPositionsTotalCollateralValue(overrides?: CallOverrides): Promise<BigNumber>;
+    initialize(_delegator: string, _oracle: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    isFactoryPosition(position: string, overrides?: CallOverrides): Promise<boolean>;
+    reinitialize(_oracle: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    callStatic: {
+        _setIonicPairWhitelisted(_collateralMarket: string, _stableMarket: string, _whitelisted: boolean, overrides?: CallOverrides): Promise<void>;
+        createAndFundIonicPosition(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: CallOverrides): Promise<string>;
+        createAndFundIonicPositionAtRatio(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: CallOverrides): Promise<string>;
+        createIonicPosition(_collateralMarket: string, _stableMarket: string, overrides?: CallOverrides): Promise<string>;
+        getAssetBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getPositionsByAccount(account: string, overrides?: CallOverrides): Promise<[string[], boolean[]]>;
+        getPositionsTotalCollateralValue(overrides?: CallOverrides): Promise<BigNumber>;
+        initialize(_delegator: string, _oracle: string, overrides?: CallOverrides): Promise<void>;
+        isFactoryPosition(position: string, overrides?: CallOverrides): Promise<boolean>;
+        reinitialize(_oracle: string, overrides?: CallOverrides): Promise<void>;
+    };
     filters: {
-        "PositionCreated(address,address,address,address,uint16)": TypedContractEvent<PositionCreatedEvent.InputTuple, PositionCreatedEvent.OutputTuple, PositionCreatedEvent.OutputObject>;
-        PositionCreated: TypedContractEvent<PositionCreatedEvent.InputTuple, PositionCreatedEvent.OutputTuple, PositionCreatedEvent.OutputObject>;
+        "PositionCreated(address,address,address,address,uint16)"(user?: string | null, position?: null, collateral?: string | null, stable?: string | null, lendingProtocol?: null): PositionCreatedEventFilter;
+        PositionCreated(user?: string | null, position?: null, collateral?: string | null, stable?: string | null, lendingProtocol?: null): PositionCreatedEventFilter;
+    };
+    estimateGas: {
+        _setIonicPairWhitelisted(_collateralMarket: string, _stableMarket: string, _whitelisted: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        createAndFundIonicPosition(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        createAndFundIonicPositionAtRatio(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        createIonicPosition(_collateralMarket: string, _stableMarket: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        getAssetBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getPositionsByAccount(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getPositionsTotalCollateralValue(overrides?: CallOverrides): Promise<BigNumber>;
+        initialize(_delegator: string, _oracle: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        isFactoryPosition(position: string, overrides?: CallOverrides): Promise<BigNumber>;
+        reinitialize(_oracle: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        _setIonicPairWhitelisted(_collateralMarket: string, _stableMarket: string, _whitelisted: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        createAndFundIonicPosition(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        createAndFundIonicPositionAtRatio(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        createIonicPosition(_collateralMarket: string, _stableMarket: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        getAssetBorrowRate(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getAssetPrice(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getPositionsByAccount(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getPositionsTotalCollateralValue(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        initialize(_delegator: string, _oracle: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        isFactoryPosition(position: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        reinitialize(_oracle: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
     };
 }

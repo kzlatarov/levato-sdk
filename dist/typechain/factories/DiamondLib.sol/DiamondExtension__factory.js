@@ -7,26 +7,26 @@ exports.DiamondExtension__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        inputs: [],
+        type: "function",
         name: "_getExtensionFunctions",
+        inputs: [],
         outputs: [
             {
-                internalType: "bytes4[]",
                 name: "",
                 type: "bytes4[]",
+                internalType: "bytes4[]",
             },
         ],
         stateMutability: "pure",
-        type: "function",
     },
 ];
 class DiamondExtension__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.DiamondExtension__factory = DiamondExtension__factory;

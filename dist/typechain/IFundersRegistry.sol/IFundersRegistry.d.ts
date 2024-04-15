@@ -1,31 +1,60 @@
-import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedListener, TypedContractMethod } from "../common";
-export interface IFundersRegistryInterface extends Interface {
-    getFunction(nameOrSignature: "WNATIVE" | "_listExtensions" | "_registerExtension" | "_removeFundingStrategyForPair" | "_replaceExtensions" | "_setBalancerPoolForTokens" | "_setBestSwapPath" | "_setFundingStrategy" | "_setUniV3PoolFee" | "amountOutAndSlippageOfSwap" | "balancerPoolForTokens" | "bestSwapPath" | "customUniV3Router" | "defaultOutputToken" | "fundingStrategiesByName" | "fundingStrategiesByTokens" | "getBestSwapPath" | "getFundingStrategies" | "getFundingStrategy" | "getSlippage" | "initialize" | "owner" | "reinitialize" | "swap" | "uniswapV3Fees"): FunctionFragment;
+import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, ContractTransaction, Overrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "../common";
+export interface IFundersRegistryInterface extends utils.Interface {
+    functions: {
+        "WNATIVE()": FunctionFragment;
+        "_listExtensions()": FunctionFragment;
+        "_registerExtension(address,address)": FunctionFragment;
+        "_removeFundingStrategyForPair(address,address,address)": FunctionFragment;
+        "_replaceExtensions(address[])": FunctionFragment;
+        "_setBalancerPoolForTokens(address,address,address)": FunctionFragment;
+        "_setBestSwapPath(address,address,address[])": FunctionFragment;
+        "_setFundingStrategy(address,address,address)": FunctionFragment;
+        "_setUniV3PoolFee(address,address,uint24)": FunctionFragment;
+        "amountOutAndSlippageOfSwap(address,uint256,address)": FunctionFragment;
+        "balancerPoolForTokens(address,address)": FunctionFragment;
+        "bestSwapPath(address,address)": FunctionFragment;
+        "customUniV3Router()": FunctionFragment;
+        "defaultOutputToken(address)": FunctionFragment;
+        "fundingStrategiesByName(string)": FunctionFragment;
+        "fundingStrategiesByTokens(address,address)": FunctionFragment;
+        "getBestSwapPath(address,address)": FunctionFragment;
+        "getFundingStrategies(address,address)": FunctionFragment;
+        "getFundingStrategy(address,address)": FunctionFragment;
+        "getSlippage(address,address)": FunctionFragment;
+        "initialize(address)": FunctionFragment;
+        "owner()": FunctionFragment;
+        "reinitialize(address)": FunctionFragment;
+        "swap(address,uint256,address)": FunctionFragment;
+        "uniswapV3Fees()": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "WNATIVE" | "_listExtensions" | "_registerExtension" | "_removeFundingStrategyForPair" | "_replaceExtensions" | "_setBalancerPoolForTokens" | "_setBestSwapPath" | "_setFundingStrategy" | "_setUniV3PoolFee" | "amountOutAndSlippageOfSwap" | "balancerPoolForTokens" | "bestSwapPath" | "customUniV3Router" | "defaultOutputToken" | "fundingStrategiesByName" | "fundingStrategiesByTokens" | "getBestSwapPath" | "getFundingStrategies" | "getFundingStrategy" | "getSlippage" | "initialize" | "owner" | "reinitialize" | "swap" | "uniswapV3Fees"): FunctionFragment;
     encodeFunctionData(functionFragment: "WNATIVE", values?: undefined): string;
     encodeFunctionData(functionFragment: "_listExtensions", values?: undefined): string;
-    encodeFunctionData(functionFragment: "_registerExtension", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "_removeFundingStrategyForPair", values: [AddressLike, AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "_replaceExtensions", values: [AddressLike[]]): string;
-    encodeFunctionData(functionFragment: "_setBalancerPoolForTokens", values: [AddressLike, AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "_setBestSwapPath", values: [AddressLike, AddressLike, AddressLike[]]): string;
-    encodeFunctionData(functionFragment: "_setFundingStrategy", values: [AddressLike, AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "_setUniV3PoolFee", values: [AddressLike, AddressLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "amountOutAndSlippageOfSwap", values: [AddressLike, BigNumberish, AddressLike]): string;
-    encodeFunctionData(functionFragment: "balancerPoolForTokens", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "bestSwapPath", values: [AddressLike, AddressLike]): string;
+    encodeFunctionData(functionFragment: "_registerExtension", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "_removeFundingStrategyForPair", values: [string, string, string]): string;
+    encodeFunctionData(functionFragment: "_replaceExtensions", values: [string[]]): string;
+    encodeFunctionData(functionFragment: "_setBalancerPoolForTokens", values: [string, string, string]): string;
+    encodeFunctionData(functionFragment: "_setBestSwapPath", values: [string, string, string[]]): string;
+    encodeFunctionData(functionFragment: "_setFundingStrategy", values: [string, string, string]): string;
+    encodeFunctionData(functionFragment: "_setUniV3PoolFee", values: [string, string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "amountOutAndSlippageOfSwap", values: [string, BigNumberish, string]): string;
+    encodeFunctionData(functionFragment: "balancerPoolForTokens", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "bestSwapPath", values: [string, string]): string;
     encodeFunctionData(functionFragment: "customUniV3Router", values?: undefined): string;
-    encodeFunctionData(functionFragment: "defaultOutputToken", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "defaultOutputToken", values: [string]): string;
     encodeFunctionData(functionFragment: "fundingStrategiesByName", values: [string]): string;
-    encodeFunctionData(functionFragment: "fundingStrategiesByTokens", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "getBestSwapPath", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "getFundingStrategies", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "getFundingStrategy", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "getSlippage", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "initialize", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "fundingStrategiesByTokens", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "getBestSwapPath", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "getFundingStrategies", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "getFundingStrategy", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "getSlippage", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "initialize", values: [string]): string;
     encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-    encodeFunctionData(functionFragment: "reinitialize", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "swap", values: [AddressLike, BigNumberish, AddressLike]): string;
+    encodeFunctionData(functionFragment: "reinitialize", values: [string]): string;
+    encodeFunctionData(functionFragment: "swap", values: [string, BigNumberish, string]): string;
     encodeFunctionData(functionFragment: "uniswapV3Fees", values?: undefined): string;
     decodeFunctionResult(functionFragment: "WNATIVE", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "_listExtensions", data: BytesLike): Result;
@@ -52,272 +81,301 @@ export interface IFundersRegistryInterface extends Interface {
     decodeFunctionResult(functionFragment: "reinitialize", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "swap", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "uniswapV3Fees", data: BytesLike): Result;
+    events: {};
 }
 export interface IFundersRegistry extends BaseContract {
-    connect(runner?: ContractRunner | null): IFundersRegistry;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: IFundersRegistryInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    WNATIVE: TypedContractMethod<[], [string], "view">;
-    _listExtensions: TypedContractMethod<[], [string[]], "view">;
-    _registerExtension: TypedContractMethod<[
-        extensionToAdd: AddressLike,
-        extensionToReplace: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    _removeFundingStrategyForPair: TypedContractMethod<[
-        strategy: AddressLike,
-        inputToken: AddressLike,
-        outputToken: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    _replaceExtensions: TypedContractMethod<[
-        extensions: AddressLike[]
-    ], [
-        void
-    ], "nonpayable">;
-    _setBalancerPoolForTokens: TypedContractMethod<[
-        inputToken: AddressLike,
-        outputToken: AddressLike,
-        pool: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    _setBestSwapPath: TypedContractMethod<[
-        inputToken: AddressLike,
-        outputToken: AddressLike,
-        bestPath: AddressLike[]
-    ], [
-        void
-    ], "nonpayable">;
-    _setFundingStrategy: TypedContractMethod<[
-        strategy: AddressLike,
-        inputToken: AddressLike,
-        outputToken: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    _setUniV3PoolFee: TypedContractMethod<[
-        inputToken: AddressLike,
-        outputToken: AddressLike,
-        fee: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    amountOutAndSlippageOfSwap: TypedContractMethod<[
-        inputToken: AddressLike,
-        inputAmount: BigNumberish,
-        outputToken: AddressLike
-    ], [
-        [bigint, bigint] & {
-            outputAmount: bigint;
-            slippage: bigint;
-        }
-    ], "nonpayable">;
-    balancerPoolForTokens: TypedContractMethod<[
-        inputToken: AddressLike,
-        outputToken: AddressLike
-    ], [
-        string
-    ], "view">;
-    bestSwapPath: TypedContractMethod<[
-        inputToken: AddressLike,
-        outputToken: AddressLike
-    ], [
-        string[]
-    ], "nonpayable">;
-    customUniV3Router: TypedContractMethod<[], [string], "nonpayable">;
-    defaultOutputToken: TypedContractMethod<[
-        inputToken: AddressLike
-    ], [
-        string
-    ], "view">;
-    fundingStrategiesByName: TypedContractMethod<[
-        name: string
-    ], [
-        string
-    ], "view">;
-    fundingStrategiesByTokens: TypedContractMethod<[
-        inputToken: AddressLike,
-        outputToken: AddressLike
-    ], [
-        string
-    ], "view">;
-    getBestSwapPath: TypedContractMethod<[
-        inputToken: AddressLike,
-        outputToken: AddressLike
-    ], [
-        string[]
-    ], "view">;
-    getFundingStrategies: TypedContractMethod<[
-        inputToken: AddressLike,
-        outputToken: AddressLike
-    ], [
-        [string[], string[]] & {
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        WNATIVE(overrides?: CallOverrides): Promise<[string]>;
+        _listExtensions(overrides?: CallOverrides): Promise<[string[]]>;
+        _registerExtension(extensionToAdd: string, extensionToReplace: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _removeFundingStrategyForPair(strategy: string, inputToken: string, outputToken: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _replaceExtensions(extensions: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _setBalancerPoolForTokens(inputToken: string, outputToken: string, pool: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _setBestSwapPath(inputToken: string, outputToken: string, bestPath: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _setFundingStrategy(strategy: string, inputToken: string, outputToken: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _setUniV3PoolFee(inputToken: string, outputToken: string, fee: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        amountOutAndSlippageOfSwap(inputToken: string, inputAmount: BigNumberish, outputToken: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        balancerPoolForTokens(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<[string]>;
+        bestSwapPath(inputToken: string, outputToken: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        customUniV3Router(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        defaultOutputToken(inputToken: string, overrides?: CallOverrides): Promise<[string]>;
+        fundingStrategiesByName(name: string, overrides?: CallOverrides): Promise<[string]>;
+        fundingStrategiesByTokens(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<[string]>;
+        getBestSwapPath(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<[string[]]>;
+        getFundingStrategies(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<[
+            string[],
+            string[]
+        ] & {
             strategies: string[];
             strategiesData: string[];
-        }
-    ], "view">;
-    getFundingStrategy: TypedContractMethod<[
-        inputToken: AddressLike,
-        outputToken: AddressLike
-    ], [
-        [string, string] & {
+        }>;
+        getFundingStrategy(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<[string, string] & {
             strategy: string;
             strategyData: string;
-        }
-    ], "view">;
-    getSlippage: TypedContractMethod<[
-        inputToken: AddressLike,
-        outputToken: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    initialize: TypedContractMethod<[
-        _wnative: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    owner: TypedContractMethod<[], [string], "view">;
-    reinitialize: TypedContractMethod<[
-        _creditDelegator: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    swap: TypedContractMethod<[
-        inputToken: AddressLike,
-        inputAmount: BigNumberish,
-        outputToken: AddressLike
-    ], [
-        bigint
-    ], "nonpayable">;
-    uniswapV3Fees: TypedContractMethod<[], [bigint], "nonpayable">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "WNATIVE"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "_listExtensions"): TypedContractMethod<[], [string[]], "view">;
-    getFunction(nameOrSignature: "_registerExtension"): TypedContractMethod<[
-        extensionToAdd: AddressLike,
-        extensionToReplace: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "_removeFundingStrategyForPair"): TypedContractMethod<[
-        strategy: AddressLike,
-        inputToken: AddressLike,
-        outputToken: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "_replaceExtensions"): TypedContractMethod<[extensions: AddressLike[]], [void], "nonpayable">;
-    getFunction(nameOrSignature: "_setBalancerPoolForTokens"): TypedContractMethod<[
-        inputToken: AddressLike,
-        outputToken: AddressLike,
-        pool: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "_setBestSwapPath"): TypedContractMethod<[
-        inputToken: AddressLike,
-        outputToken: AddressLike,
-        bestPath: AddressLike[]
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "_setFundingStrategy"): TypedContractMethod<[
-        strategy: AddressLike,
-        inputToken: AddressLike,
-        outputToken: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "_setUniV3PoolFee"): TypedContractMethod<[
-        inputToken: AddressLike,
-        outputToken: AddressLike,
-        fee: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "amountOutAndSlippageOfSwap"): TypedContractMethod<[
-        inputToken: AddressLike,
-        inputAmount: BigNumberish,
-        outputToken: AddressLike
-    ], [
-        [bigint, bigint] & {
-            outputAmount: bigint;
-            slippage: bigint;
-        }
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "balancerPoolForTokens"): TypedContractMethod<[
-        inputToken: AddressLike,
-        outputToken: AddressLike
-    ], [
-        string
-    ], "view">;
-    getFunction(nameOrSignature: "bestSwapPath"): TypedContractMethod<[
-        inputToken: AddressLike,
-        outputToken: AddressLike
-    ], [
+        }>;
+        getSlippage(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<[BigNumber] & {
+            slippage: BigNumber;
+        }>;
+        initialize(_wnative: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        owner(overrides?: CallOverrides): Promise<[string]>;
+        reinitialize(_creditDelegator: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        swap(inputToken: string, inputAmount: BigNumberish, outputToken: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        uniswapV3Fees(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+    };
+    WNATIVE(overrides?: CallOverrides): Promise<string>;
+    _listExtensions(overrides?: CallOverrides): Promise<string[]>;
+    _registerExtension(extensionToAdd: string, extensionToReplace: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _removeFundingStrategyForPair(strategy: string, inputToken: string, outputToken: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _replaceExtensions(extensions: string[], overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _setBalancerPoolForTokens(inputToken: string, outputToken: string, pool: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _setBestSwapPath(inputToken: string, outputToken: string, bestPath: string[], overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _setFundingStrategy(strategy: string, inputToken: string, outputToken: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _setUniV3PoolFee(inputToken: string, outputToken: string, fee: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    amountOutAndSlippageOfSwap(inputToken: string, inputAmount: BigNumberish, outputToken: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    balancerPoolForTokens(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<string>;
+    bestSwapPath(inputToken: string, outputToken: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    customUniV3Router(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    defaultOutputToken(inputToken: string, overrides?: CallOverrides): Promise<string>;
+    fundingStrategiesByName(name: string, overrides?: CallOverrides): Promise<string>;
+    fundingStrategiesByTokens(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<string>;
+    getBestSwapPath(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<string[]>;
+    getFundingStrategies(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<[
+        string[],
         string[]
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "customUniV3Router"): TypedContractMethod<[], [string], "nonpayable">;
-    getFunction(nameOrSignature: "defaultOutputToken"): TypedContractMethod<[inputToken: AddressLike], [string], "view">;
-    getFunction(nameOrSignature: "fundingStrategiesByName"): TypedContractMethod<[name: string], [string], "view">;
-    getFunction(nameOrSignature: "fundingStrategiesByTokens"): TypedContractMethod<[
-        inputToken: AddressLike,
-        outputToken: AddressLike
-    ], [
-        string
-    ], "view">;
-    getFunction(nameOrSignature: "getBestSwapPath"): TypedContractMethod<[
-        inputToken: AddressLike,
-        outputToken: AddressLike
-    ], [
-        string[]
-    ], "view">;
-    getFunction(nameOrSignature: "getFundingStrategies"): TypedContractMethod<[
-        inputToken: AddressLike,
-        outputToken: AddressLike
-    ], [
-        [string[], string[]] & {
+    ] & {
+        strategies: string[];
+        strategiesData: string[];
+    }>;
+    getFundingStrategy(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<[string, string] & {
+        strategy: string;
+        strategyData: string;
+    }>;
+    getSlippage(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    initialize(_wnative: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    owner(overrides?: CallOverrides): Promise<string>;
+    reinitialize(_creditDelegator: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    swap(inputToken: string, inputAmount: BigNumberish, outputToken: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    uniswapV3Fees(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    callStatic: {
+        WNATIVE(overrides?: CallOverrides): Promise<string>;
+        _listExtensions(overrides?: CallOverrides): Promise<string[]>;
+        _registerExtension(extensionToAdd: string, extensionToReplace: string, overrides?: CallOverrides): Promise<void>;
+        _removeFundingStrategyForPair(strategy: string, inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<void>;
+        _replaceExtensions(extensions: string[], overrides?: CallOverrides): Promise<void>;
+        _setBalancerPoolForTokens(inputToken: string, outputToken: string, pool: string, overrides?: CallOverrides): Promise<void>;
+        _setBestSwapPath(inputToken: string, outputToken: string, bestPath: string[], overrides?: CallOverrides): Promise<void>;
+        _setFundingStrategy(strategy: string, inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<void>;
+        _setUniV3PoolFee(inputToken: string, outputToken: string, fee: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        amountOutAndSlippageOfSwap(inputToken: string, inputAmount: BigNumberish, outputToken: string, overrides?: CallOverrides): Promise<[
+            BigNumber,
+            BigNumber
+        ] & {
+            outputAmount: BigNumber;
+            slippage: BigNumber;
+        }>;
+        balancerPoolForTokens(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<string>;
+        bestSwapPath(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<string[]>;
+        customUniV3Router(overrides?: CallOverrides): Promise<string>;
+        defaultOutputToken(inputToken: string, overrides?: CallOverrides): Promise<string>;
+        fundingStrategiesByName(name: string, overrides?: CallOverrides): Promise<string>;
+        fundingStrategiesByTokens(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<string>;
+        getBestSwapPath(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<string[]>;
+        getFundingStrategies(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<[
+            string[],
+            string[]
+        ] & {
             strategies: string[];
             strategiesData: string[];
-        }
-    ], "view">;
-    getFunction(nameOrSignature: "getFundingStrategy"): TypedContractMethod<[
-        inputToken: AddressLike,
-        outputToken: AddressLike
-    ], [
-        [string, string] & {
+        }>;
+        getFundingStrategy(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<[string, string] & {
             strategy: string;
             strategyData: string;
-        }
-    ], "view">;
-    getFunction(nameOrSignature: "getSlippage"): TypedContractMethod<[
-        inputToken: AddressLike,
-        outputToken: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "initialize"): TypedContractMethod<[_wnative: AddressLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "owner"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "reinitialize"): TypedContractMethod<[_creditDelegator: AddressLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "swap"): TypedContractMethod<[
-        inputToken: AddressLike,
-        inputAmount: BigNumberish,
-        outputToken: AddressLike
-    ], [
-        bigint
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "uniswapV3Fees"): TypedContractMethod<[], [bigint], "nonpayable">;
+        }>;
+        getSlippage(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        initialize(_wnative: string, overrides?: CallOverrides): Promise<void>;
+        owner(overrides?: CallOverrides): Promise<string>;
+        reinitialize(_creditDelegator: string, overrides?: CallOverrides): Promise<void>;
+        swap(inputToken: string, inputAmount: BigNumberish, outputToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        uniswapV3Fees(overrides?: CallOverrides): Promise<number>;
+    };
     filters: {};
+    estimateGas: {
+        WNATIVE(overrides?: CallOverrides): Promise<BigNumber>;
+        _listExtensions(overrides?: CallOverrides): Promise<BigNumber>;
+        _registerExtension(extensionToAdd: string, extensionToReplace: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _removeFundingStrategyForPair(strategy: string, inputToken: string, outputToken: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _replaceExtensions(extensions: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _setBalancerPoolForTokens(inputToken: string, outputToken: string, pool: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _setBestSwapPath(inputToken: string, outputToken: string, bestPath: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _setFundingStrategy(strategy: string, inputToken: string, outputToken: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _setUniV3PoolFee(inputToken: string, outputToken: string, fee: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        amountOutAndSlippageOfSwap(inputToken: string, inputAmount: BigNumberish, outputToken: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        balancerPoolForTokens(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        bestSwapPath(inputToken: string, outputToken: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        customUniV3Router(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        defaultOutputToken(inputToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        fundingStrategiesByName(name: string, overrides?: CallOverrides): Promise<BigNumber>;
+        fundingStrategiesByTokens(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getBestSwapPath(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getFundingStrategies(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getFundingStrategy(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getSlippage(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+        initialize(_wnative: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        owner(overrides?: CallOverrides): Promise<BigNumber>;
+        reinitialize(_creditDelegator: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        swap(inputToken: string, inputAmount: BigNumberish, outputToken: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        uniswapV3Fees(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        WNATIVE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        _listExtensions(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        _registerExtension(extensionToAdd: string, extensionToReplace: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _removeFundingStrategyForPair(strategy: string, inputToken: string, outputToken: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _replaceExtensions(extensions: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _setBalancerPoolForTokens(inputToken: string, outputToken: string, pool: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _setBestSwapPath(inputToken: string, outputToken: string, bestPath: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _setFundingStrategy(strategy: string, inputToken: string, outputToken: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _setUniV3PoolFee(inputToken: string, outputToken: string, fee: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        amountOutAndSlippageOfSwap(inputToken: string, inputAmount: BigNumberish, outputToken: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        balancerPoolForTokens(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        bestSwapPath(inputToken: string, outputToken: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        customUniV3Router(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        defaultOutputToken(inputToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        fundingStrategiesByName(name: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        fundingStrategiesByTokens(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getBestSwapPath(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getFundingStrategies(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getFundingStrategy(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getSlippage(inputToken: string, outputToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        initialize(_wnative: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        reinitialize(_creditDelegator: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        swap(inputToken: string, inputAmount: BigNumberish, outputToken: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        uniswapV3Fees(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+    };
 }

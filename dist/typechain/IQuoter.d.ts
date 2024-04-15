@@ -1,57 +1,50 @@
-import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedListener, TypedContractMethod } from "./common";
-export interface IQuoterInterface extends Interface {
-    getFunction(nameOrSignature: "estimateMaxSwapUniswapV3" | "estimateMinSwapUniswapV3"): FunctionFragment;
-    encodeFunctionData(functionFragment: "estimateMaxSwapUniswapV3", values: [AddressLike, AddressLike, BigNumberish, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "estimateMinSwapUniswapV3", values: [AddressLike, AddressLike, BigNumberish, BigNumberish]): string;
+import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
+export interface IQuoterInterface extends utils.Interface {
+    functions: {
+        "estimateMaxSwapUniswapV3(address,address,uint256,uint24)": FunctionFragment;
+        "estimateMinSwapUniswapV3(address,address,uint256,uint24)": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "estimateMaxSwapUniswapV3" | "estimateMinSwapUniswapV3"): FunctionFragment;
+    encodeFunctionData(functionFragment: "estimateMaxSwapUniswapV3", values: [string, string, BigNumberish, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "estimateMinSwapUniswapV3", values: [string, string, BigNumberish, BigNumberish]): string;
     decodeFunctionResult(functionFragment: "estimateMaxSwapUniswapV3", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "estimateMinSwapUniswapV3", data: BytesLike): Result;
+    events: {};
 }
 export interface IQuoter extends BaseContract {
-    connect(runner?: ContractRunner | null): IQuoter;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: IQuoterInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    estimateMaxSwapUniswapV3: TypedContractMethod<[
-        _fromToken: AddressLike,
-        _toToken: AddressLike,
-        _amount: BigNumberish,
-        _poolFee: BigNumberish
-    ], [
-        bigint
-    ], "view">;
-    estimateMinSwapUniswapV3: TypedContractMethod<[
-        _fromToken: AddressLike,
-        _toToken: AddressLike,
-        _amount: BigNumberish,
-        _poolFee: BigNumberish
-    ], [
-        bigint
-    ], "view">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "estimateMaxSwapUniswapV3"): TypedContractMethod<[
-        _fromToken: AddressLike,
-        _toToken: AddressLike,
-        _amount: BigNumberish,
-        _poolFee: BigNumberish
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "estimateMinSwapUniswapV3"): TypedContractMethod<[
-        _fromToken: AddressLike,
-        _toToken: AddressLike,
-        _amount: BigNumberish,
-        _poolFee: BigNumberish
-    ], [
-        bigint
-    ], "view">;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        estimateMaxSwapUniswapV3(_fromToken: string, _toToken: string, _amount: BigNumberish, _poolFee: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+        estimateMinSwapUniswapV3(_fromToken: string, _toToken: string, _amount: BigNumberish, _poolFee: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    };
+    estimateMaxSwapUniswapV3(_fromToken: string, _toToken: string, _amount: BigNumberish, _poolFee: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    estimateMinSwapUniswapV3(_fromToken: string, _toToken: string, _amount: BigNumberish, _poolFee: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    callStatic: {
+        estimateMaxSwapUniswapV3(_fromToken: string, _toToken: string, _amount: BigNumberish, _poolFee: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        estimateMinSwapUniswapV3(_fromToken: string, _toToken: string, _amount: BigNumberish, _poolFee: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    };
     filters: {};
+    estimateGas: {
+        estimateMaxSwapUniswapV3(_fromToken: string, _toToken: string, _amount: BigNumberish, _poolFee: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        estimateMinSwapUniswapV3(_fromToken: string, _toToken: string, _amount: BigNumberish, _poolFee: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        estimateMaxSwapUniswapV3(_fromToken: string, _toToken: string, _amount: BigNumberish, _poolFee: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        estimateMinSwapUniswapV3(_fromToken: string, _toToken: string, _amount: BigNumberish, _poolFee: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    };
 }

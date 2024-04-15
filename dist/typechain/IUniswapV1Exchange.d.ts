@@ -1,37 +1,50 @@
-import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedListener, TypedContractMethod } from "./common";
-export interface IUniswapV1ExchangeInterface extends Interface {
-    getFunction(nameOrSignature: "tokenToEthSwapInput"): FunctionFragment;
+import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, ContractTransaction, Overrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
+export interface IUniswapV1ExchangeInterface extends utils.Interface {
+    functions: {
+        "tokenToEthSwapInput(uint256,uint256,uint256)": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "tokenToEthSwapInput"): FunctionFragment;
     encodeFunctionData(functionFragment: "tokenToEthSwapInput", values: [BigNumberish, BigNumberish, BigNumberish]): string;
     decodeFunctionResult(functionFragment: "tokenToEthSwapInput", data: BytesLike): Result;
+    events: {};
 }
 export interface IUniswapV1Exchange extends BaseContract {
-    connect(runner?: ContractRunner | null): IUniswapV1Exchange;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: IUniswapV1ExchangeInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    tokenToEthSwapInput: TypedContractMethod<[
-        tokens_sold: BigNumberish,
-        min_eth: BigNumberish,
-        deadline: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "tokenToEthSwapInput"): TypedContractMethod<[
-        tokens_sold: BigNumberish,
-        min_eth: BigNumberish,
-        deadline: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        tokenToEthSwapInput(tokens_sold: BigNumberish, min_eth: BigNumberish, deadline: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+    };
+    tokenToEthSwapInput(tokens_sold: BigNumberish, min_eth: BigNumberish, deadline: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    callStatic: {
+        tokenToEthSwapInput(tokens_sold: BigNumberish, min_eth: BigNumberish, deadline: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    };
     filters: {};
+    estimateGas: {
+        tokenToEthSwapInput(tokens_sold: BigNumberish, min_eth: BigNumberish, deadline: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        tokenToEthSwapInput(tokens_sold: BigNumberish, min_eth: BigNumberish, deadline: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+    };
 }

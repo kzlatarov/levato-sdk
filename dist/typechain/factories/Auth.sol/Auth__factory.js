@@ -7,103 +7,103 @@ exports.Auth__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "user",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "contract Authority",
-                name: "newAuthority",
-                type: "address",
-            },
-        ],
-        name: "AuthorityUpdated",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "user",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "newOwner",
-                type: "address",
-            },
-        ],
-        name: "OwnershipTransferred",
-        type: "event",
-    },
-    {
-        inputs: [],
+        type: "function",
         name: "authority",
-        outputs: [
-            {
-                internalType: "contract Authority",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
         inputs: [],
-        name: "owner",
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "contract Authority",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "owner",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "setAuthority",
         inputs: [
             {
-                internalType: "contract Authority",
                 name: "newAuthority",
                 type: "address",
+                internalType: "contract Authority",
             },
         ],
-        name: "setAuthority",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "transferOwnership",
         inputs: [
             {
-                internalType: "address",
                 name: "newOwner",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "transferOwnership",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
+    },
+    {
+        type: "event",
+        name: "AuthorityUpdated",
+        inputs: [
+            {
+                name: "user",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "newAuthority",
+                type: "address",
+                indexed: true,
+                internalType: "contract Authority",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "OwnershipTransferred",
+        inputs: [
+            {
+                name: "user",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "newOwner",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
     },
 ];
 class Auth__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.Auth__factory = Auth__factory;

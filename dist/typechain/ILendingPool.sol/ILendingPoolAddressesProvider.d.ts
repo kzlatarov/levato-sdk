@@ -1,8 +1,30 @@
-import type { BaseContract, BytesLike, FunctionFragment, Result, Interface, EventFragment, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedLogDescription, TypedListener, TypedContractMethod } from "../common";
-export interface ILendingPoolAddressesProviderInterface extends Interface {
-    getFunction(nameOrSignature: "getAddress" | "getEmergencyAdmin" | "getLendingPool" | "getLendingPoolCollateralManager" | "getLendingPoolConfigurator" | "getLendingRateOracle" | "getMarketId" | "getPoolAdmin" | "getPriceOracle" | "setAddress" | "setAddressAsProxy" | "setEmergencyAdmin" | "setLendingPoolCollateralManager" | "setLendingPoolConfiguratorImpl" | "setLendingPoolImpl" | "setLendingRateOracle" | "setMarketId" | "setPoolAdmin" | "setPriceOracle"): FunctionFragment;
-    getEvent(nameOrSignatureOrTopic: "AddressSet" | "ConfigurationAdminUpdated" | "EmergencyAdminUpdated" | "LendingPoolCollateralManagerUpdated" | "LendingPoolConfiguratorUpdated" | "LendingPoolUpdated" | "LendingRateOracleUpdated" | "MarketIdSet" | "PriceOracleUpdated" | "ProxyCreated"): EventFragment;
+import type { BaseContract, BigNumber, BytesLike, CallOverrides, ContractTransaction, Overrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "../common";
+export interface ILendingPoolAddressesProviderInterface extends utils.Interface {
+    functions: {
+        "getAddress(bytes32)": FunctionFragment;
+        "getEmergencyAdmin()": FunctionFragment;
+        "getLendingPool()": FunctionFragment;
+        "getLendingPoolCollateralManager()": FunctionFragment;
+        "getLendingPoolConfigurator()": FunctionFragment;
+        "getLendingRateOracle()": FunctionFragment;
+        "getMarketId()": FunctionFragment;
+        "getPoolAdmin()": FunctionFragment;
+        "getPriceOracle()": FunctionFragment;
+        "setAddress(bytes32,address)": FunctionFragment;
+        "setAddressAsProxy(bytes32,address)": FunctionFragment;
+        "setEmergencyAdmin(address)": FunctionFragment;
+        "setLendingPoolCollateralManager(address)": FunctionFragment;
+        "setLendingPoolConfiguratorImpl(address)": FunctionFragment;
+        "setLendingPoolImpl(address)": FunctionFragment;
+        "setLendingRateOracle(address)": FunctionFragment;
+        "setMarketId(string)": FunctionFragment;
+        "setPoolAdmin(address)": FunctionFragment;
+        "setPriceOracle(address)": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "getAddress" | "getEmergencyAdmin" | "getLendingPool" | "getLendingPoolCollateralManager" | "getLendingPoolConfigurator" | "getLendingRateOracle" | "getMarketId" | "getPoolAdmin" | "getPriceOracle" | "setAddress" | "setAddressAsProxy" | "setEmergencyAdmin" | "setLendingPoolCollateralManager" | "setLendingPoolConfiguratorImpl" | "setLendingPoolImpl" | "setLendingRateOracle" | "setMarketId" | "setPoolAdmin" | "setPriceOracle"): FunctionFragment;
     encodeFunctionData(functionFragment: "getAddress", values: [BytesLike]): string;
     encodeFunctionData(functionFragment: "getEmergencyAdmin", values?: undefined): string;
     encodeFunctionData(functionFragment: "getLendingPool", values?: undefined): string;
@@ -12,16 +34,16 @@ export interface ILendingPoolAddressesProviderInterface extends Interface {
     encodeFunctionData(functionFragment: "getMarketId", values?: undefined): string;
     encodeFunctionData(functionFragment: "getPoolAdmin", values?: undefined): string;
     encodeFunctionData(functionFragment: "getPriceOracle", values?: undefined): string;
-    encodeFunctionData(functionFragment: "setAddress", values: [BytesLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "setAddressAsProxy", values: [BytesLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "setEmergencyAdmin", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "setLendingPoolCollateralManager", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "setLendingPoolConfiguratorImpl", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "setLendingPoolImpl", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "setLendingRateOracle", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "setAddress", values: [BytesLike, string]): string;
+    encodeFunctionData(functionFragment: "setAddressAsProxy", values: [BytesLike, string]): string;
+    encodeFunctionData(functionFragment: "setEmergencyAdmin", values: [string]): string;
+    encodeFunctionData(functionFragment: "setLendingPoolCollateralManager", values: [string]): string;
+    encodeFunctionData(functionFragment: "setLendingPoolConfiguratorImpl", values: [string]): string;
+    encodeFunctionData(functionFragment: "setLendingPoolImpl", values: [string]): string;
+    encodeFunctionData(functionFragment: "setLendingRateOracle", values: [string]): string;
     encodeFunctionData(functionFragment: "setMarketId", values: [string]): string;
-    encodeFunctionData(functionFragment: "setPoolAdmin", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "setPriceOracle", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "setPoolAdmin", values: [string]): string;
+    encodeFunctionData(functionFragment: "setPriceOracle", values: [string]): string;
     decodeFunctionResult(functionFragment: "getAddress", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getEmergencyAdmin", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getLendingPool", data: BytesLike): Result;
@@ -41,254 +63,320 @@ export interface ILendingPoolAddressesProviderInterface extends Interface {
     decodeFunctionResult(functionFragment: "setMarketId", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "setPoolAdmin", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "setPriceOracle", data: BytesLike): Result;
+    events: {
+        "AddressSet(bytes32,address,bool)": EventFragment;
+        "ConfigurationAdminUpdated(address)": EventFragment;
+        "EmergencyAdminUpdated(address)": EventFragment;
+        "LendingPoolCollateralManagerUpdated(address)": EventFragment;
+        "LendingPoolConfiguratorUpdated(address)": EventFragment;
+        "LendingPoolUpdated(address)": EventFragment;
+        "LendingRateOracleUpdated(address)": EventFragment;
+        "MarketIdSet(string)": EventFragment;
+        "PriceOracleUpdated(address)": EventFragment;
+        "ProxyCreated(bytes32,address)": EventFragment;
+    };
+    getEvent(nameOrSignatureOrTopic: "AddressSet"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "ConfigurationAdminUpdated"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "EmergencyAdminUpdated"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "LendingPoolCollateralManagerUpdated"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "LendingPoolConfiguratorUpdated"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "LendingPoolUpdated"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "LendingRateOracleUpdated"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "MarketIdSet"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "PriceOracleUpdated"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "ProxyCreated"): EventFragment;
 }
-export declare namespace AddressSetEvent {
-    type InputTuple = [
-        id: BytesLike,
-        newAddress: AddressLike,
-        hasProxy: boolean
-    ];
-    type OutputTuple = [id: string, newAddress: string, hasProxy: boolean];
-    interface OutputObject {
-        id: string;
-        newAddress: string;
-        hasProxy: boolean;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export interface AddressSetEventObject {
+    id: string;
+    newAddress: string;
+    hasProxy: boolean;
 }
-export declare namespace ConfigurationAdminUpdatedEvent {
-    type InputTuple = [newAddress: AddressLike];
-    type OutputTuple = [newAddress: string];
-    interface OutputObject {
-        newAddress: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type AddressSetEvent = TypedEvent<[
+    string,
+    string,
+    boolean
+], AddressSetEventObject>;
+export type AddressSetEventFilter = TypedEventFilter<AddressSetEvent>;
+export interface ConfigurationAdminUpdatedEventObject {
+    newAddress: string;
 }
-export declare namespace EmergencyAdminUpdatedEvent {
-    type InputTuple = [newAddress: AddressLike];
-    type OutputTuple = [newAddress: string];
-    interface OutputObject {
-        newAddress: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type ConfigurationAdminUpdatedEvent = TypedEvent<[
+    string
+], ConfigurationAdminUpdatedEventObject>;
+export type ConfigurationAdminUpdatedEventFilter = TypedEventFilter<ConfigurationAdminUpdatedEvent>;
+export interface EmergencyAdminUpdatedEventObject {
+    newAddress: string;
 }
-export declare namespace LendingPoolCollateralManagerUpdatedEvent {
-    type InputTuple = [newAddress: AddressLike];
-    type OutputTuple = [newAddress: string];
-    interface OutputObject {
-        newAddress: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type EmergencyAdminUpdatedEvent = TypedEvent<[
+    string
+], EmergencyAdminUpdatedEventObject>;
+export type EmergencyAdminUpdatedEventFilter = TypedEventFilter<EmergencyAdminUpdatedEvent>;
+export interface LendingPoolCollateralManagerUpdatedEventObject {
+    newAddress: string;
 }
-export declare namespace LendingPoolConfiguratorUpdatedEvent {
-    type InputTuple = [newAddress: AddressLike];
-    type OutputTuple = [newAddress: string];
-    interface OutputObject {
-        newAddress: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type LendingPoolCollateralManagerUpdatedEvent = TypedEvent<[
+    string
+], LendingPoolCollateralManagerUpdatedEventObject>;
+export type LendingPoolCollateralManagerUpdatedEventFilter = TypedEventFilter<LendingPoolCollateralManagerUpdatedEvent>;
+export interface LendingPoolConfiguratorUpdatedEventObject {
+    newAddress: string;
 }
-export declare namespace LendingPoolUpdatedEvent {
-    type InputTuple = [newAddress: AddressLike];
-    type OutputTuple = [newAddress: string];
-    interface OutputObject {
-        newAddress: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type LendingPoolConfiguratorUpdatedEvent = TypedEvent<[
+    string
+], LendingPoolConfiguratorUpdatedEventObject>;
+export type LendingPoolConfiguratorUpdatedEventFilter = TypedEventFilter<LendingPoolConfiguratorUpdatedEvent>;
+export interface LendingPoolUpdatedEventObject {
+    newAddress: string;
 }
-export declare namespace LendingRateOracleUpdatedEvent {
-    type InputTuple = [newAddress: AddressLike];
-    type OutputTuple = [newAddress: string];
-    interface OutputObject {
-        newAddress: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type LendingPoolUpdatedEvent = TypedEvent<[
+    string
+], LendingPoolUpdatedEventObject>;
+export type LendingPoolUpdatedEventFilter = TypedEventFilter<LendingPoolUpdatedEvent>;
+export interface LendingRateOracleUpdatedEventObject {
+    newAddress: string;
 }
-export declare namespace MarketIdSetEvent {
-    type InputTuple = [newMarketId: string];
-    type OutputTuple = [newMarketId: string];
-    interface OutputObject {
-        newMarketId: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type LendingRateOracleUpdatedEvent = TypedEvent<[
+    string
+], LendingRateOracleUpdatedEventObject>;
+export type LendingRateOracleUpdatedEventFilter = TypedEventFilter<LendingRateOracleUpdatedEvent>;
+export interface MarketIdSetEventObject {
+    newMarketId: string;
 }
-export declare namespace PriceOracleUpdatedEvent {
-    type InputTuple = [newAddress: AddressLike];
-    type OutputTuple = [newAddress: string];
-    interface OutputObject {
-        newAddress: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type MarketIdSetEvent = TypedEvent<[string], MarketIdSetEventObject>;
+export type MarketIdSetEventFilter = TypedEventFilter<MarketIdSetEvent>;
+export interface PriceOracleUpdatedEventObject {
+    newAddress: string;
 }
-export declare namespace ProxyCreatedEvent {
-    type InputTuple = [id: BytesLike, newAddress: AddressLike];
-    type OutputTuple = [id: string, newAddress: string];
-    interface OutputObject {
-        id: string;
-        newAddress: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type PriceOracleUpdatedEvent = TypedEvent<[
+    string
+], PriceOracleUpdatedEventObject>;
+export type PriceOracleUpdatedEventFilter = TypedEventFilter<PriceOracleUpdatedEvent>;
+export interface ProxyCreatedEventObject {
+    id: string;
+    newAddress: string;
 }
+export type ProxyCreatedEvent = TypedEvent<[
+    string,
+    string
+], ProxyCreatedEventObject>;
+export type ProxyCreatedEventFilter = TypedEventFilter<ProxyCreatedEvent>;
 export interface ILendingPoolAddressesProvider extends BaseContract {
-    connect(runner?: ContractRunner | null): ILendingPoolAddressesProvider;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: ILendingPoolAddressesProviderInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    getAddress: TypedContractMethod<[id: BytesLike], [string], "view">;
-    getEmergencyAdmin: TypedContractMethod<[], [string], "view">;
-    getLendingPool: TypedContractMethod<[], [string], "view">;
-    getLendingPoolCollateralManager: TypedContractMethod<[], [string], "view">;
-    getLendingPoolConfigurator: TypedContractMethod<[], [string], "view">;
-    getLendingRateOracle: TypedContractMethod<[], [string], "view">;
-    getMarketId: TypedContractMethod<[], [string], "view">;
-    getPoolAdmin: TypedContractMethod<[], [string], "view">;
-    getPriceOracle: TypedContractMethod<[], [string], "view">;
-    setAddress: TypedContractMethod<[
-        id: BytesLike,
-        newAddress: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    setAddressAsProxy: TypedContractMethod<[
-        id: BytesLike,
-        impl: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    setEmergencyAdmin: TypedContractMethod<[
-        admin: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    setLendingPoolCollateralManager: TypedContractMethod<[
-        manager: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    setLendingPoolConfiguratorImpl: TypedContractMethod<[
-        configurator: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    setLendingPoolImpl: TypedContractMethod<[
-        pool: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    setLendingRateOracle: TypedContractMethod<[
-        lendingRateOracle: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    setMarketId: TypedContractMethod<[marketId: string], [void], "nonpayable">;
-    setPoolAdmin: TypedContractMethod<[admin: AddressLike], [void], "nonpayable">;
-    setPriceOracle: TypedContractMethod<[
-        priceOracle: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "getAddress"): TypedContractMethod<[id: BytesLike], [string], "view">;
-    getFunction(nameOrSignature: "getEmergencyAdmin"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "getLendingPool"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "getLendingPoolCollateralManager"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "getLendingPoolConfigurator"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "getLendingRateOracle"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "getMarketId"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "getPoolAdmin"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "getPriceOracle"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "setAddress"): TypedContractMethod<[
-        id: BytesLike,
-        newAddress: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "setAddressAsProxy"): TypedContractMethod<[
-        id: BytesLike,
-        impl: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "setEmergencyAdmin"): TypedContractMethod<[admin: AddressLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "setLendingPoolCollateralManager"): TypedContractMethod<[manager: AddressLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "setLendingPoolConfiguratorImpl"): TypedContractMethod<[configurator: AddressLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "setLendingPoolImpl"): TypedContractMethod<[pool: AddressLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "setLendingRateOracle"): TypedContractMethod<[
-        lendingRateOracle: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "setMarketId"): TypedContractMethod<[marketId: string], [void], "nonpayable">;
-    getFunction(nameOrSignature: "setPoolAdmin"): TypedContractMethod<[admin: AddressLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "setPriceOracle"): TypedContractMethod<[priceOracle: AddressLike], [void], "nonpayable">;
-    getEvent(key: "AddressSet"): TypedContractEvent<AddressSetEvent.InputTuple, AddressSetEvent.OutputTuple, AddressSetEvent.OutputObject>;
-    getEvent(key: "ConfigurationAdminUpdated"): TypedContractEvent<ConfigurationAdminUpdatedEvent.InputTuple, ConfigurationAdminUpdatedEvent.OutputTuple, ConfigurationAdminUpdatedEvent.OutputObject>;
-    getEvent(key: "EmergencyAdminUpdated"): TypedContractEvent<EmergencyAdminUpdatedEvent.InputTuple, EmergencyAdminUpdatedEvent.OutputTuple, EmergencyAdminUpdatedEvent.OutputObject>;
-    getEvent(key: "LendingPoolCollateralManagerUpdated"): TypedContractEvent<LendingPoolCollateralManagerUpdatedEvent.InputTuple, LendingPoolCollateralManagerUpdatedEvent.OutputTuple, LendingPoolCollateralManagerUpdatedEvent.OutputObject>;
-    getEvent(key: "LendingPoolConfiguratorUpdated"): TypedContractEvent<LendingPoolConfiguratorUpdatedEvent.InputTuple, LendingPoolConfiguratorUpdatedEvent.OutputTuple, LendingPoolConfiguratorUpdatedEvent.OutputObject>;
-    getEvent(key: "LendingPoolUpdated"): TypedContractEvent<LendingPoolUpdatedEvent.InputTuple, LendingPoolUpdatedEvent.OutputTuple, LendingPoolUpdatedEvent.OutputObject>;
-    getEvent(key: "LendingRateOracleUpdated"): TypedContractEvent<LendingRateOracleUpdatedEvent.InputTuple, LendingRateOracleUpdatedEvent.OutputTuple, LendingRateOracleUpdatedEvent.OutputObject>;
-    getEvent(key: "MarketIdSet"): TypedContractEvent<MarketIdSetEvent.InputTuple, MarketIdSetEvent.OutputTuple, MarketIdSetEvent.OutputObject>;
-    getEvent(key: "PriceOracleUpdated"): TypedContractEvent<PriceOracleUpdatedEvent.InputTuple, PriceOracleUpdatedEvent.OutputTuple, PriceOracleUpdatedEvent.OutputObject>;
-    getEvent(key: "ProxyCreated"): TypedContractEvent<ProxyCreatedEvent.InputTuple, ProxyCreatedEvent.OutputTuple, ProxyCreatedEvent.OutputObject>;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        getAddress(id: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+        getEmergencyAdmin(overrides?: CallOverrides): Promise<[string]>;
+        getLendingPool(overrides?: CallOverrides): Promise<[string]>;
+        getLendingPoolCollateralManager(overrides?: CallOverrides): Promise<[string]>;
+        getLendingPoolConfigurator(overrides?: CallOverrides): Promise<[string]>;
+        getLendingRateOracle(overrides?: CallOverrides): Promise<[string]>;
+        getMarketId(overrides?: CallOverrides): Promise<[string]>;
+        getPoolAdmin(overrides?: CallOverrides): Promise<[string]>;
+        getPriceOracle(overrides?: CallOverrides): Promise<[string]>;
+        setAddress(id: BytesLike, newAddress: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        setAddressAsProxy(id: BytesLike, impl: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        setEmergencyAdmin(admin: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        setLendingPoolCollateralManager(manager: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        setLendingPoolConfiguratorImpl(configurator: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        setLendingPoolImpl(pool: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        setLendingRateOracle(lendingRateOracle: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        setMarketId(marketId: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        setPoolAdmin(admin: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        setPriceOracle(priceOracle: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+    };
+    getAddress(id: BytesLike, overrides?: CallOverrides): Promise<string>;
+    getEmergencyAdmin(overrides?: CallOverrides): Promise<string>;
+    getLendingPool(overrides?: CallOverrides): Promise<string>;
+    getLendingPoolCollateralManager(overrides?: CallOverrides): Promise<string>;
+    getLendingPoolConfigurator(overrides?: CallOverrides): Promise<string>;
+    getLendingRateOracle(overrides?: CallOverrides): Promise<string>;
+    getMarketId(overrides?: CallOverrides): Promise<string>;
+    getPoolAdmin(overrides?: CallOverrides): Promise<string>;
+    getPriceOracle(overrides?: CallOverrides): Promise<string>;
+    setAddress(id: BytesLike, newAddress: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    setAddressAsProxy(id: BytesLike, impl: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    setEmergencyAdmin(admin: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    setLendingPoolCollateralManager(manager: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    setLendingPoolConfiguratorImpl(configurator: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    setLendingPoolImpl(pool: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    setLendingRateOracle(lendingRateOracle: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    setMarketId(marketId: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    setPoolAdmin(admin: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    setPriceOracle(priceOracle: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    callStatic: {
+        getAddress(id: BytesLike, overrides?: CallOverrides): Promise<string>;
+        getEmergencyAdmin(overrides?: CallOverrides): Promise<string>;
+        getLendingPool(overrides?: CallOverrides): Promise<string>;
+        getLendingPoolCollateralManager(overrides?: CallOverrides): Promise<string>;
+        getLendingPoolConfigurator(overrides?: CallOverrides): Promise<string>;
+        getLendingRateOracle(overrides?: CallOverrides): Promise<string>;
+        getMarketId(overrides?: CallOverrides): Promise<string>;
+        getPoolAdmin(overrides?: CallOverrides): Promise<string>;
+        getPriceOracle(overrides?: CallOverrides): Promise<string>;
+        setAddress(id: BytesLike, newAddress: string, overrides?: CallOverrides): Promise<void>;
+        setAddressAsProxy(id: BytesLike, impl: string, overrides?: CallOverrides): Promise<void>;
+        setEmergencyAdmin(admin: string, overrides?: CallOverrides): Promise<void>;
+        setLendingPoolCollateralManager(manager: string, overrides?: CallOverrides): Promise<void>;
+        setLendingPoolConfiguratorImpl(configurator: string, overrides?: CallOverrides): Promise<void>;
+        setLendingPoolImpl(pool: string, overrides?: CallOverrides): Promise<void>;
+        setLendingRateOracle(lendingRateOracle: string, overrides?: CallOverrides): Promise<void>;
+        setMarketId(marketId: string, overrides?: CallOverrides): Promise<void>;
+        setPoolAdmin(admin: string, overrides?: CallOverrides): Promise<void>;
+        setPriceOracle(priceOracle: string, overrides?: CallOverrides): Promise<void>;
+    };
     filters: {
-        "AddressSet(bytes32,address,bool)": TypedContractEvent<AddressSetEvent.InputTuple, AddressSetEvent.OutputTuple, AddressSetEvent.OutputObject>;
-        AddressSet: TypedContractEvent<AddressSetEvent.InputTuple, AddressSetEvent.OutputTuple, AddressSetEvent.OutputObject>;
-        "ConfigurationAdminUpdated(address)": TypedContractEvent<ConfigurationAdminUpdatedEvent.InputTuple, ConfigurationAdminUpdatedEvent.OutputTuple, ConfigurationAdminUpdatedEvent.OutputObject>;
-        ConfigurationAdminUpdated: TypedContractEvent<ConfigurationAdminUpdatedEvent.InputTuple, ConfigurationAdminUpdatedEvent.OutputTuple, ConfigurationAdminUpdatedEvent.OutputObject>;
-        "EmergencyAdminUpdated(address)": TypedContractEvent<EmergencyAdminUpdatedEvent.InputTuple, EmergencyAdminUpdatedEvent.OutputTuple, EmergencyAdminUpdatedEvent.OutputObject>;
-        EmergencyAdminUpdated: TypedContractEvent<EmergencyAdminUpdatedEvent.InputTuple, EmergencyAdminUpdatedEvent.OutputTuple, EmergencyAdminUpdatedEvent.OutputObject>;
-        "LendingPoolCollateralManagerUpdated(address)": TypedContractEvent<LendingPoolCollateralManagerUpdatedEvent.InputTuple, LendingPoolCollateralManagerUpdatedEvent.OutputTuple, LendingPoolCollateralManagerUpdatedEvent.OutputObject>;
-        LendingPoolCollateralManagerUpdated: TypedContractEvent<LendingPoolCollateralManagerUpdatedEvent.InputTuple, LendingPoolCollateralManagerUpdatedEvent.OutputTuple, LendingPoolCollateralManagerUpdatedEvent.OutputObject>;
-        "LendingPoolConfiguratorUpdated(address)": TypedContractEvent<LendingPoolConfiguratorUpdatedEvent.InputTuple, LendingPoolConfiguratorUpdatedEvent.OutputTuple, LendingPoolConfiguratorUpdatedEvent.OutputObject>;
-        LendingPoolConfiguratorUpdated: TypedContractEvent<LendingPoolConfiguratorUpdatedEvent.InputTuple, LendingPoolConfiguratorUpdatedEvent.OutputTuple, LendingPoolConfiguratorUpdatedEvent.OutputObject>;
-        "LendingPoolUpdated(address)": TypedContractEvent<LendingPoolUpdatedEvent.InputTuple, LendingPoolUpdatedEvent.OutputTuple, LendingPoolUpdatedEvent.OutputObject>;
-        LendingPoolUpdated: TypedContractEvent<LendingPoolUpdatedEvent.InputTuple, LendingPoolUpdatedEvent.OutputTuple, LendingPoolUpdatedEvent.OutputObject>;
-        "LendingRateOracleUpdated(address)": TypedContractEvent<LendingRateOracleUpdatedEvent.InputTuple, LendingRateOracleUpdatedEvent.OutputTuple, LendingRateOracleUpdatedEvent.OutputObject>;
-        LendingRateOracleUpdated: TypedContractEvent<LendingRateOracleUpdatedEvent.InputTuple, LendingRateOracleUpdatedEvent.OutputTuple, LendingRateOracleUpdatedEvent.OutputObject>;
-        "MarketIdSet(string)": TypedContractEvent<MarketIdSetEvent.InputTuple, MarketIdSetEvent.OutputTuple, MarketIdSetEvent.OutputObject>;
-        MarketIdSet: TypedContractEvent<MarketIdSetEvent.InputTuple, MarketIdSetEvent.OutputTuple, MarketIdSetEvent.OutputObject>;
-        "PriceOracleUpdated(address)": TypedContractEvent<PriceOracleUpdatedEvent.InputTuple, PriceOracleUpdatedEvent.OutputTuple, PriceOracleUpdatedEvent.OutputObject>;
-        PriceOracleUpdated: TypedContractEvent<PriceOracleUpdatedEvent.InputTuple, PriceOracleUpdatedEvent.OutputTuple, PriceOracleUpdatedEvent.OutputObject>;
-        "ProxyCreated(bytes32,address)": TypedContractEvent<ProxyCreatedEvent.InputTuple, ProxyCreatedEvent.OutputTuple, ProxyCreatedEvent.OutputObject>;
-        ProxyCreated: TypedContractEvent<ProxyCreatedEvent.InputTuple, ProxyCreatedEvent.OutputTuple, ProxyCreatedEvent.OutputObject>;
+        "AddressSet(bytes32,address,bool)"(id?: null, newAddress?: string | null, hasProxy?: null): AddressSetEventFilter;
+        AddressSet(id?: null, newAddress?: string | null, hasProxy?: null): AddressSetEventFilter;
+        "ConfigurationAdminUpdated(address)"(newAddress?: string | null): ConfigurationAdminUpdatedEventFilter;
+        ConfigurationAdminUpdated(newAddress?: string | null): ConfigurationAdminUpdatedEventFilter;
+        "EmergencyAdminUpdated(address)"(newAddress?: string | null): EmergencyAdminUpdatedEventFilter;
+        EmergencyAdminUpdated(newAddress?: string | null): EmergencyAdminUpdatedEventFilter;
+        "LendingPoolCollateralManagerUpdated(address)"(newAddress?: string | null): LendingPoolCollateralManagerUpdatedEventFilter;
+        LendingPoolCollateralManagerUpdated(newAddress?: string | null): LendingPoolCollateralManagerUpdatedEventFilter;
+        "LendingPoolConfiguratorUpdated(address)"(newAddress?: string | null): LendingPoolConfiguratorUpdatedEventFilter;
+        LendingPoolConfiguratorUpdated(newAddress?: string | null): LendingPoolConfiguratorUpdatedEventFilter;
+        "LendingPoolUpdated(address)"(newAddress?: string | null): LendingPoolUpdatedEventFilter;
+        LendingPoolUpdated(newAddress?: string | null): LendingPoolUpdatedEventFilter;
+        "LendingRateOracleUpdated(address)"(newAddress?: string | null): LendingRateOracleUpdatedEventFilter;
+        LendingRateOracleUpdated(newAddress?: string | null): LendingRateOracleUpdatedEventFilter;
+        "MarketIdSet(string)"(newMarketId?: null): MarketIdSetEventFilter;
+        MarketIdSet(newMarketId?: null): MarketIdSetEventFilter;
+        "PriceOracleUpdated(address)"(newAddress?: string | null): PriceOracleUpdatedEventFilter;
+        PriceOracleUpdated(newAddress?: string | null): PriceOracleUpdatedEventFilter;
+        "ProxyCreated(bytes32,address)"(id?: null, newAddress?: string | null): ProxyCreatedEventFilter;
+        ProxyCreated(id?: null, newAddress?: string | null): ProxyCreatedEventFilter;
+    };
+    estimateGas: {
+        getAddress(id: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+        getEmergencyAdmin(overrides?: CallOverrides): Promise<BigNumber>;
+        getLendingPool(overrides?: CallOverrides): Promise<BigNumber>;
+        getLendingPoolCollateralManager(overrides?: CallOverrides): Promise<BigNumber>;
+        getLendingPoolConfigurator(overrides?: CallOverrides): Promise<BigNumber>;
+        getLendingRateOracle(overrides?: CallOverrides): Promise<BigNumber>;
+        getMarketId(overrides?: CallOverrides): Promise<BigNumber>;
+        getPoolAdmin(overrides?: CallOverrides): Promise<BigNumber>;
+        getPriceOracle(overrides?: CallOverrides): Promise<BigNumber>;
+        setAddress(id: BytesLike, newAddress: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        setAddressAsProxy(id: BytesLike, impl: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        setEmergencyAdmin(admin: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        setLendingPoolCollateralManager(manager: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        setLendingPoolConfiguratorImpl(configurator: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        setLendingPoolImpl(pool: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        setLendingRateOracle(lendingRateOracle: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        setMarketId(marketId: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        setPoolAdmin(admin: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        setPriceOracle(priceOracle: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        getAddress(id: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getEmergencyAdmin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getLendingPool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getLendingPoolCollateralManager(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getLendingPoolConfigurator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getLendingRateOracle(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getMarketId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getPoolAdmin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getPriceOracle(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        setAddress(id: BytesLike, newAddress: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        setAddressAsProxy(id: BytesLike, impl: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        setEmergencyAdmin(admin: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        setLendingPoolCollateralManager(manager: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        setLendingPoolConfiguratorImpl(configurator: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        setLendingPoolImpl(pool: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        setLendingRateOracle(lendingRateOracle: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        setMarketId(marketId: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        setPoolAdmin(admin: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        setPriceOracle(priceOracle: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
     };
 }

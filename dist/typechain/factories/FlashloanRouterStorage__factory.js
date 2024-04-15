@@ -7,136 +7,136 @@ exports.FlashloanRouterStorage__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        anonymous: false,
+        type: "function",
+        name: "acceptOwnership",
+        inputs: [],
+        outputs: [],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "ionicMarketOfAsset",
         inputs: [
             {
-                indexed: false,
-                internalType: "uint8",
+                name: "",
+                type: "address",
+                internalType: "contract IERC20Upgradeable",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "contract IonicCErc20",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "owner",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "pendingOwner",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "renounceOwnership",
+        inputs: [],
+        outputs: [],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "transferOwnership",
+        inputs: [
+            {
+                name: "newOwner",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "event",
+        name: "Initialized",
+        inputs: [
+            {
                 name: "version",
                 type: "uint8",
+                indexed: false,
+                internalType: "uint8",
             },
         ],
-        name: "Initialized",
-        type: "event",
+        anonymous: false,
     },
     {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "previousOwner",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "newOwner",
-                type: "address",
-            },
-        ],
+        type: "event",
         name: "OwnershipTransferStarted",
-        type: "event",
-    },
-    {
-        anonymous: false,
         inputs: [
             {
-                indexed: true,
-                internalType: "address",
                 name: "previousOwner",
                 type: "address",
-            },
-            {
                 indexed: true,
                 internalType: "address",
+            },
+            {
                 name: "newOwner",
                 type: "address",
+                indexed: true,
+                internalType: "address",
             },
         ],
-        name: "OwnershipTransferred",
+        anonymous: false,
+    },
+    {
         type: "event",
-    },
-    {
-        inputs: [],
-        name: "acceptOwnership",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
+        name: "OwnershipTransferred",
         inputs: [
             {
-                internalType: "contract IERC20Upgradeable",
-                name: "",
+                name: "previousOwner",
                 type: "address",
-            },
-        ],
-        name: "ionicMarketOfAsset",
-        outputs: [
-            {
-                internalType: "contract IonicCErc20",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "owner",
-        outputs: [
-            {
+                indexed: true,
                 internalType: "address",
-                name: "",
-                type: "address",
             },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "pendingOwner",
-        outputs: [
             {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "renounceOwnership",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
                 name: "newOwner",
                 type: "address",
+                indexed: true,
+                internalType: "address",
             },
         ],
-        name: "transferOwnership",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
+        anonymous: false,
     },
 ];
 class FlashloanRouterStorage__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.FlashloanRouterStorage__factory = FlashloanRouterStorage__factory;

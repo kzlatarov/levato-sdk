@@ -1,55 +1,51 @@
-import type { BaseContract, BigNumberish, FunctionFragment, Interface, EventFragment, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedLogDescription, TypedListener } from "./common";
-export interface ReserveLogicInterface extends Interface {
+import type { BaseContract, BigNumber, Signer, utils } from "ethers";
+import type { EventFragment } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
+export interface ReserveLogicInterface extends utils.Interface {
+    functions: {};
+    events: {
+        "ReserveDataUpdated(address,uint256,uint256,uint256,uint256,uint256)": EventFragment;
+    };
     getEvent(nameOrSignatureOrTopic: "ReserveDataUpdated"): EventFragment;
 }
-export declare namespace ReserveDataUpdatedEvent {
-    type InputTuple = [
-        reserve: AddressLike,
-        liquidityRate: BigNumberish,
-        stableBorrowRate: BigNumberish,
-        variableBorrowRate: BigNumberish,
-        liquidityIndex: BigNumberish,
-        variableBorrowIndex: BigNumberish
-    ];
-    type OutputTuple = [
-        reserve: string,
-        liquidityRate: bigint,
-        stableBorrowRate: bigint,
-        variableBorrowRate: bigint,
-        liquidityIndex: bigint,
-        variableBorrowIndex: bigint
-    ];
-    interface OutputObject {
-        reserve: string;
-        liquidityRate: bigint;
-        stableBorrowRate: bigint;
-        variableBorrowRate: bigint;
-        liquidityIndex: bigint;
-        variableBorrowIndex: bigint;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export interface ReserveDataUpdatedEventObject {
+    reserve: string;
+    liquidityRate: BigNumber;
+    stableBorrowRate: BigNumber;
+    variableBorrowRate: BigNumber;
+    liquidityIndex: BigNumber;
+    variableBorrowIndex: BigNumber;
 }
+export type ReserveDataUpdatedEvent = TypedEvent<[
+    string,
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    BigNumber
+], ReserveDataUpdatedEventObject>;
+export type ReserveDataUpdatedEventFilter = TypedEventFilter<ReserveDataUpdatedEvent>;
 export interface ReserveLogic extends BaseContract {
-    connect(runner?: ContractRunner | null): ReserveLogic;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: ReserveLogicInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getEvent(key: "ReserveDataUpdated"): TypedContractEvent<ReserveDataUpdatedEvent.InputTuple, ReserveDataUpdatedEvent.OutputTuple, ReserveDataUpdatedEvent.OutputObject>;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {};
+    callStatic: {};
     filters: {
-        "ReserveDataUpdated(address,uint256,uint256,uint256,uint256,uint256)": TypedContractEvent<ReserveDataUpdatedEvent.InputTuple, ReserveDataUpdatedEvent.OutputTuple, ReserveDataUpdatedEvent.OutputObject>;
-        ReserveDataUpdated: TypedContractEvent<ReserveDataUpdatedEvent.InputTuple, ReserveDataUpdatedEvent.OutputTuple, ReserveDataUpdatedEvent.OutputObject>;
+        "ReserveDataUpdated(address,uint256,uint256,uint256,uint256,uint256)"(reserve?: string | null, liquidityRate?: null, stableBorrowRate?: null, variableBorrowRate?: null, liquidityIndex?: null, variableBorrowIndex?: null): ReserveDataUpdatedEventFilter;
+        ReserveDataUpdated(reserve?: string | null, liquidityRate?: null, stableBorrowRate?: null, variableBorrowRate?: null, liquidityIndex?: null, variableBorrowIndex?: null): ReserveDataUpdatedEventFilter;
     };
+    estimateGas: {};
+    populateTransaction: {};
 }

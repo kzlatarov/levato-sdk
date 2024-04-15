@@ -7,68 +7,68 @@ exports.BaseFlywheelRewards__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        inputs: [],
-        name: "FlywheelError",
-        type: "error",
-    },
-    {
-        inputs: [],
+        type: "function",
         name: "flywheel",
+        inputs: [],
         outputs: [
             {
-                internalType: "contract FlywheelCore",
                 name: "",
                 type: "address",
+                internalType: "contract FlywheelCore",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getAccruedRewards",
         inputs: [
             {
-                internalType: "contract ERC20",
                 name: "strategy",
                 type: "address",
+                internalType: "contract ERC20",
             },
             {
-                internalType: "uint32",
                 name: "lastUpdatedTimestamp",
                 type: "uint32",
+                internalType: "uint32",
             },
         ],
-        name: "getAccruedRewards",
         outputs: [
             {
-                internalType: "uint256",
                 name: "rewards",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "rewardToken",
+        inputs: [],
         outputs: [
             {
-                internalType: "contract ERC20",
                 name: "",
                 type: "address",
+                internalType: "contract ERC20",
             },
         ],
         stateMutability: "view",
-        type: "function",
+    },
+    {
+        type: "error",
+        name: "FlywheelError",
+        inputs: [],
     },
 ];
 class BaseFlywheelRewards__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.BaseFlywheelRewards__factory = BaseFlywheelRewards__factory;

@@ -7,65 +7,65 @@ exports.LeveragedPositionStorage__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        inputs: [],
+        type: "function",
         name: "collateralAsset",
+        inputs: [],
         outputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "factory",
+        inputs: [],
         outputs: [
             {
+                name: "",
+                type: "address",
                 internalType: "contract ILeveragedPositionsFactory",
-                name: "",
-                type: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "positionOwner",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "stableAsset",
+        inputs: [],
         outputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
 ];
 class LeveragedPositionStorage__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.LeveragedPositionStorage__factory = LeveragedPositionStorage__factory;

@@ -1,5 +1,7 @@
-import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedListener, TypedContractMethod } from "../common";
+import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, ContractTransaction, Overrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "../common";
 export declare namespace VmSafe {
     type FsMetadataStruct = {
         isDir: boolean;
@@ -11,32 +13,28 @@ export declare namespace VmSafe {
         created: BigNumberish;
     };
     type FsMetadataStructOutput = [
-        isDir: boolean,
-        isSymlink: boolean,
-        length: bigint,
-        readOnly: boolean,
-        modified: bigint,
-        accessed: bigint,
-        created: bigint
+        boolean,
+        boolean,
+        BigNumber,
+        boolean,
+        BigNumber,
+        BigNumber,
+        BigNumber
     ] & {
         isDir: boolean;
         isSymlink: boolean;
-        length: bigint;
+        length: BigNumber;
         readOnly: boolean;
-        modified: bigint;
-        accessed: bigint;
-        created: bigint;
+        modified: BigNumber;
+        accessed: BigNumber;
+        created: BigNumber;
     };
     type LogStruct = {
         topics: BytesLike[];
         data: BytesLike;
-        emitter: AddressLike;
+        emitter: string;
     };
-    type LogStructOutput = [
-        topics: string[],
-        data: string,
-        emitter: string
-    ] & {
+    type LogStructOutput = [string[], string, string] & {
         topics: string[];
         data: string;
         emitter: string;
@@ -49,15 +47,15 @@ export declare namespace VmSafe {
         isSymlink: boolean;
     };
     type DirEntryStructOutput = [
-        errorMessage: string,
-        path: string,
-        depth: bigint,
-        isDir: boolean,
-        isSymlink: boolean
+        string,
+        string,
+        BigNumber,
+        boolean,
+        boolean
     ] & {
         errorMessage: string;
         path: string;
-        depth: bigint;
+        depth: BigNumber;
         isDir: boolean;
         isSymlink: boolean;
     };
@@ -65,27 +63,216 @@ export declare namespace VmSafe {
         key: string;
         url: string;
     };
-    type RpcStructOutput = [key: string, url: string] & {
+    type RpcStructOutput = [string, string] & {
         key: string;
         url: string;
     };
 }
-export interface VmInterface extends Interface {
-    getFunction(nameOrSignature: "accesses" | "activeFork" | "addr" | "allowCheatcodes" | "assume" | "breakpoint(string)" | "breakpoint(string,bool)" | "broadcast()" | "broadcast(address)" | "broadcast(uint256)" | "chainId" | "clearMockedCalls" | "closeFile" | "coinbase" | "createDir" | "createFork(string)" | "createFork(string,uint256)" | "createFork(string,bytes32)" | "createSelectFork(string,uint256)" | "createSelectFork(string,bytes32)" | "createSelectFork(string)" | "deal" | "deriveKey(string,uint32)" | "deriveKey(string,string,uint32)" | "difficulty" | "envAddress(string)" | "envAddress(string,string)" | "envBool(string)" | "envBool(string,string)" | "envBytes(string)" | "envBytes(string,string)" | "envBytes32(string,string)" | "envBytes32(string)" | "envInt(string,string)" | "envInt(string)" | "envOr(string,string,bytes32[])" | "envOr(string,string,int256[])" | "envOr(string,bool)" | "envOr(string,address)" | "envOr(string,uint256)" | "envOr(string,string,bytes[])" | "envOr(string,string,uint256[])" | "envOr(string,string,string[])" | "envOr(string,bytes)" | "envOr(string,bytes32)" | "envOr(string,int256)" | "envOr(string,string,address[])" | "envOr(string,string)" | "envOr(string,string,bool[])" | "envString(string,string)" | "envString(string)" | "envUint(string)" | "envUint(string,string)" | "etch" | "expectCall(address,uint256,uint64,bytes)" | "expectCall(address,uint256,uint64,bytes,uint64)" | "expectCall(address,uint256,bytes,uint64)" | "expectCall(address,bytes)" | "expectCall(address,bytes,uint64)" | "expectCall(address,uint256,bytes)" | "expectCallMinGas(address,uint256,uint64,bytes)" | "expectCallMinGas(address,uint256,uint64,bytes,uint64)" | "expectEmit()" | "expectEmit(bool,bool,bool,bool)" | "expectEmit(bool,bool,bool,bool,address)" | "expectEmit(address)" | "expectRevert(bytes4)" | "expectRevert(bytes)" | "expectRevert()" | "expectSafeMemory" | "expectSafeMemoryCall" | "fee" | "ffi" | "fsMetadata" | "getCode" | "getDeployedCode" | "getLabel" | "getNonce" | "getRecordedLogs" | "isPersistent" | "label" | "load" | "makePersistent(address[])" | "makePersistent(address,address)" | "makePersistent(address)" | "makePersistent(address,address,address)" | "mockCall(address,uint256,bytes,bytes)" | "mockCall(address,bytes,bytes)" | "mockCallRevert(address,uint256,bytes,bytes)" | "mockCallRevert(address,bytes,bytes)" | "parseAddress" | "parseBool" | "parseBytes" | "parseBytes32" | "parseInt" | "parseJson(string)" | "parseJson(string,string)" | "parseJsonAddress" | "parseJsonAddressArray" | "parseJsonBool" | "parseJsonBoolArray" | "parseJsonBytes" | "parseJsonBytes32" | "parseJsonBytes32Array" | "parseJsonBytesArray" | "parseJsonInt" | "parseJsonIntArray" | "parseJsonString" | "parseJsonStringArray" | "parseJsonUint" | "parseJsonUintArray" | "parseUint" | "pauseGasMetering" | "prank(address,address)" | "prank(address)" | "prevrandao" | "projectRoot" | "readCallers" | "readDir(string,uint64)" | "readDir(string,uint64,bool)" | "readDir(string)" | "readFile" | "readFileBinary" | "readLine" | "readLink" | "record" | "recordLogs" | "rememberKey" | "removeDir" | "removeFile" | "resetNonce" | "resumeGasMetering" | "revertTo" | "revokePersistent(address[])" | "revokePersistent(address)" | "roll" | "rollFork(bytes32)" | "rollFork(uint256,uint256)" | "rollFork(uint256)" | "rollFork(uint256,bytes32)" | "rpcUrl" | "rpcUrlStructs" | "rpcUrls" | "selectFork" | "serializeAddress(string,string,address[])" | "serializeAddress(string,string,address)" | "serializeBool(string,string,bool[])" | "serializeBool(string,string,bool)" | "serializeBytes(string,string,bytes[])" | "serializeBytes(string,string,bytes)" | "serializeBytes32(string,string,bytes32[])" | "serializeBytes32(string,string,bytes32)" | "serializeInt(string,string,int256)" | "serializeInt(string,string,int256[])" | "serializeString(string,string,string[])" | "serializeString(string,string,string)" | "serializeUint(string,string,uint256)" | "serializeUint(string,string,uint256[])" | "setEnv" | "setNonce" | "setNonceUnsafe" | "sign" | "skip" | "snapshot" | "startBroadcast()" | "startBroadcast(address)" | "startBroadcast(uint256)" | "startPrank(address)" | "startPrank(address,address)" | "stopBroadcast" | "stopPrank" | "store" | "toString(address)" | "toString(uint256)" | "toString(bytes)" | "toString(bool)" | "toString(int256)" | "toString(bytes32)" | "transact(uint256,bytes32)" | "transact(bytes32)" | "txGasPrice" | "warp" | "writeFile" | "writeFileBinary" | "writeJson(string,string,string)" | "writeJson(string,string)" | "writeLine"): FunctionFragment;
-    encodeFunctionData(functionFragment: "accesses", values: [AddressLike]): string;
+export interface VmInterface extends utils.Interface {
+    functions: {
+        "accesses(address)": FunctionFragment;
+        "activeFork()": FunctionFragment;
+        "addr(uint256)": FunctionFragment;
+        "allowCheatcodes(address)": FunctionFragment;
+        "assume(bool)": FunctionFragment;
+        "breakpoint(string)": FunctionFragment;
+        "breakpoint(string,bool)": FunctionFragment;
+        "broadcast()": FunctionFragment;
+        "broadcast(address)": FunctionFragment;
+        "broadcast(uint256)": FunctionFragment;
+        "chainId(uint256)": FunctionFragment;
+        "clearMockedCalls()": FunctionFragment;
+        "closeFile(string)": FunctionFragment;
+        "coinbase(address)": FunctionFragment;
+        "createDir(string,bool)": FunctionFragment;
+        "createFork(string)": FunctionFragment;
+        "createFork(string,uint256)": FunctionFragment;
+        "createFork(string,bytes32)": FunctionFragment;
+        "createSelectFork(string,uint256)": FunctionFragment;
+        "createSelectFork(string,bytes32)": FunctionFragment;
+        "createSelectFork(string)": FunctionFragment;
+        "deal(address,uint256)": FunctionFragment;
+        "deriveKey(string,uint32)": FunctionFragment;
+        "deriveKey(string,string,uint32)": FunctionFragment;
+        "difficulty(uint256)": FunctionFragment;
+        "envAddress(string)": FunctionFragment;
+        "envAddress(string,string)": FunctionFragment;
+        "envBool(string)": FunctionFragment;
+        "envBool(string,string)": FunctionFragment;
+        "envBytes(string)": FunctionFragment;
+        "envBytes(string,string)": FunctionFragment;
+        "envBytes32(string,string)": FunctionFragment;
+        "envBytes32(string)": FunctionFragment;
+        "envInt(string,string)": FunctionFragment;
+        "envInt(string)": FunctionFragment;
+        "envOr(string,string,bytes32[])": FunctionFragment;
+        "envOr(string,string,int256[])": FunctionFragment;
+        "envOr(string,bool)": FunctionFragment;
+        "envOr(string,address)": FunctionFragment;
+        "envOr(string,uint256)": FunctionFragment;
+        "envOr(string,string,bytes[])": FunctionFragment;
+        "envOr(string,string,uint256[])": FunctionFragment;
+        "envOr(string,string,string[])": FunctionFragment;
+        "envOr(string,bytes)": FunctionFragment;
+        "envOr(string,bytes32)": FunctionFragment;
+        "envOr(string,int256)": FunctionFragment;
+        "envOr(string,string,address[])": FunctionFragment;
+        "envOr(string,string)": FunctionFragment;
+        "envOr(string,string,bool[])": FunctionFragment;
+        "envString(string,string)": FunctionFragment;
+        "envString(string)": FunctionFragment;
+        "envUint(string)": FunctionFragment;
+        "envUint(string,string)": FunctionFragment;
+        "etch(address,bytes)": FunctionFragment;
+        "expectCall(address,uint256,uint64,bytes)": FunctionFragment;
+        "expectCall(address,uint256,uint64,bytes,uint64)": FunctionFragment;
+        "expectCall(address,uint256,bytes,uint64)": FunctionFragment;
+        "expectCall(address,bytes)": FunctionFragment;
+        "expectCall(address,bytes,uint64)": FunctionFragment;
+        "expectCall(address,uint256,bytes)": FunctionFragment;
+        "expectCallMinGas(address,uint256,uint64,bytes)": FunctionFragment;
+        "expectCallMinGas(address,uint256,uint64,bytes,uint64)": FunctionFragment;
+        "expectEmit()": FunctionFragment;
+        "expectEmit(bool,bool,bool,bool)": FunctionFragment;
+        "expectEmit(bool,bool,bool,bool,address)": FunctionFragment;
+        "expectEmit(address)": FunctionFragment;
+        "expectRevert(bytes4)": FunctionFragment;
+        "expectRevert(bytes)": FunctionFragment;
+        "expectRevert()": FunctionFragment;
+        "expectSafeMemory(uint64,uint64)": FunctionFragment;
+        "expectSafeMemoryCall(uint64,uint64)": FunctionFragment;
+        "fee(uint256)": FunctionFragment;
+        "ffi(string[])": FunctionFragment;
+        "fsMetadata(string)": FunctionFragment;
+        "getCode(string)": FunctionFragment;
+        "getDeployedCode(string)": FunctionFragment;
+        "getLabel(address)": FunctionFragment;
+        "getNonce(address)": FunctionFragment;
+        "getRecordedLogs()": FunctionFragment;
+        "isPersistent(address)": FunctionFragment;
+        "label(address,string)": FunctionFragment;
+        "load(address,bytes32)": FunctionFragment;
+        "makePersistent(address[])": FunctionFragment;
+        "makePersistent(address,address)": FunctionFragment;
+        "makePersistent(address)": FunctionFragment;
+        "makePersistent(address,address,address)": FunctionFragment;
+        "mockCall(address,uint256,bytes,bytes)": FunctionFragment;
+        "mockCall(address,bytes,bytes)": FunctionFragment;
+        "mockCallRevert(address,uint256,bytes,bytes)": FunctionFragment;
+        "mockCallRevert(address,bytes,bytes)": FunctionFragment;
+        "parseAddress(string)": FunctionFragment;
+        "parseBool(string)": FunctionFragment;
+        "parseBytes(string)": FunctionFragment;
+        "parseBytes32(string)": FunctionFragment;
+        "parseInt(string)": FunctionFragment;
+        "parseJson(string)": FunctionFragment;
+        "parseJson(string,string)": FunctionFragment;
+        "parseJsonAddress(string,string)": FunctionFragment;
+        "parseJsonAddressArray(string,string)": FunctionFragment;
+        "parseJsonBool(string,string)": FunctionFragment;
+        "parseJsonBoolArray(string,string)": FunctionFragment;
+        "parseJsonBytes(string,string)": FunctionFragment;
+        "parseJsonBytes32(string,string)": FunctionFragment;
+        "parseJsonBytes32Array(string,string)": FunctionFragment;
+        "parseJsonBytesArray(string,string)": FunctionFragment;
+        "parseJsonInt(string,string)": FunctionFragment;
+        "parseJsonIntArray(string,string)": FunctionFragment;
+        "parseJsonString(string,string)": FunctionFragment;
+        "parseJsonStringArray(string,string)": FunctionFragment;
+        "parseJsonUint(string,string)": FunctionFragment;
+        "parseJsonUintArray(string,string)": FunctionFragment;
+        "parseUint(string)": FunctionFragment;
+        "pauseGasMetering()": FunctionFragment;
+        "prank(address,address)": FunctionFragment;
+        "prank(address)": FunctionFragment;
+        "prevrandao(bytes32)": FunctionFragment;
+        "projectRoot()": FunctionFragment;
+        "readCallers()": FunctionFragment;
+        "readDir(string,uint64)": FunctionFragment;
+        "readDir(string,uint64,bool)": FunctionFragment;
+        "readDir(string)": FunctionFragment;
+        "readFile(string)": FunctionFragment;
+        "readFileBinary(string)": FunctionFragment;
+        "readLine(string)": FunctionFragment;
+        "readLink(string)": FunctionFragment;
+        "record()": FunctionFragment;
+        "recordLogs()": FunctionFragment;
+        "rememberKey(uint256)": FunctionFragment;
+        "removeDir(string,bool)": FunctionFragment;
+        "removeFile(string)": FunctionFragment;
+        "resetNonce(address)": FunctionFragment;
+        "resumeGasMetering()": FunctionFragment;
+        "revertTo(uint256)": FunctionFragment;
+        "revokePersistent(address[])": FunctionFragment;
+        "revokePersistent(address)": FunctionFragment;
+        "roll(uint256)": FunctionFragment;
+        "rollFork(bytes32)": FunctionFragment;
+        "rollFork(uint256,uint256)": FunctionFragment;
+        "rollFork(uint256)": FunctionFragment;
+        "rollFork(uint256,bytes32)": FunctionFragment;
+        "rpcUrl(string)": FunctionFragment;
+        "rpcUrlStructs()": FunctionFragment;
+        "rpcUrls()": FunctionFragment;
+        "selectFork(uint256)": FunctionFragment;
+        "serializeAddress(string,string,address[])": FunctionFragment;
+        "serializeAddress(string,string,address)": FunctionFragment;
+        "serializeBool(string,string,bool[])": FunctionFragment;
+        "serializeBool(string,string,bool)": FunctionFragment;
+        "serializeBytes(string,string,bytes[])": FunctionFragment;
+        "serializeBytes(string,string,bytes)": FunctionFragment;
+        "serializeBytes32(string,string,bytes32[])": FunctionFragment;
+        "serializeBytes32(string,string,bytes32)": FunctionFragment;
+        "serializeInt(string,string,int256)": FunctionFragment;
+        "serializeInt(string,string,int256[])": FunctionFragment;
+        "serializeString(string,string,string[])": FunctionFragment;
+        "serializeString(string,string,string)": FunctionFragment;
+        "serializeUint(string,string,uint256)": FunctionFragment;
+        "serializeUint(string,string,uint256[])": FunctionFragment;
+        "setEnv(string,string)": FunctionFragment;
+        "setNonce(address,uint64)": FunctionFragment;
+        "setNonceUnsafe(address,uint64)": FunctionFragment;
+        "sign(uint256,bytes32)": FunctionFragment;
+        "skip(bool)": FunctionFragment;
+        "snapshot()": FunctionFragment;
+        "startBroadcast()": FunctionFragment;
+        "startBroadcast(address)": FunctionFragment;
+        "startBroadcast(uint256)": FunctionFragment;
+        "startPrank(address)": FunctionFragment;
+        "startPrank(address,address)": FunctionFragment;
+        "stopBroadcast()": FunctionFragment;
+        "stopPrank()": FunctionFragment;
+        "store(address,bytes32,bytes32)": FunctionFragment;
+        "toString(address)": FunctionFragment;
+        "toString(uint256)": FunctionFragment;
+        "toString(bytes)": FunctionFragment;
+        "toString(bool)": FunctionFragment;
+        "toString(int256)": FunctionFragment;
+        "toString(bytes32)": FunctionFragment;
+        "transact(uint256,bytes32)": FunctionFragment;
+        "transact(bytes32)": FunctionFragment;
+        "txGasPrice(uint256)": FunctionFragment;
+        "warp(uint256)": FunctionFragment;
+        "writeFile(string,string)": FunctionFragment;
+        "writeFileBinary(string,bytes)": FunctionFragment;
+        "writeJson(string,string,string)": FunctionFragment;
+        "writeJson(string,string)": FunctionFragment;
+        "writeLine(string,string)": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "accesses" | "activeFork" | "addr" | "allowCheatcodes" | "assume" | "breakpoint(string)" | "breakpoint(string,bool)" | "broadcast()" | "broadcast(address)" | "broadcast(uint256)" | "chainId" | "clearMockedCalls" | "closeFile" | "coinbase" | "createDir" | "createFork(string)" | "createFork(string,uint256)" | "createFork(string,bytes32)" | "createSelectFork(string,uint256)" | "createSelectFork(string,bytes32)" | "createSelectFork(string)" | "deal" | "deriveKey(string,uint32)" | "deriveKey(string,string,uint32)" | "difficulty" | "envAddress(string)" | "envAddress(string,string)" | "envBool(string)" | "envBool(string,string)" | "envBytes(string)" | "envBytes(string,string)" | "envBytes32(string,string)" | "envBytes32(string)" | "envInt(string,string)" | "envInt(string)" | "envOr(string,string,bytes32[])" | "envOr(string,string,int256[])" | "envOr(string,bool)" | "envOr(string,address)" | "envOr(string,uint256)" | "envOr(string,string,bytes[])" | "envOr(string,string,uint256[])" | "envOr(string,string,string[])" | "envOr(string,bytes)" | "envOr(string,bytes32)" | "envOr(string,int256)" | "envOr(string,string,address[])" | "envOr(string,string)" | "envOr(string,string,bool[])" | "envString(string,string)" | "envString(string)" | "envUint(string)" | "envUint(string,string)" | "etch" | "expectCall(address,uint256,uint64,bytes)" | "expectCall(address,uint256,uint64,bytes,uint64)" | "expectCall(address,uint256,bytes,uint64)" | "expectCall(address,bytes)" | "expectCall(address,bytes,uint64)" | "expectCall(address,uint256,bytes)" | "expectCallMinGas(address,uint256,uint64,bytes)" | "expectCallMinGas(address,uint256,uint64,bytes,uint64)" | "expectEmit()" | "expectEmit(bool,bool,bool,bool)" | "expectEmit(bool,bool,bool,bool,address)" | "expectEmit(address)" | "expectRevert(bytes4)" | "expectRevert(bytes)" | "expectRevert()" | "expectSafeMemory" | "expectSafeMemoryCall" | "fee" | "ffi" | "fsMetadata" | "getCode" | "getDeployedCode" | "getLabel" | "getNonce" | "getRecordedLogs" | "isPersistent" | "label" | "load" | "makePersistent(address[])" | "makePersistent(address,address)" | "makePersistent(address)" | "makePersistent(address,address,address)" | "mockCall(address,uint256,bytes,bytes)" | "mockCall(address,bytes,bytes)" | "mockCallRevert(address,uint256,bytes,bytes)" | "mockCallRevert(address,bytes,bytes)" | "parseAddress" | "parseBool" | "parseBytes" | "parseBytes32" | "parseInt" | "parseJson(string)" | "parseJson(string,string)" | "parseJsonAddress" | "parseJsonAddressArray" | "parseJsonBool" | "parseJsonBoolArray" | "parseJsonBytes" | "parseJsonBytes32" | "parseJsonBytes32Array" | "parseJsonBytesArray" | "parseJsonInt" | "parseJsonIntArray" | "parseJsonString" | "parseJsonStringArray" | "parseJsonUint" | "parseJsonUintArray" | "parseUint" | "pauseGasMetering" | "prank(address,address)" | "prank(address)" | "prevrandao" | "projectRoot" | "readCallers" | "readDir(string,uint64)" | "readDir(string,uint64,bool)" | "readDir(string)" | "readFile" | "readFileBinary" | "readLine" | "readLink" | "record" | "recordLogs" | "rememberKey" | "removeDir" | "removeFile" | "resetNonce" | "resumeGasMetering" | "revertTo" | "revokePersistent(address[])" | "revokePersistent(address)" | "roll" | "rollFork(bytes32)" | "rollFork(uint256,uint256)" | "rollFork(uint256)" | "rollFork(uint256,bytes32)" | "rpcUrl" | "rpcUrlStructs" | "rpcUrls" | "selectFork" | "serializeAddress(string,string,address[])" | "serializeAddress(string,string,address)" | "serializeBool(string,string,bool[])" | "serializeBool(string,string,bool)" | "serializeBytes(string,string,bytes[])" | "serializeBytes(string,string,bytes)" | "serializeBytes32(string,string,bytes32[])" | "serializeBytes32(string,string,bytes32)" | "serializeInt(string,string,int256)" | "serializeInt(string,string,int256[])" | "serializeString(string,string,string[])" | "serializeString(string,string,string)" | "serializeUint(string,string,uint256)" | "serializeUint(string,string,uint256[])" | "setEnv" | "setNonce" | "setNonceUnsafe" | "sign" | "skip" | "snapshot" | "startBroadcast()" | "startBroadcast(address)" | "startBroadcast(uint256)" | "startPrank(address)" | "startPrank(address,address)" | "stopBroadcast" | "stopPrank" | "store" | "toString(address)" | "toString(uint256)" | "toString(bytes)" | "toString(bool)" | "toString(int256)" | "toString(bytes32)" | "transact(uint256,bytes32)" | "transact(bytes32)" | "txGasPrice" | "warp" | "writeFile" | "writeFileBinary" | "writeJson(string,string,string)" | "writeJson(string,string)" | "writeLine"): FunctionFragment;
+    encodeFunctionData(functionFragment: "accesses", values: [string]): string;
     encodeFunctionData(functionFragment: "activeFork", values?: undefined): string;
     encodeFunctionData(functionFragment: "addr", values: [BigNumberish]): string;
-    encodeFunctionData(functionFragment: "allowCheatcodes", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "allowCheatcodes", values: [string]): string;
     encodeFunctionData(functionFragment: "assume", values: [boolean]): string;
     encodeFunctionData(functionFragment: "breakpoint(string)", values: [string]): string;
     encodeFunctionData(functionFragment: "breakpoint(string,bool)", values: [string, boolean]): string;
     encodeFunctionData(functionFragment: "broadcast()", values?: undefined): string;
-    encodeFunctionData(functionFragment: "broadcast(address)", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "broadcast(address)", values: [string]): string;
     encodeFunctionData(functionFragment: "broadcast(uint256)", values: [BigNumberish]): string;
     encodeFunctionData(functionFragment: "chainId", values: [BigNumberish]): string;
     encodeFunctionData(functionFragment: "clearMockedCalls", values?: undefined): string;
     encodeFunctionData(functionFragment: "closeFile", values: [string]): string;
-    encodeFunctionData(functionFragment: "coinbase", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "coinbase", values: [string]): string;
     encodeFunctionData(functionFragment: "createDir", values: [string, boolean]): string;
     encodeFunctionData(functionFragment: "createFork(string)", values: [string]): string;
     encodeFunctionData(functionFragment: "createFork(string,uint256)", values: [string, BigNumberish]): string;
@@ -93,7 +280,7 @@ export interface VmInterface extends Interface {
     encodeFunctionData(functionFragment: "createSelectFork(string,uint256)", values: [string, BigNumberish]): string;
     encodeFunctionData(functionFragment: "createSelectFork(string,bytes32)", values: [string, BytesLike]): string;
     encodeFunctionData(functionFragment: "createSelectFork(string)", values: [string]): string;
-    encodeFunctionData(functionFragment: "deal", values: [AddressLike, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "deal", values: [string, BigNumberish]): string;
     encodeFunctionData(functionFragment: "deriveKey(string,uint32)", values: [string, BigNumberish]): string;
     encodeFunctionData(functionFragment: "deriveKey(string,string,uint32)", values: [string, string, BigNumberish]): string;
     encodeFunctionData(functionFragment: "difficulty", values: [BigNumberish]): string;
@@ -110,7 +297,7 @@ export interface VmInterface extends Interface {
     encodeFunctionData(functionFragment: "envOr(string,string,bytes32[])", values: [string, string, BytesLike[]]): string;
     encodeFunctionData(functionFragment: "envOr(string,string,int256[])", values: [string, string, BigNumberish[]]): string;
     encodeFunctionData(functionFragment: "envOr(string,bool)", values: [string, boolean]): string;
-    encodeFunctionData(functionFragment: "envOr(string,address)", values: [string, AddressLike]): string;
+    encodeFunctionData(functionFragment: "envOr(string,address)", values: [string, string]): string;
     encodeFunctionData(functionFragment: "envOr(string,uint256)", values: [string, BigNumberish]): string;
     encodeFunctionData(functionFragment: "envOr(string,string,bytes[])", values: [string, string, BytesLike[]]): string;
     encodeFunctionData(functionFragment: "envOr(string,string,uint256[])", values: [string, string, BigNumberish[]]): string;
@@ -118,26 +305,26 @@ export interface VmInterface extends Interface {
     encodeFunctionData(functionFragment: "envOr(string,bytes)", values: [string, BytesLike]): string;
     encodeFunctionData(functionFragment: "envOr(string,bytes32)", values: [string, BytesLike]): string;
     encodeFunctionData(functionFragment: "envOr(string,int256)", values: [string, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "envOr(string,string,address[])", values: [string, string, AddressLike[]]): string;
+    encodeFunctionData(functionFragment: "envOr(string,string,address[])", values: [string, string, string[]]): string;
     encodeFunctionData(functionFragment: "envOr(string,string)", values: [string, string]): string;
     encodeFunctionData(functionFragment: "envOr(string,string,bool[])", values: [string, string, boolean[]]): string;
     encodeFunctionData(functionFragment: "envString(string,string)", values: [string, string]): string;
     encodeFunctionData(functionFragment: "envString(string)", values: [string]): string;
     encodeFunctionData(functionFragment: "envUint(string)", values: [string]): string;
     encodeFunctionData(functionFragment: "envUint(string,string)", values: [string, string]): string;
-    encodeFunctionData(functionFragment: "etch", values: [AddressLike, BytesLike]): string;
-    encodeFunctionData(functionFragment: "expectCall(address,uint256,uint64,bytes)", values: [AddressLike, BigNumberish, BigNumberish, BytesLike]): string;
-    encodeFunctionData(functionFragment: "expectCall(address,uint256,uint64,bytes,uint64)", values: [AddressLike, BigNumberish, BigNumberish, BytesLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "expectCall(address,uint256,bytes,uint64)", values: [AddressLike, BigNumberish, BytesLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "expectCall(address,bytes)", values: [AddressLike, BytesLike]): string;
-    encodeFunctionData(functionFragment: "expectCall(address,bytes,uint64)", values: [AddressLike, BytesLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "expectCall(address,uint256,bytes)", values: [AddressLike, BigNumberish, BytesLike]): string;
-    encodeFunctionData(functionFragment: "expectCallMinGas(address,uint256,uint64,bytes)", values: [AddressLike, BigNumberish, BigNumberish, BytesLike]): string;
-    encodeFunctionData(functionFragment: "expectCallMinGas(address,uint256,uint64,bytes,uint64)", values: [AddressLike, BigNumberish, BigNumberish, BytesLike, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "etch", values: [string, BytesLike]): string;
+    encodeFunctionData(functionFragment: "expectCall(address,uint256,uint64,bytes)", values: [string, BigNumberish, BigNumberish, BytesLike]): string;
+    encodeFunctionData(functionFragment: "expectCall(address,uint256,uint64,bytes,uint64)", values: [string, BigNumberish, BigNumberish, BytesLike, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "expectCall(address,uint256,bytes,uint64)", values: [string, BigNumberish, BytesLike, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "expectCall(address,bytes)", values: [string, BytesLike]): string;
+    encodeFunctionData(functionFragment: "expectCall(address,bytes,uint64)", values: [string, BytesLike, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "expectCall(address,uint256,bytes)", values: [string, BigNumberish, BytesLike]): string;
+    encodeFunctionData(functionFragment: "expectCallMinGas(address,uint256,uint64,bytes)", values: [string, BigNumberish, BigNumberish, BytesLike]): string;
+    encodeFunctionData(functionFragment: "expectCallMinGas(address,uint256,uint64,bytes,uint64)", values: [string, BigNumberish, BigNumberish, BytesLike, BigNumberish]): string;
     encodeFunctionData(functionFragment: "expectEmit()", values?: undefined): string;
     encodeFunctionData(functionFragment: "expectEmit(bool,bool,bool,bool)", values: [boolean, boolean, boolean, boolean]): string;
-    encodeFunctionData(functionFragment: "expectEmit(bool,bool,bool,bool,address)", values: [boolean, boolean, boolean, boolean, AddressLike]): string;
-    encodeFunctionData(functionFragment: "expectEmit(address)", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "expectEmit(bool,bool,bool,bool,address)", values: [boolean, boolean, boolean, boolean, string]): string;
+    encodeFunctionData(functionFragment: "expectEmit(address)", values: [string]): string;
     encodeFunctionData(functionFragment: "expectRevert(bytes4)", values: [BytesLike]): string;
     encodeFunctionData(functionFragment: "expectRevert(bytes)", values: [BytesLike]): string;
     encodeFunctionData(functionFragment: "expectRevert()", values?: undefined): string;
@@ -148,20 +335,20 @@ export interface VmInterface extends Interface {
     encodeFunctionData(functionFragment: "fsMetadata", values: [string]): string;
     encodeFunctionData(functionFragment: "getCode", values: [string]): string;
     encodeFunctionData(functionFragment: "getDeployedCode", values: [string]): string;
-    encodeFunctionData(functionFragment: "getLabel", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "getNonce", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "getLabel", values: [string]): string;
+    encodeFunctionData(functionFragment: "getNonce", values: [string]): string;
     encodeFunctionData(functionFragment: "getRecordedLogs", values?: undefined): string;
-    encodeFunctionData(functionFragment: "isPersistent", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "label", values: [AddressLike, string]): string;
-    encodeFunctionData(functionFragment: "load", values: [AddressLike, BytesLike]): string;
-    encodeFunctionData(functionFragment: "makePersistent(address[])", values: [AddressLike[]]): string;
-    encodeFunctionData(functionFragment: "makePersistent(address,address)", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "makePersistent(address)", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "makePersistent(address,address,address)", values: [AddressLike, AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "mockCall(address,uint256,bytes,bytes)", values: [AddressLike, BigNumberish, BytesLike, BytesLike]): string;
-    encodeFunctionData(functionFragment: "mockCall(address,bytes,bytes)", values: [AddressLike, BytesLike, BytesLike]): string;
-    encodeFunctionData(functionFragment: "mockCallRevert(address,uint256,bytes,bytes)", values: [AddressLike, BigNumberish, BytesLike, BytesLike]): string;
-    encodeFunctionData(functionFragment: "mockCallRevert(address,bytes,bytes)", values: [AddressLike, BytesLike, BytesLike]): string;
+    encodeFunctionData(functionFragment: "isPersistent", values: [string]): string;
+    encodeFunctionData(functionFragment: "label", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "load", values: [string, BytesLike]): string;
+    encodeFunctionData(functionFragment: "makePersistent(address[])", values: [string[]]): string;
+    encodeFunctionData(functionFragment: "makePersistent(address,address)", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "makePersistent(address)", values: [string]): string;
+    encodeFunctionData(functionFragment: "makePersistent(address,address,address)", values: [string, string, string]): string;
+    encodeFunctionData(functionFragment: "mockCall(address,uint256,bytes,bytes)", values: [string, BigNumberish, BytesLike, BytesLike]): string;
+    encodeFunctionData(functionFragment: "mockCall(address,bytes,bytes)", values: [string, BytesLike, BytesLike]): string;
+    encodeFunctionData(functionFragment: "mockCallRevert(address,uint256,bytes,bytes)", values: [string, BigNumberish, BytesLike, BytesLike]): string;
+    encodeFunctionData(functionFragment: "mockCallRevert(address,bytes,bytes)", values: [string, BytesLike, BytesLike]): string;
     encodeFunctionData(functionFragment: "parseAddress", values: [string]): string;
     encodeFunctionData(functionFragment: "parseBool", values: [string]): string;
     encodeFunctionData(functionFragment: "parseBytes", values: [string]): string;
@@ -185,8 +372,8 @@ export interface VmInterface extends Interface {
     encodeFunctionData(functionFragment: "parseJsonUintArray", values: [string, string]): string;
     encodeFunctionData(functionFragment: "parseUint", values: [string]): string;
     encodeFunctionData(functionFragment: "pauseGasMetering", values?: undefined): string;
-    encodeFunctionData(functionFragment: "prank(address,address)", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "prank(address)", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "prank(address,address)", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "prank(address)", values: [string]): string;
     encodeFunctionData(functionFragment: "prevrandao", values: [BytesLike]): string;
     encodeFunctionData(functionFragment: "projectRoot", values?: undefined): string;
     encodeFunctionData(functionFragment: "readCallers", values?: undefined): string;
@@ -202,11 +389,11 @@ export interface VmInterface extends Interface {
     encodeFunctionData(functionFragment: "rememberKey", values: [BigNumberish]): string;
     encodeFunctionData(functionFragment: "removeDir", values: [string, boolean]): string;
     encodeFunctionData(functionFragment: "removeFile", values: [string]): string;
-    encodeFunctionData(functionFragment: "resetNonce", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "resetNonce", values: [string]): string;
     encodeFunctionData(functionFragment: "resumeGasMetering", values?: undefined): string;
     encodeFunctionData(functionFragment: "revertTo", values: [BigNumberish]): string;
-    encodeFunctionData(functionFragment: "revokePersistent(address[])", values: [AddressLike[]]): string;
-    encodeFunctionData(functionFragment: "revokePersistent(address)", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "revokePersistent(address[])", values: [string[]]): string;
+    encodeFunctionData(functionFragment: "revokePersistent(address)", values: [string]): string;
     encodeFunctionData(functionFragment: "roll", values: [BigNumberish]): string;
     encodeFunctionData(functionFragment: "rollFork(bytes32)", values: [BytesLike]): string;
     encodeFunctionData(functionFragment: "rollFork(uint256,uint256)", values: [BigNumberish, BigNumberish]): string;
@@ -216,8 +403,8 @@ export interface VmInterface extends Interface {
     encodeFunctionData(functionFragment: "rpcUrlStructs", values?: undefined): string;
     encodeFunctionData(functionFragment: "rpcUrls", values?: undefined): string;
     encodeFunctionData(functionFragment: "selectFork", values: [BigNumberish]): string;
-    encodeFunctionData(functionFragment: "serializeAddress(string,string,address[])", values: [string, string, AddressLike[]]): string;
-    encodeFunctionData(functionFragment: "serializeAddress(string,string,address)", values: [string, string, AddressLike]): string;
+    encodeFunctionData(functionFragment: "serializeAddress(string,string,address[])", values: [string, string, string[]]): string;
+    encodeFunctionData(functionFragment: "serializeAddress(string,string,address)", values: [string, string, string]): string;
     encodeFunctionData(functionFragment: "serializeBool(string,string,bool[])", values: [string, string, boolean[]]): string;
     encodeFunctionData(functionFragment: "serializeBool(string,string,bool)", values: [string, string, boolean]): string;
     encodeFunctionData(functionFragment: "serializeBytes(string,string,bytes[])", values: [string, string, BytesLike[]]): string;
@@ -231,20 +418,20 @@ export interface VmInterface extends Interface {
     encodeFunctionData(functionFragment: "serializeUint(string,string,uint256)", values: [string, string, BigNumberish]): string;
     encodeFunctionData(functionFragment: "serializeUint(string,string,uint256[])", values: [string, string, BigNumberish[]]): string;
     encodeFunctionData(functionFragment: "setEnv", values: [string, string]): string;
-    encodeFunctionData(functionFragment: "setNonce", values: [AddressLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "setNonceUnsafe", values: [AddressLike, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "setNonce", values: [string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "setNonceUnsafe", values: [string, BigNumberish]): string;
     encodeFunctionData(functionFragment: "sign", values: [BigNumberish, BytesLike]): string;
     encodeFunctionData(functionFragment: "skip", values: [boolean]): string;
     encodeFunctionData(functionFragment: "snapshot", values?: undefined): string;
     encodeFunctionData(functionFragment: "startBroadcast()", values?: undefined): string;
-    encodeFunctionData(functionFragment: "startBroadcast(address)", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "startBroadcast(address)", values: [string]): string;
     encodeFunctionData(functionFragment: "startBroadcast(uint256)", values: [BigNumberish]): string;
-    encodeFunctionData(functionFragment: "startPrank(address)", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "startPrank(address,address)", values: [AddressLike, AddressLike]): string;
+    encodeFunctionData(functionFragment: "startPrank(address)", values: [string]): string;
+    encodeFunctionData(functionFragment: "startPrank(address,address)", values: [string, string]): string;
     encodeFunctionData(functionFragment: "stopBroadcast", values?: undefined): string;
     encodeFunctionData(functionFragment: "stopPrank", values?: undefined): string;
-    encodeFunctionData(functionFragment: "store", values: [AddressLike, BytesLike, BytesLike]): string;
-    encodeFunctionData(functionFragment: "toString(address)", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "store", values: [string, BytesLike, BytesLike]): string;
+    encodeFunctionData(functionFragment: "toString(address)", values: [string]): string;
     encodeFunctionData(functionFragment: "toString(uint256)", values: [BigNumberish]): string;
     encodeFunctionData(functionFragment: "toString(bytes)", values: [BytesLike]): string;
     encodeFunctionData(functionFragment: "toString(bool)", values: [boolean]): string;
@@ -446,1570 +633,2184 @@ export interface VmInterface extends Interface {
     decodeFunctionResult(functionFragment: "writeJson(string,string,string)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "writeJson(string,string)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "writeLine", data: BytesLike): Result;
+    events: {};
 }
 export interface Vm extends BaseContract {
-    connect(runner?: ContractRunner | null): Vm;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: VmInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    accesses: TypedContractMethod<[
-        target: AddressLike
-    ], [
-        [string[], string[]] & {
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        accesses(target: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        activeFork(overrides?: CallOverrides): Promise<[BigNumber] & {
+            forkId: BigNumber;
+        }>;
+        addr(privateKey: BigNumberish, overrides?: CallOverrides): Promise<[string] & {
+            keyAddr: string;
+        }>;
+        allowCheatcodes(account: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        assume(condition: boolean, overrides?: CallOverrides): Promise<[void]>;
+        "breakpoint(string)"(char: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "breakpoint(string,bool)"(char: string, value: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "broadcast()"(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "broadcast(address)"(signer: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "broadcast(uint256)"(privateKey: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        chainId(newChainId: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        clearMockedCalls(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        closeFile(path: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        coinbase(newCoinbase: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        createDir(path: string, recursive: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "createFork(string)"(urlOrAlias: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "createFork(string,uint256)"(urlOrAlias: string, blockNumber: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "createFork(string,bytes32)"(urlOrAlias: string, txHash: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "createSelectFork(string,uint256)"(urlOrAlias: string, blockNumber: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "createSelectFork(string,bytes32)"(urlOrAlias: string, txHash: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "createSelectFork(string)"(urlOrAlias: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        deal(account: string, newBalance: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "deriveKey(string,uint32)"(mnemonic: string, index: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber] & {
+            privateKey: BigNumber;
+        }>;
+        "deriveKey(string,string,uint32)"(mnemonic: string, derivationPath: string, index: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber] & {
+            privateKey: BigNumber;
+        }>;
+        difficulty(newDifficulty: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "envAddress(string)"(name: string, overrides?: CallOverrides): Promise<[string] & {
+            value: string;
+        }>;
+        "envAddress(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<[string[]] & {
+            value: string[];
+        }>;
+        "envBool(string)"(name: string, overrides?: CallOverrides): Promise<[boolean] & {
+            value: boolean;
+        }>;
+        "envBool(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<[boolean[]] & {
+            value: boolean[];
+        }>;
+        "envBytes(string)"(name: string, overrides?: CallOverrides): Promise<[string] & {
+            value: string;
+        }>;
+        "envBytes(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<[string[]] & {
+            value: string[];
+        }>;
+        "envBytes32(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<[string[]] & {
+            value: string[];
+        }>;
+        "envBytes32(string)"(name: string, overrides?: CallOverrides): Promise<[string] & {
+            value: string;
+        }>;
+        "envInt(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<[BigNumber[]] & {
+            value: BigNumber[];
+        }>;
+        "envInt(string)"(name: string, overrides?: CallOverrides): Promise<[BigNumber] & {
+            value: BigNumber;
+        }>;
+        "envOr(string,string,bytes32[])"(name: string, delim: string, defaultValue: BytesLike[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "envOr(string,string,int256[])"(name: string, delim: string, defaultValue: BigNumberish[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "envOr(string,bool)"(name: string, defaultValue: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "envOr(string,address)"(name: string, defaultValue: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "envOr(string,uint256)"(name: string, defaultValue: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "envOr(string,string,bytes[])"(name: string, delim: string, defaultValue: BytesLike[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "envOr(string,string,uint256[])"(name: string, delim: string, defaultValue: BigNumberish[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "envOr(string,string,string[])"(name: string, delim: string, defaultValue: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "envOr(string,bytes)"(name: string, defaultValue: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "envOr(string,bytes32)"(name: string, defaultValue: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "envOr(string,int256)"(name: string, defaultValue: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "envOr(string,string,address[])"(name: string, delim: string, defaultValue: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "envOr(string,string)"(name: string, defaultValue: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "envOr(string,string,bool[])"(name: string, delim: string, defaultValue: boolean[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "envString(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<[string[]] & {
+            value: string[];
+        }>;
+        "envString(string)"(name: string, overrides?: CallOverrides): Promise<[string] & {
+            value: string;
+        }>;
+        "envUint(string)"(name: string, overrides?: CallOverrides): Promise<[BigNumber] & {
+            value: BigNumber;
+        }>;
+        "envUint(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<[BigNumber[]] & {
+            value: BigNumber[];
+        }>;
+        etch(target: string, newRuntimeBytecode: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "expectCall(address,uint256,uint64,bytes)"(callee: string, msgValue: BigNumberish, gas: BigNumberish, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "expectCall(address,uint256,uint64,bytes,uint64)"(callee: string, msgValue: BigNumberish, gas: BigNumberish, data: BytesLike, count: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "expectCall(address,uint256,bytes,uint64)"(callee: string, msgValue: BigNumberish, data: BytesLike, count: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "expectCall(address,bytes)"(callee: string, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "expectCall(address,bytes,uint64)"(callee: string, data: BytesLike, count: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "expectCall(address,uint256,bytes)"(callee: string, msgValue: BigNumberish, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "expectCallMinGas(address,uint256,uint64,bytes)"(callee: string, msgValue: BigNumberish, minGas: BigNumberish, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "expectCallMinGas(address,uint256,uint64,bytes,uint64)"(callee: string, msgValue: BigNumberish, minGas: BigNumberish, data: BytesLike, count: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "expectEmit()"(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "expectEmit(bool,bool,bool,bool)"(checkTopic1: boolean, checkTopic2: boolean, checkTopic3: boolean, checkData: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "expectEmit(bool,bool,bool,bool,address)"(checkTopic1: boolean, checkTopic2: boolean, checkTopic3: boolean, checkData: boolean, emitter: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "expectEmit(address)"(emitter: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "expectRevert(bytes4)"(revertData: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "expectRevert(bytes)"(revertData: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "expectRevert()"(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        expectSafeMemory(min: BigNumberish, max: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        expectSafeMemoryCall(min: BigNumberish, max: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        fee(newBasefee: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        ffi(commandInput: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        fsMetadata(path: string, overrides?: CallOverrides): Promise<[
+            VmSafe.FsMetadataStructOutput
+        ] & {
+            metadata: VmSafe.FsMetadataStructOutput;
+        }>;
+        getCode(artifactPath: string, overrides?: CallOverrides): Promise<[string] & {
+            creationBytecode: string;
+        }>;
+        getDeployedCode(artifactPath: string, overrides?: CallOverrides): Promise<[string] & {
+            runtimeBytecode: string;
+        }>;
+        getLabel(account: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        getNonce(account: string, overrides?: CallOverrides): Promise<[BigNumber] & {
+            nonce: BigNumber;
+        }>;
+        getRecordedLogs(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        isPersistent(account: string, overrides?: CallOverrides): Promise<[boolean] & {
+            persistent: boolean;
+        }>;
+        label(account: string, newLabel: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        load(target: string, slot: BytesLike, overrides?: CallOverrides): Promise<[string] & {
+            data: string;
+        }>;
+        "makePersistent(address[])"(accounts: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "makePersistent(address,address)"(account0: string, account1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "makePersistent(address)"(account: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "makePersistent(address,address,address)"(account0: string, account1: string, account2: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "mockCall(address,uint256,bytes,bytes)"(callee: string, msgValue: BigNumberish, data: BytesLike, returnData: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "mockCall(address,bytes,bytes)"(callee: string, data: BytesLike, returnData: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "mockCallRevert(address,uint256,bytes,bytes)"(callee: string, msgValue: BigNumberish, data: BytesLike, revertData: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "mockCallRevert(address,bytes,bytes)"(callee: string, data: BytesLike, revertData: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        parseAddress(stringifiedValue: string, overrides?: CallOverrides): Promise<[string] & {
+            parsedValue: string;
+        }>;
+        parseBool(stringifiedValue: string, overrides?: CallOverrides): Promise<[boolean] & {
+            parsedValue: boolean;
+        }>;
+        parseBytes(stringifiedValue: string, overrides?: CallOverrides): Promise<[string] & {
+            parsedValue: string;
+        }>;
+        parseBytes32(stringifiedValue: string, overrides?: CallOverrides): Promise<[string] & {
+            parsedValue: string;
+        }>;
+        parseInt(stringifiedValue: string, overrides?: CallOverrides): Promise<[BigNumber] & {
+            parsedValue: BigNumber;
+        }>;
+        "parseJson(string)"(json: string, overrides?: CallOverrides): Promise<[string] & {
+            abiEncodedData: string;
+        }>;
+        "parseJson(string,string)"(json: string, key: string, overrides?: CallOverrides): Promise<[string] & {
+            abiEncodedData: string;
+        }>;
+        parseJsonAddress(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        parseJsonAddressArray(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        parseJsonBool(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        parseJsonBoolArray(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        parseJsonBytes(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        parseJsonBytes32(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        parseJsonBytes32Array(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        parseJsonBytesArray(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        parseJsonInt(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        parseJsonIntArray(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        parseJsonString(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        parseJsonStringArray(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        parseJsonUint(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        parseJsonUintArray(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        parseUint(stringifiedValue: string, overrides?: CallOverrides): Promise<[BigNumber] & {
+            parsedValue: BigNumber;
+        }>;
+        pauseGasMetering(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "prank(address,address)"(msgSender: string, txOrigin: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "prank(address)"(msgSender: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        prevrandao(newPrevrandao: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        projectRoot(overrides?: CallOverrides): Promise<[string] & {
+            path: string;
+        }>;
+        readCallers(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "readDir(string,uint64)"(path: string, maxDepth: BigNumberish, overrides?: CallOverrides): Promise<[
+            VmSafe.DirEntryStructOutput[]
+        ] & {
+            entries: VmSafe.DirEntryStructOutput[];
+        }>;
+        "readDir(string,uint64,bool)"(path: string, maxDepth: BigNumberish, followLinks: boolean, overrides?: CallOverrides): Promise<[
+            VmSafe.DirEntryStructOutput[]
+        ] & {
+            entries: VmSafe.DirEntryStructOutput[];
+        }>;
+        "readDir(string)"(path: string, overrides?: CallOverrides): Promise<[
+            VmSafe.DirEntryStructOutput[]
+        ] & {
+            entries: VmSafe.DirEntryStructOutput[];
+        }>;
+        readFile(path: string, overrides?: CallOverrides): Promise<[string] & {
+            data: string;
+        }>;
+        readFileBinary(path: string, overrides?: CallOverrides): Promise<[string] & {
+            data: string;
+        }>;
+        readLine(path: string, overrides?: CallOverrides): Promise<[string] & {
+            line: string;
+        }>;
+        readLink(linkPath: string, overrides?: CallOverrides): Promise<[string] & {
+            targetPath: string;
+        }>;
+        record(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        recordLogs(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        rememberKey(privateKey: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        removeDir(path: string, recursive: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        removeFile(path: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        resetNonce(account: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        resumeGasMetering(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        revertTo(snapshotId: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "revokePersistent(address[])"(accounts: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "revokePersistent(address)"(account: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        roll(newHeight: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "rollFork(bytes32)"(txHash: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "rollFork(uint256,uint256)"(forkId: BigNumberish, blockNumber: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "rollFork(uint256)"(blockNumber: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "rollFork(uint256,bytes32)"(forkId: BigNumberish, txHash: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        rpcUrl(rpcAlias: string, overrides?: CallOverrides): Promise<[string] & {
+            json: string;
+        }>;
+        rpcUrlStructs(overrides?: CallOverrides): Promise<[VmSafe.RpcStructOutput[]] & {
+            urls: VmSafe.RpcStructOutput[];
+        }>;
+        rpcUrls(overrides?: CallOverrides): Promise<[[string, string][]] & {
+            urls: [string, string][];
+        }>;
+        selectFork(forkId: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "serializeAddress(string,string,address[])"(objectKey: string, valueKey: string, values: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "serializeAddress(string,string,address)"(objectKey: string, valueKey: string, value: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "serializeBool(string,string,bool[])"(objectKey: string, valueKey: string, values: boolean[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "serializeBool(string,string,bool)"(objectKey: string, valueKey: string, value: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "serializeBytes(string,string,bytes[])"(objectKey: string, valueKey: string, values: BytesLike[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "serializeBytes(string,string,bytes)"(objectKey: string, valueKey: string, value: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "serializeBytes32(string,string,bytes32[])"(objectKey: string, valueKey: string, values: BytesLike[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "serializeBytes32(string,string,bytes32)"(objectKey: string, valueKey: string, value: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "serializeInt(string,string,int256)"(objectKey: string, valueKey: string, value: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "serializeInt(string,string,int256[])"(objectKey: string, valueKey: string, values: BigNumberish[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "serializeString(string,string,string[])"(objectKey: string, valueKey: string, values: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "serializeString(string,string,string)"(objectKey: string, valueKey: string, value: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "serializeUint(string,string,uint256)"(objectKey: string, valueKey: string, value: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "serializeUint(string,string,uint256[])"(objectKey: string, valueKey: string, values: BigNumberish[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        setEnv(name: string, value: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        setNonce(account: string, newNonce: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        setNonceUnsafe(account: string, newNonce: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        sign(privateKey: BigNumberish, digest: BytesLike, overrides?: CallOverrides): Promise<[number, string, string] & {
+            v: number;
+            r: string;
+            s: string;
+        }>;
+        skip(skipTest: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        snapshot(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "startBroadcast()"(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "startBroadcast(address)"(signer: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "startBroadcast(uint256)"(privateKey: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "startPrank(address)"(msgSender: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "startPrank(address,address)"(msgSender: string, txOrigin: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        stopBroadcast(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        stopPrank(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        store(target: string, slot: BytesLike, value: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "toString(address)"(value: string, overrides?: CallOverrides): Promise<[string] & {
+            stringifiedValue: string;
+        }>;
+        "toString(uint256)"(value: BigNumberish, overrides?: CallOverrides): Promise<[string] & {
+            stringifiedValue: string;
+        }>;
+        "toString(bytes)"(value: BytesLike, overrides?: CallOverrides): Promise<[string] & {
+            stringifiedValue: string;
+        }>;
+        "toString(bool)"(value: boolean, overrides?: CallOverrides): Promise<[string] & {
+            stringifiedValue: string;
+        }>;
+        "toString(int256)"(value: BigNumberish, overrides?: CallOverrides): Promise<[string] & {
+            stringifiedValue: string;
+        }>;
+        "toString(bytes32)"(value: BytesLike, overrides?: CallOverrides): Promise<[string] & {
+            stringifiedValue: string;
+        }>;
+        "transact(uint256,bytes32)"(forkId: BigNumberish, txHash: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "transact(bytes32)"(txHash: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        txGasPrice(newGasPrice: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        warp(newTimestamp: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        writeFile(path: string, data: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        writeFileBinary(path: string, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "writeJson(string,string,string)"(json: string, path: string, valueKey: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        "writeJson(string,string)"(json: string, path: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        writeLine(path: string, data: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+    };
+    accesses(target: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    activeFork(overrides?: CallOverrides): Promise<BigNumber>;
+    addr(privateKey: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    allowCheatcodes(account: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    assume(condition: boolean, overrides?: CallOverrides): Promise<void>;
+    "breakpoint(string)"(char: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "breakpoint(string,bool)"(char: string, value: boolean, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "broadcast()"(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "broadcast(address)"(signer: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "broadcast(uint256)"(privateKey: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    chainId(newChainId: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    clearMockedCalls(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    closeFile(path: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    coinbase(newCoinbase: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    createDir(path: string, recursive: boolean, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "createFork(string)"(urlOrAlias: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "createFork(string,uint256)"(urlOrAlias: string, blockNumber: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "createFork(string,bytes32)"(urlOrAlias: string, txHash: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "createSelectFork(string,uint256)"(urlOrAlias: string, blockNumber: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "createSelectFork(string,bytes32)"(urlOrAlias: string, txHash: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "createSelectFork(string)"(urlOrAlias: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    deal(account: string, newBalance: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "deriveKey(string,uint32)"(mnemonic: string, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    "deriveKey(string,string,uint32)"(mnemonic: string, derivationPath: string, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    difficulty(newDifficulty: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "envAddress(string)"(name: string, overrides?: CallOverrides): Promise<string>;
+    "envAddress(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<string[]>;
+    "envBool(string)"(name: string, overrides?: CallOverrides): Promise<boolean>;
+    "envBool(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<boolean[]>;
+    "envBytes(string)"(name: string, overrides?: CallOverrides): Promise<string>;
+    "envBytes(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<string[]>;
+    "envBytes32(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<string[]>;
+    "envBytes32(string)"(name: string, overrides?: CallOverrides): Promise<string>;
+    "envInt(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<BigNumber[]>;
+    "envInt(string)"(name: string, overrides?: CallOverrides): Promise<BigNumber>;
+    "envOr(string,string,bytes32[])"(name: string, delim: string, defaultValue: BytesLike[], overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "envOr(string,string,int256[])"(name: string, delim: string, defaultValue: BigNumberish[], overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "envOr(string,bool)"(name: string, defaultValue: boolean, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "envOr(string,address)"(name: string, defaultValue: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "envOr(string,uint256)"(name: string, defaultValue: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "envOr(string,string,bytes[])"(name: string, delim: string, defaultValue: BytesLike[], overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "envOr(string,string,uint256[])"(name: string, delim: string, defaultValue: BigNumberish[], overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "envOr(string,string,string[])"(name: string, delim: string, defaultValue: string[], overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "envOr(string,bytes)"(name: string, defaultValue: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "envOr(string,bytes32)"(name: string, defaultValue: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "envOr(string,int256)"(name: string, defaultValue: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "envOr(string,string,address[])"(name: string, delim: string, defaultValue: string[], overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "envOr(string,string)"(name: string, defaultValue: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "envOr(string,string,bool[])"(name: string, delim: string, defaultValue: boolean[], overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "envString(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<string[]>;
+    "envString(string)"(name: string, overrides?: CallOverrides): Promise<string>;
+    "envUint(string)"(name: string, overrides?: CallOverrides): Promise<BigNumber>;
+    "envUint(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<BigNumber[]>;
+    etch(target: string, newRuntimeBytecode: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "expectCall(address,uint256,uint64,bytes)"(callee: string, msgValue: BigNumberish, gas: BigNumberish, data: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "expectCall(address,uint256,uint64,bytes,uint64)"(callee: string, msgValue: BigNumberish, gas: BigNumberish, data: BytesLike, count: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "expectCall(address,uint256,bytes,uint64)"(callee: string, msgValue: BigNumberish, data: BytesLike, count: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "expectCall(address,bytes)"(callee: string, data: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "expectCall(address,bytes,uint64)"(callee: string, data: BytesLike, count: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "expectCall(address,uint256,bytes)"(callee: string, msgValue: BigNumberish, data: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "expectCallMinGas(address,uint256,uint64,bytes)"(callee: string, msgValue: BigNumberish, minGas: BigNumberish, data: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "expectCallMinGas(address,uint256,uint64,bytes,uint64)"(callee: string, msgValue: BigNumberish, minGas: BigNumberish, data: BytesLike, count: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "expectEmit()"(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "expectEmit(bool,bool,bool,bool)"(checkTopic1: boolean, checkTopic2: boolean, checkTopic3: boolean, checkData: boolean, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "expectEmit(bool,bool,bool,bool,address)"(checkTopic1: boolean, checkTopic2: boolean, checkTopic3: boolean, checkData: boolean, emitter: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "expectEmit(address)"(emitter: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "expectRevert(bytes4)"(revertData: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "expectRevert(bytes)"(revertData: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "expectRevert()"(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    expectSafeMemory(min: BigNumberish, max: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    expectSafeMemoryCall(min: BigNumberish, max: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    fee(newBasefee: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    ffi(commandInput: string[], overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    fsMetadata(path: string, overrides?: CallOverrides): Promise<VmSafe.FsMetadataStructOutput>;
+    getCode(artifactPath: string, overrides?: CallOverrides): Promise<string>;
+    getDeployedCode(artifactPath: string, overrides?: CallOverrides): Promise<string>;
+    getLabel(account: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    getNonce(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getRecordedLogs(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    isPersistent(account: string, overrides?: CallOverrides): Promise<boolean>;
+    label(account: string, newLabel: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    load(target: string, slot: BytesLike, overrides?: CallOverrides): Promise<string>;
+    "makePersistent(address[])"(accounts: string[], overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "makePersistent(address,address)"(account0: string, account1: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "makePersistent(address)"(account: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "makePersistent(address,address,address)"(account0: string, account1: string, account2: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "mockCall(address,uint256,bytes,bytes)"(callee: string, msgValue: BigNumberish, data: BytesLike, returnData: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "mockCall(address,bytes,bytes)"(callee: string, data: BytesLike, returnData: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "mockCallRevert(address,uint256,bytes,bytes)"(callee: string, msgValue: BigNumberish, data: BytesLike, revertData: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "mockCallRevert(address,bytes,bytes)"(callee: string, data: BytesLike, revertData: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    parseAddress(stringifiedValue: string, overrides?: CallOverrides): Promise<string>;
+    parseBool(stringifiedValue: string, overrides?: CallOverrides): Promise<boolean>;
+    parseBytes(stringifiedValue: string, overrides?: CallOverrides): Promise<string>;
+    parseBytes32(stringifiedValue: string, overrides?: CallOverrides): Promise<string>;
+    parseInt(stringifiedValue: string, overrides?: CallOverrides): Promise<BigNumber>;
+    "parseJson(string)"(json: string, overrides?: CallOverrides): Promise<string>;
+    "parseJson(string,string)"(json: string, key: string, overrides?: CallOverrides): Promise<string>;
+    parseJsonAddress(arg0: string, arg1: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    parseJsonAddressArray(arg0: string, arg1: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    parseJsonBool(arg0: string, arg1: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    parseJsonBoolArray(arg0: string, arg1: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    parseJsonBytes(arg0: string, arg1: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    parseJsonBytes32(arg0: string, arg1: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    parseJsonBytes32Array(arg0: string, arg1: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    parseJsonBytesArray(arg0: string, arg1: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    parseJsonInt(arg0: string, arg1: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    parseJsonIntArray(arg0: string, arg1: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    parseJsonString(arg0: string, arg1: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    parseJsonStringArray(arg0: string, arg1: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    parseJsonUint(arg0: string, arg1: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    parseJsonUintArray(arg0: string, arg1: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    parseUint(stringifiedValue: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pauseGasMetering(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "prank(address,address)"(msgSender: string, txOrigin: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "prank(address)"(msgSender: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    prevrandao(newPrevrandao: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    projectRoot(overrides?: CallOverrides): Promise<string>;
+    readCallers(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "readDir(string,uint64)"(path: string, maxDepth: BigNumberish, overrides?: CallOverrides): Promise<VmSafe.DirEntryStructOutput[]>;
+    "readDir(string,uint64,bool)"(path: string, maxDepth: BigNumberish, followLinks: boolean, overrides?: CallOverrides): Promise<VmSafe.DirEntryStructOutput[]>;
+    "readDir(string)"(path: string, overrides?: CallOverrides): Promise<VmSafe.DirEntryStructOutput[]>;
+    readFile(path: string, overrides?: CallOverrides): Promise<string>;
+    readFileBinary(path: string, overrides?: CallOverrides): Promise<string>;
+    readLine(path: string, overrides?: CallOverrides): Promise<string>;
+    readLink(linkPath: string, overrides?: CallOverrides): Promise<string>;
+    record(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    recordLogs(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    rememberKey(privateKey: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    removeDir(path: string, recursive: boolean, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    removeFile(path: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    resetNonce(account: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    resumeGasMetering(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    revertTo(snapshotId: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "revokePersistent(address[])"(accounts: string[], overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "revokePersistent(address)"(account: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    roll(newHeight: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "rollFork(bytes32)"(txHash: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "rollFork(uint256,uint256)"(forkId: BigNumberish, blockNumber: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "rollFork(uint256)"(blockNumber: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "rollFork(uint256,bytes32)"(forkId: BigNumberish, txHash: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    rpcUrl(rpcAlias: string, overrides?: CallOverrides): Promise<string>;
+    rpcUrlStructs(overrides?: CallOverrides): Promise<VmSafe.RpcStructOutput[]>;
+    rpcUrls(overrides?: CallOverrides): Promise<[string, string][]>;
+    selectFork(forkId: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "serializeAddress(string,string,address[])"(objectKey: string, valueKey: string, values: string[], overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "serializeAddress(string,string,address)"(objectKey: string, valueKey: string, value: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "serializeBool(string,string,bool[])"(objectKey: string, valueKey: string, values: boolean[], overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "serializeBool(string,string,bool)"(objectKey: string, valueKey: string, value: boolean, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "serializeBytes(string,string,bytes[])"(objectKey: string, valueKey: string, values: BytesLike[], overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "serializeBytes(string,string,bytes)"(objectKey: string, valueKey: string, value: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "serializeBytes32(string,string,bytes32[])"(objectKey: string, valueKey: string, values: BytesLike[], overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "serializeBytes32(string,string,bytes32)"(objectKey: string, valueKey: string, value: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "serializeInt(string,string,int256)"(objectKey: string, valueKey: string, value: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "serializeInt(string,string,int256[])"(objectKey: string, valueKey: string, values: BigNumberish[], overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "serializeString(string,string,string[])"(objectKey: string, valueKey: string, values: string[], overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "serializeString(string,string,string)"(objectKey: string, valueKey: string, value: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "serializeUint(string,string,uint256)"(objectKey: string, valueKey: string, value: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "serializeUint(string,string,uint256[])"(objectKey: string, valueKey: string, values: BigNumberish[], overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    setEnv(name: string, value: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    setNonce(account: string, newNonce: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    setNonceUnsafe(account: string, newNonce: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    sign(privateKey: BigNumberish, digest: BytesLike, overrides?: CallOverrides): Promise<[number, string, string] & {
+        v: number;
+        r: string;
+        s: string;
+    }>;
+    skip(skipTest: boolean, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    snapshot(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "startBroadcast()"(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "startBroadcast(address)"(signer: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "startBroadcast(uint256)"(privateKey: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "startPrank(address)"(msgSender: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "startPrank(address,address)"(msgSender: string, txOrigin: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    stopBroadcast(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    stopPrank(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    store(target: string, slot: BytesLike, value: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "toString(address)"(value: string, overrides?: CallOverrides): Promise<string>;
+    "toString(uint256)"(value: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    "toString(bytes)"(value: BytesLike, overrides?: CallOverrides): Promise<string>;
+    "toString(bool)"(value: boolean, overrides?: CallOverrides): Promise<string>;
+    "toString(int256)"(value: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    "toString(bytes32)"(value: BytesLike, overrides?: CallOverrides): Promise<string>;
+    "transact(uint256,bytes32)"(forkId: BigNumberish, txHash: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "transact(bytes32)"(txHash: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    txGasPrice(newGasPrice: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    warp(newTimestamp: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    writeFile(path: string, data: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    writeFileBinary(path: string, data: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "writeJson(string,string,string)"(json: string, path: string, valueKey: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    "writeJson(string,string)"(json: string, path: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    writeLine(path: string, data: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    callStatic: {
+        accesses(target: string, overrides?: CallOverrides): Promise<[
+            string[],
+            string[]
+        ] & {
             readSlots: string[];
             writeSlots: string[];
-        }
-    ], "nonpayable">;
-    activeFork: TypedContractMethod<[], [bigint], "view">;
-    addr: TypedContractMethod<[privateKey: BigNumberish], [string], "view">;
-    allowCheatcodes: TypedContractMethod<[
-        account: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    assume: TypedContractMethod<[condition: boolean], [void], "view">;
-    "breakpoint(string)": TypedContractMethod<[
-        char: string
-    ], [
-        void
-    ], "nonpayable">;
-    "breakpoint(string,bool)": TypedContractMethod<[
-        char: string,
-        value: boolean
-    ], [
-        void
-    ], "nonpayable">;
-    "broadcast()": TypedContractMethod<[], [void], "nonpayable">;
-    "broadcast(address)": TypedContractMethod<[
-        signer: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    "broadcast(uint256)": TypedContractMethod<[
-        privateKey: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    chainId: TypedContractMethod<[
-        newChainId: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    clearMockedCalls: TypedContractMethod<[], [void], "nonpayable">;
-    closeFile: TypedContractMethod<[path: string], [void], "nonpayable">;
-    coinbase: TypedContractMethod<[
-        newCoinbase: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    createDir: TypedContractMethod<[
-        path: string,
-        recursive: boolean
-    ], [
-        void
-    ], "nonpayable">;
-    "createFork(string)": TypedContractMethod<[
-        urlOrAlias: string
-    ], [
-        bigint
-    ], "nonpayable">;
-    "createFork(string,uint256)": TypedContractMethod<[
-        urlOrAlias: string,
-        blockNumber: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    "createFork(string,bytes32)": TypedContractMethod<[
-        urlOrAlias: string,
-        txHash: BytesLike
-    ], [
-        bigint
-    ], "nonpayable">;
-    "createSelectFork(string,uint256)": TypedContractMethod<[
-        urlOrAlias: string,
-        blockNumber: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    "createSelectFork(string,bytes32)": TypedContractMethod<[
-        urlOrAlias: string,
-        txHash: BytesLike
-    ], [
-        bigint
-    ], "nonpayable">;
-    "createSelectFork(string)": TypedContractMethod<[
-        urlOrAlias: string
-    ], [
-        bigint
-    ], "nonpayable">;
-    deal: TypedContractMethod<[
-        account: AddressLike,
-        newBalance: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    "deriveKey(string,uint32)": TypedContractMethod<[
-        mnemonic: string,
-        index: BigNumberish
-    ], [
-        bigint
-    ], "view">;
-    "deriveKey(string,string,uint32)": TypedContractMethod<[
-        mnemonic: string,
-        derivationPath: string,
-        index: BigNumberish
-    ], [
-        bigint
-    ], "view">;
-    difficulty: TypedContractMethod<[
-        newDifficulty: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    "envAddress(string)": TypedContractMethod<[name: string], [string], "view">;
-    "envAddress(string,string)": TypedContractMethod<[
-        name: string,
-        delim: string
-    ], [
-        string[]
-    ], "view">;
-    "envBool(string)": TypedContractMethod<[name: string], [boolean], "view">;
-    "envBool(string,string)": TypedContractMethod<[
-        name: string,
-        delim: string
-    ], [
-        boolean[]
-    ], "view">;
-    "envBytes(string)": TypedContractMethod<[name: string], [string], "view">;
-    "envBytes(string,string)": TypedContractMethod<[
-        name: string,
-        delim: string
-    ], [
-        string[]
-    ], "view">;
-    "envBytes32(string,string)": TypedContractMethod<[
-        name: string,
-        delim: string
-    ], [
-        string[]
-    ], "view">;
-    "envBytes32(string)": TypedContractMethod<[name: string], [string], "view">;
-    "envInt(string,string)": TypedContractMethod<[
-        name: string,
-        delim: string
-    ], [
-        bigint[]
-    ], "view">;
-    "envInt(string)": TypedContractMethod<[name: string], [bigint], "view">;
-    "envOr(string,string,bytes32[])": TypedContractMethod<[
-        name: string,
-        delim: string,
-        defaultValue: BytesLike[]
-    ], [
-        string[]
-    ], "nonpayable">;
-    "envOr(string,string,int256[])": TypedContractMethod<[
-        name: string,
-        delim: string,
-        defaultValue: BigNumberish[]
-    ], [
-        bigint[]
-    ], "nonpayable">;
-    "envOr(string,bool)": TypedContractMethod<[
-        name: string,
-        defaultValue: boolean
-    ], [
-        boolean
-    ], "nonpayable">;
-    "envOr(string,address)": TypedContractMethod<[
-        name: string,
-        defaultValue: AddressLike
-    ], [
-        string
-    ], "nonpayable">;
-    "envOr(string,uint256)": TypedContractMethod<[
-        name: string,
-        defaultValue: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    "envOr(string,string,bytes[])": TypedContractMethod<[
-        name: string,
-        delim: string,
-        defaultValue: BytesLike[]
-    ], [
-        string[]
-    ], "nonpayable">;
-    "envOr(string,string,uint256[])": TypedContractMethod<[
-        name: string,
-        delim: string,
-        defaultValue: BigNumberish[]
-    ], [
-        bigint[]
-    ], "nonpayable">;
-    "envOr(string,string,string[])": TypedContractMethod<[
-        name: string,
-        delim: string,
-        defaultValue: string[]
-    ], [
-        string[]
-    ], "nonpayable">;
-    "envOr(string,bytes)": TypedContractMethod<[
-        name: string,
-        defaultValue: BytesLike
-    ], [
-        string
-    ], "nonpayable">;
-    "envOr(string,bytes32)": TypedContractMethod<[
-        name: string,
-        defaultValue: BytesLike
-    ], [
-        string
-    ], "nonpayable">;
-    "envOr(string,int256)": TypedContractMethod<[
-        name: string,
-        defaultValue: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    "envOr(string,string,address[])": TypedContractMethod<[
-        name: string,
-        delim: string,
-        defaultValue: AddressLike[]
-    ], [
-        string[]
-    ], "nonpayable">;
-    "envOr(string,string)": TypedContractMethod<[
-        name: string,
-        defaultValue: string
-    ], [
-        string
-    ], "nonpayable">;
-    "envOr(string,string,bool[])": TypedContractMethod<[
-        name: string,
-        delim: string,
-        defaultValue: boolean[]
-    ], [
-        boolean[]
-    ], "nonpayable">;
-    "envString(string,string)": TypedContractMethod<[
-        name: string,
-        delim: string
-    ], [
-        string[]
-    ], "view">;
-    "envString(string)": TypedContractMethod<[name: string], [string], "view">;
-    "envUint(string)": TypedContractMethod<[name: string], [bigint], "view">;
-    "envUint(string,string)": TypedContractMethod<[
-        name: string,
-        delim: string
-    ], [
-        bigint[]
-    ], "view">;
-    etch: TypedContractMethod<[
-        target: AddressLike,
-        newRuntimeBytecode: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    "expectCall(address,uint256,uint64,bytes)": TypedContractMethod<[
-        callee: AddressLike,
-        msgValue: BigNumberish,
-        gas: BigNumberish,
-        data: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    "expectCall(address,uint256,uint64,bytes,uint64)": TypedContractMethod<[
-        callee: AddressLike,
-        msgValue: BigNumberish,
-        gas: BigNumberish,
-        data: BytesLike,
-        count: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    "expectCall(address,uint256,bytes,uint64)": TypedContractMethod<[
-        callee: AddressLike,
-        msgValue: BigNumberish,
-        data: BytesLike,
-        count: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    "expectCall(address,bytes)": TypedContractMethod<[
-        callee: AddressLike,
-        data: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    "expectCall(address,bytes,uint64)": TypedContractMethod<[
-        callee: AddressLike,
-        data: BytesLike,
-        count: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    "expectCall(address,uint256,bytes)": TypedContractMethod<[
-        callee: AddressLike,
-        msgValue: BigNumberish,
-        data: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    "expectCallMinGas(address,uint256,uint64,bytes)": TypedContractMethod<[
-        callee: AddressLike,
-        msgValue: BigNumberish,
-        minGas: BigNumberish,
-        data: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    "expectCallMinGas(address,uint256,uint64,bytes,uint64)": TypedContractMethod<[
-        callee: AddressLike,
-        msgValue: BigNumberish,
-        minGas: BigNumberish,
-        data: BytesLike,
-        count: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    "expectEmit()": TypedContractMethod<[], [void], "nonpayable">;
-    "expectEmit(bool,bool,bool,bool)": TypedContractMethod<[
-        checkTopic1: boolean,
-        checkTopic2: boolean,
-        checkTopic3: boolean,
-        checkData: boolean
-    ], [
-        void
-    ], "nonpayable">;
-    "expectEmit(bool,bool,bool,bool,address)": TypedContractMethod<[
-        checkTopic1: boolean,
-        checkTopic2: boolean,
-        checkTopic3: boolean,
-        checkData: boolean,
-        emitter: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    "expectEmit(address)": TypedContractMethod<[
-        emitter: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    "expectRevert(bytes4)": TypedContractMethod<[
-        revertData: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    "expectRevert(bytes)": TypedContractMethod<[
-        revertData: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    "expectRevert()": TypedContractMethod<[], [void], "nonpayable">;
-    expectSafeMemory: TypedContractMethod<[
-        min: BigNumberish,
-        max: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    expectSafeMemoryCall: TypedContractMethod<[
-        min: BigNumberish,
-        max: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    fee: TypedContractMethod<[newBasefee: BigNumberish], [void], "nonpayable">;
-    ffi: TypedContractMethod<[commandInput: string[]], [string], "nonpayable">;
-    fsMetadata: TypedContractMethod<[
-        path: string
-    ], [
-        VmSafe.FsMetadataStructOutput
-    ], "view">;
-    getCode: TypedContractMethod<[artifactPath: string], [string], "view">;
-    getDeployedCode: TypedContractMethod<[
-        artifactPath: string
-    ], [
-        string
-    ], "view">;
-    getLabel: TypedContractMethod<[account: AddressLike], [string], "nonpayable">;
-    getNonce: TypedContractMethod<[account: AddressLike], [bigint], "view">;
-    getRecordedLogs: TypedContractMethod<[
-    ], [
-        VmSafe.LogStructOutput[]
-    ], "nonpayable">;
-    isPersistent: TypedContractMethod<[account: AddressLike], [boolean], "view">;
-    label: TypedContractMethod<[
-        account: AddressLike,
-        newLabel: string
-    ], [
-        void
-    ], "nonpayable">;
-    load: TypedContractMethod<[
-        target: AddressLike,
-        slot: BytesLike
-    ], [
-        string
-    ], "view">;
-    "makePersistent(address[])": TypedContractMethod<[
-        accounts: AddressLike[]
-    ], [
-        void
-    ], "nonpayable">;
-    "makePersistent(address,address)": TypedContractMethod<[
-        account0: AddressLike,
-        account1: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    "makePersistent(address)": TypedContractMethod<[
-        account: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    "makePersistent(address,address,address)": TypedContractMethod<[
-        account0: AddressLike,
-        account1: AddressLike,
-        account2: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    "mockCall(address,uint256,bytes,bytes)": TypedContractMethod<[
-        callee: AddressLike,
-        msgValue: BigNumberish,
-        data: BytesLike,
-        returnData: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    "mockCall(address,bytes,bytes)": TypedContractMethod<[
-        callee: AddressLike,
-        data: BytesLike,
-        returnData: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    "mockCallRevert(address,uint256,bytes,bytes)": TypedContractMethod<[
-        callee: AddressLike,
-        msgValue: BigNumberish,
-        data: BytesLike,
-        revertData: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    "mockCallRevert(address,bytes,bytes)": TypedContractMethod<[
-        callee: AddressLike,
-        data: BytesLike,
-        revertData: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    parseAddress: TypedContractMethod<[
-        stringifiedValue: string
-    ], [
-        string
-    ], "view">;
-    parseBool: TypedContractMethod<[stringifiedValue: string], [boolean], "view">;
-    parseBytes: TypedContractMethod<[stringifiedValue: string], [string], "view">;
-    parseBytes32: TypedContractMethod<[
-        stringifiedValue: string
-    ], [
-        string
-    ], "view">;
-    parseInt: TypedContractMethod<[stringifiedValue: string], [bigint], "view">;
-    "parseJson(string)": TypedContractMethod<[json: string], [string], "view">;
-    "parseJson(string,string)": TypedContractMethod<[
-        json: string,
-        key: string
-    ], [
-        string
-    ], "view">;
-    parseJsonAddress: TypedContractMethod<[
-        arg0: string,
-        arg1: string
-    ], [
-        string
-    ], "nonpayable">;
-    parseJsonAddressArray: TypedContractMethod<[
-        arg0: string,
-        arg1: string
-    ], [
-        string[]
-    ], "nonpayable">;
-    parseJsonBool: TypedContractMethod<[
-        arg0: string,
-        arg1: string
-    ], [
-        boolean
-    ], "nonpayable">;
-    parseJsonBoolArray: TypedContractMethod<[
-        arg0: string,
-        arg1: string
-    ], [
-        boolean[]
-    ], "nonpayable">;
-    parseJsonBytes: TypedContractMethod<[
-        arg0: string,
-        arg1: string
-    ], [
-        string
-    ], "nonpayable">;
-    parseJsonBytes32: TypedContractMethod<[
-        arg0: string,
-        arg1: string
-    ], [
-        string
-    ], "nonpayable">;
-    parseJsonBytes32Array: TypedContractMethod<[
-        arg0: string,
-        arg1: string
-    ], [
-        string[]
-    ], "nonpayable">;
-    parseJsonBytesArray: TypedContractMethod<[
-        arg0: string,
-        arg1: string
-    ], [
-        string[]
-    ], "nonpayable">;
-    parseJsonInt: TypedContractMethod<[
-        arg0: string,
-        arg1: string
-    ], [
-        bigint
-    ], "nonpayable">;
-    parseJsonIntArray: TypedContractMethod<[
-        arg0: string,
-        arg1: string
-    ], [
-        bigint[]
-    ], "nonpayable">;
-    parseJsonString: TypedContractMethod<[
-        arg0: string,
-        arg1: string
-    ], [
-        string
-    ], "nonpayable">;
-    parseJsonStringArray: TypedContractMethod<[
-        arg0: string,
-        arg1: string
-    ], [
-        string[]
-    ], "nonpayable">;
-    parseJsonUint: TypedContractMethod<[
-        arg0: string,
-        arg1: string
-    ], [
-        bigint
-    ], "nonpayable">;
-    parseJsonUintArray: TypedContractMethod<[
-        arg0: string,
-        arg1: string
-    ], [
-        bigint[]
-    ], "nonpayable">;
-    parseUint: TypedContractMethod<[stringifiedValue: string], [bigint], "view">;
-    pauseGasMetering: TypedContractMethod<[], [void], "nonpayable">;
-    "prank(address,address)": TypedContractMethod<[
-        msgSender: AddressLike,
-        txOrigin: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    "prank(address)": TypedContractMethod<[
-        msgSender: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    prevrandao: TypedContractMethod<[
-        newPrevrandao: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    projectRoot: TypedContractMethod<[], [string], "view">;
-    readCallers: TypedContractMethod<[
-    ], [
-        [
-            bigint,
+        }>;
+        activeFork(overrides?: CallOverrides): Promise<BigNumber>;
+        addr(privateKey: BigNumberish, overrides?: CallOverrides): Promise<string>;
+        allowCheatcodes(account: string, overrides?: CallOverrides): Promise<void>;
+        assume(condition: boolean, overrides?: CallOverrides): Promise<void>;
+        "breakpoint(string)"(char: string, overrides?: CallOverrides): Promise<void>;
+        "breakpoint(string,bool)"(char: string, value: boolean, overrides?: CallOverrides): Promise<void>;
+        "broadcast()"(overrides?: CallOverrides): Promise<void>;
+        "broadcast(address)"(signer: string, overrides?: CallOverrides): Promise<void>;
+        "broadcast(uint256)"(privateKey: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        chainId(newChainId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        clearMockedCalls(overrides?: CallOverrides): Promise<void>;
+        closeFile(path: string, overrides?: CallOverrides): Promise<void>;
+        coinbase(newCoinbase: string, overrides?: CallOverrides): Promise<void>;
+        createDir(path: string, recursive: boolean, overrides?: CallOverrides): Promise<void>;
+        "createFork(string)"(urlOrAlias: string, overrides?: CallOverrides): Promise<BigNumber>;
+        "createFork(string,uint256)"(urlOrAlias: string, blockNumber: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        "createFork(string,bytes32)"(urlOrAlias: string, txHash: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+        "createSelectFork(string,uint256)"(urlOrAlias: string, blockNumber: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        "createSelectFork(string,bytes32)"(urlOrAlias: string, txHash: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+        "createSelectFork(string)"(urlOrAlias: string, overrides?: CallOverrides): Promise<BigNumber>;
+        deal(account: string, newBalance: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        "deriveKey(string,uint32)"(mnemonic: string, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        "deriveKey(string,string,uint32)"(mnemonic: string, derivationPath: string, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        difficulty(newDifficulty: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        "envAddress(string)"(name: string, overrides?: CallOverrides): Promise<string>;
+        "envAddress(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<string[]>;
+        "envBool(string)"(name: string, overrides?: CallOverrides): Promise<boolean>;
+        "envBool(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<boolean[]>;
+        "envBytes(string)"(name: string, overrides?: CallOverrides): Promise<string>;
+        "envBytes(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<string[]>;
+        "envBytes32(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<string[]>;
+        "envBytes32(string)"(name: string, overrides?: CallOverrides): Promise<string>;
+        "envInt(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<BigNumber[]>;
+        "envInt(string)"(name: string, overrides?: CallOverrides): Promise<BigNumber>;
+        "envOr(string,string,bytes32[])"(name: string, delim: string, defaultValue: BytesLike[], overrides?: CallOverrides): Promise<string[]>;
+        "envOr(string,string,int256[])"(name: string, delim: string, defaultValue: BigNumberish[], overrides?: CallOverrides): Promise<BigNumber[]>;
+        "envOr(string,bool)"(name: string, defaultValue: boolean, overrides?: CallOverrides): Promise<boolean>;
+        "envOr(string,address)"(name: string, defaultValue: string, overrides?: CallOverrides): Promise<string>;
+        "envOr(string,uint256)"(name: string, defaultValue: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        "envOr(string,string,bytes[])"(name: string, delim: string, defaultValue: BytesLike[], overrides?: CallOverrides): Promise<string[]>;
+        "envOr(string,string,uint256[])"(name: string, delim: string, defaultValue: BigNumberish[], overrides?: CallOverrides): Promise<BigNumber[]>;
+        "envOr(string,string,string[])"(name: string, delim: string, defaultValue: string[], overrides?: CallOverrides): Promise<string[]>;
+        "envOr(string,bytes)"(name: string, defaultValue: BytesLike, overrides?: CallOverrides): Promise<string>;
+        "envOr(string,bytes32)"(name: string, defaultValue: BytesLike, overrides?: CallOverrides): Promise<string>;
+        "envOr(string,int256)"(name: string, defaultValue: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        "envOr(string,string,address[])"(name: string, delim: string, defaultValue: string[], overrides?: CallOverrides): Promise<string[]>;
+        "envOr(string,string)"(name: string, defaultValue: string, overrides?: CallOverrides): Promise<string>;
+        "envOr(string,string,bool[])"(name: string, delim: string, defaultValue: boolean[], overrides?: CallOverrides): Promise<boolean[]>;
+        "envString(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<string[]>;
+        "envString(string)"(name: string, overrides?: CallOverrides): Promise<string>;
+        "envUint(string)"(name: string, overrides?: CallOverrides): Promise<BigNumber>;
+        "envUint(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<BigNumber[]>;
+        etch(target: string, newRuntimeBytecode: BytesLike, overrides?: CallOverrides): Promise<void>;
+        "expectCall(address,uint256,uint64,bytes)"(callee: string, msgValue: BigNumberish, gas: BigNumberish, data: BytesLike, overrides?: CallOverrides): Promise<void>;
+        "expectCall(address,uint256,uint64,bytes,uint64)"(callee: string, msgValue: BigNumberish, gas: BigNumberish, data: BytesLike, count: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        "expectCall(address,uint256,bytes,uint64)"(callee: string, msgValue: BigNumberish, data: BytesLike, count: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        "expectCall(address,bytes)"(callee: string, data: BytesLike, overrides?: CallOverrides): Promise<void>;
+        "expectCall(address,bytes,uint64)"(callee: string, data: BytesLike, count: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        "expectCall(address,uint256,bytes)"(callee: string, msgValue: BigNumberish, data: BytesLike, overrides?: CallOverrides): Promise<void>;
+        "expectCallMinGas(address,uint256,uint64,bytes)"(callee: string, msgValue: BigNumberish, minGas: BigNumberish, data: BytesLike, overrides?: CallOverrides): Promise<void>;
+        "expectCallMinGas(address,uint256,uint64,bytes,uint64)"(callee: string, msgValue: BigNumberish, minGas: BigNumberish, data: BytesLike, count: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        "expectEmit()"(overrides?: CallOverrides): Promise<void>;
+        "expectEmit(bool,bool,bool,bool)"(checkTopic1: boolean, checkTopic2: boolean, checkTopic3: boolean, checkData: boolean, overrides?: CallOverrides): Promise<void>;
+        "expectEmit(bool,bool,bool,bool,address)"(checkTopic1: boolean, checkTopic2: boolean, checkTopic3: boolean, checkData: boolean, emitter: string, overrides?: CallOverrides): Promise<void>;
+        "expectEmit(address)"(emitter: string, overrides?: CallOverrides): Promise<void>;
+        "expectRevert(bytes4)"(revertData: BytesLike, overrides?: CallOverrides): Promise<void>;
+        "expectRevert(bytes)"(revertData: BytesLike, overrides?: CallOverrides): Promise<void>;
+        "expectRevert()"(overrides?: CallOverrides): Promise<void>;
+        expectSafeMemory(min: BigNumberish, max: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        expectSafeMemoryCall(min: BigNumberish, max: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        fee(newBasefee: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        ffi(commandInput: string[], overrides?: CallOverrides): Promise<string>;
+        fsMetadata(path: string, overrides?: CallOverrides): Promise<VmSafe.FsMetadataStructOutput>;
+        getCode(artifactPath: string, overrides?: CallOverrides): Promise<string>;
+        getDeployedCode(artifactPath: string, overrides?: CallOverrides): Promise<string>;
+        getLabel(account: string, overrides?: CallOverrides): Promise<string>;
+        getNonce(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getRecordedLogs(overrides?: CallOverrides): Promise<VmSafe.LogStructOutput[]>;
+        isPersistent(account: string, overrides?: CallOverrides): Promise<boolean>;
+        label(account: string, newLabel: string, overrides?: CallOverrides): Promise<void>;
+        load(target: string, slot: BytesLike, overrides?: CallOverrides): Promise<string>;
+        "makePersistent(address[])"(accounts: string[], overrides?: CallOverrides): Promise<void>;
+        "makePersistent(address,address)"(account0: string, account1: string, overrides?: CallOverrides): Promise<void>;
+        "makePersistent(address)"(account: string, overrides?: CallOverrides): Promise<void>;
+        "makePersistent(address,address,address)"(account0: string, account1: string, account2: string, overrides?: CallOverrides): Promise<void>;
+        "mockCall(address,uint256,bytes,bytes)"(callee: string, msgValue: BigNumberish, data: BytesLike, returnData: BytesLike, overrides?: CallOverrides): Promise<void>;
+        "mockCall(address,bytes,bytes)"(callee: string, data: BytesLike, returnData: BytesLike, overrides?: CallOverrides): Promise<void>;
+        "mockCallRevert(address,uint256,bytes,bytes)"(callee: string, msgValue: BigNumberish, data: BytesLike, revertData: BytesLike, overrides?: CallOverrides): Promise<void>;
+        "mockCallRevert(address,bytes,bytes)"(callee: string, data: BytesLike, revertData: BytesLike, overrides?: CallOverrides): Promise<void>;
+        parseAddress(stringifiedValue: string, overrides?: CallOverrides): Promise<string>;
+        parseBool(stringifiedValue: string, overrides?: CallOverrides): Promise<boolean>;
+        parseBytes(stringifiedValue: string, overrides?: CallOverrides): Promise<string>;
+        parseBytes32(stringifiedValue: string, overrides?: CallOverrides): Promise<string>;
+        parseInt(stringifiedValue: string, overrides?: CallOverrides): Promise<BigNumber>;
+        "parseJson(string)"(json: string, overrides?: CallOverrides): Promise<string>;
+        "parseJson(string,string)"(json: string, key: string, overrides?: CallOverrides): Promise<string>;
+        parseJsonAddress(arg0: string, arg1: string, overrides?: CallOverrides): Promise<string>;
+        parseJsonAddressArray(arg0: string, arg1: string, overrides?: CallOverrides): Promise<string[]>;
+        parseJsonBool(arg0: string, arg1: string, overrides?: CallOverrides): Promise<boolean>;
+        parseJsonBoolArray(arg0: string, arg1: string, overrides?: CallOverrides): Promise<boolean[]>;
+        parseJsonBytes(arg0: string, arg1: string, overrides?: CallOverrides): Promise<string>;
+        parseJsonBytes32(arg0: string, arg1: string, overrides?: CallOverrides): Promise<string>;
+        parseJsonBytes32Array(arg0: string, arg1: string, overrides?: CallOverrides): Promise<string[]>;
+        parseJsonBytesArray(arg0: string, arg1: string, overrides?: CallOverrides): Promise<string[]>;
+        parseJsonInt(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+        parseJsonIntArray(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber[]>;
+        parseJsonString(arg0: string, arg1: string, overrides?: CallOverrides): Promise<string>;
+        parseJsonStringArray(arg0: string, arg1: string, overrides?: CallOverrides): Promise<string[]>;
+        parseJsonUint(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+        parseJsonUintArray(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber[]>;
+        parseUint(stringifiedValue: string, overrides?: CallOverrides): Promise<BigNumber>;
+        pauseGasMetering(overrides?: CallOverrides): Promise<void>;
+        "prank(address,address)"(msgSender: string, txOrigin: string, overrides?: CallOverrides): Promise<void>;
+        "prank(address)"(msgSender: string, overrides?: CallOverrides): Promise<void>;
+        prevrandao(newPrevrandao: BytesLike, overrides?: CallOverrides): Promise<void>;
+        projectRoot(overrides?: CallOverrides): Promise<string>;
+        readCallers(overrides?: CallOverrides): Promise<[
+            number,
             string,
             string
         ] & {
-            callerMode: bigint;
+            callerMode: number;
             msgSender: string;
             txOrigin: string;
-        }
-    ], "nonpayable">;
-    "readDir(string,uint64)": TypedContractMethod<[
-        path: string,
-        maxDepth: BigNumberish
-    ], [
-        VmSafe.DirEntryStructOutput[]
-    ], "view">;
-    "readDir(string,uint64,bool)": TypedContractMethod<[
-        path: string,
-        maxDepth: BigNumberish,
-        followLinks: boolean
-    ], [
-        VmSafe.DirEntryStructOutput[]
-    ], "view">;
-    "readDir(string)": TypedContractMethod<[
-        path: string
-    ], [
-        VmSafe.DirEntryStructOutput[]
-    ], "view">;
-    readFile: TypedContractMethod<[path: string], [string], "view">;
-    readFileBinary: TypedContractMethod<[path: string], [string], "view">;
-    readLine: TypedContractMethod<[path: string], [string], "view">;
-    readLink: TypedContractMethod<[linkPath: string], [string], "view">;
-    record: TypedContractMethod<[], [void], "nonpayable">;
-    recordLogs: TypedContractMethod<[], [void], "nonpayable">;
-    rememberKey: TypedContractMethod<[
-        privateKey: BigNumberish
-    ], [
-        string
-    ], "nonpayable">;
-    removeDir: TypedContractMethod<[
-        path: string,
-        recursive: boolean
-    ], [
-        void
-    ], "nonpayable">;
-    removeFile: TypedContractMethod<[path: string], [void], "nonpayable">;
-    resetNonce: TypedContractMethod<[account: AddressLike], [void], "nonpayable">;
-    resumeGasMetering: TypedContractMethod<[], [void], "nonpayable">;
-    revertTo: TypedContractMethod<[
-        snapshotId: BigNumberish
-    ], [
-        boolean
-    ], "nonpayable">;
-    "revokePersistent(address[])": TypedContractMethod<[
-        accounts: AddressLike[]
-    ], [
-        void
-    ], "nonpayable">;
-    "revokePersistent(address)": TypedContractMethod<[
-        account: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    roll: TypedContractMethod<[newHeight: BigNumberish], [void], "nonpayable">;
-    "rollFork(bytes32)": TypedContractMethod<[
-        txHash: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    "rollFork(uint256,uint256)": TypedContractMethod<[
-        forkId: BigNumberish,
-        blockNumber: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    "rollFork(uint256)": TypedContractMethod<[
-        blockNumber: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    "rollFork(uint256,bytes32)": TypedContractMethod<[
-        forkId: BigNumberish,
-        txHash: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    rpcUrl: TypedContractMethod<[rpcAlias: string], [string], "view">;
-    rpcUrlStructs: TypedContractMethod<[], [VmSafe.RpcStructOutput[]], "view">;
-    rpcUrls: TypedContractMethod<[], [[string, string][]], "view">;
-    selectFork: TypedContractMethod<[forkId: BigNumberish], [void], "nonpayable">;
-    "serializeAddress(string,string,address[])": TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        values: AddressLike[]
-    ], [
-        string
-    ], "nonpayable">;
-    "serializeAddress(string,string,address)": TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        value: AddressLike
-    ], [
-        string
-    ], "nonpayable">;
-    "serializeBool(string,string,bool[])": TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        values: boolean[]
-    ], [
-        string
-    ], "nonpayable">;
-    "serializeBool(string,string,bool)": TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        value: boolean
-    ], [
-        string
-    ], "nonpayable">;
-    "serializeBytes(string,string,bytes[])": TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        values: BytesLike[]
-    ], [
-        string
-    ], "nonpayable">;
-    "serializeBytes(string,string,bytes)": TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        value: BytesLike
-    ], [
-        string
-    ], "nonpayable">;
-    "serializeBytes32(string,string,bytes32[])": TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        values: BytesLike[]
-    ], [
-        string
-    ], "nonpayable">;
-    "serializeBytes32(string,string,bytes32)": TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        value: BytesLike
-    ], [
-        string
-    ], "nonpayable">;
-    "serializeInt(string,string,int256)": TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        value: BigNumberish
-    ], [
-        string
-    ], "nonpayable">;
-    "serializeInt(string,string,int256[])": TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        values: BigNumberish[]
-    ], [
-        string
-    ], "nonpayable">;
-    "serializeString(string,string,string[])": TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        values: string[]
-    ], [
-        string
-    ], "nonpayable">;
-    "serializeString(string,string,string)": TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        value: string
-    ], [
-        string
-    ], "nonpayable">;
-    "serializeUint(string,string,uint256)": TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        value: BigNumberish
-    ], [
-        string
-    ], "nonpayable">;
-    "serializeUint(string,string,uint256[])": TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        values: BigNumberish[]
-    ], [
-        string
-    ], "nonpayable">;
-    setEnv: TypedContractMethod<[
-        name: string,
-        value: string
-    ], [
-        void
-    ], "nonpayable">;
-    setNonce: TypedContractMethod<[
-        account: AddressLike,
-        newNonce: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    setNonceUnsafe: TypedContractMethod<[
-        account: AddressLike,
-        newNonce: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    sign: TypedContractMethod<[
-        privateKey: BigNumberish,
-        digest: BytesLike
-    ], [
-        [bigint, string, string] & {
-            v: bigint;
+        }>;
+        "readDir(string,uint64)"(path: string, maxDepth: BigNumberish, overrides?: CallOverrides): Promise<VmSafe.DirEntryStructOutput[]>;
+        "readDir(string,uint64,bool)"(path: string, maxDepth: BigNumberish, followLinks: boolean, overrides?: CallOverrides): Promise<VmSafe.DirEntryStructOutput[]>;
+        "readDir(string)"(path: string, overrides?: CallOverrides): Promise<VmSafe.DirEntryStructOutput[]>;
+        readFile(path: string, overrides?: CallOverrides): Promise<string>;
+        readFileBinary(path: string, overrides?: CallOverrides): Promise<string>;
+        readLine(path: string, overrides?: CallOverrides): Promise<string>;
+        readLink(linkPath: string, overrides?: CallOverrides): Promise<string>;
+        record(overrides?: CallOverrides): Promise<void>;
+        recordLogs(overrides?: CallOverrides): Promise<void>;
+        rememberKey(privateKey: BigNumberish, overrides?: CallOverrides): Promise<string>;
+        removeDir(path: string, recursive: boolean, overrides?: CallOverrides): Promise<void>;
+        removeFile(path: string, overrides?: CallOverrides): Promise<void>;
+        resetNonce(account: string, overrides?: CallOverrides): Promise<void>;
+        resumeGasMetering(overrides?: CallOverrides): Promise<void>;
+        revertTo(snapshotId: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+        "revokePersistent(address[])"(accounts: string[], overrides?: CallOverrides): Promise<void>;
+        "revokePersistent(address)"(account: string, overrides?: CallOverrides): Promise<void>;
+        roll(newHeight: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        "rollFork(bytes32)"(txHash: BytesLike, overrides?: CallOverrides): Promise<void>;
+        "rollFork(uint256,uint256)"(forkId: BigNumberish, blockNumber: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        "rollFork(uint256)"(blockNumber: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        "rollFork(uint256,bytes32)"(forkId: BigNumberish, txHash: BytesLike, overrides?: CallOverrides): Promise<void>;
+        rpcUrl(rpcAlias: string, overrides?: CallOverrides): Promise<string>;
+        rpcUrlStructs(overrides?: CallOverrides): Promise<VmSafe.RpcStructOutput[]>;
+        rpcUrls(overrides?: CallOverrides): Promise<[string, string][]>;
+        selectFork(forkId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        "serializeAddress(string,string,address[])"(objectKey: string, valueKey: string, values: string[], overrides?: CallOverrides): Promise<string>;
+        "serializeAddress(string,string,address)"(objectKey: string, valueKey: string, value: string, overrides?: CallOverrides): Promise<string>;
+        "serializeBool(string,string,bool[])"(objectKey: string, valueKey: string, values: boolean[], overrides?: CallOverrides): Promise<string>;
+        "serializeBool(string,string,bool)"(objectKey: string, valueKey: string, value: boolean, overrides?: CallOverrides): Promise<string>;
+        "serializeBytes(string,string,bytes[])"(objectKey: string, valueKey: string, values: BytesLike[], overrides?: CallOverrides): Promise<string>;
+        "serializeBytes(string,string,bytes)"(objectKey: string, valueKey: string, value: BytesLike, overrides?: CallOverrides): Promise<string>;
+        "serializeBytes32(string,string,bytes32[])"(objectKey: string, valueKey: string, values: BytesLike[], overrides?: CallOverrides): Promise<string>;
+        "serializeBytes32(string,string,bytes32)"(objectKey: string, valueKey: string, value: BytesLike, overrides?: CallOverrides): Promise<string>;
+        "serializeInt(string,string,int256)"(objectKey: string, valueKey: string, value: BigNumberish, overrides?: CallOverrides): Promise<string>;
+        "serializeInt(string,string,int256[])"(objectKey: string, valueKey: string, values: BigNumberish[], overrides?: CallOverrides): Promise<string>;
+        "serializeString(string,string,string[])"(objectKey: string, valueKey: string, values: string[], overrides?: CallOverrides): Promise<string>;
+        "serializeString(string,string,string)"(objectKey: string, valueKey: string, value: string, overrides?: CallOverrides): Promise<string>;
+        "serializeUint(string,string,uint256)"(objectKey: string, valueKey: string, value: BigNumberish, overrides?: CallOverrides): Promise<string>;
+        "serializeUint(string,string,uint256[])"(objectKey: string, valueKey: string, values: BigNumberish[], overrides?: CallOverrides): Promise<string>;
+        setEnv(name: string, value: string, overrides?: CallOverrides): Promise<void>;
+        setNonce(account: string, newNonce: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        setNonceUnsafe(account: string, newNonce: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        sign(privateKey: BigNumberish, digest: BytesLike, overrides?: CallOverrides): Promise<[number, string, string] & {
+            v: number;
             r: string;
             s: string;
-        }
-    ], "view">;
-    skip: TypedContractMethod<[skipTest: boolean], [void], "nonpayable">;
-    snapshot: TypedContractMethod<[], [bigint], "nonpayable">;
-    "startBroadcast()": TypedContractMethod<[], [void], "nonpayable">;
-    "startBroadcast(address)": TypedContractMethod<[
-        signer: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    "startBroadcast(uint256)": TypedContractMethod<[
-        privateKey: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    "startPrank(address)": TypedContractMethod<[
-        msgSender: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    "startPrank(address,address)": TypedContractMethod<[
-        msgSender: AddressLike,
-        txOrigin: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    stopBroadcast: TypedContractMethod<[], [void], "nonpayable">;
-    stopPrank: TypedContractMethod<[], [void], "nonpayable">;
-    store: TypedContractMethod<[
-        target: AddressLike,
-        slot: BytesLike,
-        value: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    "toString(address)": TypedContractMethod<[
-        value: AddressLike
-    ], [
-        string
-    ], "view">;
-    "toString(uint256)": TypedContractMethod<[
-        value: BigNumberish
-    ], [
-        string
-    ], "view">;
-    "toString(bytes)": TypedContractMethod<[value: BytesLike], [string], "view">;
-    "toString(bool)": TypedContractMethod<[value: boolean], [string], "view">;
-    "toString(int256)": TypedContractMethod<[
-        value: BigNumberish
-    ], [
-        string
-    ], "view">;
-    "toString(bytes32)": TypedContractMethod<[
-        value: BytesLike
-    ], [
-        string
-    ], "view">;
-    "transact(uint256,bytes32)": TypedContractMethod<[
-        forkId: BigNumberish,
-        txHash: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    "transact(bytes32)": TypedContractMethod<[
-        txHash: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    txGasPrice: TypedContractMethod<[
-        newGasPrice: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    warp: TypedContractMethod<[newTimestamp: BigNumberish], [void], "nonpayable">;
-    writeFile: TypedContractMethod<[
-        path: string,
-        data: string
-    ], [
-        void
-    ], "nonpayable">;
-    writeFileBinary: TypedContractMethod<[
-        path: string,
-        data: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    "writeJson(string,string,string)": TypedContractMethod<[
-        json: string,
-        path: string,
-        valueKey: string
-    ], [
-        void
-    ], "nonpayable">;
-    "writeJson(string,string)": TypedContractMethod<[
-        json: string,
-        path: string
-    ], [
-        void
-    ], "nonpayable">;
-    writeLine: TypedContractMethod<[
-        path: string,
-        data: string
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "accesses"): TypedContractMethod<[
-        target: AddressLike
-    ], [
-        [string[], string[]] & {
-            readSlots: string[];
-            writeSlots: string[];
-        }
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "activeFork"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "addr"): TypedContractMethod<[privateKey: BigNumberish], [string], "view">;
-    getFunction(nameOrSignature: "allowCheatcodes"): TypedContractMethod<[account: AddressLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "assume"): TypedContractMethod<[condition: boolean], [void], "view">;
-    getFunction(nameOrSignature: "breakpoint(string)"): TypedContractMethod<[char: string], [void], "nonpayable">;
-    getFunction(nameOrSignature: "breakpoint(string,bool)"): TypedContractMethod<[char: string, value: boolean], [void], "nonpayable">;
-    getFunction(nameOrSignature: "broadcast()"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "broadcast(address)"): TypedContractMethod<[signer: AddressLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "broadcast(uint256)"): TypedContractMethod<[privateKey: BigNumberish], [void], "nonpayable">;
-    getFunction(nameOrSignature: "chainId"): TypedContractMethod<[newChainId: BigNumberish], [void], "nonpayable">;
-    getFunction(nameOrSignature: "clearMockedCalls"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "closeFile"): TypedContractMethod<[path: string], [void], "nonpayable">;
-    getFunction(nameOrSignature: "coinbase"): TypedContractMethod<[newCoinbase: AddressLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "createDir"): TypedContractMethod<[
-        path: string,
-        recursive: boolean
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "createFork(string)"): TypedContractMethod<[urlOrAlias: string], [bigint], "nonpayable">;
-    getFunction(nameOrSignature: "createFork(string,uint256)"): TypedContractMethod<[
-        urlOrAlias: string,
-        blockNumber: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "createFork(string,bytes32)"): TypedContractMethod<[
-        urlOrAlias: string,
-        txHash: BytesLike
-    ], [
-        bigint
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "createSelectFork(string,uint256)"): TypedContractMethod<[
-        urlOrAlias: string,
-        blockNumber: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "createSelectFork(string,bytes32)"): TypedContractMethod<[
-        urlOrAlias: string,
-        txHash: BytesLike
-    ], [
-        bigint
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "createSelectFork(string)"): TypedContractMethod<[urlOrAlias: string], [bigint], "nonpayable">;
-    getFunction(nameOrSignature: "deal"): TypedContractMethod<[
-        account: AddressLike,
-        newBalance: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "deriveKey(string,uint32)"): TypedContractMethod<[
-        mnemonic: string,
-        index: BigNumberish
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "deriveKey(string,string,uint32)"): TypedContractMethod<[
-        mnemonic: string,
-        derivationPath: string,
-        index: BigNumberish
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "difficulty"): TypedContractMethod<[newDifficulty: BigNumberish], [void], "nonpayable">;
-    getFunction(nameOrSignature: "envAddress(string)"): TypedContractMethod<[name: string], [string], "view">;
-    getFunction(nameOrSignature: "envAddress(string,string)"): TypedContractMethod<[name: string, delim: string], [string[]], "view">;
-    getFunction(nameOrSignature: "envBool(string)"): TypedContractMethod<[name: string], [boolean], "view">;
-    getFunction(nameOrSignature: "envBool(string,string)"): TypedContractMethod<[name: string, delim: string], [boolean[]], "view">;
-    getFunction(nameOrSignature: "envBytes(string)"): TypedContractMethod<[name: string], [string], "view">;
-    getFunction(nameOrSignature: "envBytes(string,string)"): TypedContractMethod<[name: string, delim: string], [string[]], "view">;
-    getFunction(nameOrSignature: "envBytes32(string,string)"): TypedContractMethod<[name: string, delim: string], [string[]], "view">;
-    getFunction(nameOrSignature: "envBytes32(string)"): TypedContractMethod<[name: string], [string], "view">;
-    getFunction(nameOrSignature: "envInt(string,string)"): TypedContractMethod<[name: string, delim: string], [bigint[]], "view">;
-    getFunction(nameOrSignature: "envInt(string)"): TypedContractMethod<[name: string], [bigint], "view">;
-    getFunction(nameOrSignature: "envOr(string,string,bytes32[])"): TypedContractMethod<[
-        name: string,
-        delim: string,
-        defaultValue: BytesLike[]
-    ], [
-        string[]
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "envOr(string,string,int256[])"): TypedContractMethod<[
-        name: string,
-        delim: string,
-        defaultValue: BigNumberish[]
-    ], [
-        bigint[]
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "envOr(string,bool)"): TypedContractMethod<[
-        name: string,
-        defaultValue: boolean
-    ], [
-        boolean
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "envOr(string,address)"): TypedContractMethod<[
-        name: string,
-        defaultValue: AddressLike
-    ], [
-        string
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "envOr(string,uint256)"): TypedContractMethod<[
-        name: string,
-        defaultValue: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "envOr(string,string,bytes[])"): TypedContractMethod<[
-        name: string,
-        delim: string,
-        defaultValue: BytesLike[]
-    ], [
-        string[]
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "envOr(string,string,uint256[])"): TypedContractMethod<[
-        name: string,
-        delim: string,
-        defaultValue: BigNumberish[]
-    ], [
-        bigint[]
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "envOr(string,string,string[])"): TypedContractMethod<[
-        name: string,
-        delim: string,
-        defaultValue: string[]
-    ], [
-        string[]
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "envOr(string,bytes)"): TypedContractMethod<[
-        name: string,
-        defaultValue: BytesLike
-    ], [
-        string
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "envOr(string,bytes32)"): TypedContractMethod<[
-        name: string,
-        defaultValue: BytesLike
-    ], [
-        string
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "envOr(string,int256)"): TypedContractMethod<[
-        name: string,
-        defaultValue: BigNumberish
-    ], [
-        bigint
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "envOr(string,string,address[])"): TypedContractMethod<[
-        name: string,
-        delim: string,
-        defaultValue: AddressLike[]
-    ], [
-        string[]
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "envOr(string,string)"): TypedContractMethod<[
-        name: string,
-        defaultValue: string
-    ], [
-        string
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "envOr(string,string,bool[])"): TypedContractMethod<[
-        name: string,
-        delim: string,
-        defaultValue: boolean[]
-    ], [
-        boolean[]
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "envString(string,string)"): TypedContractMethod<[name: string, delim: string], [string[]], "view">;
-    getFunction(nameOrSignature: "envString(string)"): TypedContractMethod<[name: string], [string], "view">;
-    getFunction(nameOrSignature: "envUint(string)"): TypedContractMethod<[name: string], [bigint], "view">;
-    getFunction(nameOrSignature: "envUint(string,string)"): TypedContractMethod<[name: string, delim: string], [bigint[]], "view">;
-    getFunction(nameOrSignature: "etch"): TypedContractMethod<[
-        target: AddressLike,
-        newRuntimeBytecode: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "expectCall(address,uint256,uint64,bytes)"): TypedContractMethod<[
-        callee: AddressLike,
-        msgValue: BigNumberish,
-        gas: BigNumberish,
-        data: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "expectCall(address,uint256,uint64,bytes,uint64)"): TypedContractMethod<[
-        callee: AddressLike,
-        msgValue: BigNumberish,
-        gas: BigNumberish,
-        data: BytesLike,
-        count: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "expectCall(address,uint256,bytes,uint64)"): TypedContractMethod<[
-        callee: AddressLike,
-        msgValue: BigNumberish,
-        data: BytesLike,
-        count: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "expectCall(address,bytes)"): TypedContractMethod<[
-        callee: AddressLike,
-        data: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "expectCall(address,bytes,uint64)"): TypedContractMethod<[
-        callee: AddressLike,
-        data: BytesLike,
-        count: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "expectCall(address,uint256,bytes)"): TypedContractMethod<[
-        callee: AddressLike,
-        msgValue: BigNumberish,
-        data: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "expectCallMinGas(address,uint256,uint64,bytes)"): TypedContractMethod<[
-        callee: AddressLike,
-        msgValue: BigNumberish,
-        minGas: BigNumberish,
-        data: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "expectCallMinGas(address,uint256,uint64,bytes,uint64)"): TypedContractMethod<[
-        callee: AddressLike,
-        msgValue: BigNumberish,
-        minGas: BigNumberish,
-        data: BytesLike,
-        count: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "expectEmit()"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "expectEmit(bool,bool,bool,bool)"): TypedContractMethod<[
-        checkTopic1: boolean,
-        checkTopic2: boolean,
-        checkTopic3: boolean,
-        checkData: boolean
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "expectEmit(bool,bool,bool,bool,address)"): TypedContractMethod<[
-        checkTopic1: boolean,
-        checkTopic2: boolean,
-        checkTopic3: boolean,
-        checkData: boolean,
-        emitter: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "expectEmit(address)"): TypedContractMethod<[emitter: AddressLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "expectRevert(bytes4)"): TypedContractMethod<[revertData: BytesLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "expectRevert(bytes)"): TypedContractMethod<[revertData: BytesLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "expectRevert()"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "expectSafeMemory"): TypedContractMethod<[
-        min: BigNumberish,
-        max: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "expectSafeMemoryCall"): TypedContractMethod<[
-        min: BigNumberish,
-        max: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "fee"): TypedContractMethod<[newBasefee: BigNumberish], [void], "nonpayable">;
-    getFunction(nameOrSignature: "ffi"): TypedContractMethod<[commandInput: string[]], [string], "nonpayable">;
-    getFunction(nameOrSignature: "fsMetadata"): TypedContractMethod<[
-        path: string
-    ], [
-        VmSafe.FsMetadataStructOutput
-    ], "view">;
-    getFunction(nameOrSignature: "getCode"): TypedContractMethod<[artifactPath: string], [string], "view">;
-    getFunction(nameOrSignature: "getDeployedCode"): TypedContractMethod<[artifactPath: string], [string], "view">;
-    getFunction(nameOrSignature: "getLabel"): TypedContractMethod<[account: AddressLike], [string], "nonpayable">;
-    getFunction(nameOrSignature: "getNonce"): TypedContractMethod<[account: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "getRecordedLogs"): TypedContractMethod<[], [VmSafe.LogStructOutput[]], "nonpayable">;
-    getFunction(nameOrSignature: "isPersistent"): TypedContractMethod<[account: AddressLike], [boolean], "view">;
-    getFunction(nameOrSignature: "label"): TypedContractMethod<[
-        account: AddressLike,
-        newLabel: string
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "load"): TypedContractMethod<[
-        target: AddressLike,
-        slot: BytesLike
-    ], [
-        string
-    ], "view">;
-    getFunction(nameOrSignature: "makePersistent(address[])"): TypedContractMethod<[accounts: AddressLike[]], [void], "nonpayable">;
-    getFunction(nameOrSignature: "makePersistent(address,address)"): TypedContractMethod<[
-        account0: AddressLike,
-        account1: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "makePersistent(address)"): TypedContractMethod<[account: AddressLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "makePersistent(address,address,address)"): TypedContractMethod<[
-        account0: AddressLike,
-        account1: AddressLike,
-        account2: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "mockCall(address,uint256,bytes,bytes)"): TypedContractMethod<[
-        callee: AddressLike,
-        msgValue: BigNumberish,
-        data: BytesLike,
-        returnData: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "mockCall(address,bytes,bytes)"): TypedContractMethod<[
-        callee: AddressLike,
-        data: BytesLike,
-        returnData: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "mockCallRevert(address,uint256,bytes,bytes)"): TypedContractMethod<[
-        callee: AddressLike,
-        msgValue: BigNumberish,
-        data: BytesLike,
-        revertData: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "mockCallRevert(address,bytes,bytes)"): TypedContractMethod<[
-        callee: AddressLike,
-        data: BytesLike,
-        revertData: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "parseAddress"): TypedContractMethod<[stringifiedValue: string], [string], "view">;
-    getFunction(nameOrSignature: "parseBool"): TypedContractMethod<[stringifiedValue: string], [boolean], "view">;
-    getFunction(nameOrSignature: "parseBytes"): TypedContractMethod<[stringifiedValue: string], [string], "view">;
-    getFunction(nameOrSignature: "parseBytes32"): TypedContractMethod<[stringifiedValue: string], [string], "view">;
-    getFunction(nameOrSignature: "parseInt"): TypedContractMethod<[stringifiedValue: string], [bigint], "view">;
-    getFunction(nameOrSignature: "parseJson(string)"): TypedContractMethod<[json: string], [string], "view">;
-    getFunction(nameOrSignature: "parseJson(string,string)"): TypedContractMethod<[json: string, key: string], [string], "view">;
-    getFunction(nameOrSignature: "parseJsonAddress"): TypedContractMethod<[arg0: string, arg1: string], [string], "nonpayable">;
-    getFunction(nameOrSignature: "parseJsonAddressArray"): TypedContractMethod<[
-        arg0: string,
-        arg1: string
-    ], [
-        string[]
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "parseJsonBool"): TypedContractMethod<[arg0: string, arg1: string], [boolean], "nonpayable">;
-    getFunction(nameOrSignature: "parseJsonBoolArray"): TypedContractMethod<[
-        arg0: string,
-        arg1: string
-    ], [
-        boolean[]
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "parseJsonBytes"): TypedContractMethod<[arg0: string, arg1: string], [string], "nonpayable">;
-    getFunction(nameOrSignature: "parseJsonBytes32"): TypedContractMethod<[arg0: string, arg1: string], [string], "nonpayable">;
-    getFunction(nameOrSignature: "parseJsonBytes32Array"): TypedContractMethod<[
-        arg0: string,
-        arg1: string
-    ], [
-        string[]
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "parseJsonBytesArray"): TypedContractMethod<[
-        arg0: string,
-        arg1: string
-    ], [
-        string[]
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "parseJsonInt"): TypedContractMethod<[arg0: string, arg1: string], [bigint], "nonpayable">;
-    getFunction(nameOrSignature: "parseJsonIntArray"): TypedContractMethod<[
-        arg0: string,
-        arg1: string
-    ], [
-        bigint[]
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "parseJsonString"): TypedContractMethod<[arg0: string, arg1: string], [string], "nonpayable">;
-    getFunction(nameOrSignature: "parseJsonStringArray"): TypedContractMethod<[
-        arg0: string,
-        arg1: string
-    ], [
-        string[]
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "parseJsonUint"): TypedContractMethod<[arg0: string, arg1: string], [bigint], "nonpayable">;
-    getFunction(nameOrSignature: "parseJsonUintArray"): TypedContractMethod<[
-        arg0: string,
-        arg1: string
-    ], [
-        bigint[]
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "parseUint"): TypedContractMethod<[stringifiedValue: string], [bigint], "view">;
-    getFunction(nameOrSignature: "pauseGasMetering"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "prank(address,address)"): TypedContractMethod<[
-        msgSender: AddressLike,
-        txOrigin: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "prank(address)"): TypedContractMethod<[msgSender: AddressLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "prevrandao"): TypedContractMethod<[newPrevrandao: BytesLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "projectRoot"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "readCallers"): TypedContractMethod<[
-    ], [
-        [
-            bigint,
-            string,
-            string
-        ] & {
-            callerMode: bigint;
-            msgSender: string;
-            txOrigin: string;
-        }
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "readDir(string,uint64)"): TypedContractMethod<[
-        path: string,
-        maxDepth: BigNumberish
-    ], [
-        VmSafe.DirEntryStructOutput[]
-    ], "view">;
-    getFunction(nameOrSignature: "readDir(string,uint64,bool)"): TypedContractMethod<[
-        path: string,
-        maxDepth: BigNumberish,
-        followLinks: boolean
-    ], [
-        VmSafe.DirEntryStructOutput[]
-    ], "view">;
-    getFunction(nameOrSignature: "readDir(string)"): TypedContractMethod<[
-        path: string
-    ], [
-        VmSafe.DirEntryStructOutput[]
-    ], "view">;
-    getFunction(nameOrSignature: "readFile"): TypedContractMethod<[path: string], [string], "view">;
-    getFunction(nameOrSignature: "readFileBinary"): TypedContractMethod<[path: string], [string], "view">;
-    getFunction(nameOrSignature: "readLine"): TypedContractMethod<[path: string], [string], "view">;
-    getFunction(nameOrSignature: "readLink"): TypedContractMethod<[linkPath: string], [string], "view">;
-    getFunction(nameOrSignature: "record"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "recordLogs"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "rememberKey"): TypedContractMethod<[privateKey: BigNumberish], [string], "nonpayable">;
-    getFunction(nameOrSignature: "removeDir"): TypedContractMethod<[
-        path: string,
-        recursive: boolean
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "removeFile"): TypedContractMethod<[path: string], [void], "nonpayable">;
-    getFunction(nameOrSignature: "resetNonce"): TypedContractMethod<[account: AddressLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "resumeGasMetering"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "revertTo"): TypedContractMethod<[snapshotId: BigNumberish], [boolean], "nonpayable">;
-    getFunction(nameOrSignature: "revokePersistent(address[])"): TypedContractMethod<[accounts: AddressLike[]], [void], "nonpayable">;
-    getFunction(nameOrSignature: "revokePersistent(address)"): TypedContractMethod<[account: AddressLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "roll"): TypedContractMethod<[newHeight: BigNumberish], [void], "nonpayable">;
-    getFunction(nameOrSignature: "rollFork(bytes32)"): TypedContractMethod<[txHash: BytesLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "rollFork(uint256,uint256)"): TypedContractMethod<[
-        forkId: BigNumberish,
-        blockNumber: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "rollFork(uint256)"): TypedContractMethod<[blockNumber: BigNumberish], [void], "nonpayable">;
-    getFunction(nameOrSignature: "rollFork(uint256,bytes32)"): TypedContractMethod<[
-        forkId: BigNumberish,
-        txHash: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "rpcUrl"): TypedContractMethod<[rpcAlias: string], [string], "view">;
-    getFunction(nameOrSignature: "rpcUrlStructs"): TypedContractMethod<[], [VmSafe.RpcStructOutput[]], "view">;
-    getFunction(nameOrSignature: "rpcUrls"): TypedContractMethod<[], [[string, string][]], "view">;
-    getFunction(nameOrSignature: "selectFork"): TypedContractMethod<[forkId: BigNumberish], [void], "nonpayable">;
-    getFunction(nameOrSignature: "serializeAddress(string,string,address[])"): TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        values: AddressLike[]
-    ], [
-        string
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "serializeAddress(string,string,address)"): TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        value: AddressLike
-    ], [
-        string
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "serializeBool(string,string,bool[])"): TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        values: boolean[]
-    ], [
-        string
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "serializeBool(string,string,bool)"): TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        value: boolean
-    ], [
-        string
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "serializeBytes(string,string,bytes[])"): TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        values: BytesLike[]
-    ], [
-        string
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "serializeBytes(string,string,bytes)"): TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        value: BytesLike
-    ], [
-        string
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "serializeBytes32(string,string,bytes32[])"): TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        values: BytesLike[]
-    ], [
-        string
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "serializeBytes32(string,string,bytes32)"): TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        value: BytesLike
-    ], [
-        string
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "serializeInt(string,string,int256)"): TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        value: BigNumberish
-    ], [
-        string
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "serializeInt(string,string,int256[])"): TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        values: BigNumberish[]
-    ], [
-        string
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "serializeString(string,string,string[])"): TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        values: string[]
-    ], [
-        string
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "serializeString(string,string,string)"): TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        value: string
-    ], [
-        string
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "serializeUint(string,string,uint256)"): TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        value: BigNumberish
-    ], [
-        string
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "serializeUint(string,string,uint256[])"): TypedContractMethod<[
-        objectKey: string,
-        valueKey: string,
-        values: BigNumberish[]
-    ], [
-        string
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "setEnv"): TypedContractMethod<[name: string, value: string], [void], "nonpayable">;
-    getFunction(nameOrSignature: "setNonce"): TypedContractMethod<[
-        account: AddressLike,
-        newNonce: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "setNonceUnsafe"): TypedContractMethod<[
-        account: AddressLike,
-        newNonce: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "sign"): TypedContractMethod<[
-        privateKey: BigNumberish,
-        digest: BytesLike
-    ], [
-        [bigint, string, string] & {
-            v: bigint;
-            r: string;
-            s: string;
-        }
-    ], "view">;
-    getFunction(nameOrSignature: "skip"): TypedContractMethod<[skipTest: boolean], [void], "nonpayable">;
-    getFunction(nameOrSignature: "snapshot"): TypedContractMethod<[], [bigint], "nonpayable">;
-    getFunction(nameOrSignature: "startBroadcast()"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "startBroadcast(address)"): TypedContractMethod<[signer: AddressLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "startBroadcast(uint256)"): TypedContractMethod<[privateKey: BigNumberish], [void], "nonpayable">;
-    getFunction(nameOrSignature: "startPrank(address)"): TypedContractMethod<[msgSender: AddressLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "startPrank(address,address)"): TypedContractMethod<[
-        msgSender: AddressLike,
-        txOrigin: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "stopBroadcast"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "stopPrank"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "store"): TypedContractMethod<[
-        target: AddressLike,
-        slot: BytesLike,
-        value: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "toString(address)"): TypedContractMethod<[value: AddressLike], [string], "view">;
-    getFunction(nameOrSignature: "toString(uint256)"): TypedContractMethod<[value: BigNumberish], [string], "view">;
-    getFunction(nameOrSignature: "toString(bytes)"): TypedContractMethod<[value: BytesLike], [string], "view">;
-    getFunction(nameOrSignature: "toString(bool)"): TypedContractMethod<[value: boolean], [string], "view">;
-    getFunction(nameOrSignature: "toString(int256)"): TypedContractMethod<[value: BigNumberish], [string], "view">;
-    getFunction(nameOrSignature: "toString(bytes32)"): TypedContractMethod<[value: BytesLike], [string], "view">;
-    getFunction(nameOrSignature: "transact(uint256,bytes32)"): TypedContractMethod<[
-        forkId: BigNumberish,
-        txHash: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "transact(bytes32)"): TypedContractMethod<[txHash: BytesLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "txGasPrice"): TypedContractMethod<[newGasPrice: BigNumberish], [void], "nonpayable">;
-    getFunction(nameOrSignature: "warp"): TypedContractMethod<[newTimestamp: BigNumberish], [void], "nonpayable">;
-    getFunction(nameOrSignature: "writeFile"): TypedContractMethod<[path: string, data: string], [void], "nonpayable">;
-    getFunction(nameOrSignature: "writeFileBinary"): TypedContractMethod<[path: string, data: BytesLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "writeJson(string,string,string)"): TypedContractMethod<[
-        json: string,
-        path: string,
-        valueKey: string
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "writeJson(string,string)"): TypedContractMethod<[json: string, path: string], [void], "nonpayable">;
-    getFunction(nameOrSignature: "writeLine"): TypedContractMethod<[path: string, data: string], [void], "nonpayable">;
+        }>;
+        skip(skipTest: boolean, overrides?: CallOverrides): Promise<void>;
+        snapshot(overrides?: CallOverrides): Promise<BigNumber>;
+        "startBroadcast()"(overrides?: CallOverrides): Promise<void>;
+        "startBroadcast(address)"(signer: string, overrides?: CallOverrides): Promise<void>;
+        "startBroadcast(uint256)"(privateKey: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        "startPrank(address)"(msgSender: string, overrides?: CallOverrides): Promise<void>;
+        "startPrank(address,address)"(msgSender: string, txOrigin: string, overrides?: CallOverrides): Promise<void>;
+        stopBroadcast(overrides?: CallOverrides): Promise<void>;
+        stopPrank(overrides?: CallOverrides): Promise<void>;
+        store(target: string, slot: BytesLike, value: BytesLike, overrides?: CallOverrides): Promise<void>;
+        "toString(address)"(value: string, overrides?: CallOverrides): Promise<string>;
+        "toString(uint256)"(value: BigNumberish, overrides?: CallOverrides): Promise<string>;
+        "toString(bytes)"(value: BytesLike, overrides?: CallOverrides): Promise<string>;
+        "toString(bool)"(value: boolean, overrides?: CallOverrides): Promise<string>;
+        "toString(int256)"(value: BigNumberish, overrides?: CallOverrides): Promise<string>;
+        "toString(bytes32)"(value: BytesLike, overrides?: CallOverrides): Promise<string>;
+        "transact(uint256,bytes32)"(forkId: BigNumberish, txHash: BytesLike, overrides?: CallOverrides): Promise<void>;
+        "transact(bytes32)"(txHash: BytesLike, overrides?: CallOverrides): Promise<void>;
+        txGasPrice(newGasPrice: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        warp(newTimestamp: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        writeFile(path: string, data: string, overrides?: CallOverrides): Promise<void>;
+        writeFileBinary(path: string, data: BytesLike, overrides?: CallOverrides): Promise<void>;
+        "writeJson(string,string,string)"(json: string, path: string, valueKey: string, overrides?: CallOverrides): Promise<void>;
+        "writeJson(string,string)"(json: string, path: string, overrides?: CallOverrides): Promise<void>;
+        writeLine(path: string, data: string, overrides?: CallOverrides): Promise<void>;
+    };
     filters: {};
+    estimateGas: {
+        accesses(target: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        activeFork(overrides?: CallOverrides): Promise<BigNumber>;
+        addr(privateKey: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        allowCheatcodes(account: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        assume(condition: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+        "breakpoint(string)"(char: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "breakpoint(string,bool)"(char: string, value: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "broadcast()"(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "broadcast(address)"(signer: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "broadcast(uint256)"(privateKey: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        chainId(newChainId: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        clearMockedCalls(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        closeFile(path: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        coinbase(newCoinbase: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        createDir(path: string, recursive: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "createFork(string)"(urlOrAlias: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "createFork(string,uint256)"(urlOrAlias: string, blockNumber: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "createFork(string,bytes32)"(urlOrAlias: string, txHash: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "createSelectFork(string,uint256)"(urlOrAlias: string, blockNumber: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "createSelectFork(string,bytes32)"(urlOrAlias: string, txHash: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "createSelectFork(string)"(urlOrAlias: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        deal(account: string, newBalance: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "deriveKey(string,uint32)"(mnemonic: string, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        "deriveKey(string,string,uint32)"(mnemonic: string, derivationPath: string, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        difficulty(newDifficulty: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "envAddress(string)"(name: string, overrides?: CallOverrides): Promise<BigNumber>;
+        "envAddress(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<BigNumber>;
+        "envBool(string)"(name: string, overrides?: CallOverrides): Promise<BigNumber>;
+        "envBool(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<BigNumber>;
+        "envBytes(string)"(name: string, overrides?: CallOverrides): Promise<BigNumber>;
+        "envBytes(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<BigNumber>;
+        "envBytes32(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<BigNumber>;
+        "envBytes32(string)"(name: string, overrides?: CallOverrides): Promise<BigNumber>;
+        "envInt(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<BigNumber>;
+        "envInt(string)"(name: string, overrides?: CallOverrides): Promise<BigNumber>;
+        "envOr(string,string,bytes32[])"(name: string, delim: string, defaultValue: BytesLike[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "envOr(string,string,int256[])"(name: string, delim: string, defaultValue: BigNumberish[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "envOr(string,bool)"(name: string, defaultValue: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "envOr(string,address)"(name: string, defaultValue: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "envOr(string,uint256)"(name: string, defaultValue: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "envOr(string,string,bytes[])"(name: string, delim: string, defaultValue: BytesLike[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "envOr(string,string,uint256[])"(name: string, delim: string, defaultValue: BigNumberish[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "envOr(string,string,string[])"(name: string, delim: string, defaultValue: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "envOr(string,bytes)"(name: string, defaultValue: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "envOr(string,bytes32)"(name: string, defaultValue: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "envOr(string,int256)"(name: string, defaultValue: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "envOr(string,string,address[])"(name: string, delim: string, defaultValue: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "envOr(string,string)"(name: string, defaultValue: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "envOr(string,string,bool[])"(name: string, delim: string, defaultValue: boolean[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "envString(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<BigNumber>;
+        "envString(string)"(name: string, overrides?: CallOverrides): Promise<BigNumber>;
+        "envUint(string)"(name: string, overrides?: CallOverrides): Promise<BigNumber>;
+        "envUint(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<BigNumber>;
+        etch(target: string, newRuntimeBytecode: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "expectCall(address,uint256,uint64,bytes)"(callee: string, msgValue: BigNumberish, gas: BigNumberish, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "expectCall(address,uint256,uint64,bytes,uint64)"(callee: string, msgValue: BigNumberish, gas: BigNumberish, data: BytesLike, count: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "expectCall(address,uint256,bytes,uint64)"(callee: string, msgValue: BigNumberish, data: BytesLike, count: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "expectCall(address,bytes)"(callee: string, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "expectCall(address,bytes,uint64)"(callee: string, data: BytesLike, count: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "expectCall(address,uint256,bytes)"(callee: string, msgValue: BigNumberish, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "expectCallMinGas(address,uint256,uint64,bytes)"(callee: string, msgValue: BigNumberish, minGas: BigNumberish, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "expectCallMinGas(address,uint256,uint64,bytes,uint64)"(callee: string, msgValue: BigNumberish, minGas: BigNumberish, data: BytesLike, count: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "expectEmit()"(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "expectEmit(bool,bool,bool,bool)"(checkTopic1: boolean, checkTopic2: boolean, checkTopic3: boolean, checkData: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "expectEmit(bool,bool,bool,bool,address)"(checkTopic1: boolean, checkTopic2: boolean, checkTopic3: boolean, checkData: boolean, emitter: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "expectEmit(address)"(emitter: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "expectRevert(bytes4)"(revertData: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "expectRevert(bytes)"(revertData: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "expectRevert()"(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        expectSafeMemory(min: BigNumberish, max: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        expectSafeMemoryCall(min: BigNumberish, max: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        fee(newBasefee: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        ffi(commandInput: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        fsMetadata(path: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getCode(artifactPath: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getDeployedCode(artifactPath: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getLabel(account: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        getNonce(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getRecordedLogs(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        isPersistent(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+        label(account: string, newLabel: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        load(target: string, slot: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+        "makePersistent(address[])"(accounts: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "makePersistent(address,address)"(account0: string, account1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "makePersistent(address)"(account: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "makePersistent(address,address,address)"(account0: string, account1: string, account2: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "mockCall(address,uint256,bytes,bytes)"(callee: string, msgValue: BigNumberish, data: BytesLike, returnData: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "mockCall(address,bytes,bytes)"(callee: string, data: BytesLike, returnData: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "mockCallRevert(address,uint256,bytes,bytes)"(callee: string, msgValue: BigNumberish, data: BytesLike, revertData: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "mockCallRevert(address,bytes,bytes)"(callee: string, data: BytesLike, revertData: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        parseAddress(stringifiedValue: string, overrides?: CallOverrides): Promise<BigNumber>;
+        parseBool(stringifiedValue: string, overrides?: CallOverrides): Promise<BigNumber>;
+        parseBytes(stringifiedValue: string, overrides?: CallOverrides): Promise<BigNumber>;
+        parseBytes32(stringifiedValue: string, overrides?: CallOverrides): Promise<BigNumber>;
+        parseInt(stringifiedValue: string, overrides?: CallOverrides): Promise<BigNumber>;
+        "parseJson(string)"(json: string, overrides?: CallOverrides): Promise<BigNumber>;
+        "parseJson(string,string)"(json: string, key: string, overrides?: CallOverrides): Promise<BigNumber>;
+        parseJsonAddress(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        parseJsonAddressArray(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        parseJsonBool(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        parseJsonBoolArray(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        parseJsonBytes(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        parseJsonBytes32(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        parseJsonBytes32Array(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        parseJsonBytesArray(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        parseJsonInt(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        parseJsonIntArray(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        parseJsonString(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        parseJsonStringArray(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        parseJsonUint(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        parseJsonUintArray(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        parseUint(stringifiedValue: string, overrides?: CallOverrides): Promise<BigNumber>;
+        pauseGasMetering(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "prank(address,address)"(msgSender: string, txOrigin: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "prank(address)"(msgSender: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        prevrandao(newPrevrandao: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        projectRoot(overrides?: CallOverrides): Promise<BigNumber>;
+        readCallers(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "readDir(string,uint64)"(path: string, maxDepth: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        "readDir(string,uint64,bool)"(path: string, maxDepth: BigNumberish, followLinks: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+        "readDir(string)"(path: string, overrides?: CallOverrides): Promise<BigNumber>;
+        readFile(path: string, overrides?: CallOverrides): Promise<BigNumber>;
+        readFileBinary(path: string, overrides?: CallOverrides): Promise<BigNumber>;
+        readLine(path: string, overrides?: CallOverrides): Promise<BigNumber>;
+        readLink(linkPath: string, overrides?: CallOverrides): Promise<BigNumber>;
+        record(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        recordLogs(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        rememberKey(privateKey: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        removeDir(path: string, recursive: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        removeFile(path: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        resetNonce(account: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        resumeGasMetering(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        revertTo(snapshotId: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "revokePersistent(address[])"(accounts: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "revokePersistent(address)"(account: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        roll(newHeight: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "rollFork(bytes32)"(txHash: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "rollFork(uint256,uint256)"(forkId: BigNumberish, blockNumber: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "rollFork(uint256)"(blockNumber: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "rollFork(uint256,bytes32)"(forkId: BigNumberish, txHash: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        rpcUrl(rpcAlias: string, overrides?: CallOverrides): Promise<BigNumber>;
+        rpcUrlStructs(overrides?: CallOverrides): Promise<BigNumber>;
+        rpcUrls(overrides?: CallOverrides): Promise<BigNumber>;
+        selectFork(forkId: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "serializeAddress(string,string,address[])"(objectKey: string, valueKey: string, values: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "serializeAddress(string,string,address)"(objectKey: string, valueKey: string, value: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "serializeBool(string,string,bool[])"(objectKey: string, valueKey: string, values: boolean[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "serializeBool(string,string,bool)"(objectKey: string, valueKey: string, value: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "serializeBytes(string,string,bytes[])"(objectKey: string, valueKey: string, values: BytesLike[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "serializeBytes(string,string,bytes)"(objectKey: string, valueKey: string, value: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "serializeBytes32(string,string,bytes32[])"(objectKey: string, valueKey: string, values: BytesLike[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "serializeBytes32(string,string,bytes32)"(objectKey: string, valueKey: string, value: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "serializeInt(string,string,int256)"(objectKey: string, valueKey: string, value: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "serializeInt(string,string,int256[])"(objectKey: string, valueKey: string, values: BigNumberish[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "serializeString(string,string,string[])"(objectKey: string, valueKey: string, values: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "serializeString(string,string,string)"(objectKey: string, valueKey: string, value: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "serializeUint(string,string,uint256)"(objectKey: string, valueKey: string, value: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "serializeUint(string,string,uint256[])"(objectKey: string, valueKey: string, values: BigNumberish[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        setEnv(name: string, value: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        setNonce(account: string, newNonce: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        setNonceUnsafe(account: string, newNonce: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        sign(privateKey: BigNumberish, digest: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+        skip(skipTest: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        snapshot(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "startBroadcast()"(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "startBroadcast(address)"(signer: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "startBroadcast(uint256)"(privateKey: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "startPrank(address)"(msgSender: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "startPrank(address,address)"(msgSender: string, txOrigin: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        stopBroadcast(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        stopPrank(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        store(target: string, slot: BytesLike, value: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "toString(address)"(value: string, overrides?: CallOverrides): Promise<BigNumber>;
+        "toString(uint256)"(value: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        "toString(bytes)"(value: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+        "toString(bool)"(value: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+        "toString(int256)"(value: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        "toString(bytes32)"(value: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+        "transact(uint256,bytes32)"(forkId: BigNumberish, txHash: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "transact(bytes32)"(txHash: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        txGasPrice(newGasPrice: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        warp(newTimestamp: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        writeFile(path: string, data: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        writeFileBinary(path: string, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "writeJson(string,string,string)"(json: string, path: string, valueKey: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        "writeJson(string,string)"(json: string, path: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        writeLine(path: string, data: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        accesses(target: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        activeFork(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        addr(privateKey: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        allowCheatcodes(account: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        assume(condition: boolean, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "breakpoint(string)"(char: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "breakpoint(string,bool)"(char: string, value: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "broadcast()"(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "broadcast(address)"(signer: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "broadcast(uint256)"(privateKey: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        chainId(newChainId: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        clearMockedCalls(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        closeFile(path: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        coinbase(newCoinbase: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        createDir(path: string, recursive: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "createFork(string)"(urlOrAlias: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "createFork(string,uint256)"(urlOrAlias: string, blockNumber: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "createFork(string,bytes32)"(urlOrAlias: string, txHash: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "createSelectFork(string,uint256)"(urlOrAlias: string, blockNumber: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "createSelectFork(string,bytes32)"(urlOrAlias: string, txHash: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "createSelectFork(string)"(urlOrAlias: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        deal(account: string, newBalance: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "deriveKey(string,uint32)"(mnemonic: string, index: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "deriveKey(string,string,uint32)"(mnemonic: string, derivationPath: string, index: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        difficulty(newDifficulty: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "envAddress(string)"(name: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "envAddress(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "envBool(string)"(name: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "envBool(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "envBytes(string)"(name: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "envBytes(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "envBytes32(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "envBytes32(string)"(name: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "envInt(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "envInt(string)"(name: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "envOr(string,string,bytes32[])"(name: string, delim: string, defaultValue: BytesLike[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "envOr(string,string,int256[])"(name: string, delim: string, defaultValue: BigNumberish[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "envOr(string,bool)"(name: string, defaultValue: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "envOr(string,address)"(name: string, defaultValue: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "envOr(string,uint256)"(name: string, defaultValue: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "envOr(string,string,bytes[])"(name: string, delim: string, defaultValue: BytesLike[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "envOr(string,string,uint256[])"(name: string, delim: string, defaultValue: BigNumberish[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "envOr(string,string,string[])"(name: string, delim: string, defaultValue: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "envOr(string,bytes)"(name: string, defaultValue: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "envOr(string,bytes32)"(name: string, defaultValue: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "envOr(string,int256)"(name: string, defaultValue: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "envOr(string,string,address[])"(name: string, delim: string, defaultValue: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "envOr(string,string)"(name: string, defaultValue: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "envOr(string,string,bool[])"(name: string, delim: string, defaultValue: boolean[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "envString(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "envString(string)"(name: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "envUint(string)"(name: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "envUint(string,string)"(name: string, delim: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        etch(target: string, newRuntimeBytecode: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "expectCall(address,uint256,uint64,bytes)"(callee: string, msgValue: BigNumberish, gas: BigNumberish, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "expectCall(address,uint256,uint64,bytes,uint64)"(callee: string, msgValue: BigNumberish, gas: BigNumberish, data: BytesLike, count: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "expectCall(address,uint256,bytes,uint64)"(callee: string, msgValue: BigNumberish, data: BytesLike, count: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "expectCall(address,bytes)"(callee: string, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "expectCall(address,bytes,uint64)"(callee: string, data: BytesLike, count: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "expectCall(address,uint256,bytes)"(callee: string, msgValue: BigNumberish, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "expectCallMinGas(address,uint256,uint64,bytes)"(callee: string, msgValue: BigNumberish, minGas: BigNumberish, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "expectCallMinGas(address,uint256,uint64,bytes,uint64)"(callee: string, msgValue: BigNumberish, minGas: BigNumberish, data: BytesLike, count: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "expectEmit()"(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "expectEmit(bool,bool,bool,bool)"(checkTopic1: boolean, checkTopic2: boolean, checkTopic3: boolean, checkData: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "expectEmit(bool,bool,bool,bool,address)"(checkTopic1: boolean, checkTopic2: boolean, checkTopic3: boolean, checkData: boolean, emitter: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "expectEmit(address)"(emitter: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "expectRevert(bytes4)"(revertData: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "expectRevert(bytes)"(revertData: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "expectRevert()"(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        expectSafeMemory(min: BigNumberish, max: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        expectSafeMemoryCall(min: BigNumberish, max: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        fee(newBasefee: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        ffi(commandInput: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        fsMetadata(path: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getCode(artifactPath: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getDeployedCode(artifactPath: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getLabel(account: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        getNonce(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getRecordedLogs(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        isPersistent(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        label(account: string, newLabel: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        load(target: string, slot: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "makePersistent(address[])"(accounts: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "makePersistent(address,address)"(account0: string, account1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "makePersistent(address)"(account: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "makePersistent(address,address,address)"(account0: string, account1: string, account2: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "mockCall(address,uint256,bytes,bytes)"(callee: string, msgValue: BigNumberish, data: BytesLike, returnData: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "mockCall(address,bytes,bytes)"(callee: string, data: BytesLike, returnData: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "mockCallRevert(address,uint256,bytes,bytes)"(callee: string, msgValue: BigNumberish, data: BytesLike, revertData: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "mockCallRevert(address,bytes,bytes)"(callee: string, data: BytesLike, revertData: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        parseAddress(stringifiedValue: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        parseBool(stringifiedValue: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        parseBytes(stringifiedValue: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        parseBytes32(stringifiedValue: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        parseInt(stringifiedValue: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "parseJson(string)"(json: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "parseJson(string,string)"(json: string, key: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        parseJsonAddress(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        parseJsonAddressArray(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        parseJsonBool(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        parseJsonBoolArray(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        parseJsonBytes(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        parseJsonBytes32(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        parseJsonBytes32Array(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        parseJsonBytesArray(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        parseJsonInt(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        parseJsonIntArray(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        parseJsonString(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        parseJsonStringArray(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        parseJsonUint(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        parseJsonUintArray(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        parseUint(stringifiedValue: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        pauseGasMetering(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "prank(address,address)"(msgSender: string, txOrigin: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "prank(address)"(msgSender: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        prevrandao(newPrevrandao: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        projectRoot(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        readCallers(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "readDir(string,uint64)"(path: string, maxDepth: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "readDir(string,uint64,bool)"(path: string, maxDepth: BigNumberish, followLinks: boolean, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "readDir(string)"(path: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        readFile(path: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        readFileBinary(path: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        readLine(path: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        readLink(linkPath: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        record(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        recordLogs(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        rememberKey(privateKey: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        removeDir(path: string, recursive: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        removeFile(path: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        resetNonce(account: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        resumeGasMetering(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        revertTo(snapshotId: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "revokePersistent(address[])"(accounts: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "revokePersistent(address)"(account: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        roll(newHeight: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "rollFork(bytes32)"(txHash: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "rollFork(uint256,uint256)"(forkId: BigNumberish, blockNumber: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "rollFork(uint256)"(blockNumber: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "rollFork(uint256,bytes32)"(forkId: BigNumberish, txHash: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        rpcUrl(rpcAlias: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        rpcUrlStructs(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        rpcUrls(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        selectFork(forkId: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "serializeAddress(string,string,address[])"(objectKey: string, valueKey: string, values: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "serializeAddress(string,string,address)"(objectKey: string, valueKey: string, value: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "serializeBool(string,string,bool[])"(objectKey: string, valueKey: string, values: boolean[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "serializeBool(string,string,bool)"(objectKey: string, valueKey: string, value: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "serializeBytes(string,string,bytes[])"(objectKey: string, valueKey: string, values: BytesLike[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "serializeBytes(string,string,bytes)"(objectKey: string, valueKey: string, value: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "serializeBytes32(string,string,bytes32[])"(objectKey: string, valueKey: string, values: BytesLike[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "serializeBytes32(string,string,bytes32)"(objectKey: string, valueKey: string, value: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "serializeInt(string,string,int256)"(objectKey: string, valueKey: string, value: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "serializeInt(string,string,int256[])"(objectKey: string, valueKey: string, values: BigNumberish[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "serializeString(string,string,string[])"(objectKey: string, valueKey: string, values: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "serializeString(string,string,string)"(objectKey: string, valueKey: string, value: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "serializeUint(string,string,uint256)"(objectKey: string, valueKey: string, value: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "serializeUint(string,string,uint256[])"(objectKey: string, valueKey: string, values: BigNumberish[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        setEnv(name: string, value: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        setNonce(account: string, newNonce: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        setNonceUnsafe(account: string, newNonce: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        sign(privateKey: BigNumberish, digest: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        skip(skipTest: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        snapshot(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "startBroadcast()"(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "startBroadcast(address)"(signer: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "startBroadcast(uint256)"(privateKey: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "startPrank(address)"(msgSender: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "startPrank(address,address)"(msgSender: string, txOrigin: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        stopBroadcast(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        stopPrank(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        store(target: string, slot: BytesLike, value: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "toString(address)"(value: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "toString(uint256)"(value: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "toString(bytes)"(value: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "toString(bool)"(value: boolean, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "toString(int256)"(value: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "toString(bytes32)"(value: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        "transact(uint256,bytes32)"(forkId: BigNumberish, txHash: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "transact(bytes32)"(txHash: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        txGasPrice(newGasPrice: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        warp(newTimestamp: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        writeFile(path: string, data: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        writeFileBinary(path: string, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "writeJson(string,string,string)"(json: string, path: string, valueKey: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        "writeJson(string,string)"(json: string, path: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        writeLine(path: string, data: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+    };
 }

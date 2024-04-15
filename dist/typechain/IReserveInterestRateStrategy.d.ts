@@ -1,5 +1,7 @@
-import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedListener, TypedContractMethod } from "./common";
+import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 export declare namespace DataTypes {
     type CalculateInterestRatesParamsStruct = {
         unbacked: BigNumberish;
@@ -9,59 +11,66 @@ export declare namespace DataTypes {
         totalVariableDebt: BigNumberish;
         averageStableBorrowRate: BigNumberish;
         reserveFactor: BigNumberish;
-        reserve: AddressLike;
-        aToken: AddressLike;
+        reserve: string;
+        aToken: string;
     };
     type CalculateInterestRatesParamsStructOutput = [
-        unbacked: bigint,
-        liquidityAdded: bigint,
-        liquidityTaken: bigint,
-        totalStableDebt: bigint,
-        totalVariableDebt: bigint,
-        averageStableBorrowRate: bigint,
-        reserveFactor: bigint,
-        reserve: string,
-        aToken: string
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        string,
+        string
     ] & {
-        unbacked: bigint;
-        liquidityAdded: bigint;
-        liquidityTaken: bigint;
-        totalStableDebt: bigint;
-        totalVariableDebt: bigint;
-        averageStableBorrowRate: bigint;
-        reserveFactor: bigint;
+        unbacked: BigNumber;
+        liquidityAdded: BigNumber;
+        liquidityTaken: BigNumber;
+        totalStableDebt: BigNumber;
+        totalVariableDebt: BigNumber;
+        averageStableBorrowRate: BigNumber;
+        reserveFactor: BigNumber;
         reserve: string;
         aToken: string;
     };
 }
-export interface IReserveInterestRateStrategyInterface extends Interface {
-    getFunction(nameOrSignature: "calculateInterestRates"): FunctionFragment;
+export interface IReserveInterestRateStrategyInterface extends utils.Interface {
+    functions: {
+        "calculateInterestRates((uint256,uint256,uint256,uint256,uint256,uint256,uint256,address,address))": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "calculateInterestRates"): FunctionFragment;
     encodeFunctionData(functionFragment: "calculateInterestRates", values: [DataTypes.CalculateInterestRatesParamsStruct]): string;
     decodeFunctionResult(functionFragment: "calculateInterestRates", data: BytesLike): Result;
+    events: {};
 }
 export interface IReserveInterestRateStrategy extends BaseContract {
-    connect(runner?: ContractRunner | null): IReserveInterestRateStrategy;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: IReserveInterestRateStrategyInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    calculateInterestRates: TypedContractMethod<[
-        params: DataTypes.CalculateInterestRatesParamsStruct
-    ], [
-        [bigint, bigint, bigint]
-    ], "view">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "calculateInterestRates"): TypedContractMethod<[
-        params: DataTypes.CalculateInterestRatesParamsStruct
-    ], [
-        [bigint, bigint, bigint]
-    ], "view">;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        calculateInterestRates(params: DataTypes.CalculateInterestRatesParamsStruct, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, BigNumber]>;
+    };
+    calculateInterestRates(params: DataTypes.CalculateInterestRatesParamsStruct, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, BigNumber]>;
+    callStatic: {
+        calculateInterestRates(params: DataTypes.CalculateInterestRatesParamsStruct, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, BigNumber]>;
+    };
     filters: {};
+    estimateGas: {
+        calculateInterestRates(params: DataTypes.CalculateInterestRatesParamsStruct, overrides?: CallOverrides): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        calculateInterestRates(params: DataTypes.CalculateInterestRatesParamsStruct, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    };
 }

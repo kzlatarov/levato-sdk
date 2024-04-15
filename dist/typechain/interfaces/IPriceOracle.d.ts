@@ -1,39 +1,58 @@
-import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedListener, TypedContractMethod } from "../common";
-export interface IPriceOracleInterface extends Interface {
-    getFunction(nameOrSignature: "getAssetPrice" | "setAssetPrice"): FunctionFragment;
-    encodeFunctionData(functionFragment: "getAssetPrice", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "setAssetPrice", values: [AddressLike, BigNumberish]): string;
+import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, ContractTransaction, Overrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "../common";
+export interface IPriceOracleInterface extends utils.Interface {
+    functions: {
+        "getAssetPrice(address)": FunctionFragment;
+        "setAssetPrice(address,uint256)": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "getAssetPrice" | "setAssetPrice"): FunctionFragment;
+    encodeFunctionData(functionFragment: "getAssetPrice", values: [string]): string;
+    encodeFunctionData(functionFragment: "setAssetPrice", values: [string, BigNumberish]): string;
     decodeFunctionResult(functionFragment: "getAssetPrice", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "setAssetPrice", data: BytesLike): Result;
+    events: {};
 }
 export interface IPriceOracle extends BaseContract {
-    connect(runner?: ContractRunner | null): IPriceOracle;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: IPriceOracleInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    getAssetPrice: TypedContractMethod<[asset: AddressLike], [bigint], "view">;
-    setAssetPrice: TypedContractMethod<[
-        asset: AddressLike,
-        price: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "getAssetPrice"): TypedContractMethod<[asset: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "setAssetPrice"): TypedContractMethod<[
-        asset: AddressLike,
-        price: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        getAssetPrice(asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        setAssetPrice(asset: string, price: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+    };
+    getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    setAssetPrice(asset: string, price: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    callStatic: {
+        getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        setAssetPrice(asset: string, price: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    };
     filters: {};
+    estimateGas: {
+        getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        setAssetPrice(asset: string, price: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        getAssetPrice(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        setAssetPrice(asset: string, price: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+    };
 }

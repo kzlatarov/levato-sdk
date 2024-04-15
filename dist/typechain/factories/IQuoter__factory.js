@@ -7,81 +7,81 @@ exports.IQuoter__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
+        type: "function",
+        name: "estimateMaxSwapUniswapV3",
         inputs: [
             {
-                internalType: "address",
                 name: "_fromToken",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "_toToken",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "_amount",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint24",
                 name: "_poolFee",
                 type: "uint24",
+                internalType: "uint24",
             },
         ],
-        name: "estimateMaxSwapUniswapV3",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "estimateMinSwapUniswapV3",
         inputs: [
             {
-                internalType: "address",
                 name: "_fromToken",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "_toToken",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "_amount",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint24",
                 name: "_poolFee",
                 type: "uint24",
+                internalType: "uint24",
             },
         ],
-        name: "estimateMinSwapUniswapV3",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
 ];
 class IQuoter__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.IQuoter__factory = IQuoter__factory;

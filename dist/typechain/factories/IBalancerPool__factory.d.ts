@@ -1,245 +1,246 @@
-import { type ContractRunner } from "ethers";
+import { Signer } from "ethers";
+import type { Provider } from "@ethersproject/providers";
 import type { IBalancerPool, IBalancerPoolInterface } from "../IBalancerPool";
 export declare class IBalancerPool__factory {
     static readonly abi: readonly [{
+        readonly type: "function";
+        readonly name: "exitPool";
         readonly inputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "poolAmountIn";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }, {
-            readonly internalType: "uint256[]";
             readonly name: "minAmountsOut";
             readonly type: "uint256[]";
+            readonly internalType: "uint256[]";
         }];
-        readonly name: "exitPool";
         readonly outputs: readonly [];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "exitswapExternAmountOut";
         readonly inputs: readonly [{
-            readonly internalType: "address";
             readonly name: "tokenOut";
             readonly type: "address";
+            readonly internalType: "address";
         }, {
-            readonly internalType: "uint256";
             readonly name: "tokenAmountOut";
             readonly type: "uint256";
-        }, {
             readonly internalType: "uint256";
+        }, {
             readonly name: "maxPoolAmountIn";
             readonly type: "uint256";
-        }];
-        readonly name: "exitswapExternAmountOut";
-        readonly outputs: readonly [{
             readonly internalType: "uint256";
+        }];
+        readonly outputs: readonly [{
             readonly name: "poolAmountIn";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "getBalance";
         readonly inputs: readonly [{
-            readonly internalType: "address";
             readonly name: "token";
             readonly type: "address";
+            readonly internalType: "address";
         }];
-        readonly name: "getBalance";
         readonly outputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }, {
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "getFinalTokens";
+        readonly inputs: readonly [];
         readonly outputs: readonly [{
-            readonly internalType: "address[]";
             readonly name: "";
             readonly type: "address[]";
+            readonly internalType: "address[]";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "getNormalizedWeight";
         readonly inputs: readonly [{
-            readonly internalType: "address";
             readonly name: "token";
             readonly type: "address";
+            readonly internalType: "address";
         }];
-        readonly name: "getNormalizedWeight";
         readonly outputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }, {
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "getNormalizedWeights";
+        readonly inputs: readonly [];
         readonly outputs: readonly [{
-            readonly internalType: "uint256[]";
             readonly name: "";
             readonly type: "uint256[]";
+            readonly internalType: "uint256[]";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }, {
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "getNumTokens";
+        readonly inputs: readonly [];
         readonly outputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }, {
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "getPoolId";
+        readonly inputs: readonly [];
         readonly outputs: readonly [{
-            readonly internalType: "bytes32";
             readonly name: "";
             readonly type: "bytes32";
+            readonly internalType: "bytes32";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }, {
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "getSwapFee";
+        readonly inputs: readonly [];
         readonly outputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }, {
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "getVault";
+        readonly inputs: readonly [];
         readonly outputs: readonly [{
-            readonly internalType: "contract IBalancerVault";
             readonly name: "";
             readonly type: "address";
+            readonly internalType: "contract IBalancerVault";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "joinPool";
         readonly inputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "poolAmountOut";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }, {
-            readonly internalType: "uint256[]";
             readonly name: "maxAmountsIn";
             readonly type: "uint256[]";
+            readonly internalType: "uint256[]";
         }];
-        readonly name: "joinPool";
         readonly outputs: readonly [];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "joinswapExternAmountIn";
         readonly inputs: readonly [{
-            readonly internalType: "address";
             readonly name: "tokenIn";
             readonly type: "address";
+            readonly internalType: "address";
         }, {
-            readonly internalType: "uint256";
             readonly name: "tokenAmountIn";
             readonly type: "uint256";
-        }, {
             readonly internalType: "uint256";
+        }, {
             readonly name: "minPoolAmountOut";
             readonly type: "uint256";
-        }];
-        readonly name: "joinswapExternAmountIn";
-        readonly outputs: readonly [{
             readonly internalType: "uint256";
+        }];
+        readonly outputs: readonly [{
             readonly name: "poolAmountOut";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "swapExactAmountIn";
         readonly inputs: readonly [{
-            readonly internalType: "address";
             readonly name: "tokenIn";
             readonly type: "address";
+            readonly internalType: "address";
         }, {
-            readonly internalType: "uint256";
             readonly name: "tokenAmountIn";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }, {
-            readonly internalType: "address";
             readonly name: "tokenOut";
             readonly type: "address";
+            readonly internalType: "address";
         }, {
-            readonly internalType: "uint256";
             readonly name: "minAmountOut";
             readonly type: "uint256";
-        }, {
             readonly internalType: "uint256";
+        }, {
             readonly name: "maxPrice";
             readonly type: "uint256";
-        }];
-        readonly name: "swapExactAmountIn";
-        readonly outputs: readonly [{
             readonly internalType: "uint256";
+        }];
+        readonly outputs: readonly [{
             readonly name: "tokenAmountOut";
             readonly type: "uint256";
-        }, {
             readonly internalType: "uint256";
+        }, {
             readonly name: "spotPriceAfter";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "swapExactAmountOut";
         readonly inputs: readonly [{
-            readonly internalType: "address";
             readonly name: "tokenIn";
             readonly type: "address";
+            readonly internalType: "address";
         }, {
-            readonly internalType: "uint256";
             readonly name: "maxAmountIn";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }, {
-            readonly internalType: "address";
             readonly name: "tokenOut";
             readonly type: "address";
+            readonly internalType: "address";
         }, {
-            readonly internalType: "uint256";
             readonly name: "tokenAmountOut";
             readonly type: "uint256";
-        }, {
             readonly internalType: "uint256";
+        }, {
             readonly name: "maxPrice";
             readonly type: "uint256";
-        }];
-        readonly name: "swapExactAmountOut";
-        readonly outputs: readonly [{
             readonly internalType: "uint256";
+        }];
+        readonly outputs: readonly [{
             readonly name: "tokenAmountIn";
             readonly type: "uint256";
-        }, {
             readonly internalType: "uint256";
+        }, {
             readonly name: "spotPriceAfter";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }, {
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "totalSupply";
+        readonly inputs: readonly [];
         readonly outputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }];
     static createInterface(): IBalancerPoolInterface;
-    static connect(address: string, runner?: ContractRunner | null): IBalancerPool;
+    static connect(address: string, signerOrProvider: Signer | Provider): IBalancerPool;
 }

@@ -1,17 +1,18 @@
-import { type ContractRunner } from "ethers";
+import { Signer } from "ethers";
+import type { Provider } from "@ethersproject/providers";
 import type { IBeacon, IBeaconInterface } from "../IBeacon";
 export declare class IBeacon__factory {
     static readonly abi: readonly [{
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "implementation";
+        readonly inputs: readonly [];
         readonly outputs: readonly [{
-            readonly internalType: "address";
             readonly name: "";
             readonly type: "address";
+            readonly internalType: "address";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }];
     static createInterface(): IBeaconInterface;
-    static connect(address: string, runner?: ContractRunner | null): IBeacon;
+    static connect(address: string, signerOrProvider: Signer | Provider): IBeacon;
 }

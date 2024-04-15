@@ -7,257 +7,257 @@ exports.SolidlyPriceOracle__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        anonymous: false,
+        type: "function",
+        name: "SUPPORTED_BASE_TOKENS",
         inputs: [
             {
-                indexed: false,
-                internalType: "uint8",
-                name: "version",
-                type: "uint8",
-            },
-        ],
-        name: "Initialized",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "previousOwner",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "newOwner",
-                type: "address",
-            },
-        ],
-        name: "OwnershipTransferStarted",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "previousOwner",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "newOwner",
-                type: "address",
-            },
-        ],
-        name: "OwnershipTransferred",
-        type: "event",
-    },
-    {
-        inputs: [
-            {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "SUPPORTED_BASE_TOKENS",
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "WTOKEN",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_setSupportedBaseTokens",
         inputs: [
             {
-                internalType: "address[]",
                 name: "_supportedBaseTokens",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
-        name: "_setSupportedBaseTokens",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "acceptOwnership",
+        inputs: [],
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "getSupportedBaseTokens",
+        inputs: [],
         outputs: [
             {
-                internalType: "address[]",
                 name: "",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "initialize",
         inputs: [
             {
-                internalType: "address",
                 name: "_wtoken",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address[]",
                 name: "_supportedBaseTokens",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
-        name: "initialize",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "owner",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
         inputs: [],
-        name: "pendingOwner",
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "pendingOwner",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "poolFeeds",
         inputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "poolFeeds",
         outputs: [
             {
-                internalType: "address",
                 name: "poolAddress",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "baseToken",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "price",
         inputs: [
             {
-                internalType: "address",
                 name: "underlying",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "price",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "renounceOwnership",
+        inputs: [],
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "setPoolFeeds",
         inputs: [
             {
-                internalType: "address[]",
                 name: "underlyings",
                 type: "address[]",
+                internalType: "address[]",
             },
             {
-                components: [
-                    {
-                        internalType: "address",
-                        name: "poolAddress",
-                        type: "address",
-                    },
-                    {
-                        internalType: "address",
-                        name: "baseToken",
-                        type: "address",
-                    },
-                ],
-                internalType: "struct SolidlyPriceOracle.AssetConfig[]",
                 name: "assetConfig",
                 type: "tuple[]",
+                internalType: "struct SolidlyPriceOracle.AssetConfig[]",
+                components: [
+                    {
+                        name: "poolAddress",
+                        type: "address",
+                        internalType: "address",
+                    },
+                    {
+                        name: "baseToken",
+                        type: "address",
+                        internalType: "address",
+                    },
+                ],
             },
         ],
-        name: "setPoolFeeds",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "transferOwnership",
         inputs: [
             {
-                internalType: "address",
                 name: "newOwner",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "transferOwnership",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
+    },
+    {
+        type: "event",
+        name: "Initialized",
+        inputs: [
+            {
+                name: "version",
+                type: "uint8",
+                indexed: false,
+                internalType: "uint8",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "OwnershipTransferStarted",
+        inputs: [
+            {
+                name: "previousOwner",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "newOwner",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "OwnershipTransferred",
+        inputs: [
+            {
+                name: "previousOwner",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "newOwner",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
     },
 ];
 const _bytecode = "0x608060405234801561001057600080fd5b506111ff806100206000396000f3fe608060405234801561001057600080fd5b50600436106100cf5760003560e01c80638da5cb5b1161008c578063cef1090111610066578063cef1090114610196578063d856737d146101ea578063e30c3978146101fd578063f2fde38b1461020e57600080fd5b80638da5cb5b14610151578063946d920414610162578063aea910781461017557600080fd5b80630bb5ebc2146100d45780630fee7bc1146100e95780635bcf1f76146101195780636d913a1c1461012c578063715018a61461014157806379ba509714610149575b600080fd5b6100e76100e2366004610db7565b610221565b005b6100fc6100f7366004610ea8565b610412565b6040516001600160a01b0390911681526020015b60405180910390f35b6098546100fc906001600160a01b031681565b61013461043c565b6040516101109190610ec1565b6100e761049e565b6100e76104b2565b6033546001600160a01b03166100fc565b6100e7610170366004610f0e565b61052c565b610188610183366004610f5e565b61066d565b604051908152602001610110565b6101ca6101a4366004610f5e565b609760205260009081526040902080546001909101546001600160a01b03918216911682565b604080516001600160a01b03938416815292909116602083015201610110565b6100e76101f8366004610f82565b61067e565b6065546001600160a01b03166100fc565b6100e761021c366004610f5e565b61069d565b61022961070e565b6000825111801561023b575080518251145b6102b25760405162461bcd60e51b815260206004820152603860248201527f4c656e67746873206f6620626f746820617272617973206d757374206265206560448201527f7175616c20616e642067726561746572207468616e20302e000000000000000060648201526084015b60405180910390fd5b60005b825181101561040d5760008382815181106102d2576102d2610fbf565b602090810291909101015160985484519192506001600160a01b03169084908490811061030157610301610fbf565b6020026020010151602001516001600160a01b03161480610343575061034383838151811061033257610332610fbf565b602002602001015160200151610768565b61039a5760405162461bcd60e51b815260206004820152602260248201527f556e6465726c79696e6720746f6b656e206d75737420626520737570706f7274604482015261195960f21b60648201526084016102a9565b8282815181106103ac576103ac610fbf565b6020908102919091018101516001600160a01b0392831660009081526097835260409020815181549085166001600160a01b03199182161782559190920151600190920180549290931691161790558061040581610feb565b9150506102b5565b505050565b6099818154811061042257600080fd5b6000918252602090912001546001600160a01b0316905081565b6060609980548060200260200160405190810160405280929190818152602001828054801561049457602002820191906000526020600020905b81546001600160a01b03168152600190910190602001808311610476575b5050505050905090565b6104a661070e565b6104b060006107d2565b565b60655433906001600160a01b031681146105205760405162461bcd60e51b815260206004820152602960248201527f4f776e61626c6532537465703a2063616c6c6572206973206e6f7420746865206044820152683732bb9037bbb732b960b91b60648201526084016102a9565b610529816107d2565b50565b600054610100900460ff161580801561054c5750600054600160ff909116105b806105665750303b158015610566575060005460ff166001145b6105c95760405162461bcd60e51b815260206004820152602e60248201527f496e697469616c697a61626c653a20636f6e747261637420697320616c72656160448201526d191e481a5b9a5d1a585b1a5e995960921b60648201526084016102a9565b6000805460ff1916600117905580156105ec576000805461ff0019166101001790555b6105f46107eb565b609880546001600160a01b0319166001600160a01b0385161790558151610622906099906020850190610c20565b50801561040d576000805461ff0019169055604051600181527f7f26b83ff96e1f2b6a682f133852f6798a09c465da95921460cefb38474024989060200160405180910390a1505050565b60006106788261081a565b92915050565b61068661070e565b8051610699906099906020840190610c20565b5050565b6106a561070e565b606580546001600160a01b0383166001600160a01b031990911681179091556106d66033546001600160a01b031690565b6001600160a01b03167f38d16b8cac22d99fc7c124b9cd0de2d3fa1faef420bfe791d8c362d765e2270060405160405180910390a350565b6033546001600160a01b031633146104b05760405162461bcd60e51b815260206004820181905260248201527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e657260448201526064016102a9565b6000805b6099548110156107c957826001600160a01b03166099828154811061079357610793610fbf565b6000918252602090912001546001600160a01b031614156107b75750600192915050565b806107c181610feb565b91505061076c565b50600092915050565b606580546001600160a01b031916905561052981610b9e565b600054610100900460ff166108125760405162461bcd60e51b81526004016102a990611006565b6104b0610bf0565b6001600160a01b038082166000908152609760209081526040808320600181015490548251630dfe168160e01b8152925194959182169491169285928492630dfe1681926004808401939192918290030181865afa158015610880573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906108a49190611051565b90506000826001600160a01b031663d21220a76040518163ffffffff1660e01b8152600401602060405180830381865afa1580156108e6573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061090a9190611051565b90506000826001600160a01b0316856001600160a01b03161461092f57508180610933565b5080805b506000846001600160a01b031663517b3f8283846001600160a01b031663313ce5676040518163ffffffff1660e01b8152600401602060405180830381865afa158015610984573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906109a8919061106e565b6109b69060ff16600a611175565b6040516001600160e01b031960e085901b1681526001600160a01b0390921660048301526024820152604401602060405180830381865afa1580156109ff573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190610a239190611181565b6098549091506001600160a01b0387811691161415610a4757979650505050505050565b6040516315d5220f60e31b81526001600160a01b0387166004820152600090339063aea9107890602401602060405180830381865afa158015610a8e573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190610ab29190611181565b90506000876001600160a01b031663313ce5676040518163ffffffff1660e01b8152600401602060405180830381865afa158015610af4573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190610b18919061106e565b60ff16905060006012821115610b4f57610b3360128361119a565b610b3e90600a611175565b610b4890856111b1565b9050610b72565b610b5a82601261119a565b610b6590600a611175565b610b6f90856111d3565b90505b670de0b6b3a7640000610b8584836111d3565b610b8f91906111b1565b9b9a5050505050505050505050565b603380546001600160a01b038381166001600160a01b0319831681179093556040519116919082907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a35050565b600054610100900460ff16610c175760405162461bcd60e51b81526004016102a990611006565b6104b0336107d2565b828054828255906000526020600020908101928215610c75579160200282015b82811115610c7557825182546001600160a01b0319166001600160a01b03909116178255602090920191600190910190610c40565b50610c81929150610c85565b5090565b5b80821115610c815760008155600101610c86565b634e487b7160e01b600052604160045260246000fd5b6040805190810167ffffffffffffffff81118282101715610cd357610cd3610c9a565b60405290565b604051601f8201601f1916810167ffffffffffffffff81118282101715610d0257610d02610c9a565b604052919050565b600067ffffffffffffffff821115610d2457610d24610c9a565b5060051b60200190565b6001600160a01b038116811461052957600080fd5b600082601f830112610d5457600080fd5b81356020610d69610d6483610d0a565b610cd9565b82815260059290921b84018101918181019086841115610d8857600080fd5b8286015b84811015610dac578035610d9f81610d2e565b8352918301918301610d8c565b509695505050505050565b6000806040808486031215610dcb57600080fd5b833567ffffffffffffffff80821115610de357600080fd5b610def87838801610d43565b9450602091508186013581811115610e0657600080fd5b86019050601f81018713610e1957600080fd5b8035610e27610d6482610d0a565b81815260069190911b82018301908381019089831115610e4657600080fd5b928401925b82841015610e985785848b031215610e635760008081fd5b610e6b610cb0565b8435610e7681610d2e565b815284860135610e8581610d2e565b8187015282529285019290840190610e4b565b8096505050505050509250929050565b600060208284031215610eba57600080fd5b5035919050565b6020808252825182820181905260009190848201906040850190845b81811015610f025783516001600160a01b031683529284019291840191600101610edd565b50909695505050505050565b60008060408385031215610f2157600080fd5b8235610f2c81610d2e565b9150602083013567ffffffffffffffff811115610f4857600080fd5b610f5485828601610d43565b9150509250929050565b600060208284031215610f7057600080fd5b8135610f7b81610d2e565b9392505050565b600060208284031215610f9457600080fd5b813567ffffffffffffffff811115610fab57600080fd5b610fb784828501610d43565b949350505050565b634e487b7160e01b600052603260045260246000fd5b634e487b7160e01b600052601160045260246000fd5b6000600019821415610fff57610fff610fd5565b5060010190565b6020808252602b908201527f496e697469616c697a61626c653a20636f6e7472616374206973206e6f74206960408201526a6e697469616c697a696e6760a81b606082015260800190565b60006020828403121561106357600080fd5b8151610f7b81610d2e565b60006020828403121561108057600080fd5b815160ff81168114610f7b57600080fd5b600181815b808511156110cc5781600019048211156110b2576110b2610fd5565b808516156110bf57918102915b93841c9390800290611096565b509250929050565b6000826110e357506001610678565b816110f057506000610678565b816001811461110657600281146111105761112c565b6001915050610678565b60ff84111561112157611121610fd5565b50506001821b610678565b5060208310610133831016604e8410600b841016171561114f575081810a610678565b6111598383611091565b806000190482111561116d5761116d610fd5565b029392505050565b6000610f7b83836110d4565b60006020828403121561119357600080fd5b5051919050565b6000828210156111ac576111ac610fd5565b500390565b6000826111ce57634e487b7160e01b600052601260045260246000fd5b500490565b60008160001904831182151516156111ed576111ed610fd5565b50029056fea164736f6c634300080a000a";
@@ -271,22 +271,25 @@ class SolidlyPriceOracle__factory extends ethers_1.ContractFactory {
             super(_abi, _bytecode, args[0]);
         }
     }
-    getDeployTransaction(overrides) {
-        return super.getDeployTransaction(overrides || {});
-    }
     deploy(overrides) {
         return super.deploy(overrides || {});
     }
-    connect(runner) {
-        return super.connect(runner);
+    getDeployTransaction(overrides) {
+        return super.getDeployTransaction(overrides || {});
+    }
+    attach(address) {
+        return super.attach(address);
+    }
+    connect(signer) {
+        return super.connect(signer);
     }
     static bytecode = _bytecode;
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.SolidlyPriceOracle__factory = SolidlyPriceOracle__factory;

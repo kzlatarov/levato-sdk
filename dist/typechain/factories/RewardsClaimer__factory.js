@@ -7,110 +7,110 @@ exports.RewardsClaimer__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        anonymous: false,
+        type: "function",
+        name: "claimRewards",
+        inputs: [],
+        outputs: [],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "rewardDestination",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "rewardTokens",
         inputs: [
             {
-                indexed: true,
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "contract ERC20Upgradeable",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "setRewardDestination",
+        inputs: [
+            {
+                name: "newDestination",
+                type: "address",
                 internalType: "address",
+            },
+        ],
+        outputs: [],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "event",
+        name: "ClaimTokenRewards",
+        inputs: [
+            {
                 name: "rewardToken",
                 type: "address",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "amount",
-                type: "uint256",
-            },
-        ],
-        name: "ClaimTokenRewards",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "uint8",
-                name: "version",
-                type: "uint8",
-            },
-        ],
-        name: "Initialized",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
                 indexed: true,
                 internalType: "address",
-                name: "newDestination",
-                type: "address",
             },
-        ],
-        name: "RewardDestinationUpdate",
-        type: "event",
-    },
-    {
-        inputs: [],
-        name: "claimRewards",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "rewardDestination",
-        outputs: [
             {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "uint256",
-                name: "",
+                name: "amount",
                 type: "uint256",
+                indexed: false,
+                internalType: "uint256",
             },
         ],
-        name: "rewardTokens",
-        outputs: [
-            {
-                internalType: "contract ERC20Upgradeable",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
+        anonymous: false,
     },
     {
+        type: "event",
+        name: "Initialized",
         inputs: [
             {
-                internalType: "address",
-                name: "newDestination",
-                type: "address",
+                name: "version",
+                type: "uint8",
+                indexed: false,
+                internalType: "uint8",
             },
         ],
-        name: "setRewardDestination",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "RewardDestinationUpdate",
+        inputs: [
+            {
+                name: "newDestination",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
     },
 ];
 class RewardsClaimer__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.RewardsClaimer__factory = RewardsClaimer__factory;

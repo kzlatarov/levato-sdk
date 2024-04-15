@@ -1,179 +1,180 @@
-import { type ContractRunner } from "ethers";
+import { Signer } from "ethers";
+import type { Provider } from "@ethersproject/providers";
 import type { LeveragedPositionsFactoryStorage, LeveragedPositionsFactoryStorageInterface } from "../LeveragedPositionsFactoryStorage";
 export declare class LeveragedPositionsFactoryStorage__factory {
     static readonly abi: readonly [{
-        readonly anonymous: false;
+        readonly type: "function";
+        readonly name: "AAVE";
+        readonly inputs: readonly [];
+        readonly outputs: readonly [{
+            readonly name: "";
+            readonly type: "uint16";
+            readonly internalType: "uint16";
+        }];
+        readonly stateMutability: "view";
+    }, {
+        readonly type: "function";
+        readonly name: "DELEGATED";
+        readonly inputs: readonly [];
+        readonly outputs: readonly [{
+            readonly name: "";
+            readonly type: "uint16";
+            readonly internalType: "uint16";
+        }];
+        readonly stateMutability: "view";
+    }, {
+        readonly type: "function";
+        readonly name: "IONIC";
+        readonly inputs: readonly [];
+        readonly outputs: readonly [{
+            readonly name: "";
+            readonly type: "uint16";
+            readonly internalType: "uint16";
+        }];
+        readonly stateMutability: "view";
+    }, {
+        readonly type: "function";
+        readonly name: "acceptOwnership";
+        readonly inputs: readonly [];
+        readonly outputs: readonly [];
+        readonly stateMutability: "nonpayable";
+    }, {
+        readonly type: "function";
+        readonly name: "blocksPerYear";
+        readonly inputs: readonly [];
+        readonly outputs: readonly [{
+            readonly name: "";
+            readonly type: "uint256";
+            readonly internalType: "uint256";
+        }];
+        readonly stateMutability: "view";
+    }, {
+        readonly type: "function";
+        readonly name: "creditDelegator";
+        readonly inputs: readonly [];
+        readonly outputs: readonly [{
+            readonly name: "";
+            readonly type: "address";
+            readonly internalType: "contract ICreditDelegator";
+        }];
+        readonly stateMutability: "view";
+    }, {
+        readonly type: "function";
+        readonly name: "flashloanRouter";
+        readonly inputs: readonly [];
+        readonly outputs: readonly [{
+            readonly name: "";
+            readonly type: "address";
+            readonly internalType: "contract IFlashloanRouter";
+        }];
+        readonly stateMutability: "view";
+    }, {
+        readonly type: "function";
+        readonly name: "fundersRegistry";
+        readonly inputs: readonly [];
+        readonly outputs: readonly [{
+            readonly name: "";
+            readonly type: "address";
+            readonly internalType: "contract IFundersRegistry";
+        }];
+        readonly stateMutability: "view";
+    }, {
+        readonly type: "function";
+        readonly name: "minBorrowNative";
+        readonly inputs: readonly [];
+        readonly outputs: readonly [{
+            readonly name: "";
+            readonly type: "uint256";
+            readonly internalType: "uint256";
+        }];
+        readonly stateMutability: "view";
+    }, {
+        readonly type: "function";
+        readonly name: "oracle";
+        readonly inputs: readonly [];
+        readonly outputs: readonly [{
+            readonly name: "";
+            readonly type: "address";
+            readonly internalType: "contract MasterPriceOracle";
+        }];
+        readonly stateMutability: "view";
+    }, {
+        readonly type: "function";
+        readonly name: "owner";
+        readonly inputs: readonly [];
+        readonly outputs: readonly [{
+            readonly name: "";
+            readonly type: "address";
+            readonly internalType: "address";
+        }];
+        readonly stateMutability: "view";
+    }, {
+        readonly type: "function";
+        readonly name: "pendingOwner";
+        readonly inputs: readonly [];
+        readonly outputs: readonly [{
+            readonly name: "";
+            readonly type: "address";
+            readonly internalType: "address";
+        }];
+        readonly stateMutability: "view";
+    }, {
+        readonly type: "function";
+        readonly name: "renounceOwnership";
+        readonly inputs: readonly [];
+        readonly outputs: readonly [];
+        readonly stateMutability: "nonpayable";
+    }, {
+        readonly type: "function";
+        readonly name: "transferOwnership";
         readonly inputs: readonly [{
-            readonly indexed: false;
-            readonly internalType: "uint8";
+            readonly name: "newOwner";
+            readonly type: "address";
+            readonly internalType: "address";
+        }];
+        readonly outputs: readonly [];
+        readonly stateMutability: "nonpayable";
+    }, {
+        readonly type: "event";
+        readonly name: "Initialized";
+        readonly inputs: readonly [{
             readonly name: "version";
             readonly type: "uint8";
+            readonly indexed: false;
+            readonly internalType: "uint8";
         }];
-        readonly name: "Initialized";
-        readonly type: "event";
-    }, {
         readonly anonymous: false;
-        readonly inputs: readonly [{
-            readonly indexed: true;
-            readonly internalType: "address";
-            readonly name: "previousOwner";
-            readonly type: "address";
-        }, {
-            readonly indexed: true;
-            readonly internalType: "address";
-            readonly name: "newOwner";
-            readonly type: "address";
-        }];
+    }, {
+        readonly type: "event";
         readonly name: "OwnershipTransferStarted";
-        readonly type: "event";
-    }, {
-        readonly anonymous: false;
         readonly inputs: readonly [{
-            readonly indexed: true;
-            readonly internalType: "address";
             readonly name: "previousOwner";
             readonly type: "address";
-        }, {
             readonly indexed: true;
             readonly internalType: "address";
+        }, {
             readonly name: "newOwner";
             readonly type: "address";
+            readonly indexed: true;
+            readonly internalType: "address";
         }];
-        readonly name: "OwnershipTransferred";
+        readonly anonymous: false;
+    }, {
         readonly type: "event";
-    }, {
-        readonly inputs: readonly [];
-        readonly name: "AAVE";
-        readonly outputs: readonly [{
-            readonly internalType: "uint16";
-            readonly name: "";
-            readonly type: "uint16";
-        }];
-        readonly stateMutability: "view";
-        readonly type: "function";
-    }, {
-        readonly inputs: readonly [];
-        readonly name: "DELEGATED";
-        readonly outputs: readonly [{
-            readonly internalType: "uint16";
-            readonly name: "";
-            readonly type: "uint16";
-        }];
-        readonly stateMutability: "view";
-        readonly type: "function";
-    }, {
-        readonly inputs: readonly [];
-        readonly name: "IONIC";
-        readonly outputs: readonly [{
-            readonly internalType: "uint16";
-            readonly name: "";
-            readonly type: "uint16";
-        }];
-        readonly stateMutability: "view";
-        readonly type: "function";
-    }, {
-        readonly inputs: readonly [];
-        readonly name: "acceptOwnership";
-        readonly outputs: readonly [];
-        readonly stateMutability: "nonpayable";
-        readonly type: "function";
-    }, {
-        readonly inputs: readonly [];
-        readonly name: "blocksPerYear";
-        readonly outputs: readonly [{
-            readonly internalType: "uint256";
-            readonly name: "";
-            readonly type: "uint256";
-        }];
-        readonly stateMutability: "view";
-        readonly type: "function";
-    }, {
-        readonly inputs: readonly [];
-        readonly name: "creditDelegator";
-        readonly outputs: readonly [{
-            readonly internalType: "contract ICreditDelegator";
-            readonly name: "";
-            readonly type: "address";
-        }];
-        readonly stateMutability: "view";
-        readonly type: "function";
-    }, {
-        readonly inputs: readonly [];
-        readonly name: "flashloanRouter";
-        readonly outputs: readonly [{
-            readonly internalType: "contract IFlashloanRouter";
-            readonly name: "";
-            readonly type: "address";
-        }];
-        readonly stateMutability: "view";
-        readonly type: "function";
-    }, {
-        readonly inputs: readonly [];
-        readonly name: "fundersRegistry";
-        readonly outputs: readonly [{
-            readonly internalType: "contract IFundersRegistry";
-            readonly name: "";
-            readonly type: "address";
-        }];
-        readonly stateMutability: "view";
-        readonly type: "function";
-    }, {
-        readonly inputs: readonly [];
-        readonly name: "minBorrowNative";
-        readonly outputs: readonly [{
-            readonly internalType: "uint256";
-            readonly name: "";
-            readonly type: "uint256";
-        }];
-        readonly stateMutability: "view";
-        readonly type: "function";
-    }, {
-        readonly inputs: readonly [];
-        readonly name: "oracle";
-        readonly outputs: readonly [{
-            readonly internalType: "contract MasterPriceOracle";
-            readonly name: "";
-            readonly type: "address";
-        }];
-        readonly stateMutability: "view";
-        readonly type: "function";
-    }, {
-        readonly inputs: readonly [];
-        readonly name: "owner";
-        readonly outputs: readonly [{
-            readonly internalType: "address";
-            readonly name: "";
-            readonly type: "address";
-        }];
-        readonly stateMutability: "view";
-        readonly type: "function";
-    }, {
-        readonly inputs: readonly [];
-        readonly name: "pendingOwner";
-        readonly outputs: readonly [{
-            readonly internalType: "address";
-            readonly name: "";
-            readonly type: "address";
-        }];
-        readonly stateMutability: "view";
-        readonly type: "function";
-    }, {
-        readonly inputs: readonly [];
-        readonly name: "renounceOwnership";
-        readonly outputs: readonly [];
-        readonly stateMutability: "nonpayable";
-        readonly type: "function";
-    }, {
+        readonly name: "OwnershipTransferred";
         readonly inputs: readonly [{
+            readonly name: "previousOwner";
+            readonly type: "address";
+            readonly indexed: true;
             readonly internalType: "address";
+        }, {
             readonly name: "newOwner";
             readonly type: "address";
+            readonly indexed: true;
+            readonly internalType: "address";
         }];
-        readonly name: "transferOwnership";
-        readonly outputs: readonly [];
-        readonly stateMutability: "nonpayable";
-        readonly type: "function";
+        readonly anonymous: false;
     }];
     static createInterface(): LeveragedPositionsFactoryStorageInterface;
-    static connect(address: string, runner?: ContractRunner | null): LeveragedPositionsFactoryStorage;
+    static connect(address: string, signerOrProvider: Signer | Provider): LeveragedPositionsFactoryStorage;
 }

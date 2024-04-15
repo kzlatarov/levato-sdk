@@ -1,9 +1,23 @@
-import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedListener, TypedContractMethod } from "../common";
-export interface IBeefyVaultInterface extends Interface {
-    getFunction(nameOrSignature: "balance" | "balanceOf" | "deposit" | "earn" | "getPricePerFullShare" | "strategy" | "totalSupply" | "want" | "withdraw" | "withdrawAll"): FunctionFragment;
+import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, ContractTransaction, Overrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "../common";
+export interface IBeefyVaultInterface extends utils.Interface {
+    functions: {
+        "balance()": FunctionFragment;
+        "balanceOf(address)": FunctionFragment;
+        "deposit(uint256)": FunctionFragment;
+        "earn()": FunctionFragment;
+        "getPricePerFullShare()": FunctionFragment;
+        "strategy()": FunctionFragment;
+        "totalSupply()": FunctionFragment;
+        "want()": FunctionFragment;
+        "withdraw(uint256)": FunctionFragment;
+        "withdrawAll()": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "balance" | "balanceOf" | "deposit" | "earn" | "getPricePerFullShare" | "strategy" | "totalSupply" | "want" | "withdraw" | "withdrawAll"): FunctionFragment;
     encodeFunctionData(functionFragment: "balance", values?: undefined): string;
-    encodeFunctionData(functionFragment: "balanceOf", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
     encodeFunctionData(functionFragment: "deposit", values: [BigNumberish]): string;
     encodeFunctionData(functionFragment: "earn", values?: undefined): string;
     encodeFunctionData(functionFragment: "getPricePerFullShare", values?: undefined): string;
@@ -22,40 +36,111 @@ export interface IBeefyVaultInterface extends Interface {
     decodeFunctionResult(functionFragment: "want", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "withdrawAll", data: BytesLike): Result;
+    events: {};
 }
 export interface IBeefyVault extends BaseContract {
-    connect(runner?: ContractRunner | null): IBeefyVault;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: IBeefyVaultInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    balance: TypedContractMethod<[], [bigint], "view">;
-    balanceOf: TypedContractMethod<[_account: AddressLike], [bigint], "view">;
-    deposit: TypedContractMethod<[_amount: BigNumberish], [void], "nonpayable">;
-    earn: TypedContractMethod<[], [void], "nonpayable">;
-    getPricePerFullShare: TypedContractMethod<[], [bigint], "view">;
-    strategy: TypedContractMethod<[], [string], "view">;
-    totalSupply: TypedContractMethod<[], [bigint], "view">;
-    want: TypedContractMethod<[], [string], "view">;
-    withdraw: TypedContractMethod<[_shares: BigNumberish], [void], "nonpayable">;
-    withdrawAll: TypedContractMethod<[], [void], "nonpayable">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "balance"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "balanceOf"): TypedContractMethod<[_account: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "deposit"): TypedContractMethod<[_amount: BigNumberish], [void], "nonpayable">;
-    getFunction(nameOrSignature: "earn"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "getPricePerFullShare"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "strategy"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "totalSupply"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "want"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "withdraw"): TypedContractMethod<[_shares: BigNumberish], [void], "nonpayable">;
-    getFunction(nameOrSignature: "withdrawAll"): TypedContractMethod<[], [void], "nonpayable">;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        balance(overrides?: CallOverrides): Promise<[BigNumber]>;
+        balanceOf(_account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        deposit(_amount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        earn(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        getPricePerFullShare(overrides?: CallOverrides): Promise<[BigNumber]>;
+        strategy(overrides?: CallOverrides): Promise<[string]>;
+        totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
+        want(overrides?: CallOverrides): Promise<[string]>;
+        withdraw(_shares: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        withdrawAll(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+    };
+    balance(overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    deposit(_amount: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    earn(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    getPricePerFullShare(overrides?: CallOverrides): Promise<BigNumber>;
+    strategy(overrides?: CallOverrides): Promise<string>;
+    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+    want(overrides?: CallOverrides): Promise<string>;
+    withdraw(_shares: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    withdrawAll(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    callStatic: {
+        balance(overrides?: CallOverrides): Promise<BigNumber>;
+        balanceOf(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+        deposit(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        earn(overrides?: CallOverrides): Promise<void>;
+        getPricePerFullShare(overrides?: CallOverrides): Promise<BigNumber>;
+        strategy(overrides?: CallOverrides): Promise<string>;
+        totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+        want(overrides?: CallOverrides): Promise<string>;
+        withdraw(_shares: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        withdrawAll(overrides?: CallOverrides): Promise<void>;
+    };
     filters: {};
+    estimateGas: {
+        balance(overrides?: CallOverrides): Promise<BigNumber>;
+        balanceOf(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+        deposit(_amount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        earn(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        getPricePerFullShare(overrides?: CallOverrides): Promise<BigNumber>;
+        strategy(overrides?: CallOverrides): Promise<BigNumber>;
+        totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+        want(overrides?: CallOverrides): Promise<BigNumber>;
+        withdraw(_shares: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        withdrawAll(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        balance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        balanceOf(_account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        deposit(_amount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        earn(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        getPricePerFullShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        strategy(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        want(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        withdraw(_shares: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        withdrawAll(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+    };
 }

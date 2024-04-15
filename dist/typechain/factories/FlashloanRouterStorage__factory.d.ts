@@ -1,103 +1,104 @@
-import { type ContractRunner } from "ethers";
+import { Signer } from "ethers";
+import type { Provider } from "@ethersproject/providers";
 import type { FlashloanRouterStorage, FlashloanRouterStorageInterface } from "../FlashloanRouterStorage";
 export declare class FlashloanRouterStorage__factory {
     static readonly abi: readonly [{
-        readonly anonymous: false;
+        readonly type: "function";
+        readonly name: "acceptOwnership";
+        readonly inputs: readonly [];
+        readonly outputs: readonly [];
+        readonly stateMutability: "nonpayable";
+    }, {
+        readonly type: "function";
+        readonly name: "ionicMarketOfAsset";
         readonly inputs: readonly [{
-            readonly indexed: false;
-            readonly internalType: "uint8";
+            readonly name: "";
+            readonly type: "address";
+            readonly internalType: "contract IERC20Upgradeable";
+        }];
+        readonly outputs: readonly [{
+            readonly name: "";
+            readonly type: "address";
+            readonly internalType: "contract IonicCErc20";
+        }];
+        readonly stateMutability: "view";
+    }, {
+        readonly type: "function";
+        readonly name: "owner";
+        readonly inputs: readonly [];
+        readonly outputs: readonly [{
+            readonly name: "";
+            readonly type: "address";
+            readonly internalType: "address";
+        }];
+        readonly stateMutability: "view";
+    }, {
+        readonly type: "function";
+        readonly name: "pendingOwner";
+        readonly inputs: readonly [];
+        readonly outputs: readonly [{
+            readonly name: "";
+            readonly type: "address";
+            readonly internalType: "address";
+        }];
+        readonly stateMutability: "view";
+    }, {
+        readonly type: "function";
+        readonly name: "renounceOwnership";
+        readonly inputs: readonly [];
+        readonly outputs: readonly [];
+        readonly stateMutability: "nonpayable";
+    }, {
+        readonly type: "function";
+        readonly name: "transferOwnership";
+        readonly inputs: readonly [{
+            readonly name: "newOwner";
+            readonly type: "address";
+            readonly internalType: "address";
+        }];
+        readonly outputs: readonly [];
+        readonly stateMutability: "nonpayable";
+    }, {
+        readonly type: "event";
+        readonly name: "Initialized";
+        readonly inputs: readonly [{
             readonly name: "version";
             readonly type: "uint8";
+            readonly indexed: false;
+            readonly internalType: "uint8";
         }];
-        readonly name: "Initialized";
-        readonly type: "event";
-    }, {
         readonly anonymous: false;
-        readonly inputs: readonly [{
-            readonly indexed: true;
-            readonly internalType: "address";
-            readonly name: "previousOwner";
-            readonly type: "address";
-        }, {
-            readonly indexed: true;
-            readonly internalType: "address";
-            readonly name: "newOwner";
-            readonly type: "address";
-        }];
+    }, {
+        readonly type: "event";
         readonly name: "OwnershipTransferStarted";
-        readonly type: "event";
-    }, {
-        readonly anonymous: false;
         readonly inputs: readonly [{
-            readonly indexed: true;
-            readonly internalType: "address";
             readonly name: "previousOwner";
             readonly type: "address";
-        }, {
             readonly indexed: true;
             readonly internalType: "address";
+        }, {
             readonly name: "newOwner";
             readonly type: "address";
+            readonly indexed: true;
+            readonly internalType: "address";
         }];
-        readonly name: "OwnershipTransferred";
+        readonly anonymous: false;
+    }, {
         readonly type: "event";
-    }, {
-        readonly inputs: readonly [];
-        readonly name: "acceptOwnership";
-        readonly outputs: readonly [];
-        readonly stateMutability: "nonpayable";
-        readonly type: "function";
-    }, {
+        readonly name: "OwnershipTransferred";
         readonly inputs: readonly [{
-            readonly internalType: "contract IERC20Upgradeable";
-            readonly name: "";
+            readonly name: "previousOwner";
             readonly type: "address";
-        }];
-        readonly name: "ionicMarketOfAsset";
-        readonly outputs: readonly [{
-            readonly internalType: "contract IonicCErc20";
-            readonly name: "";
-            readonly type: "address";
-        }];
-        readonly stateMutability: "view";
-        readonly type: "function";
-    }, {
-        readonly inputs: readonly [];
-        readonly name: "owner";
-        readonly outputs: readonly [{
+            readonly indexed: true;
             readonly internalType: "address";
-            readonly name: "";
-            readonly type: "address";
-        }];
-        readonly stateMutability: "view";
-        readonly type: "function";
-    }, {
-        readonly inputs: readonly [];
-        readonly name: "pendingOwner";
-        readonly outputs: readonly [{
-            readonly internalType: "address";
-            readonly name: "";
-            readonly type: "address";
-        }];
-        readonly stateMutability: "view";
-        readonly type: "function";
-    }, {
-        readonly inputs: readonly [];
-        readonly name: "renounceOwnership";
-        readonly outputs: readonly [];
-        readonly stateMutability: "nonpayable";
-        readonly type: "function";
-    }, {
-        readonly inputs: readonly [{
-            readonly internalType: "address";
+        }, {
             readonly name: "newOwner";
             readonly type: "address";
+            readonly indexed: true;
+            readonly internalType: "address";
         }];
-        readonly name: "transferOwnership";
-        readonly outputs: readonly [];
-        readonly stateMutability: "nonpayable";
-        readonly type: "function";
+        readonly anonymous: false;
     }];
     static createInterface(): FlashloanRouterStorageInterface;
-    static connect(address: string, runner?: ContractRunner | null): FlashloanRouterStorage;
+    static connect(address: string, signerOrProvider: Signer | Provider): FlashloanRouterStorage;
 }

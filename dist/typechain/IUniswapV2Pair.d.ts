@@ -1,26 +1,56 @@
-import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, EventFragment, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedLogDescription, TypedListener, TypedContractMethod } from "./common";
-export interface IUniswapV2PairInterface extends Interface {
-    getFunction(nameOrSignature: "DOMAIN_SEPARATOR" | "MINIMUM_LIQUIDITY" | "PERMIT_TYPEHASH" | "allowance" | "approve" | "balanceOf" | "burn" | "decimals" | "factory" | "getReserves" | "initialize" | "kLast" | "mint" | "name" | "nonces" | "permit" | "price0CumulativeLast" | "price1CumulativeLast" | "skim" | "swap" | "symbol" | "sync" | "token0" | "token1" | "totalSupply" | "transfer" | "transferFrom"): FunctionFragment;
-    getEvent(nameOrSignatureOrTopic: "Approval" | "Burn" | "Mint" | "Swap" | "Sync" | "Transfer"): EventFragment;
+import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, ContractTransaction, Overrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
+export interface IUniswapV2PairInterface extends utils.Interface {
+    functions: {
+        "DOMAIN_SEPARATOR()": FunctionFragment;
+        "MINIMUM_LIQUIDITY()": FunctionFragment;
+        "PERMIT_TYPEHASH()": FunctionFragment;
+        "allowance(address,address)": FunctionFragment;
+        "approve(address,uint256)": FunctionFragment;
+        "balanceOf(address)": FunctionFragment;
+        "burn(address)": FunctionFragment;
+        "decimals()": FunctionFragment;
+        "factory()": FunctionFragment;
+        "getReserves()": FunctionFragment;
+        "initialize(address,address)": FunctionFragment;
+        "kLast()": FunctionFragment;
+        "mint(address)": FunctionFragment;
+        "name()": FunctionFragment;
+        "nonces(address)": FunctionFragment;
+        "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)": FunctionFragment;
+        "price0CumulativeLast()": FunctionFragment;
+        "price1CumulativeLast()": FunctionFragment;
+        "skim(address)": FunctionFragment;
+        "swap(uint256,uint256,address,bytes)": FunctionFragment;
+        "symbol()": FunctionFragment;
+        "sync()": FunctionFragment;
+        "token0()": FunctionFragment;
+        "token1()": FunctionFragment;
+        "totalSupply()": FunctionFragment;
+        "transfer(address,uint256)": FunctionFragment;
+        "transferFrom(address,address,uint256)": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "DOMAIN_SEPARATOR" | "MINIMUM_LIQUIDITY" | "PERMIT_TYPEHASH" | "allowance" | "approve" | "balanceOf" | "burn" | "decimals" | "factory" | "getReserves" | "initialize" | "kLast" | "mint" | "name" | "nonces" | "permit" | "price0CumulativeLast" | "price1CumulativeLast" | "skim" | "swap" | "symbol" | "sync" | "token0" | "token1" | "totalSupply" | "transfer" | "transferFrom"): FunctionFragment;
     encodeFunctionData(functionFragment: "DOMAIN_SEPARATOR", values?: undefined): string;
     encodeFunctionData(functionFragment: "MINIMUM_LIQUIDITY", values?: undefined): string;
     encodeFunctionData(functionFragment: "PERMIT_TYPEHASH", values?: undefined): string;
-    encodeFunctionData(functionFragment: "allowance", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "approve", values: [AddressLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "balanceOf", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "burn", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "allowance", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "approve", values: [string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
+    encodeFunctionData(functionFragment: "burn", values: [string]): string;
     encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
     encodeFunctionData(functionFragment: "factory", values?: undefined): string;
     encodeFunctionData(functionFragment: "getReserves", values?: undefined): string;
-    encodeFunctionData(functionFragment: "initialize", values: [AddressLike, AddressLike]): string;
+    encodeFunctionData(functionFragment: "initialize", values: [string, string]): string;
     encodeFunctionData(functionFragment: "kLast", values?: undefined): string;
-    encodeFunctionData(functionFragment: "mint", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "mint", values: [string]): string;
     encodeFunctionData(functionFragment: "name", values?: undefined): string;
-    encodeFunctionData(functionFragment: "nonces", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "nonces", values: [string]): string;
     encodeFunctionData(functionFragment: "permit", values: [
-        AddressLike,
-        AddressLike,
+        string,
+        string,
         BigNumberish,
         BigNumberish,
         BigNumberish,
@@ -29,15 +59,15 @@ export interface IUniswapV2PairInterface extends Interface {
     ]): string;
     encodeFunctionData(functionFragment: "price0CumulativeLast", values?: undefined): string;
     encodeFunctionData(functionFragment: "price1CumulativeLast", values?: undefined): string;
-    encodeFunctionData(functionFragment: "skim", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "swap", values: [BigNumberish, BigNumberish, AddressLike, BytesLike]): string;
+    encodeFunctionData(functionFragment: "skim", values: [string]): string;
+    encodeFunctionData(functionFragment: "swap", values: [BigNumberish, BigNumberish, string, BytesLike]): string;
     encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
     encodeFunctionData(functionFragment: "sync", values?: undefined): string;
     encodeFunctionData(functionFragment: "token0", values?: undefined): string;
     encodeFunctionData(functionFragment: "token1", values?: undefined): string;
     encodeFunctionData(functionFragment: "totalSupply", values?: undefined): string;
-    encodeFunctionData(functionFragment: "transfer", values: [AddressLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "transferFrom", values: [AddressLike, AddressLike, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "transfer", values: [string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "transferFrom", values: [string, string, BigNumberish]): string;
     decodeFunctionResult(functionFragment: "DOMAIN_SEPARATOR", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "MINIMUM_LIQUIDITY", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "PERMIT_TYPEHASH", data: BytesLike): Result;
@@ -65,332 +95,369 @@ export interface IUniswapV2PairInterface extends Interface {
     decodeFunctionResult(functionFragment: "totalSupply", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "transferFrom", data: BytesLike): Result;
+    events: {
+        "Approval(address,address,uint256)": EventFragment;
+        "Burn(address,uint256,uint256,address)": EventFragment;
+        "Mint(address,uint256,uint256)": EventFragment;
+        "Swap(address,uint256,uint256,uint256,uint256,address)": EventFragment;
+        "Sync(uint112,uint112)": EventFragment;
+        "Transfer(address,address,uint256)": EventFragment;
+    };
+    getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "Burn"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "Mint"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "Swap"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "Sync"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
-export declare namespace ApprovalEvent {
-    type InputTuple = [
-        owner: AddressLike,
-        spender: AddressLike,
-        value: BigNumberish
-    ];
-    type OutputTuple = [owner: string, spender: string, value: bigint];
-    interface OutputObject {
-        owner: string;
-        spender: string;
-        value: bigint;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export interface ApprovalEventObject {
+    owner: string;
+    spender: string;
+    value: BigNumber;
 }
-export declare namespace BurnEvent {
-    type InputTuple = [
-        sender: AddressLike,
-        amount0: BigNumberish,
-        amount1: BigNumberish,
-        to: AddressLike
-    ];
-    type OutputTuple = [
-        sender: string,
-        amount0: bigint,
-        amount1: bigint,
-        to: string
-    ];
-    interface OutputObject {
-        sender: string;
-        amount0: bigint;
-        amount1: bigint;
-        to: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type ApprovalEvent = TypedEvent<[
+    string,
+    string,
+    BigNumber
+], ApprovalEventObject>;
+export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
+export interface BurnEventObject {
+    sender: string;
+    amount0: BigNumber;
+    amount1: BigNumber;
+    to: string;
 }
-export declare namespace MintEvent {
-    type InputTuple = [
-        sender: AddressLike,
-        amount0: BigNumberish,
-        amount1: BigNumberish
-    ];
-    type OutputTuple = [sender: string, amount0: bigint, amount1: bigint];
-    interface OutputObject {
-        sender: string;
-        amount0: bigint;
-        amount1: bigint;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type BurnEvent = TypedEvent<[
+    string,
+    BigNumber,
+    BigNumber,
+    string
+], BurnEventObject>;
+export type BurnEventFilter = TypedEventFilter<BurnEvent>;
+export interface MintEventObject {
+    sender: string;
+    amount0: BigNumber;
+    amount1: BigNumber;
 }
-export declare namespace SwapEvent {
-    type InputTuple = [
-        sender: AddressLike,
-        amount0In: BigNumberish,
-        amount1In: BigNumberish,
-        amount0Out: BigNumberish,
-        amount1Out: BigNumberish,
-        to: AddressLike
-    ];
-    type OutputTuple = [
-        sender: string,
-        amount0In: bigint,
-        amount1In: bigint,
-        amount0Out: bigint,
-        amount1Out: bigint,
-        to: string
-    ];
-    interface OutputObject {
-        sender: string;
-        amount0In: bigint;
-        amount1In: bigint;
-        amount0Out: bigint;
-        amount1Out: bigint;
-        to: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type MintEvent = TypedEvent<[
+    string,
+    BigNumber,
+    BigNumber
+], MintEventObject>;
+export type MintEventFilter = TypedEventFilter<MintEvent>;
+export interface SwapEventObject {
+    sender: string;
+    amount0In: BigNumber;
+    amount1In: BigNumber;
+    amount0Out: BigNumber;
+    amount1Out: BigNumber;
+    to: string;
 }
-export declare namespace SyncEvent {
-    type InputTuple = [reserve0: BigNumberish, reserve1: BigNumberish];
-    type OutputTuple = [reserve0: bigint, reserve1: bigint];
-    interface OutputObject {
-        reserve0: bigint;
-        reserve1: bigint;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type SwapEvent = TypedEvent<[
+    string,
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    string
+], SwapEventObject>;
+export type SwapEventFilter = TypedEventFilter<SwapEvent>;
+export interface SyncEventObject {
+    reserve0: BigNumber;
+    reserve1: BigNumber;
 }
-export declare namespace TransferEvent {
-    type InputTuple = [
-        from: AddressLike,
-        to: AddressLike,
-        value: BigNumberish
-    ];
-    type OutputTuple = [from: string, to: string, value: bigint];
-    interface OutputObject {
-        from: string;
-        to: string;
-        value: bigint;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type SyncEvent = TypedEvent<[BigNumber, BigNumber], SyncEventObject>;
+export type SyncEventFilter = TypedEventFilter<SyncEvent>;
+export interface TransferEventObject {
+    from: string;
+    to: string;
+    value: BigNumber;
 }
+export type TransferEvent = TypedEvent<[
+    string,
+    string,
+    BigNumber
+], TransferEventObject>;
+export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 export interface IUniswapV2Pair extends BaseContract {
-    connect(runner?: ContractRunner | null): IUniswapV2Pair;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: IUniswapV2PairInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    DOMAIN_SEPARATOR: TypedContractMethod<[], [string], "view">;
-    MINIMUM_LIQUIDITY: TypedContractMethod<[], [bigint], "view">;
-    PERMIT_TYPEHASH: TypedContractMethod<[], [string], "view">;
-    allowance: TypedContractMethod<[
-        owner: AddressLike,
-        spender: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    approve: TypedContractMethod<[
-        spender: AddressLike,
-        value: BigNumberish
-    ], [
-        boolean
-    ], "nonpayable">;
-    balanceOf: TypedContractMethod<[owner: AddressLike], [bigint], "view">;
-    burn: TypedContractMethod<[
-        to: AddressLike
-    ], [
-        [bigint, bigint] & {
-            amount0: bigint;
-            amount1: bigint;
-        }
-    ], "nonpayable">;
-    decimals: TypedContractMethod<[], [bigint], "view">;
-    factory: TypedContractMethod<[], [string], "view">;
-    getReserves: TypedContractMethod<[
-    ], [
-        [
-            bigint,
-            bigint,
-            bigint
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<[string]>;
+        MINIMUM_LIQUIDITY(overrides?: CallOverrides): Promise<[BigNumber]>;
+        PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
+        allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        approve(spender: string, value: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        burn(to: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        decimals(overrides?: CallOverrides): Promise<[number]>;
+        factory(overrides?: CallOverrides): Promise<[string]>;
+        getReserves(overrides?: CallOverrides): Promise<[
+            BigNumber,
+            BigNumber,
+            number
         ] & {
-            reserve0: bigint;
-            reserve1: bigint;
-            blockTimestampLast: bigint;
-        }
-    ], "view">;
-    initialize: TypedContractMethod<[
-        arg0: AddressLike,
-        arg1: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    kLast: TypedContractMethod<[], [bigint], "view">;
-    mint: TypedContractMethod<[to: AddressLike], [bigint], "nonpayable">;
-    name: TypedContractMethod<[], [string], "view">;
-    nonces: TypedContractMethod<[owner: AddressLike], [bigint], "view">;
-    permit: TypedContractMethod<[
-        owner: AddressLike,
-        spender: AddressLike,
-        value: BigNumberish,
-        deadline: BigNumberish,
-        v: BigNumberish,
-        r: BytesLike,
-        s: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    price0CumulativeLast: TypedContractMethod<[], [bigint], "view">;
-    price1CumulativeLast: TypedContractMethod<[], [bigint], "view">;
-    skim: TypedContractMethod<[to: AddressLike], [void], "nonpayable">;
-    swap: TypedContractMethod<[
-        amount0Out: BigNumberish,
-        amount1Out: BigNumberish,
-        to: AddressLike,
-        data: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    symbol: TypedContractMethod<[], [string], "view">;
-    sync: TypedContractMethod<[], [void], "nonpayable">;
-    token0: TypedContractMethod<[], [string], "view">;
-    token1: TypedContractMethod<[], [string], "view">;
-    totalSupply: TypedContractMethod<[], [bigint], "view">;
-    transfer: TypedContractMethod<[
-        to: AddressLike,
-        value: BigNumberish
-    ], [
-        boolean
-    ], "nonpayable">;
-    transferFrom: TypedContractMethod<[
-        from: AddressLike,
-        to: AddressLike,
-        value: BigNumberish
-    ], [
-        boolean
-    ], "nonpayable">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "DOMAIN_SEPARATOR"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "MINIMUM_LIQUIDITY"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "PERMIT_TYPEHASH"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "allowance"): TypedContractMethod<[
-        owner: AddressLike,
-        spender: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "approve"): TypedContractMethod<[
-        spender: AddressLike,
-        value: BigNumberish
-    ], [
-        boolean
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "balanceOf"): TypedContractMethod<[owner: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "burn"): TypedContractMethod<[
-        to: AddressLike
-    ], [
-        [bigint, bigint] & {
-            amount0: bigint;
-            amount1: bigint;
-        }
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "decimals"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "factory"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "getReserves"): TypedContractMethod<[
-    ], [
-        [
-            bigint,
-            bigint,
-            bigint
+            reserve0: BigNumber;
+            reserve1: BigNumber;
+            blockTimestampLast: number;
+        }>;
+        initialize(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        kLast(overrides?: CallOverrides): Promise<[BigNumber]>;
+        mint(to: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        name(overrides?: CallOverrides): Promise<[string]>;
+        nonces(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        permit(owner: string, spender: string, value: BigNumberish, deadline: BigNumberish, v: BigNumberish, r: BytesLike, s: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        price0CumulativeLast(overrides?: CallOverrides): Promise<[BigNumber]>;
+        price1CumulativeLast(overrides?: CallOverrides): Promise<[BigNumber]>;
+        skim(to: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        swap(amount0Out: BigNumberish, amount1Out: BigNumberish, to: string, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        symbol(overrides?: CallOverrides): Promise<[string]>;
+        sync(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        token0(overrides?: CallOverrides): Promise<[string]>;
+        token1(overrides?: CallOverrides): Promise<[string]>;
+        totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
+        transfer(to: string, value: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        transferFrom(from: string, to: string, value: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+    };
+    DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
+    MINIMUM_LIQUIDITY(overrides?: CallOverrides): Promise<BigNumber>;
+    PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
+    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    approve(spender: string, value: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    burn(to: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    decimals(overrides?: CallOverrides): Promise<number>;
+    factory(overrides?: CallOverrides): Promise<string>;
+    getReserves(overrides?: CallOverrides): Promise<[
+        BigNumber,
+        BigNumber,
+        number
+    ] & {
+        reserve0: BigNumber;
+        reserve1: BigNumber;
+        blockTimestampLast: number;
+    }>;
+    initialize(arg0: string, arg1: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    kLast(overrides?: CallOverrides): Promise<BigNumber>;
+    mint(to: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    name(overrides?: CallOverrides): Promise<string>;
+    nonces(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    permit(owner: string, spender: string, value: BigNumberish, deadline: BigNumberish, v: BigNumberish, r: BytesLike, s: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    price0CumulativeLast(overrides?: CallOverrides): Promise<BigNumber>;
+    price1CumulativeLast(overrides?: CallOverrides): Promise<BigNumber>;
+    skim(to: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    swap(amount0Out: BigNumberish, amount1Out: BigNumberish, to: string, data: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    symbol(overrides?: CallOverrides): Promise<string>;
+    sync(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    token0(overrides?: CallOverrides): Promise<string>;
+    token1(overrides?: CallOverrides): Promise<string>;
+    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+    transfer(to: string, value: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    transferFrom(from: string, to: string, value: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    callStatic: {
+        DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
+        MINIMUM_LIQUIDITY(overrides?: CallOverrides): Promise<BigNumber>;
+        PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
+        allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+        approve(spender: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+        balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+        burn(to: string, overrides?: CallOverrides): Promise<[
+            BigNumber,
+            BigNumber
         ] & {
-            reserve0: bigint;
-            reserve1: bigint;
-            blockTimestampLast: bigint;
-        }
-    ], "view">;
-    getFunction(nameOrSignature: "initialize"): TypedContractMethod<[
-        arg0: AddressLike,
-        arg1: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "kLast"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "mint"): TypedContractMethod<[to: AddressLike], [bigint], "nonpayable">;
-    getFunction(nameOrSignature: "name"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "nonces"): TypedContractMethod<[owner: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "permit"): TypedContractMethod<[
-        owner: AddressLike,
-        spender: AddressLike,
-        value: BigNumberish,
-        deadline: BigNumberish,
-        v: BigNumberish,
-        r: BytesLike,
-        s: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "price0CumulativeLast"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "price1CumulativeLast"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "skim"): TypedContractMethod<[to: AddressLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "swap"): TypedContractMethod<[
-        amount0Out: BigNumberish,
-        amount1Out: BigNumberish,
-        to: AddressLike,
-        data: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "symbol"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "sync"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "token0"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "token1"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "totalSupply"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "transfer"): TypedContractMethod<[
-        to: AddressLike,
-        value: BigNumberish
-    ], [
-        boolean
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "transferFrom"): TypedContractMethod<[
-        from: AddressLike,
-        to: AddressLike,
-        value: BigNumberish
-    ], [
-        boolean
-    ], "nonpayable">;
-    getEvent(key: "Approval"): TypedContractEvent<ApprovalEvent.InputTuple, ApprovalEvent.OutputTuple, ApprovalEvent.OutputObject>;
-    getEvent(key: "Burn"): TypedContractEvent<BurnEvent.InputTuple, BurnEvent.OutputTuple, BurnEvent.OutputObject>;
-    getEvent(key: "Mint"): TypedContractEvent<MintEvent.InputTuple, MintEvent.OutputTuple, MintEvent.OutputObject>;
-    getEvent(key: "Swap"): TypedContractEvent<SwapEvent.InputTuple, SwapEvent.OutputTuple, SwapEvent.OutputObject>;
-    getEvent(key: "Sync"): TypedContractEvent<SyncEvent.InputTuple, SyncEvent.OutputTuple, SyncEvent.OutputObject>;
-    getEvent(key: "Transfer"): TypedContractEvent<TransferEvent.InputTuple, TransferEvent.OutputTuple, TransferEvent.OutputObject>;
+            amount0: BigNumber;
+            amount1: BigNumber;
+        }>;
+        decimals(overrides?: CallOverrides): Promise<number>;
+        factory(overrides?: CallOverrides): Promise<string>;
+        getReserves(overrides?: CallOverrides): Promise<[
+            BigNumber,
+            BigNumber,
+            number
+        ] & {
+            reserve0: BigNumber;
+            reserve1: BigNumber;
+            blockTimestampLast: number;
+        }>;
+        initialize(arg0: string, arg1: string, overrides?: CallOverrides): Promise<void>;
+        kLast(overrides?: CallOverrides): Promise<BigNumber>;
+        mint(to: string, overrides?: CallOverrides): Promise<BigNumber>;
+        name(overrides?: CallOverrides): Promise<string>;
+        nonces(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+        permit(owner: string, spender: string, value: BigNumberish, deadline: BigNumberish, v: BigNumberish, r: BytesLike, s: BytesLike, overrides?: CallOverrides): Promise<void>;
+        price0CumulativeLast(overrides?: CallOverrides): Promise<BigNumber>;
+        price1CumulativeLast(overrides?: CallOverrides): Promise<BigNumber>;
+        skim(to: string, overrides?: CallOverrides): Promise<void>;
+        swap(amount0Out: BigNumberish, amount1Out: BigNumberish, to: string, data: BytesLike, overrides?: CallOverrides): Promise<void>;
+        symbol(overrides?: CallOverrides): Promise<string>;
+        sync(overrides?: CallOverrides): Promise<void>;
+        token0(overrides?: CallOverrides): Promise<string>;
+        token1(overrides?: CallOverrides): Promise<string>;
+        totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+        transfer(to: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+        transferFrom(from: string, to: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    };
     filters: {
-        "Approval(address,address,uint256)": TypedContractEvent<ApprovalEvent.InputTuple, ApprovalEvent.OutputTuple, ApprovalEvent.OutputObject>;
-        Approval: TypedContractEvent<ApprovalEvent.InputTuple, ApprovalEvent.OutputTuple, ApprovalEvent.OutputObject>;
-        "Burn(address,uint256,uint256,address)": TypedContractEvent<BurnEvent.InputTuple, BurnEvent.OutputTuple, BurnEvent.OutputObject>;
-        Burn: TypedContractEvent<BurnEvent.InputTuple, BurnEvent.OutputTuple, BurnEvent.OutputObject>;
-        "Mint(address,uint256,uint256)": TypedContractEvent<MintEvent.InputTuple, MintEvent.OutputTuple, MintEvent.OutputObject>;
-        Mint: TypedContractEvent<MintEvent.InputTuple, MintEvent.OutputTuple, MintEvent.OutputObject>;
-        "Swap(address,uint256,uint256,uint256,uint256,address)": TypedContractEvent<SwapEvent.InputTuple, SwapEvent.OutputTuple, SwapEvent.OutputObject>;
-        Swap: TypedContractEvent<SwapEvent.InputTuple, SwapEvent.OutputTuple, SwapEvent.OutputObject>;
-        "Sync(uint112,uint112)": TypedContractEvent<SyncEvent.InputTuple, SyncEvent.OutputTuple, SyncEvent.OutputObject>;
-        Sync: TypedContractEvent<SyncEvent.InputTuple, SyncEvent.OutputTuple, SyncEvent.OutputObject>;
-        "Transfer(address,address,uint256)": TypedContractEvent<TransferEvent.InputTuple, TransferEvent.OutputTuple, TransferEvent.OutputObject>;
-        Transfer: TypedContractEvent<TransferEvent.InputTuple, TransferEvent.OutputTuple, TransferEvent.OutputObject>;
+        "Approval(address,address,uint256)"(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+        Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+        "Burn(address,uint256,uint256,address)"(sender?: string | null, amount0?: null, amount1?: null, to?: string | null): BurnEventFilter;
+        Burn(sender?: string | null, amount0?: null, amount1?: null, to?: string | null): BurnEventFilter;
+        "Mint(address,uint256,uint256)"(sender?: string | null, amount0?: null, amount1?: null): MintEventFilter;
+        Mint(sender?: string | null, amount0?: null, amount1?: null): MintEventFilter;
+        "Swap(address,uint256,uint256,uint256,uint256,address)"(sender?: string | null, amount0In?: null, amount1In?: null, amount0Out?: null, amount1Out?: null, to?: string | null): SwapEventFilter;
+        Swap(sender?: string | null, amount0In?: null, amount1In?: null, amount0Out?: null, amount1Out?: null, to?: string | null): SwapEventFilter;
+        "Sync(uint112,uint112)"(reserve0?: null, reserve1?: null): SyncEventFilter;
+        Sync(reserve0?: null, reserve1?: null): SyncEventFilter;
+        "Transfer(address,address,uint256)"(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+        Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    };
+    estimateGas: {
+        DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<BigNumber>;
+        MINIMUM_LIQUIDITY(overrides?: CallOverrides): Promise<BigNumber>;
+        PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
+        allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+        approve(spender: string, value: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+        burn(to: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        decimals(overrides?: CallOverrides): Promise<BigNumber>;
+        factory(overrides?: CallOverrides): Promise<BigNumber>;
+        getReserves(overrides?: CallOverrides): Promise<BigNumber>;
+        initialize(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        kLast(overrides?: CallOverrides): Promise<BigNumber>;
+        mint(to: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        name(overrides?: CallOverrides): Promise<BigNumber>;
+        nonces(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+        permit(owner: string, spender: string, value: BigNumberish, deadline: BigNumberish, v: BigNumberish, r: BytesLike, s: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        price0CumulativeLast(overrides?: CallOverrides): Promise<BigNumber>;
+        price1CumulativeLast(overrides?: CallOverrides): Promise<BigNumber>;
+        skim(to: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        swap(amount0Out: BigNumberish, amount1Out: BigNumberish, to: string, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        symbol(overrides?: CallOverrides): Promise<BigNumber>;
+        sync(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        token0(overrides?: CallOverrides): Promise<BigNumber>;
+        token1(overrides?: CallOverrides): Promise<BigNumber>;
+        totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+        transfer(to: string, value: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        transferFrom(from: string, to: string, value: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        MINIMUM_LIQUIDITY(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        approve(spender: string, value: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        balanceOf(owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        burn(to: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        factory(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getReserves(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        initialize(arg0: string, arg1: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        kLast(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        mint(to: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        nonces(owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        permit(owner: string, spender: string, value: BigNumberish, deadline: BigNumberish, v: BigNumberish, r: BytesLike, s: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        price0CumulativeLast(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        price1CumulativeLast(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        skim(to: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        swap(amount0Out: BigNumberish, amount1Out: BigNumberish, to: string, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        sync(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        token0(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        token1(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        transfer(to: string, value: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        transferFrom(from: string, to: string, value: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
     };
 }

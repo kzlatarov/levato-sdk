@@ -7,128 +7,128 @@ exports.ITransparentUpgradeableProxy__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "address",
-                name: "previousAdmin",
-                type: "address",
-            },
-            {
-                indexed: false,
-                internalType: "address",
-                name: "newAdmin",
-                type: "address",
-            },
-        ],
-        name: "AdminChanged",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "beacon",
-                type: "address",
-            },
-        ],
-        name: "BeaconUpgraded",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "implementation",
-                type: "address",
-            },
-        ],
-        name: "Upgraded",
-        type: "event",
-    },
-    {
-        inputs: [],
+        type: "function",
         name: "admin",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        name: "changeAdmin",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
         inputs: [],
-        name: "implementation",
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "changeAdmin",
         inputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "upgradeTo",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [
+        type: "function",
+        name: "implementation",
+        inputs: [],
+        outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "upgradeTo",
+        inputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "upgradeToAndCall",
+        inputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
             },
             {
-                internalType: "bytes",
                 name: "",
                 type: "bytes",
+                internalType: "bytes",
             },
         ],
-        name: "upgradeToAndCall",
         outputs: [],
         stateMutability: "payable",
-        type: "function",
+    },
+    {
+        type: "event",
+        name: "AdminChanged",
+        inputs: [
+            {
+                name: "previousAdmin",
+                type: "address",
+                indexed: false,
+                internalType: "address",
+            },
+            {
+                name: "newAdmin",
+                type: "address",
+                indexed: false,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "BeaconUpgraded",
+        inputs: [
+            {
+                name: "beacon",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "Upgraded",
+        inputs: [
+            {
+                name: "implementation",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
     },
 ];
 class ITransparentUpgradeableProxy__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.ITransparentUpgradeableProxy__factory = ITransparentUpgradeableProxy__factory;

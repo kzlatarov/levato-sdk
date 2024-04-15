@@ -1,103 +1,104 @@
-import { type ContractRunner } from "ethers";
+import { Signer } from "ethers";
+import type { Provider } from "@ethersproject/providers";
 import type { IBeefyVault, IBeefyVaultInterface } from "../../BeefyERC4626.sol/IBeefyVault";
 export declare class IBeefyVault__factory {
     static readonly abi: readonly [{
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "balance";
+        readonly inputs: readonly [];
         readonly outputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "balanceOf";
         readonly inputs: readonly [{
-            readonly internalType: "address";
             readonly name: "_account";
             readonly type: "address";
+            readonly internalType: "address";
         }];
-        readonly name: "balanceOf";
         readonly outputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "deposit";
         readonly inputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "_amount";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
-        readonly name: "deposit";
         readonly outputs: readonly [];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }, {
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "earn";
+        readonly inputs: readonly [];
         readonly outputs: readonly [];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }, {
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "getPricePerFullShare";
+        readonly inputs: readonly [];
         readonly outputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }, {
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "strategy";
+        readonly inputs: readonly [];
         readonly outputs: readonly [{
-            readonly internalType: "address";
             readonly name: "";
             readonly type: "address";
+            readonly internalType: "address";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }, {
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "totalSupply";
+        readonly inputs: readonly [];
         readonly outputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }, {
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "want";
+        readonly inputs: readonly [];
         readonly outputs: readonly [{
-            readonly internalType: "contract ERC20Upgradeable";
             readonly name: "";
             readonly type: "address";
+            readonly internalType: "contract ERC20Upgradeable";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "withdraw";
         readonly inputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "_shares";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
-        readonly name: "withdraw";
         readonly outputs: readonly [];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }, {
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "withdrawAll";
+        readonly inputs: readonly [];
         readonly outputs: readonly [];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }];
     static createInterface(): IBeefyVaultInterface;
-    static connect(address: string, runner?: ContractRunner | null): IBeefyVault;
+    static connect(address: string, signerOrProvider: Signer | Provider): IBeefyVault;
 }

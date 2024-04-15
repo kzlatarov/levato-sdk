@@ -1,86 +1,117 @@
-import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, EventFragment, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedLogDescription, TypedListener, TypedContractMethod } from "./common";
-export interface RewardsClaimerInterface extends Interface {
-    getFunction(nameOrSignature: "claimRewards" | "rewardDestination" | "rewardTokens" | "setRewardDestination"): FunctionFragment;
-    getEvent(nameOrSignatureOrTopic: "ClaimTokenRewards" | "Initialized" | "RewardDestinationUpdate"): EventFragment;
+import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, ContractTransaction, Overrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
+export interface RewardsClaimerInterface extends utils.Interface {
+    functions: {
+        "claimRewards()": FunctionFragment;
+        "rewardDestination()": FunctionFragment;
+        "rewardTokens(uint256)": FunctionFragment;
+        "setRewardDestination(address)": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "claimRewards" | "rewardDestination" | "rewardTokens" | "setRewardDestination"): FunctionFragment;
     encodeFunctionData(functionFragment: "claimRewards", values?: undefined): string;
     encodeFunctionData(functionFragment: "rewardDestination", values?: undefined): string;
     encodeFunctionData(functionFragment: "rewardTokens", values: [BigNumberish]): string;
-    encodeFunctionData(functionFragment: "setRewardDestination", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "setRewardDestination", values: [string]): string;
     decodeFunctionResult(functionFragment: "claimRewards", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "rewardDestination", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "rewardTokens", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "setRewardDestination", data: BytesLike): Result;
+    events: {
+        "ClaimTokenRewards(address,uint256)": EventFragment;
+        "Initialized(uint8)": EventFragment;
+        "RewardDestinationUpdate(address)": EventFragment;
+    };
+    getEvent(nameOrSignatureOrTopic: "ClaimTokenRewards"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "RewardDestinationUpdate"): EventFragment;
 }
-export declare namespace ClaimTokenRewardsEvent {
-    type InputTuple = [rewardToken: AddressLike, amount: BigNumberish];
-    type OutputTuple = [rewardToken: string, amount: bigint];
-    interface OutputObject {
-        rewardToken: string;
-        amount: bigint;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export interface ClaimTokenRewardsEventObject {
+    rewardToken: string;
+    amount: BigNumber;
 }
-export declare namespace InitializedEvent {
-    type InputTuple = [version: BigNumberish];
-    type OutputTuple = [version: bigint];
-    interface OutputObject {
-        version: bigint;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type ClaimTokenRewardsEvent = TypedEvent<[
+    string,
+    BigNumber
+], ClaimTokenRewardsEventObject>;
+export type ClaimTokenRewardsEventFilter = TypedEventFilter<ClaimTokenRewardsEvent>;
+export interface InitializedEventObject {
+    version: number;
 }
-export declare namespace RewardDestinationUpdateEvent {
-    type InputTuple = [newDestination: AddressLike];
-    type OutputTuple = [newDestination: string];
-    interface OutputObject {
-        newDestination: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
+export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
+export interface RewardDestinationUpdateEventObject {
+    newDestination: string;
 }
+export type RewardDestinationUpdateEvent = TypedEvent<[
+    string
+], RewardDestinationUpdateEventObject>;
+export type RewardDestinationUpdateEventFilter = TypedEventFilter<RewardDestinationUpdateEvent>;
 export interface RewardsClaimer extends BaseContract {
-    connect(runner?: ContractRunner | null): RewardsClaimer;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: RewardsClaimerInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    claimRewards: TypedContractMethod<[], [void], "nonpayable">;
-    rewardDestination: TypedContractMethod<[], [string], "view">;
-    rewardTokens: TypedContractMethod<[arg0: BigNumberish], [string], "view">;
-    setRewardDestination: TypedContractMethod<[
-        newDestination: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "claimRewards"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "rewardDestination"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "rewardTokens"): TypedContractMethod<[arg0: BigNumberish], [string], "view">;
-    getFunction(nameOrSignature: "setRewardDestination"): TypedContractMethod<[newDestination: AddressLike], [void], "nonpayable">;
-    getEvent(key: "ClaimTokenRewards"): TypedContractEvent<ClaimTokenRewardsEvent.InputTuple, ClaimTokenRewardsEvent.OutputTuple, ClaimTokenRewardsEvent.OutputObject>;
-    getEvent(key: "Initialized"): TypedContractEvent<InitializedEvent.InputTuple, InitializedEvent.OutputTuple, InitializedEvent.OutputObject>;
-    getEvent(key: "RewardDestinationUpdate"): TypedContractEvent<RewardDestinationUpdateEvent.InputTuple, RewardDestinationUpdateEvent.OutputTuple, RewardDestinationUpdateEvent.OutputObject>;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        claimRewards(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        rewardDestination(overrides?: CallOverrides): Promise<[string]>;
+        rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+        setRewardDestination(newDestination: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+    };
+    claimRewards(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    rewardDestination(overrides?: CallOverrides): Promise<string>;
+    rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    setRewardDestination(newDestination: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    callStatic: {
+        claimRewards(overrides?: CallOverrides): Promise<void>;
+        rewardDestination(overrides?: CallOverrides): Promise<string>;
+        rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+        setRewardDestination(newDestination: string, overrides?: CallOverrides): Promise<void>;
+    };
     filters: {
-        "ClaimTokenRewards(address,uint256)": TypedContractEvent<ClaimTokenRewardsEvent.InputTuple, ClaimTokenRewardsEvent.OutputTuple, ClaimTokenRewardsEvent.OutputObject>;
-        ClaimTokenRewards: TypedContractEvent<ClaimTokenRewardsEvent.InputTuple, ClaimTokenRewardsEvent.OutputTuple, ClaimTokenRewardsEvent.OutputObject>;
-        "Initialized(uint8)": TypedContractEvent<InitializedEvent.InputTuple, InitializedEvent.OutputTuple, InitializedEvent.OutputObject>;
-        Initialized: TypedContractEvent<InitializedEvent.InputTuple, InitializedEvent.OutputTuple, InitializedEvent.OutputObject>;
-        "RewardDestinationUpdate(address)": TypedContractEvent<RewardDestinationUpdateEvent.InputTuple, RewardDestinationUpdateEvent.OutputTuple, RewardDestinationUpdateEvent.OutputObject>;
-        RewardDestinationUpdate: TypedContractEvent<RewardDestinationUpdateEvent.InputTuple, RewardDestinationUpdateEvent.OutputTuple, RewardDestinationUpdateEvent.OutputObject>;
+        "ClaimTokenRewards(address,uint256)"(rewardToken?: string | null, amount?: null): ClaimTokenRewardsEventFilter;
+        ClaimTokenRewards(rewardToken?: string | null, amount?: null): ClaimTokenRewardsEventFilter;
+        "Initialized(uint8)"(version?: null): InitializedEventFilter;
+        Initialized(version?: null): InitializedEventFilter;
+        "RewardDestinationUpdate(address)"(newDestination?: string | null): RewardDestinationUpdateEventFilter;
+        RewardDestinationUpdate(newDestination?: string | null): RewardDestinationUpdateEventFilter;
+    };
+    estimateGas: {
+        claimRewards(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        rewardDestination(overrides?: CallOverrides): Promise<BigNumber>;
+        rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        setRewardDestination(newDestination: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        claimRewards(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        rewardDestination(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        setRewardDestination(newDestination: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
     };
 }

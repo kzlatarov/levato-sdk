@@ -7,65 +7,65 @@ exports.PausableUpgradeable__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "uint8",
-                name: "version",
-                type: "uint8",
-            },
-        ],
-        name: "Initialized",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "address",
-                name: "account",
-                type: "address",
-            },
-        ],
-        name: "Paused",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "address",
-                name: "account",
-                type: "address",
-            },
-        ],
-        name: "Unpaused",
-        type: "event",
-    },
-    {
-        inputs: [],
+        type: "function",
         name: "paused",
+        inputs: [],
         outputs: [
             {
-                internalType: "bool",
                 name: "",
                 type: "bool",
+                internalType: "bool",
             },
         ],
         stateMutability: "view",
-        type: "function",
+    },
+    {
+        type: "event",
+        name: "Initialized",
+        inputs: [
+            {
+                name: "version",
+                type: "uint8",
+                indexed: false,
+                internalType: "uint8",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "Paused",
+        inputs: [
+            {
+                name: "account",
+                type: "address",
+                indexed: false,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "Unpaused",
+        inputs: [
+            {
+                name: "account",
+                type: "address",
+                indexed: false,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
     },
 ];
 class PausableUpgradeable__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.PausableUpgradeable__factory = PausableUpgradeable__factory;

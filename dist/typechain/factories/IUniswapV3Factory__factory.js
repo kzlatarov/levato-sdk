@@ -7,209 +7,209 @@ exports.IUniswapV3Factory__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        anonymous: false,
+        type: "function",
+        name: "createPool",
         inputs: [
             {
-                indexed: true,
-                internalType: "uint24",
-                name: "fee",
-                type: "uint24",
-            },
-            {
-                indexed: true,
-                internalType: "int24",
-                name: "tickSpacing",
-                type: "int24",
-            },
-        ],
-        name: "FeeAmountEnabled",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "oldOwner",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "newOwner",
-                type: "address",
-            },
-        ],
-        name: "OwnerChanged",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "token0",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "token1",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "uint24",
-                name: "fee",
-                type: "uint24",
-            },
-            {
-                indexed: false,
-                internalType: "int24",
-                name: "tickSpacing",
-                type: "int24",
-            },
-            {
-                indexed: false,
-                internalType: "address",
-                name: "pool",
-                type: "address",
-            },
-        ],
-        name: "PoolCreated",
-        type: "event",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
                 name: "tokenA",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "tokenB",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint24",
                 name: "fee",
                 type: "uint24",
+                internalType: "uint24",
             },
         ],
-        name: "createPool",
         outputs: [
             {
-                internalType: "address",
                 name: "pool",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "enableFeeAmount",
         inputs: [
             {
-                internalType: "uint24",
                 name: "fee",
                 type: "uint24",
+                internalType: "uint24",
             },
             {
-                internalType: "int24",
                 name: "tickSpacing",
                 type: "int24",
+                internalType: "int24",
             },
         ],
-        name: "enableFeeAmount",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "feeAmountTickSpacing",
         inputs: [
             {
-                internalType: "uint24",
                 name: "fee",
                 type: "uint24",
+                internalType: "uint24",
             },
         ],
-        name: "feeAmountTickSpacing",
         outputs: [
             {
-                internalType: "int24",
                 name: "",
                 type: "int24",
+                internalType: "int24",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getPool",
         inputs: [
             {
-                internalType: "address",
                 name: "tokenA",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "tokenB",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint24",
                 name: "fee",
                 type: "uint24",
+                internalType: "uint24",
             },
         ],
-        name: "getPool",
         outputs: [
             {
-                internalType: "address",
                 name: "pool",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "owner",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "setOwner",
         inputs: [
             {
-                internalType: "address",
                 name: "_owner",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "setOwner",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
+    },
+    {
+        type: "event",
+        name: "FeeAmountEnabled",
+        inputs: [
+            {
+                name: "fee",
+                type: "uint24",
+                indexed: true,
+                internalType: "uint24",
+            },
+            {
+                name: "tickSpacing",
+                type: "int24",
+                indexed: true,
+                internalType: "int24",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "OwnerChanged",
+        inputs: [
+            {
+                name: "oldOwner",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "newOwner",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "event",
+        name: "PoolCreated",
+        inputs: [
+            {
+                name: "token0",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "token1",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "fee",
+                type: "uint24",
+                indexed: true,
+                internalType: "uint24",
+            },
+            {
+                name: "tickSpacing",
+                type: "int24",
+                indexed: false,
+                internalType: "int24",
+            },
+            {
+                name: "pool",
+                type: "address",
+                indexed: false,
+                internalType: "address",
+            },
+        ],
+        anonymous: false,
     },
 ];
 class IUniswapV3Factory__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.IUniswapV3Factory__factory = IUniswapV3Factory__factory;

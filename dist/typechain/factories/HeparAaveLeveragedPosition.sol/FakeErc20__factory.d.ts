@@ -1,4 +1,5 @@
-import { type ContractRunner } from "ethers";
+import { Signer } from "ethers";
+import type { Provider } from "@ethersproject/providers";
 import type { FakeErc20, FakeErc20Interface } from "../../HeparAaveLeveragedPosition.sol/FakeErc20";
 export declare class FakeErc20__factory {
     static readonly abi: readonly [{
@@ -17,5 +18,5 @@ export declare class FakeErc20__factory {
         readonly type: "function";
     }];
     static createInterface(): FakeErc20Interface;
-    static connect(address: string, runner?: ContractRunner | null): FakeErc20;
+    static connect(address: string, signerOrProvider: Signer | Provider): FakeErc20;
 }

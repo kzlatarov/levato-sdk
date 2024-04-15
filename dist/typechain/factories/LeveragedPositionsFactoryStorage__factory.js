@@ -7,234 +7,234 @@ exports.LeveragedPositionsFactoryStorage__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        anonymous: false,
+        type: "function",
+        name: "AAVE",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "uint16",
+                internalType: "uint16",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "DELEGATED",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "uint16",
+                internalType: "uint16",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "IONIC",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "uint16",
+                internalType: "uint16",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "acceptOwnership",
+        inputs: [],
+        outputs: [],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "blocksPerYear",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "creditDelegator",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "contract ICreditDelegator",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "flashloanRouter",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "contract IFlashloanRouter",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "fundersRegistry",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "contract IFundersRegistry",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "minBorrowNative",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "oracle",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "contract MasterPriceOracle",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "owner",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "pendingOwner",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "renounceOwnership",
+        inputs: [],
+        outputs: [],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "function",
+        name: "transferOwnership",
         inputs: [
             {
-                indexed: false,
-                internalType: "uint8",
+                name: "newOwner",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [],
+        stateMutability: "nonpayable",
+    },
+    {
+        type: "event",
+        name: "Initialized",
+        inputs: [
+            {
                 name: "version",
                 type: "uint8",
+                indexed: false,
+                internalType: "uint8",
             },
         ],
-        name: "Initialized",
-        type: "event",
+        anonymous: false,
     },
     {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "previousOwner",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "newOwner",
-                type: "address",
-            },
-        ],
+        type: "event",
         name: "OwnershipTransferStarted",
-        type: "event",
-    },
-    {
-        anonymous: false,
         inputs: [
             {
-                indexed: true,
-                internalType: "address",
                 name: "previousOwner",
                 type: "address",
-            },
-            {
                 indexed: true,
                 internalType: "address",
+            },
+            {
                 name: "newOwner",
                 type: "address",
+                indexed: true,
+                internalType: "address",
             },
         ],
-        name: "OwnershipTransferred",
+        anonymous: false,
+    },
+    {
         type: "event",
-    },
-    {
-        inputs: [],
-        name: "AAVE",
-        outputs: [
-            {
-                internalType: "uint16",
-                name: "",
-                type: "uint16",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "DELEGATED",
-        outputs: [
-            {
-                internalType: "uint16",
-                name: "",
-                type: "uint16",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "IONIC",
-        outputs: [
-            {
-                internalType: "uint16",
-                name: "",
-                type: "uint16",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "acceptOwnership",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "blocksPerYear",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "creditDelegator",
-        outputs: [
-            {
-                internalType: "contract ICreditDelegator",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "flashloanRouter",
-        outputs: [
-            {
-                internalType: "contract IFlashloanRouter",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "fundersRegistry",
-        outputs: [
-            {
-                internalType: "contract IFundersRegistry",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "minBorrowNative",
-        outputs: [
-            {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "oracle",
-        outputs: [
-            {
-                internalType: "contract MasterPriceOracle",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "owner",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "pendingOwner",
-        outputs: [
-            {
-                internalType: "address",
-                name: "",
-                type: "address",
-            },
-        ],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "renounceOwnership",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
+        name: "OwnershipTransferred",
         inputs: [
             {
+                name: "previousOwner",
+                type: "address",
+                indexed: true,
                 internalType: "address",
+            },
+            {
                 name: "newOwner",
                 type: "address",
+                indexed: true,
+                internalType: "address",
             },
         ],
-        name: "transferOwnership",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
+        anonymous: false,
     },
 ];
 class LeveragedPositionsFactoryStorage__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.LeveragedPositionsFactoryStorage__factory = LeveragedPositionsFactoryStorage__factory;

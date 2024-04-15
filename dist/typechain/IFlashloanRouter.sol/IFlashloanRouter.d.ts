@@ -1,15 +1,27 @@
-import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedListener, TypedContractMethod } from "../common";
-export interface IFlashloanRouterInterface extends Interface {
-    getFunction(nameOrSignature: "_listExtensions" | "_registerExtension" | "_replaceExtensions" | "_setIonicMarketOfAsset" | "flashloan" | "ionicMarketOfAsset" | "owner" | "receiveFlashLoan"): FunctionFragment;
+import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, ContractTransaction, Overrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "../common";
+export interface IFlashloanRouterInterface extends utils.Interface {
+    functions: {
+        "_listExtensions()": FunctionFragment;
+        "_registerExtension(address,address)": FunctionFragment;
+        "_replaceExtensions(address[])": FunctionFragment;
+        "_setIonicMarketOfAsset(address,address)": FunctionFragment;
+        "flashloan(address,uint256,bytes)": FunctionFragment;
+        "ionicMarketOfAsset(address)": FunctionFragment;
+        "owner()": FunctionFragment;
+        "receiveFlashLoan(address,uint256,uint256,bytes)": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "_listExtensions" | "_registerExtension" | "_replaceExtensions" | "_setIonicMarketOfAsset" | "flashloan" | "ionicMarketOfAsset" | "owner" | "receiveFlashLoan"): FunctionFragment;
     encodeFunctionData(functionFragment: "_listExtensions", values?: undefined): string;
-    encodeFunctionData(functionFragment: "_registerExtension", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "_replaceExtensions", values: [AddressLike[]]): string;
-    encodeFunctionData(functionFragment: "_setIonicMarketOfAsset", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "flashloan", values: [AddressLike, BigNumberish, BytesLike]): string;
-    encodeFunctionData(functionFragment: "ionicMarketOfAsset", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "_registerExtension", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "_replaceExtensions", values: [string[]]): string;
+    encodeFunctionData(functionFragment: "_setIonicMarketOfAsset", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "flashloan", values: [string, BigNumberish, BytesLike]): string;
+    encodeFunctionData(functionFragment: "ionicMarketOfAsset", values: [string]): string;
     encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-    encodeFunctionData(functionFragment: "receiveFlashLoan", values: [AddressLike, BigNumberish, BigNumberish, BytesLike]): string;
+    encodeFunctionData(functionFragment: "receiveFlashLoan", values: [string, BigNumberish, BigNumberish, BytesLike]): string;
     decodeFunctionResult(functionFragment: "_listExtensions", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "_registerExtension", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "_replaceExtensions", data: BytesLike): Result;
@@ -18,90 +30,109 @@ export interface IFlashloanRouterInterface extends Interface {
     decodeFunctionResult(functionFragment: "ionicMarketOfAsset", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "receiveFlashLoan", data: BytesLike): Result;
+    events: {};
 }
 export interface IFlashloanRouter extends BaseContract {
-    connect(runner?: ContractRunner | null): IFlashloanRouter;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: IFlashloanRouterInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    _listExtensions: TypedContractMethod<[], [string[]], "view">;
-    _registerExtension: TypedContractMethod<[
-        extensionToAdd: AddressLike,
-        extensionToReplace: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    _replaceExtensions: TypedContractMethod<[
-        extensions: AddressLike[]
-    ], [
-        void
-    ], "nonpayable">;
-    _setIonicMarketOfAsset: TypedContractMethod<[
-        asset: AddressLike,
-        market: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    flashloan: TypedContractMethod<[
-        asset: AddressLike,
-        amount: BigNumberish,
-        data: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    ionicMarketOfAsset: TypedContractMethod<[
-        asset: AddressLike
-    ], [
-        string
-    ], "view">;
-    owner: TypedContractMethod<[], [string], "view">;
-    receiveFlashLoan: TypedContractMethod<[
-        borrowedAsset: AddressLike,
-        borrowedAmount: BigNumberish,
-        premium: BigNumberish,
-        data: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "_listExtensions"): TypedContractMethod<[], [string[]], "view">;
-    getFunction(nameOrSignature: "_registerExtension"): TypedContractMethod<[
-        extensionToAdd: AddressLike,
-        extensionToReplace: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "_replaceExtensions"): TypedContractMethod<[extensions: AddressLike[]], [void], "nonpayable">;
-    getFunction(nameOrSignature: "_setIonicMarketOfAsset"): TypedContractMethod<[
-        asset: AddressLike,
-        market: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "flashloan"): TypedContractMethod<[
-        asset: AddressLike,
-        amount: BigNumberish,
-        data: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "ionicMarketOfAsset"): TypedContractMethod<[asset: AddressLike], [string], "view">;
-    getFunction(nameOrSignature: "owner"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "receiveFlashLoan"): TypedContractMethod<[
-        borrowedAsset: AddressLike,
-        borrowedAmount: BigNumberish,
-        premium: BigNumberish,
-        data: BytesLike
-    ], [
-        void
-    ], "nonpayable">;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        _listExtensions(overrides?: CallOverrides): Promise<[string[]]>;
+        _registerExtension(extensionToAdd: string, extensionToReplace: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _replaceExtensions(extensions: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _setIonicMarketOfAsset(asset: string, market: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        flashloan(asset: string, amount: BigNumberish, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        ionicMarketOfAsset(asset: string, overrides?: CallOverrides): Promise<[string]>;
+        owner(overrides?: CallOverrides): Promise<[string]>;
+        receiveFlashLoan(borrowedAsset: string, borrowedAmount: BigNumberish, premium: BigNumberish, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+    };
+    _listExtensions(overrides?: CallOverrides): Promise<string[]>;
+    _registerExtension(extensionToAdd: string, extensionToReplace: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _replaceExtensions(extensions: string[], overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _setIonicMarketOfAsset(asset: string, market: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    flashloan(asset: string, amount: BigNumberish, data: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    ionicMarketOfAsset(asset: string, overrides?: CallOverrides): Promise<string>;
+    owner(overrides?: CallOverrides): Promise<string>;
+    receiveFlashLoan(borrowedAsset: string, borrowedAmount: BigNumberish, premium: BigNumberish, data: BytesLike, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    callStatic: {
+        _listExtensions(overrides?: CallOverrides): Promise<string[]>;
+        _registerExtension(extensionToAdd: string, extensionToReplace: string, overrides?: CallOverrides): Promise<void>;
+        _replaceExtensions(extensions: string[], overrides?: CallOverrides): Promise<void>;
+        _setIonicMarketOfAsset(asset: string, market: string, overrides?: CallOverrides): Promise<void>;
+        flashloan(asset: string, amount: BigNumberish, data: BytesLike, overrides?: CallOverrides): Promise<void>;
+        ionicMarketOfAsset(asset: string, overrides?: CallOverrides): Promise<string>;
+        owner(overrides?: CallOverrides): Promise<string>;
+        receiveFlashLoan(borrowedAsset: string, borrowedAmount: BigNumberish, premium: BigNumberish, data: BytesLike, overrides?: CallOverrides): Promise<void>;
+    };
     filters: {};
+    estimateGas: {
+        _listExtensions(overrides?: CallOverrides): Promise<BigNumber>;
+        _registerExtension(extensionToAdd: string, extensionToReplace: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _replaceExtensions(extensions: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _setIonicMarketOfAsset(asset: string, market: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        flashloan(asset: string, amount: BigNumberish, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        ionicMarketOfAsset(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        owner(overrides?: CallOverrides): Promise<BigNumber>;
+        receiveFlashLoan(borrowedAsset: string, borrowedAmount: BigNumberish, premium: BigNumberish, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        _listExtensions(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        _registerExtension(extensionToAdd: string, extensionToReplace: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _replaceExtensions(extensions: string[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _setIonicMarketOfAsset(asset: string, market: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        flashloan(asset: string, amount: BigNumberish, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        ionicMarketOfAsset(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        receiveFlashLoan(borrowedAsset: string, borrowedAmount: BigNumberish, premium: BigNumberish, data: BytesLike, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+    };
 }

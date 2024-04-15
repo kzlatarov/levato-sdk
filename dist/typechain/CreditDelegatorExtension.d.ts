@@ -1,48 +1,89 @@
-import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, EventFragment, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedLogDescription, TypedListener, TypedContractMethod } from "./common";
-export interface CreditDelegatorExtensionInterface extends Interface {
-    getFunction(nameOrSignature: "_getExtensionFunctions" | "_repayForPosition" | "aaveAddressesProvider" | "acceptOwnership" | "borrowAllowance" | "borrowAsPosition" | "borrowBalance" | "callLiquidation" | "callPartialLiquidation" | "changeBorrowAllowance" | "delegatedDebtAssetData" | "depositLevatoFunds" | "factory" | "getAavePool" | "getAccruedToTreasury" | "getAssetBorrowRate" | "getAssetPoolLtv" | "getAssetPrice" | "getBorrowingPowerUtilization" | "getLevatoCurrentBorrowRate" | "getLiquidationThreshold" | "getPositionAvailableBorrows" | "getPositionDebt" | "getPositionLiquidationThreshold" | "getPositionScaledATokens" | "getTotalAvailableBorrows" | "getUserBorrowAllowance" | "initialize" | "initializeReserve" | "isPoolSupportedAsset" | "isPositionLiquidateable" | "owner" | "pendingOwner" | "positionBorrowIndex" | "positionBorrowIndexLastUpdate" | "positionScaledATokens" | "reinitialize" | "renounceOwnership" | "repayAsPosition" | "transferOwnership"): FunctionFragment;
-    getEvent(nameOrSignatureOrTopic: "BorrowAsPosition" | "Initialized" | "Liquidation" | "OwnershipTransferStarted" | "OwnershipTransferred" | "RepayAsPosition"): EventFragment;
+import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, ContractTransaction, Overrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
+export interface CreditDelegatorExtensionInterface extends utils.Interface {
+    functions: {
+        "_getExtensionFunctions()": FunctionFragment;
+        "_repayForPosition(address,address,uint256)": FunctionFragment;
+        "aaveAddressesProvider()": FunctionFragment;
+        "acceptOwnership()": FunctionFragment;
+        "borrowAllowance(address,address)": FunctionFragment;
+        "borrowAsPosition(address,uint256)": FunctionFragment;
+        "borrowBalance(address,address)": FunctionFragment;
+        "callLiquidation(address)": FunctionFragment;
+        "callPartialLiquidation(address,uint256)": FunctionFragment;
+        "changeBorrowAllowance(uint256,uint256,address,address)": FunctionFragment;
+        "delegatedDebtAssetData(address)": FunctionFragment;
+        "depositLevatoFunds(address)": FunctionFragment;
+        "factory()": FunctionFragment;
+        "getAavePool()": FunctionFragment;
+        "getAccruedToTreasury(address)": FunctionFragment;
+        "getAssetBorrowRate(address)": FunctionFragment;
+        "getAssetPoolLtv(address)": FunctionFragment;
+        "getAssetPrice(address)": FunctionFragment;
+        "getBorrowingPowerUtilization()": FunctionFragment;
+        "getLevatoCurrentBorrowRate(address)": FunctionFragment;
+        "getLiquidationThreshold(address,uint256)": FunctionFragment;
+        "getPositionDebt(address)": FunctionFragment;
+        "getPositionLiquidationThreshold(address)": FunctionFragment;
+        "getPositionScaledATokens(address)": FunctionFragment;
+        "getTotalAvailableBorrows(address)": FunctionFragment;
+        "getUserBorrowAllowance(address,address)": FunctionFragment;
+        "initialize(address,address,address)": FunctionFragment;
+        "initializeReserve(address,address)": FunctionFragment;
+        "isPoolSupportedAsset(address)": FunctionFragment;
+        "isPositionLiquidateable(address)": FunctionFragment;
+        "owner()": FunctionFragment;
+        "pendingOwner()": FunctionFragment;
+        "positionBorrowIndex(address,address)": FunctionFragment;
+        "positionBorrowIndexLastUpdate(address,address)": FunctionFragment;
+        "positionScaledATokens(address,address)": FunctionFragment;
+        "reinitialize(address,address,address)": FunctionFragment;
+        "renounceOwnership()": FunctionFragment;
+        "repayAsPosition(address,uint256)": FunctionFragment;
+        "transferOwnership(address)": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "_getExtensionFunctions" | "_repayForPosition" | "aaveAddressesProvider" | "acceptOwnership" | "borrowAllowance" | "borrowAsPosition" | "borrowBalance" | "callLiquidation" | "callPartialLiquidation" | "changeBorrowAllowance" | "delegatedDebtAssetData" | "depositLevatoFunds" | "factory" | "getAavePool" | "getAccruedToTreasury" | "getAssetBorrowRate" | "getAssetPoolLtv" | "getAssetPrice" | "getBorrowingPowerUtilization" | "getLevatoCurrentBorrowRate" | "getLiquidationThreshold" | "getPositionDebt" | "getPositionLiquidationThreshold" | "getPositionScaledATokens" | "getTotalAvailableBorrows" | "getUserBorrowAllowance" | "initialize" | "initializeReserve" | "isPoolSupportedAsset" | "isPositionLiquidateable" | "owner" | "pendingOwner" | "positionBorrowIndex" | "positionBorrowIndexLastUpdate" | "positionScaledATokens" | "reinitialize" | "renounceOwnership" | "repayAsPosition" | "transferOwnership"): FunctionFragment;
     encodeFunctionData(functionFragment: "_getExtensionFunctions", values?: undefined): string;
-    encodeFunctionData(functionFragment: "_repayForPosition", values: [AddressLike, AddressLike, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "_repayForPosition", values: [string, string, BigNumberish]): string;
     encodeFunctionData(functionFragment: "aaveAddressesProvider", values?: undefined): string;
     encodeFunctionData(functionFragment: "acceptOwnership", values?: undefined): string;
-    encodeFunctionData(functionFragment: "borrowAllowance", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "borrowAsPosition", values: [AddressLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "borrowBalance", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "callLiquidation", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "callPartialLiquidation", values: [AddressLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "changeBorrowAllowance", values: [BigNumberish, BigNumberish, AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "delegatedDebtAssetData", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "depositLevatoFunds", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "borrowAllowance", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "borrowAsPosition", values: [string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "borrowBalance", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "callLiquidation", values: [string]): string;
+    encodeFunctionData(functionFragment: "callPartialLiquidation", values: [string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "changeBorrowAllowance", values: [BigNumberish, BigNumberish, string, string]): string;
+    encodeFunctionData(functionFragment: "delegatedDebtAssetData", values: [string]): string;
+    encodeFunctionData(functionFragment: "depositLevatoFunds", values: [string]): string;
     encodeFunctionData(functionFragment: "factory", values?: undefined): string;
     encodeFunctionData(functionFragment: "getAavePool", values?: undefined): string;
-    encodeFunctionData(functionFragment: "getAccruedToTreasury", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "getAssetBorrowRate", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "getAssetPoolLtv", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "getAssetPrice", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "getAccruedToTreasury", values: [string]): string;
+    encodeFunctionData(functionFragment: "getAssetBorrowRate", values: [string]): string;
+    encodeFunctionData(functionFragment: "getAssetPoolLtv", values: [string]): string;
+    encodeFunctionData(functionFragment: "getAssetPrice", values: [string]): string;
     encodeFunctionData(functionFragment: "getBorrowingPowerUtilization", values?: undefined): string;
-    encodeFunctionData(functionFragment: "getLevatoCurrentBorrowRate", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "getLiquidationThreshold", values: [AddressLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "getPositionAvailableBorrows", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "getPositionDebt", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "getPositionLiquidationThreshold", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "getPositionScaledATokens", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "getTotalAvailableBorrows", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "getUserBorrowAllowance", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "initialize", values: [AddressLike, AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "initializeReserve", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "isPoolSupportedAsset", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "isPositionLiquidateable", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "getLevatoCurrentBorrowRate", values: [string]): string;
+    encodeFunctionData(functionFragment: "getLiquidationThreshold", values: [string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "getPositionDebt", values: [string]): string;
+    encodeFunctionData(functionFragment: "getPositionLiquidationThreshold", values: [string]): string;
+    encodeFunctionData(functionFragment: "getPositionScaledATokens", values: [string]): string;
+    encodeFunctionData(functionFragment: "getTotalAvailableBorrows", values: [string]): string;
+    encodeFunctionData(functionFragment: "getUserBorrowAllowance", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "initialize", values: [string, string, string]): string;
+    encodeFunctionData(functionFragment: "initializeReserve", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "isPoolSupportedAsset", values: [string]): string;
+    encodeFunctionData(functionFragment: "isPositionLiquidateable", values: [string]): string;
     encodeFunctionData(functionFragment: "owner", values?: undefined): string;
     encodeFunctionData(functionFragment: "pendingOwner", values?: undefined): string;
-    encodeFunctionData(functionFragment: "positionBorrowIndex", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "positionBorrowIndexLastUpdate", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "positionScaledATokens", values: [AddressLike, AddressLike]): string;
-    encodeFunctionData(functionFragment: "reinitialize", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "positionBorrowIndex", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "positionBorrowIndexLastUpdate", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "positionScaledATokens", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "reinitialize", values: [string, string, string]): string;
     encodeFunctionData(functionFragment: "renounceOwnership", values?: undefined): string;
-    encodeFunctionData(functionFragment: "repayAsPosition", values: [AddressLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "transferOwnership", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "repayAsPosition", values: [string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "transferOwnership", values: [string]): string;
     decodeFunctionResult(functionFragment: "_getExtensionFunctions", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "_repayForPosition", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "aaveAddressesProvider", data: BytesLike): Result;
@@ -64,7 +105,6 @@ export interface CreditDelegatorExtensionInterface extends Interface {
     decodeFunctionResult(functionFragment: "getBorrowingPowerUtilization", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getLevatoCurrentBorrowRate", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getLiquidationThreshold", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "getPositionAvailableBorrows", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getPositionDebt", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getPositionLiquidationThreshold", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getPositionScaledATokens", data: BytesLike): Result;
@@ -83,487 +123,482 @@ export interface CreditDelegatorExtensionInterface extends Interface {
     decodeFunctionResult(functionFragment: "renounceOwnership", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "repayAsPosition", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "transferOwnership", data: BytesLike): Result;
+    events: {
+        "BorrowAsPosition(address,address,uint256,uint256)": EventFragment;
+        "Initialized(uint8)": EventFragment;
+        "Liquidation(address,address,uint256,uint256,uint256)": EventFragment;
+        "OwnershipTransferStarted(address,address)": EventFragment;
+        "OwnershipTransferred(address,address)": EventFragment;
+        "RepayAsPosition(address,address,uint256,uint256)": EventFragment;
+    };
+    getEvent(nameOrSignatureOrTopic: "BorrowAsPosition"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "Liquidation"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "OwnershipTransferStarted"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+    getEvent(nameOrSignatureOrTopic: "RepayAsPosition"): EventFragment;
 }
-export declare namespace BorrowAsPositionEvent {
-    type InputTuple = [
-        position: AddressLike,
-        asset: AddressLike,
-        borrowAmount: BigNumberish,
-        scaledATokensMinted: BigNumberish
-    ];
-    type OutputTuple = [
-        position: string,
-        asset: string,
-        borrowAmount: bigint,
-        scaledATokensMinted: bigint
-    ];
-    interface OutputObject {
-        position: string;
-        asset: string;
-        borrowAmount: bigint;
-        scaledATokensMinted: bigint;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export interface BorrowAsPositionEventObject {
+    position: string;
+    asset: string;
+    borrowAmount: BigNumber;
+    scaledATokensMinted: BigNumber;
 }
-export declare namespace InitializedEvent {
-    type InputTuple = [version: BigNumberish];
-    type OutputTuple = [version: bigint];
-    interface OutputObject {
-        version: bigint;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type BorrowAsPositionEvent = TypedEvent<[
+    string,
+    string,
+    BigNumber,
+    BigNumber
+], BorrowAsPositionEventObject>;
+export type BorrowAsPositionEventFilter = TypedEventFilter<BorrowAsPositionEvent>;
+export interface InitializedEventObject {
+    version: number;
 }
-export declare namespace LiquidationEvent {
-    type InputTuple = [
-        liquidator: AddressLike,
-        position: AddressLike,
-        debtToRepay: BigNumberish,
-        actualSeizedStableAmount: BigNumberish,
-        collateralSeized: BigNumberish
-    ];
-    type OutputTuple = [
-        liquidator: string,
-        position: string,
-        debtToRepay: bigint,
-        actualSeizedStableAmount: bigint,
-        collateralSeized: bigint
-    ];
-    interface OutputObject {
-        liquidator: string;
-        position: string;
-        debtToRepay: bigint;
-        actualSeizedStableAmount: bigint;
-        collateralSeized: bigint;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
+export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
+export interface LiquidationEventObject {
+    liquidator: string;
+    position: string;
+    debtToRepay: BigNumber;
+    actualSeizedStableAmount: BigNumber;
+    collateralSeized: BigNumber;
 }
-export declare namespace OwnershipTransferStartedEvent {
-    type InputTuple = [previousOwner: AddressLike, newOwner: AddressLike];
-    type OutputTuple = [previousOwner: string, newOwner: string];
-    interface OutputObject {
-        previousOwner: string;
-        newOwner: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type LiquidationEvent = TypedEvent<[
+    string,
+    string,
+    BigNumber,
+    BigNumber,
+    BigNumber
+], LiquidationEventObject>;
+export type LiquidationEventFilter = TypedEventFilter<LiquidationEvent>;
+export interface OwnershipTransferStartedEventObject {
+    previousOwner: string;
+    newOwner: string;
 }
-export declare namespace OwnershipTransferredEvent {
-    type InputTuple = [previousOwner: AddressLike, newOwner: AddressLike];
-    type OutputTuple = [previousOwner: string, newOwner: string];
-    interface OutputObject {
-        previousOwner: string;
-        newOwner: string;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type OwnershipTransferStartedEvent = TypedEvent<[
+    string,
+    string
+], OwnershipTransferStartedEventObject>;
+export type OwnershipTransferStartedEventFilter = TypedEventFilter<OwnershipTransferStartedEvent>;
+export interface OwnershipTransferredEventObject {
+    previousOwner: string;
+    newOwner: string;
 }
-export declare namespace RepayAsPositionEvent {
-    type InputTuple = [
-        position: AddressLike,
-        asset: AddressLike,
-        borrowAmount: BigNumberish,
-        scaledATokensBurnt: BigNumberish
-    ];
-    type OutputTuple = [
-        position: string,
-        asset: string,
-        borrowAmount: bigint,
-        scaledATokensBurnt: bigint
-    ];
-    interface OutputObject {
-        position: string;
-        asset: string;
-        borrowAmount: bigint;
-        scaledATokensBurnt: bigint;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export type OwnershipTransferredEvent = TypedEvent<[
+    string,
+    string
+], OwnershipTransferredEventObject>;
+export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
+export interface RepayAsPositionEventObject {
+    position: string;
+    asset: string;
+    borrowAmount: BigNumber;
+    scaledATokensBurnt: BigNumber;
 }
+export type RepayAsPositionEvent = TypedEvent<[
+    string,
+    string,
+    BigNumber,
+    BigNumber
+], RepayAsPositionEventObject>;
+export type RepayAsPositionEventFilter = TypedEventFilter<RepayAsPositionEvent>;
 export interface CreditDelegatorExtension extends BaseContract {
-    connect(runner?: ContractRunner | null): CreditDelegatorExtension;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: CreditDelegatorExtensionInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    _getExtensionFunctions: TypedContractMethod<[], [string[]], "view">;
-    _repayForPosition: TypedContractMethod<[
-        position: AddressLike,
-        asset: AddressLike,
-        repayAmount: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    aaveAddressesProvider: TypedContractMethod<[], [string], "view">;
-    acceptOwnership: TypedContractMethod<[], [void], "nonpayable">;
-    borrowAllowance: TypedContractMethod<[
-        arg0: AddressLike,
-        arg1: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    borrowAsPosition: TypedContractMethod<[
-        asset: AddressLike,
-        borrowAmount: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    borrowBalance: TypedContractMethod<[
-        arg0: AddressLike,
-        arg1: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    callLiquidation: TypedContractMethod<[
-        position: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    callPartialLiquidation: TypedContractMethod<[
-        position: AddressLike,
-        debtToRepay: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    changeBorrowAllowance: TypedContractMethod<[
-        fromAllowance: BigNumberish,
-        toAllowance: BigNumberish,
-        user: AddressLike,
-        asset: AddressLike
-    ], [
-        bigint
-    ], "nonpayable">;
-    delegatedDebtAssetData: TypedContractMethod<[
-        arg0: AddressLike
-    ], [
-        [
-            bigint,
-            bigint,
-            bigint,
-            bigint,
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        _getExtensionFunctions(overrides?: CallOverrides): Promise<[string[]]>;
+        _repayForPosition(position: string, asset: string, repayAmount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        aaveAddressesProvider(overrides?: CallOverrides): Promise<[string]>;
+        acceptOwnership(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        borrowAllowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        borrowAsPosition(asset: string, borrowAmount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        borrowBalance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        callLiquidation(position: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        callPartialLiquidation(position: string, debtToRepay: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        changeBorrowAllowance(fromAllowance: BigNumberish, toAllowance: BigNumberish, user: string, asset: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        delegatedDebtAssetData(arg0: string, overrides?: CallOverrides): Promise<[
+            BigNumber,
+            BigNumber,
+            BigNumber,
+            number,
             string,
             string,
             string,
-            bigint,
-            bigint
+            BigNumber,
+            BigNumber
         ] & {
-            levatoCurrentBorrowRate: bigint;
-            borrowIndex: bigint;
-            lastTotalDebt: bigint;
-            lastUpdateTimestamp: bigint;
+            levatoCurrentBorrowRate: BigNumber;
+            borrowIndex: BigNumber;
+            lastTotalDebt: BigNumber;
+            lastUpdateTimestamp: number;
             lpToken: string;
             debtToken: string;
             irm: string;
-            accruedToTreasury: bigint;
-            reserveFactor: bigint;
-        }
-    ], "view">;
-    depositLevatoFunds: TypedContractMethod<[
-        asset: AddressLike
-    ], [
-        bigint
-    ], "nonpayable">;
-    factory: TypedContractMethod<[], [string], "view">;
-    getAavePool: TypedContractMethod<[], [string], "view">;
-    getAccruedToTreasury: TypedContractMethod<[
-        asset: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getAssetBorrowRate: TypedContractMethod<[
-        asset: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getAssetPoolLtv: TypedContractMethod<[asset: AddressLike], [bigint], "view">;
-    getAssetPrice: TypedContractMethod<[asset: AddressLike], [bigint], "view">;
-    getBorrowingPowerUtilization: TypedContractMethod<[], [bigint], "view">;
-    getLevatoCurrentBorrowRate: TypedContractMethod<[
-        asset: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getLiquidationThreshold: TypedContractMethod<[
-        collateralAsset: AddressLike,
-        delegatedDebtValue: BigNumberish
-    ], [
-        bigint
-    ], "view">;
-    getPositionAvailableBorrows: TypedContractMethod<[
-        positionAddress: AddressLike,
-        asset: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getPositionDebt: TypedContractMethod<[
-        position: AddressLike
-    ], [
-        [bigint, bigint, string]
-    ], "view">;
-    getPositionLiquidationThreshold: TypedContractMethod<[
-        position: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getPositionScaledATokens: TypedContractMethod<[
-        position: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getTotalAvailableBorrows: TypedContractMethod<[
-        asset: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getUserBorrowAllowance: TypedContractMethod<[
-        user: AddressLike,
-        asset: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    initialize: TypedContractMethod<[
-        _addressesProvider: AddressLike,
-        _factory: AddressLike,
-        _irm: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    initializeReserve: TypedContractMethod<[
-        _asset: AddressLike,
-        _lpToken: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    isPoolSupportedAsset: TypedContractMethod<[
-        asset: AddressLike
-    ], [
-        boolean
-    ], "view">;
-    isPositionLiquidateable: TypedContractMethod<[
-        position: AddressLike
-    ], [
-        boolean
-    ], "view">;
-    owner: TypedContractMethod<[], [string], "view">;
-    pendingOwner: TypedContractMethod<[], [string], "view">;
-    positionBorrowIndex: TypedContractMethod<[
-        arg0: AddressLike,
-        arg1: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    positionBorrowIndexLastUpdate: TypedContractMethod<[
-        arg0: AddressLike,
-        arg1: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    positionScaledATokens: TypedContractMethod<[
-        arg0: AddressLike,
-        arg1: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    reinitialize: TypedContractMethod<[_irm: AddressLike], [void], "nonpayable">;
-    renounceOwnership: TypedContractMethod<[], [void], "nonpayable">;
-    repayAsPosition: TypedContractMethod<[
-        asset: AddressLike,
-        repayAmount: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    transferOwnership: TypedContractMethod<[
-        newOwner: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "_getExtensionFunctions"): TypedContractMethod<[], [string[]], "view">;
-    getFunction(nameOrSignature: "_repayForPosition"): TypedContractMethod<[
-        position: AddressLike,
-        asset: AddressLike,
-        repayAmount: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "aaveAddressesProvider"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "acceptOwnership"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "borrowAllowance"): TypedContractMethod<[
-        arg0: AddressLike,
-        arg1: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "borrowAsPosition"): TypedContractMethod<[
-        asset: AddressLike,
-        borrowAmount: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "borrowBalance"): TypedContractMethod<[
-        arg0: AddressLike,
-        arg1: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "callLiquidation"): TypedContractMethod<[position: AddressLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "callPartialLiquidation"): TypedContractMethod<[
-        position: AddressLike,
-        debtToRepay: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "changeBorrowAllowance"): TypedContractMethod<[
-        fromAllowance: BigNumberish,
-        toAllowance: BigNumberish,
-        user: AddressLike,
-        asset: AddressLike
-    ], [
-        bigint
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "delegatedDebtAssetData"): TypedContractMethod<[
-        arg0: AddressLike
-    ], [
-        [
-            bigint,
-            bigint,
-            bigint,
-            bigint,
+            accruedToTreasury: BigNumber;
+            reserveFactor: BigNumber;
+        }>;
+        depositLevatoFunds(asset: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        factory(overrides?: CallOverrides): Promise<[string]>;
+        getAavePool(overrides?: CallOverrides): Promise<[string]>;
+        getAccruedToTreasury(asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        getAssetBorrowRate(asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        getAssetPoolLtv(asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        getAssetPrice(asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        getBorrowingPowerUtilization(overrides?: CallOverrides): Promise<[BigNumber]>;
+        getLevatoCurrentBorrowRate(asset: string, overrides?: CallOverrides): Promise<[BigNumber] & {
+            levatoCurrentBorrowRate: BigNumber;
+        }>;
+        getLiquidationThreshold(collateralAsset: string, delegatedDebtValue: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+        getPositionDebt(position: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, string]>;
+        getPositionLiquidationThreshold(position: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        getPositionScaledATokens(position: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        getTotalAvailableBorrows(asset: string, overrides?: CallOverrides): Promise<[BigNumber] & {
+            availableBorrowsETH: BigNumber;
+        }>;
+        getUserBorrowAllowance(user: string, asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        initialize(_addressesProvider: string, _factory: string, _irm: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        initializeReserve(_asset: string, _lpToken: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        isPoolSupportedAsset(asset: string, overrides?: CallOverrides): Promise<[boolean]>;
+        isPositionLiquidateable(position: string, overrides?: CallOverrides): Promise<[boolean]>;
+        owner(overrides?: CallOverrides): Promise<[string]>;
+        pendingOwner(overrides?: CallOverrides): Promise<[string]>;
+        positionBorrowIndex(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        positionBorrowIndexLastUpdate(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[number]>;
+        positionScaledATokens(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        reinitialize(_addressesProvider: string, _factory: string, _irm: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        renounceOwnership(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        repayAsPosition(asset: string, repayAmount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        transferOwnership(newOwner: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+    };
+    _getExtensionFunctions(overrides?: CallOverrides): Promise<string[]>;
+    _repayForPosition(position: string, asset: string, repayAmount: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    aaveAddressesProvider(overrides?: CallOverrides): Promise<string>;
+    acceptOwnership(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    borrowAllowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    borrowAsPosition(asset: string, borrowAmount: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    borrowBalance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    callLiquidation(position: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    callPartialLiquidation(position: string, debtToRepay: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    changeBorrowAllowance(fromAllowance: BigNumberish, toAllowance: BigNumberish, user: string, asset: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    delegatedDebtAssetData(arg0: string, overrides?: CallOverrides): Promise<[
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        number,
+        string,
+        string,
+        string,
+        BigNumber,
+        BigNumber
+    ] & {
+        levatoCurrentBorrowRate: BigNumber;
+        borrowIndex: BigNumber;
+        lastTotalDebt: BigNumber;
+        lastUpdateTimestamp: number;
+        lpToken: string;
+        debtToken: string;
+        irm: string;
+        accruedToTreasury: BigNumber;
+        reserveFactor: BigNumber;
+    }>;
+    depositLevatoFunds(asset: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    factory(overrides?: CallOverrides): Promise<string>;
+    getAavePool(overrides?: CallOverrides): Promise<string>;
+    getAccruedToTreasury(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAssetBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAssetPoolLtv(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getBorrowingPowerUtilization(overrides?: CallOverrides): Promise<BigNumber>;
+    getLevatoCurrentBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getLiquidationThreshold(collateralAsset: string, delegatedDebtValue: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getPositionDebt(position: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, string]>;
+    getPositionLiquidationThreshold(position: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getPositionScaledATokens(position: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getTotalAvailableBorrows(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getUserBorrowAllowance(user: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    initialize(_addressesProvider: string, _factory: string, _irm: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    initializeReserve(_asset: string, _lpToken: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    isPoolSupportedAsset(asset: string, overrides?: CallOverrides): Promise<boolean>;
+    isPositionLiquidateable(position: string, overrides?: CallOverrides): Promise<boolean>;
+    owner(overrides?: CallOverrides): Promise<string>;
+    pendingOwner(overrides?: CallOverrides): Promise<string>;
+    positionBorrowIndex(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    positionBorrowIndexLastUpdate(arg0: string, arg1: string, overrides?: CallOverrides): Promise<number>;
+    positionScaledATokens(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    reinitialize(_addressesProvider: string, _factory: string, _irm: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    repayAsPosition(asset: string, repayAmount: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    transferOwnership(newOwner: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    callStatic: {
+        _getExtensionFunctions(overrides?: CallOverrides): Promise<string[]>;
+        _repayForPosition(position: string, asset: string, repayAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        aaveAddressesProvider(overrides?: CallOverrides): Promise<string>;
+        acceptOwnership(overrides?: CallOverrides): Promise<void>;
+        borrowAllowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+        borrowAsPosition(asset: string, borrowAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        borrowBalance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+        callLiquidation(position: string, overrides?: CallOverrides): Promise<void>;
+        callPartialLiquidation(position: string, debtToRepay: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        changeBorrowAllowance(fromAllowance: BigNumberish, toAllowance: BigNumberish, user: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        delegatedDebtAssetData(arg0: string, overrides?: CallOverrides): Promise<[
+            BigNumber,
+            BigNumber,
+            BigNumber,
+            number,
             string,
             string,
             string,
-            bigint,
-            bigint
+            BigNumber,
+            BigNumber
         ] & {
-            levatoCurrentBorrowRate: bigint;
-            borrowIndex: bigint;
-            lastTotalDebt: bigint;
-            lastUpdateTimestamp: bigint;
+            levatoCurrentBorrowRate: BigNumber;
+            borrowIndex: BigNumber;
+            lastTotalDebt: BigNumber;
+            lastUpdateTimestamp: number;
             lpToken: string;
             debtToken: string;
             irm: string;
-            accruedToTreasury: bigint;
-            reserveFactor: bigint;
-        }
-    ], "view">;
-    getFunction(nameOrSignature: "depositLevatoFunds"): TypedContractMethod<[asset: AddressLike], [bigint], "nonpayable">;
-    getFunction(nameOrSignature: "factory"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "getAavePool"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "getAccruedToTreasury"): TypedContractMethod<[asset: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "getAssetBorrowRate"): TypedContractMethod<[asset: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "getAssetPoolLtv"): TypedContractMethod<[asset: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "getAssetPrice"): TypedContractMethod<[asset: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "getBorrowingPowerUtilization"): TypedContractMethod<[], [bigint], "view">;
-    getFunction(nameOrSignature: "getLevatoCurrentBorrowRate"): TypedContractMethod<[asset: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "getLiquidationThreshold"): TypedContractMethod<[
-        collateralAsset: AddressLike,
-        delegatedDebtValue: BigNumberish
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "getPositionAvailableBorrows"): TypedContractMethod<[
-        positionAddress: AddressLike,
-        asset: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "getPositionDebt"): TypedContractMethod<[
-        position: AddressLike
-    ], [
-        [bigint, bigint, string]
-    ], "view">;
-    getFunction(nameOrSignature: "getPositionLiquidationThreshold"): TypedContractMethod<[position: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "getPositionScaledATokens"): TypedContractMethod<[position: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "getTotalAvailableBorrows"): TypedContractMethod<[asset: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "getUserBorrowAllowance"): TypedContractMethod<[
-        user: AddressLike,
-        asset: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "initialize"): TypedContractMethod<[
-        _addressesProvider: AddressLike,
-        _factory: AddressLike,
-        _irm: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "initializeReserve"): TypedContractMethod<[
-        _asset: AddressLike,
-        _lpToken: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "isPoolSupportedAsset"): TypedContractMethod<[asset: AddressLike], [boolean], "view">;
-    getFunction(nameOrSignature: "isPositionLiquidateable"): TypedContractMethod<[position: AddressLike], [boolean], "view">;
-    getFunction(nameOrSignature: "owner"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "pendingOwner"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "positionBorrowIndex"): TypedContractMethod<[
-        arg0: AddressLike,
-        arg1: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "positionBorrowIndexLastUpdate"): TypedContractMethod<[
-        arg0: AddressLike,
-        arg1: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "positionScaledATokens"): TypedContractMethod<[
-        arg0: AddressLike,
-        arg1: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "reinitialize"): TypedContractMethod<[_irm: AddressLike], [void], "nonpayable">;
-    getFunction(nameOrSignature: "renounceOwnership"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "repayAsPosition"): TypedContractMethod<[
-        asset: AddressLike,
-        repayAmount: BigNumberish
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "transferOwnership"): TypedContractMethod<[newOwner: AddressLike], [void], "nonpayable">;
-    getEvent(key: "BorrowAsPosition"): TypedContractEvent<BorrowAsPositionEvent.InputTuple, BorrowAsPositionEvent.OutputTuple, BorrowAsPositionEvent.OutputObject>;
-    getEvent(key: "Initialized"): TypedContractEvent<InitializedEvent.InputTuple, InitializedEvent.OutputTuple, InitializedEvent.OutputObject>;
-    getEvent(key: "Liquidation"): TypedContractEvent<LiquidationEvent.InputTuple, LiquidationEvent.OutputTuple, LiquidationEvent.OutputObject>;
-    getEvent(key: "OwnershipTransferStarted"): TypedContractEvent<OwnershipTransferStartedEvent.InputTuple, OwnershipTransferStartedEvent.OutputTuple, OwnershipTransferStartedEvent.OutputObject>;
-    getEvent(key: "OwnershipTransferred"): TypedContractEvent<OwnershipTransferredEvent.InputTuple, OwnershipTransferredEvent.OutputTuple, OwnershipTransferredEvent.OutputObject>;
-    getEvent(key: "RepayAsPosition"): TypedContractEvent<RepayAsPositionEvent.InputTuple, RepayAsPositionEvent.OutputTuple, RepayAsPositionEvent.OutputObject>;
+            accruedToTreasury: BigNumber;
+            reserveFactor: BigNumber;
+        }>;
+        depositLevatoFunds(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        factory(overrides?: CallOverrides): Promise<string>;
+        getAavePool(overrides?: CallOverrides): Promise<string>;
+        getAccruedToTreasury(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getAssetBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getAssetPoolLtv(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getBorrowingPowerUtilization(overrides?: CallOverrides): Promise<BigNumber>;
+        getLevatoCurrentBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getLiquidationThreshold(collateralAsset: string, delegatedDebtValue: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        getPositionDebt(position: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, string]>;
+        getPositionLiquidationThreshold(position: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getPositionScaledATokens(position: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getTotalAvailableBorrows(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getUserBorrowAllowance(user: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        initialize(_addressesProvider: string, _factory: string, _irm: string, overrides?: CallOverrides): Promise<void>;
+        initializeReserve(_asset: string, _lpToken: string, overrides?: CallOverrides): Promise<void>;
+        isPoolSupportedAsset(asset: string, overrides?: CallOverrides): Promise<boolean>;
+        isPositionLiquidateable(position: string, overrides?: CallOverrides): Promise<boolean>;
+        owner(overrides?: CallOverrides): Promise<string>;
+        pendingOwner(overrides?: CallOverrides): Promise<string>;
+        positionBorrowIndex(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+        positionBorrowIndexLastUpdate(arg0: string, arg1: string, overrides?: CallOverrides): Promise<number>;
+        positionScaledATokens(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+        reinitialize(_addressesProvider: string, _factory: string, _irm: string, overrides?: CallOverrides): Promise<void>;
+        renounceOwnership(overrides?: CallOverrides): Promise<void>;
+        repayAsPosition(asset: string, repayAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    };
     filters: {
-        "BorrowAsPosition(address,address,uint256,uint256)": TypedContractEvent<BorrowAsPositionEvent.InputTuple, BorrowAsPositionEvent.OutputTuple, BorrowAsPositionEvent.OutputObject>;
-        BorrowAsPosition: TypedContractEvent<BorrowAsPositionEvent.InputTuple, BorrowAsPositionEvent.OutputTuple, BorrowAsPositionEvent.OutputObject>;
-        "Initialized(uint8)": TypedContractEvent<InitializedEvent.InputTuple, InitializedEvent.OutputTuple, InitializedEvent.OutputObject>;
-        Initialized: TypedContractEvent<InitializedEvent.InputTuple, InitializedEvent.OutputTuple, InitializedEvent.OutputObject>;
-        "Liquidation(address,address,uint256,uint256,uint256)": TypedContractEvent<LiquidationEvent.InputTuple, LiquidationEvent.OutputTuple, LiquidationEvent.OutputObject>;
-        Liquidation: TypedContractEvent<LiquidationEvent.InputTuple, LiquidationEvent.OutputTuple, LiquidationEvent.OutputObject>;
-        "OwnershipTransferStarted(address,address)": TypedContractEvent<OwnershipTransferStartedEvent.InputTuple, OwnershipTransferStartedEvent.OutputTuple, OwnershipTransferStartedEvent.OutputObject>;
-        OwnershipTransferStarted: TypedContractEvent<OwnershipTransferStartedEvent.InputTuple, OwnershipTransferStartedEvent.OutputTuple, OwnershipTransferStartedEvent.OutputObject>;
-        "OwnershipTransferred(address,address)": TypedContractEvent<OwnershipTransferredEvent.InputTuple, OwnershipTransferredEvent.OutputTuple, OwnershipTransferredEvent.OutputObject>;
-        OwnershipTransferred: TypedContractEvent<OwnershipTransferredEvent.InputTuple, OwnershipTransferredEvent.OutputTuple, OwnershipTransferredEvent.OutputObject>;
-        "RepayAsPosition(address,address,uint256,uint256)": TypedContractEvent<RepayAsPositionEvent.InputTuple, RepayAsPositionEvent.OutputTuple, RepayAsPositionEvent.OutputObject>;
-        RepayAsPosition: TypedContractEvent<RepayAsPositionEvent.InputTuple, RepayAsPositionEvent.OutputTuple, RepayAsPositionEvent.OutputObject>;
+        "BorrowAsPosition(address,address,uint256,uint256)"(position?: string | null, asset?: string | null, borrowAmount?: null, scaledATokensMinted?: null): BorrowAsPositionEventFilter;
+        BorrowAsPosition(position?: string | null, asset?: string | null, borrowAmount?: null, scaledATokensMinted?: null): BorrowAsPositionEventFilter;
+        "Initialized(uint8)"(version?: null): InitializedEventFilter;
+        Initialized(version?: null): InitializedEventFilter;
+        "Liquidation(address,address,uint256,uint256,uint256)"(liquidator?: string | null, position?: string | null, debtToRepay?: null, actualSeizedStableAmount?: null, collateralSeized?: null): LiquidationEventFilter;
+        Liquidation(liquidator?: string | null, position?: string | null, debtToRepay?: null, actualSeizedStableAmount?: null, collateralSeized?: null): LiquidationEventFilter;
+        "OwnershipTransferStarted(address,address)"(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferStartedEventFilter;
+        OwnershipTransferStarted(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferStartedEventFilter;
+        "OwnershipTransferred(address,address)"(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+        OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+        "RepayAsPosition(address,address,uint256,uint256)"(position?: string | null, asset?: string | null, borrowAmount?: null, scaledATokensBurnt?: null): RepayAsPositionEventFilter;
+        RepayAsPosition(position?: string | null, asset?: string | null, borrowAmount?: null, scaledATokensBurnt?: null): RepayAsPositionEventFilter;
+    };
+    estimateGas: {
+        _getExtensionFunctions(overrides?: CallOverrides): Promise<BigNumber>;
+        _repayForPosition(position: string, asset: string, repayAmount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        aaveAddressesProvider(overrides?: CallOverrides): Promise<BigNumber>;
+        acceptOwnership(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        borrowAllowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+        borrowAsPosition(asset: string, borrowAmount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        borrowBalance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+        callLiquidation(position: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        callPartialLiquidation(position: string, debtToRepay: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        changeBorrowAllowance(fromAllowance: BigNumberish, toAllowance: BigNumberish, user: string, asset: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        delegatedDebtAssetData(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+        depositLevatoFunds(asset: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        factory(overrides?: CallOverrides): Promise<BigNumber>;
+        getAavePool(overrides?: CallOverrides): Promise<BigNumber>;
+        getAccruedToTreasury(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getAssetBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getAssetPoolLtv(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getBorrowingPowerUtilization(overrides?: CallOverrides): Promise<BigNumber>;
+        getLevatoCurrentBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getLiquidationThreshold(collateralAsset: string, delegatedDebtValue: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        getPositionDebt(position: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getPositionLiquidationThreshold(position: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getPositionScaledATokens(position: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getTotalAvailableBorrows(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getUserBorrowAllowance(user: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        initialize(_addressesProvider: string, _factory: string, _irm: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        initializeReserve(_asset: string, _lpToken: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        isPoolSupportedAsset(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        isPositionLiquidateable(position: string, overrides?: CallOverrides): Promise<BigNumber>;
+        owner(overrides?: CallOverrides): Promise<BigNumber>;
+        pendingOwner(overrides?: CallOverrides): Promise<BigNumber>;
+        positionBorrowIndex(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+        positionBorrowIndexLastUpdate(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+        positionScaledATokens(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+        reinitialize(_addressesProvider: string, _factory: string, _irm: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        renounceOwnership(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        repayAsPosition(asset: string, repayAmount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        transferOwnership(newOwner: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        _getExtensionFunctions(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        _repayForPosition(position: string, asset: string, repayAmount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        aaveAddressesProvider(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        acceptOwnership(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        borrowAllowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        borrowAsPosition(asset: string, borrowAmount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        borrowBalance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        callLiquidation(position: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        callPartialLiquidation(position: string, debtToRepay: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        changeBorrowAllowance(fromAllowance: BigNumberish, toAllowance: BigNumberish, user: string, asset: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        delegatedDebtAssetData(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        depositLevatoFunds(asset: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        factory(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getAavePool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getAccruedToTreasury(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getAssetBorrowRate(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getAssetPoolLtv(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getAssetPrice(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getBorrowingPowerUtilization(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getLevatoCurrentBorrowRate(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getLiquidationThreshold(collateralAsset: string, delegatedDebtValue: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getPositionDebt(position: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getPositionLiquidationThreshold(position: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getPositionScaledATokens(position: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getTotalAvailableBorrows(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getUserBorrowAllowance(user: string, asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        initialize(_addressesProvider: string, _factory: string, _irm: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        initializeReserve(_asset: string, _lpToken: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        isPoolSupportedAsset(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        isPositionLiquidateable(position: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        pendingOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        positionBorrowIndex(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        positionBorrowIndexLastUpdate(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        positionScaledATokens(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        reinitialize(_addressesProvider: string, _factory: string, _irm: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        renounceOwnership(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        repayAsPosition(asset: string, repayAmount: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        transferOwnership(newOwner: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
     };
 }

@@ -1,167 +1,168 @@
-import { type ContractRunner } from "ethers";
+import { Signer } from "ethers";
+import type { Provider } from "@ethersproject/providers";
 import type { IonicFlywheel, IonicFlywheelInterface } from "../IonicFlywheel";
 export declare class IonicFlywheel__factory {
     static readonly abi: readonly [{
-        readonly inputs: readonly [{
-            readonly internalType: "contract ERC20";
-            readonly name: "strategy";
-            readonly type: "address";
-        }, {
-            readonly internalType: "address";
-            readonly name: "user";
-            readonly type: "address";
-        }];
+        readonly type: "function";
         readonly name: "accrue";
-        readonly outputs: readonly [{
-            readonly internalType: "uint256";
-            readonly name: "";
-            readonly type: "uint256";
-        }];
-        readonly stateMutability: "nonpayable";
-        readonly type: "function";
-    }, {
         readonly inputs: readonly [{
-            readonly internalType: "contract ERC20";
             readonly name: "strategy";
             readonly type: "address";
-        }];
-        readonly name: "addMarketForRewards";
-        readonly outputs: readonly [];
-        readonly stateMutability: "nonpayable";
-        readonly type: "function";
-    }, {
-        readonly inputs: readonly [{
-            readonly internalType: "address";
+            readonly internalType: "contract ERC20";
+        }, {
             readonly name: "user";
             readonly type: "address";
-        }];
-        readonly name: "claimRewards";
-        readonly outputs: readonly [];
-        readonly stateMutability: "nonpayable";
-        readonly type: "function";
-    }, {
-        readonly inputs: readonly [{
             readonly internalType: "address";
-            readonly name: "user";
-            readonly type: "address";
         }];
-        readonly name: "compAccrued";
         readonly outputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "";
             readonly type: "uint256";
+            readonly internalType: "uint256";
+        }];
+        readonly stateMutability: "nonpayable";
+    }, {
+        readonly type: "function";
+        readonly name: "addMarketForRewards";
+        readonly inputs: readonly [{
+            readonly name: "strategy";
+            readonly type: "address";
+            readonly internalType: "contract ERC20";
+        }];
+        readonly outputs: readonly [];
+        readonly stateMutability: "nonpayable";
+    }, {
+        readonly type: "function";
+        readonly name: "claimRewards";
+        readonly inputs: readonly [{
+            readonly name: "user";
+            readonly type: "address";
+            readonly internalType: "address";
+        }];
+        readonly outputs: readonly [];
+        readonly stateMutability: "nonpayable";
+    }, {
+        readonly type: "function";
+        readonly name: "compAccrued";
+        readonly inputs: readonly [{
+            readonly name: "user";
+            readonly type: "address";
+            readonly internalType: "address";
+        }];
+        readonly outputs: readonly [{
+            readonly name: "";
+            readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "flywheelPreBorrowerAction";
         readonly inputs: readonly [{
-            readonly internalType: "address";
             readonly name: "market";
             readonly type: "address";
-        }, {
             readonly internalType: "address";
+        }, {
             readonly name: "borrower";
             readonly type: "address";
+            readonly internalType: "address";
         }];
-        readonly name: "flywheelPreBorrowerAction";
         readonly outputs: readonly [];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "flywheelPreSupplierAction";
         readonly inputs: readonly [{
-            readonly internalType: "address";
             readonly name: "market";
             readonly type: "address";
-        }, {
             readonly internalType: "address";
+        }, {
             readonly name: "supplier";
             readonly type: "address";
+            readonly internalType: "address";
         }];
-        readonly name: "flywheelPreSupplierAction";
         readonly outputs: readonly [];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "flywheelPreTransferAction";
         readonly inputs: readonly [{
-            readonly internalType: "address";
             readonly name: "market";
             readonly type: "address";
-        }, {
             readonly internalType: "address";
+        }, {
             readonly name: "src";
             readonly type: "address";
-        }, {
             readonly internalType: "address";
+        }, {
             readonly name: "dst";
             readonly type: "address";
+            readonly internalType: "address";
         }];
-        readonly name: "flywheelPreTransferAction";
         readonly outputs: readonly [];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }, {
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "isFlywheel";
-        readonly outputs: readonly [{
-            readonly internalType: "bool";
-            readonly name: "";
-            readonly type: "bool";
-        }];
-        readonly stateMutability: "nonpayable";
-        readonly type: "function";
-    }, {
         readonly inputs: readonly [];
-        readonly name: "isRewardsDistributor";
         readonly outputs: readonly [{
-            readonly internalType: "bool";
             readonly name: "";
             readonly type: "bool";
+            readonly internalType: "bool";
         }];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "isRewardsDistributor";
+        readonly inputs: readonly [];
+        readonly outputs: readonly [{
+            readonly name: "";
+            readonly type: "bool";
+            readonly internalType: "bool";
+        }];
+        readonly stateMutability: "nonpayable";
+    }, {
+        readonly type: "function";
+        readonly name: "marketState";
         readonly inputs: readonly [{
-            readonly internalType: "contract ERC20";
             readonly name: "strategy";
             readonly type: "address";
+            readonly internalType: "contract ERC20";
         }];
-        readonly name: "marketState";
         readonly outputs: readonly [{
-            readonly internalType: "uint224";
             readonly name: "index";
             readonly type: "uint224";
+            readonly internalType: "uint224";
         }, {
-            readonly internalType: "uint32";
             readonly name: "lastUpdatedTimestamp";
             readonly type: "uint32";
+            readonly internalType: "uint32";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }, {
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "rewardToken";
+        readonly inputs: readonly [];
         readonly outputs: readonly [{
-            readonly internalType: "contract ERC20";
             readonly name: "";
             readonly type: "address";
+            readonly internalType: "contract ERC20";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "rewardsAccrued";
         readonly inputs: readonly [{
-            readonly internalType: "address";
             readonly name: "user";
             readonly type: "address";
+            readonly internalType: "address";
         }];
-        readonly name: "rewardsAccrued";
         readonly outputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }];
     static createInterface(): IonicFlywheelInterface;
-    static connect(address: string, runner?: ContractRunner | null): IonicFlywheel;
+    static connect(address: string, signerOrProvider: Signer | Provider): IonicFlywheel;
 }

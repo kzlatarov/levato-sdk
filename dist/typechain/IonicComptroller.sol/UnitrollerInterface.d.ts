@@ -1,9 +1,18 @@
-import type { BaseContract, BytesLike, FunctionFragment, Result, Interface, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedListener, TypedContractMethod } from "../common";
-export interface UnitrollerInterfaceInterface extends Interface {
-    getFunction(nameOrSignature: "_acceptAdmin" | "_setPendingAdmin" | "_toggleAdminRights" | "_upgrade" | "comptrollerImplementation"): FunctionFragment;
+import type { BaseContract, BigNumber, BytesLike, CallOverrides, ContractTransaction, Overrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "../common";
+export interface UnitrollerInterfaceInterface extends utils.Interface {
+    functions: {
+        "_acceptAdmin()": FunctionFragment;
+        "_setPendingAdmin(address)": FunctionFragment;
+        "_toggleAdminRights(bool)": FunctionFragment;
+        "_upgrade()": FunctionFragment;
+        "comptrollerImplementation()": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "_acceptAdmin" | "_setPendingAdmin" | "_toggleAdminRights" | "_upgrade" | "comptrollerImplementation"): FunctionFragment;
     encodeFunctionData(functionFragment: "_acceptAdmin", values?: undefined): string;
-    encodeFunctionData(functionFragment: "_setPendingAdmin", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "_setPendingAdmin", values: [string]): string;
     encodeFunctionData(functionFragment: "_toggleAdminRights", values: [boolean]): string;
     encodeFunctionData(functionFragment: "_upgrade", values?: undefined): string;
     encodeFunctionData(functionFragment: "comptrollerImplementation", values?: undefined): string;
@@ -12,42 +21,86 @@ export interface UnitrollerInterfaceInterface extends Interface {
     decodeFunctionResult(functionFragment: "_toggleAdminRights", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "_upgrade", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "comptrollerImplementation", data: BytesLike): Result;
+    events: {};
 }
 export interface UnitrollerInterface extends BaseContract {
-    connect(runner?: ContractRunner | null): UnitrollerInterface;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: UnitrollerInterfaceInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    _acceptAdmin: TypedContractMethod<[], [bigint], "nonpayable">;
-    _setPendingAdmin: TypedContractMethod<[
-        newPendingAdmin: AddressLike
-    ], [
-        bigint
-    ], "nonpayable">;
-    _toggleAdminRights: TypedContractMethod<[
-        hasRights: boolean
-    ], [
-        bigint
-    ], "nonpayable">;
-    _upgrade: TypedContractMethod<[], [void], "nonpayable">;
-    comptrollerImplementation: TypedContractMethod<[], [string], "view">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "_acceptAdmin"): TypedContractMethod<[], [bigint], "nonpayable">;
-    getFunction(nameOrSignature: "_setPendingAdmin"): TypedContractMethod<[
-        newPendingAdmin: AddressLike
-    ], [
-        bigint
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "_toggleAdminRights"): TypedContractMethod<[hasRights: boolean], [bigint], "nonpayable">;
-    getFunction(nameOrSignature: "_upgrade"): TypedContractMethod<[], [void], "nonpayable">;
-    getFunction(nameOrSignature: "comptrollerImplementation"): TypedContractMethod<[], [string], "view">;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        _acceptAdmin(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _setPendingAdmin(newPendingAdmin: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _toggleAdminRights(hasRights: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        _upgrade(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        comptrollerImplementation(overrides?: CallOverrides): Promise<[string]>;
+    };
+    _acceptAdmin(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _setPendingAdmin(newPendingAdmin: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _toggleAdminRights(hasRights: boolean, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    _upgrade(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    comptrollerImplementation(overrides?: CallOverrides): Promise<string>;
+    callStatic: {
+        _acceptAdmin(overrides?: CallOverrides): Promise<BigNumber>;
+        _setPendingAdmin(newPendingAdmin: string, overrides?: CallOverrides): Promise<BigNumber>;
+        _toggleAdminRights(hasRights: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+        _upgrade(overrides?: CallOverrides): Promise<void>;
+        comptrollerImplementation(overrides?: CallOverrides): Promise<string>;
+    };
     filters: {};
+    estimateGas: {
+        _acceptAdmin(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _setPendingAdmin(newPendingAdmin: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _toggleAdminRights(hasRights: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        _upgrade(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        comptrollerImplementation(overrides?: CallOverrides): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        _acceptAdmin(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _setPendingAdmin(newPendingAdmin: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _toggleAdminRights(hasRights: boolean, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        _upgrade(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        comptrollerImplementation(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    };
 }

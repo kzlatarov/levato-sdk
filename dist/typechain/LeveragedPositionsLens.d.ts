@@ -1,8 +1,10 @@
-import type { BaseContract, BigNumberish, BytesLike, FunctionFragment, Result, Interface, EventFragment, AddressLike, ContractRunner, ContractMethod, Listener } from "ethers";
-import type { TypedContractEvent, TypedDeferredTopicFilter, TypedEventLog, TypedLogDescription, TypedListener, TypedContractMethod } from "./common";
+import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, ContractTransaction, Overrides, PopulatedTransaction, Signer, utils } from "ethers";
+import type { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 export declare namespace LeveragedPositionsLens {
     type PositionInfoStruct = {
-        positionAddress: AddressLike;
+        positionAddress: string;
         closed: boolean;
         collateralAssetPrice: BigNumberish;
         borrowedAssetPrice: BigNumberish;
@@ -22,76 +24,93 @@ export declare namespace LeveragedPositionsLens {
         maxLeverageRatio: BigNumberish;
         positionCollateralAllowance: BigNumberish;
         healthRatio: BigNumberish;
-        collateralAsset: AddressLike;
-        stableAsset: AddressLike;
+        collateralAsset: string;
+        stableAsset: string;
     };
     type PositionInfoStructOutput = [
-        positionAddress: string,
-        closed: boolean,
-        collateralAssetPrice: bigint,
-        borrowedAssetPrice: bigint,
-        positionSupplyAmount: bigint,
-        positionValue: bigint,
-        debtAmount: bigint,
-        debtValue: bigint,
-        equityAmount: bigint,
-        equityValue: bigint,
-        netApy: bigint,
-        rewardsApy: bigint,
-        debtRatio: bigint,
-        liquidationThreshold: bigint,
-        liquidationPrice: bigint,
-        safetyBuffer: bigint,
-        leverageRatio: bigint,
-        maxLeverageRatio: bigint,
-        positionCollateralAllowance: bigint,
-        healthRatio: bigint,
-        collateralAsset: string,
-        stableAsset: string
+        string,
+        boolean,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        string,
+        string
     ] & {
         positionAddress: string;
         closed: boolean;
-        collateralAssetPrice: bigint;
-        borrowedAssetPrice: bigint;
-        positionSupplyAmount: bigint;
-        positionValue: bigint;
-        debtAmount: bigint;
-        debtValue: bigint;
-        equityAmount: bigint;
-        equityValue: bigint;
-        netApy: bigint;
-        rewardsApy: bigint;
-        debtRatio: bigint;
-        liquidationThreshold: bigint;
-        liquidationPrice: bigint;
-        safetyBuffer: bigint;
-        leverageRatio: bigint;
-        maxLeverageRatio: bigint;
-        positionCollateralAllowance: bigint;
-        healthRatio: bigint;
+        collateralAssetPrice: BigNumber;
+        borrowedAssetPrice: BigNumber;
+        positionSupplyAmount: BigNumber;
+        positionValue: BigNumber;
+        debtAmount: BigNumber;
+        debtValue: BigNumber;
+        equityAmount: BigNumber;
+        equityValue: BigNumber;
+        netApy: BigNumber;
+        rewardsApy: BigNumber;
+        debtRatio: BigNumber;
+        liquidationThreshold: BigNumber;
+        liquidationPrice: BigNumber;
+        safetyBuffer: BigNumber;
+        leverageRatio: BigNumber;
+        maxLeverageRatio: BigNumber;
+        positionCollateralAllowance: BigNumber;
+        healthRatio: BigNumber;
         collateralAsset: string;
         stableAsset: string;
     };
 }
-export interface LeveragedPositionsLensInterface extends Interface {
-    getFunction(nameOrSignature: "factory" | "getAssetBorrowRate" | "getAssetPrice" | "getAssetsBorrowRates" | "getErc20Balances" | "getErc20BalancesAndAllowances" | "getLiquidationThreshold" | "getMaxLeverageRatio" | "getNetAPY" | "getPositionInfo" | "getPositionLiquidationThreshold" | "getPositionNetAPY" | "getPositionRewardsSpeedPerSecond" | "getPositionsInfo" | "getRewardsAprForPosition" | "initialize"): FunctionFragment;
-    getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
+export interface LeveragedPositionsLensInterface extends utils.Interface {
+    functions: {
+        "factory()": FunctionFragment;
+        "getAssetBorrowRate(address)": FunctionFragment;
+        "getAssetPrice(address)": FunctionFragment;
+        "getAssetsBorrowRates(address[])": FunctionFragment;
+        "getErc20Balances(address,address[])": FunctionFragment;
+        "getErc20BalancesAndAllowances(address,address,address[])": FunctionFragment;
+        "getLiquidationThreshold(address,uint256,address,uint256)": FunctionFragment;
+        "getMaxLeverageRatio(address,uint256,address)": FunctionFragment;
+        "getNetAPY(uint256,uint256,address,address,uint256)": FunctionFragment;
+        "getPositionInfo(address,uint256)": FunctionFragment;
+        "getPositionLiquidationThreshold(address)": FunctionFragment;
+        "getPositionNetAPY(uint256,address)": FunctionFragment;
+        "getPositionRewardsSpeedPerSecond(address)": FunctionFragment;
+        "getPositionsInfo(address[],uint256[])": FunctionFragment;
+        "getRewardsAprForPosition(address)": FunctionFragment;
+        "initialize(address)": FunctionFragment;
+    };
+    getFunction(nameOrSignatureOrTopic: "factory" | "getAssetBorrowRate" | "getAssetPrice" | "getAssetsBorrowRates" | "getErc20Balances" | "getErc20BalancesAndAllowances" | "getLiquidationThreshold" | "getMaxLeverageRatio" | "getNetAPY" | "getPositionInfo" | "getPositionLiquidationThreshold" | "getPositionNetAPY" | "getPositionRewardsSpeedPerSecond" | "getPositionsInfo" | "getRewardsAprForPosition" | "initialize"): FunctionFragment;
     encodeFunctionData(functionFragment: "factory", values?: undefined): string;
-    encodeFunctionData(functionFragment: "getAssetBorrowRate", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "getAssetPrice", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "getAssetsBorrowRates", values: [AddressLike[]]): string;
-    encodeFunctionData(functionFragment: "getErc20Balances", values: [AddressLike, AddressLike[]]): string;
-    encodeFunctionData(functionFragment: "getErc20BalancesAndAllowances", values: [AddressLike, AddressLike, AddressLike[]]): string;
-    encodeFunctionData(functionFragment: "getLiquidationThreshold", values: [AddressLike, BigNumberish, AddressLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "getMaxLeverageRatio", values: [AddressLike, BigNumberish, AddressLike]): string;
-    encodeFunctionData(functionFragment: "getNetAPY", values: [BigNumberish, BigNumberish, AddressLike, AddressLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "getPositionInfo", values: [AddressLike, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "getPositionLiquidationThreshold", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "getPositionNetAPY", values: [BigNumberish, AddressLike]): string;
-    encodeFunctionData(functionFragment: "getPositionRewardsSpeedPerSecond", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "getPositionsInfo", values: [AddressLike[], BigNumberish[]]): string;
-    encodeFunctionData(functionFragment: "getRewardsAprForPosition", values: [AddressLike]): string;
-    encodeFunctionData(functionFragment: "initialize", values: [AddressLike]): string;
+    encodeFunctionData(functionFragment: "getAssetBorrowRate", values: [string]): string;
+    encodeFunctionData(functionFragment: "getAssetPrice", values: [string]): string;
+    encodeFunctionData(functionFragment: "getAssetsBorrowRates", values: [string[]]): string;
+    encodeFunctionData(functionFragment: "getErc20Balances", values: [string, string[]]): string;
+    encodeFunctionData(functionFragment: "getErc20BalancesAndAllowances", values: [string, string, string[]]): string;
+    encodeFunctionData(functionFragment: "getLiquidationThreshold", values: [string, BigNumberish, string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "getMaxLeverageRatio", values: [string, BigNumberish, string]): string;
+    encodeFunctionData(functionFragment: "getNetAPY", values: [BigNumberish, BigNumberish, string, string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "getPositionInfo", values: [string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "getPositionLiquidationThreshold", values: [string]): string;
+    encodeFunctionData(functionFragment: "getPositionNetAPY", values: [BigNumberish, string]): string;
+    encodeFunctionData(functionFragment: "getPositionRewardsSpeedPerSecond", values: [string]): string;
+    encodeFunctionData(functionFragment: "getPositionsInfo", values: [string[], BigNumberish[]]): string;
+    encodeFunctionData(functionFragment: "getRewardsAprForPosition", values: [string]): string;
+    encodeFunctionData(functionFragment: "initialize", values: [string]): string;
     decodeFunctionResult(functionFragment: "factory", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getAssetBorrowRate", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getAssetPrice", data: BytesLike): Result;
@@ -108,191 +127,186 @@ export interface LeveragedPositionsLensInterface extends Interface {
     decodeFunctionResult(functionFragment: "getPositionsInfo", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getRewardsAprForPosition", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+    events: {
+        "Initialized(uint8)": EventFragment;
+    };
+    getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
 }
-export declare namespace InitializedEvent {
-    type InputTuple = [version: BigNumberish];
-    type OutputTuple = [version: bigint];
-    interface OutputObject {
-        version: bigint;
-    }
-    type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-    type Filter = TypedDeferredTopicFilter<Event>;
-    type Log = TypedEventLog<Event>;
-    type LogDescription = TypedLogDescription<Event>;
+export interface InitializedEventObject {
+    version: number;
 }
+export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
+export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 export interface LeveragedPositionsLens extends BaseContract {
-    connect(runner?: ContractRunner | null): LeveragedPositionsLens;
-    waitForDeployment(): Promise<this>;
+    connect(signerOrProvider: Signer | Provider | string): this;
+    attach(addressOrName: string): this;
+    deployed(): Promise<this>;
     interface: LeveragedPositionsLensInterface;
-    queryFilter<TCEvent extends TypedContractEvent>(event: TCEvent, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    queryFilter<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TypedEventLog<TCEvent>>>;
-    on<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    on<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(event: TCEvent, listener: TypedListener<TCEvent>): Promise<this>;
-    once<TCEvent extends TypedContractEvent>(filter: TypedDeferredTopicFilter<TCEvent>, listener: TypedListener<TCEvent>): Promise<this>;
-    listeners<TCEvent extends TypedContractEvent>(event: TCEvent): Promise<Array<TypedListener<TCEvent>>>;
-    listeners(eventName?: string): Promise<Array<Listener>>;
-    removeAllListeners<TCEvent extends TypedContractEvent>(event?: TCEvent): Promise<this>;
-    factory: TypedContractMethod<[], [string], "view">;
-    getAssetBorrowRate: TypedContractMethod<[
-        asset: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getAssetPrice: TypedContractMethod<[asset: AddressLike], [bigint], "view">;
-    getAssetsBorrowRates: TypedContractMethod<[
-        assets: AddressLike[]
-    ], [
-        bigint[]
-    ], "view">;
-    getErc20Balances: TypedContractMethod<[
-        user: AddressLike,
-        tokens: AddressLike[]
-    ], [
-        bigint[]
-    ], "view">;
-    getErc20BalancesAndAllowances: TypedContractMethod<[
-        user: AddressLike,
-        spender: AddressLike,
-        tokens: AddressLike[]
-    ], [
-        [bigint[], bigint[]] & {
-            balances: bigint[];
-            allowances: bigint[];
-        }
-    ], "view">;
-    getLiquidationThreshold: TypedContractMethod<[
-        collateralAsset: AddressLike,
-        collateralAmount: BigNumberish,
-        borrowedAsset: AddressLike,
-        leverageRatio: BigNumberish
-    ], [
-        bigint
-    ], "view">;
-    getMaxLeverageRatio: TypedContractMethod<[
-        collateralAsset: AddressLike,
-        collateralAmount: BigNumberish,
-        borrowedAsset: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getNetAPY: TypedContractMethod<[
-        _supplyAPY: BigNumberish,
-        _supplyAmount: BigNumberish,
-        _collateralAsset: AddressLike,
-        _stableAsset: AddressLike,
-        _leverageRatio: BigNumberish
-    ], [
-        bigint
-    ], "view">;
-    getPositionInfo: TypedContractMethod<[
-        pos: AddressLike,
-        supplyApy: BigNumberish
-    ], [
-        LeveragedPositionsLens.PositionInfoStructOutput
-    ], "nonpayable">;
-    getPositionLiquidationThreshold: TypedContractMethod<[
-        position: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getPositionNetAPY: TypedContractMethod<[
-        _supplyAPY: BigNumberish,
-        position: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getPositionRewardsSpeedPerSecond: TypedContractMethod<[
-        position: AddressLike
-    ], [
-        bigint
-    ], "nonpayable">;
-    getPositionsInfo: TypedContractMethod<[
-        positions: AddressLike[],
-        supplyApys: BigNumberish[]
-    ], [
-        LeveragedPositionsLens.PositionInfoStructOutput[]
-    ], "nonpayable">;
-    getRewardsAprForPosition: TypedContractMethod<[
-        position: AddressLike
-    ], [
-        bigint
-    ], "nonpayable">;
-    initialize: TypedContractMethod<[
-        _factory: AddressLike
-    ], [
-        void
-    ], "nonpayable">;
-    getFunction<T extends ContractMethod = ContractMethod>(key: string | FunctionFragment): T;
-    getFunction(nameOrSignature: "factory"): TypedContractMethod<[], [string], "view">;
-    getFunction(nameOrSignature: "getAssetBorrowRate"): TypedContractMethod<[asset: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "getAssetPrice"): TypedContractMethod<[asset: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "getAssetsBorrowRates"): TypedContractMethod<[assets: AddressLike[]], [bigint[]], "view">;
-    getFunction(nameOrSignature: "getErc20Balances"): TypedContractMethod<[
-        user: AddressLike,
-        tokens: AddressLike[]
-    ], [
-        bigint[]
-    ], "view">;
-    getFunction(nameOrSignature: "getErc20BalancesAndAllowances"): TypedContractMethod<[
-        user: AddressLike,
-        spender: AddressLike,
-        tokens: AddressLike[]
-    ], [
-        [bigint[], bigint[]] & {
-            balances: bigint[];
-            allowances: bigint[];
-        }
-    ], "view">;
-    getFunction(nameOrSignature: "getLiquidationThreshold"): TypedContractMethod<[
-        collateralAsset: AddressLike,
-        collateralAmount: BigNumberish,
-        borrowedAsset: AddressLike,
-        leverageRatio: BigNumberish
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "getMaxLeverageRatio"): TypedContractMethod<[
-        collateralAsset: AddressLike,
-        collateralAmount: BigNumberish,
-        borrowedAsset: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "getNetAPY"): TypedContractMethod<[
-        _supplyAPY: BigNumberish,
-        _supplyAmount: BigNumberish,
-        _collateralAsset: AddressLike,
-        _stableAsset: AddressLike,
-        _leverageRatio: BigNumberish
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "getPositionInfo"): TypedContractMethod<[
-        pos: AddressLike,
-        supplyApy: BigNumberish
-    ], [
-        LeveragedPositionsLens.PositionInfoStructOutput
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "getPositionLiquidationThreshold"): TypedContractMethod<[position: AddressLike], [bigint], "view">;
-    getFunction(nameOrSignature: "getPositionNetAPY"): TypedContractMethod<[
-        _supplyAPY: BigNumberish,
-        position: AddressLike
-    ], [
-        bigint
-    ], "view">;
-    getFunction(nameOrSignature: "getPositionRewardsSpeedPerSecond"): TypedContractMethod<[position: AddressLike], [bigint], "nonpayable">;
-    getFunction(nameOrSignature: "getPositionsInfo"): TypedContractMethod<[
-        positions: AddressLike[],
-        supplyApys: BigNumberish[]
-    ], [
-        LeveragedPositionsLens.PositionInfoStructOutput[]
-    ], "nonpayable">;
-    getFunction(nameOrSignature: "getRewardsAprForPosition"): TypedContractMethod<[position: AddressLike], [bigint], "nonpayable">;
-    getFunction(nameOrSignature: "initialize"): TypedContractMethod<[_factory: AddressLike], [void], "nonpayable">;
-    getEvent(key: "Initialized"): TypedContractEvent<InitializedEvent.InputTuple, InitializedEvent.OutputTuple, InitializedEvent.OutputObject>;
+    queryFilter<TEvent extends TypedEvent>(event: TypedEventFilter<TEvent>, fromBlockOrBlockhash?: string | number | undefined, toBlock?: string | number | undefined): Promise<Array<TEvent>>;
+    listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+    listeners(eventName?: string): Array<Listener>;
+    removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+    removeAllListeners(eventName?: string): this;
+    off: OnEvent<this>;
+    on: OnEvent<this>;
+    once: OnEvent<this>;
+    removeListener: OnEvent<this>;
+    functions: {
+        factory(overrides?: CallOverrides): Promise<[string]>;
+        getAssetBorrowRate(asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        getAssetPrice(asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        getAssetsBorrowRates(assets: string[], overrides?: CallOverrides): Promise<[BigNumber[]] & {
+            rates: BigNumber[];
+        }>;
+        getErc20Balances(user: string, tokens: string[], overrides?: CallOverrides): Promise<[BigNumber[]] & {
+            balances: BigNumber[];
+        }>;
+        getErc20BalancesAndAllowances(user: string, spender: string, tokens: string[], overrides?: CallOverrides): Promise<[
+            BigNumber[],
+            BigNumber[]
+        ] & {
+            balances: BigNumber[];
+            allowances: BigNumber[];
+        }>;
+        getLiquidationThreshold(collateralAsset: string, collateralAmount: BigNumberish, borrowedAsset: string, leverageRatio: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+        getMaxLeverageRatio(collateralAsset: string, collateralAmount: BigNumberish, borrowedAsset: string, overrides?: CallOverrides): Promise<[BigNumber] & {
+            maxLeverageRatio: BigNumber;
+        }>;
+        getNetAPY(_supplyAPY: BigNumberish, _supplyAmount: BigNumberish, _collateralAsset: string, _stableAsset: string, _leverageRatio: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber] & {
+            netAPY: BigNumber;
+        }>;
+        getPositionInfo(pos: string, supplyApy: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        getPositionLiquidationThreshold(position: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        getPositionNetAPY(_supplyAPY: BigNumberish, position: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        getPositionRewardsSpeedPerSecond(position: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        getPositionsInfo(positions: string[], supplyApys: BigNumberish[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        getRewardsAprForPosition(position: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        initialize(_factory: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+    };
+    factory(overrides?: CallOverrides): Promise<string>;
+    getAssetBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAssetsBorrowRates(assets: string[], overrides?: CallOverrides): Promise<BigNumber[]>;
+    getErc20Balances(user: string, tokens: string[], overrides?: CallOverrides): Promise<BigNumber[]>;
+    getErc20BalancesAndAllowances(user: string, spender: string, tokens: string[], overrides?: CallOverrides): Promise<[
+        BigNumber[],
+        BigNumber[]
+    ] & {
+        balances: BigNumber[];
+        allowances: BigNumber[];
+    }>;
+    getLiquidationThreshold(collateralAsset: string, collateralAmount: BigNumberish, borrowedAsset: string, leverageRatio: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getMaxLeverageRatio(collateralAsset: string, collateralAmount: BigNumberish, borrowedAsset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getNetAPY(_supplyAPY: BigNumberish, _supplyAmount: BigNumberish, _collateralAsset: string, _stableAsset: string, _leverageRatio: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getPositionInfo(pos: string, supplyApy: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    getPositionLiquidationThreshold(position: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getPositionNetAPY(_supplyAPY: BigNumberish, position: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getPositionRewardsSpeedPerSecond(position: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    getPositionsInfo(positions: string[], supplyApys: BigNumberish[], overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    getRewardsAprForPosition(position: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    initialize(_factory: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    callStatic: {
+        factory(overrides?: CallOverrides): Promise<string>;
+        getAssetBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getAssetsBorrowRates(assets: string[], overrides?: CallOverrides): Promise<BigNumber[]>;
+        getErc20Balances(user: string, tokens: string[], overrides?: CallOverrides): Promise<BigNumber[]>;
+        getErc20BalancesAndAllowances(user: string, spender: string, tokens: string[], overrides?: CallOverrides): Promise<[
+            BigNumber[],
+            BigNumber[]
+        ] & {
+            balances: BigNumber[];
+            allowances: BigNumber[];
+        }>;
+        getLiquidationThreshold(collateralAsset: string, collateralAmount: BigNumberish, borrowedAsset: string, leverageRatio: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        getMaxLeverageRatio(collateralAsset: string, collateralAmount: BigNumberish, borrowedAsset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getNetAPY(_supplyAPY: BigNumberish, _supplyAmount: BigNumberish, _collateralAsset: string, _stableAsset: string, _leverageRatio: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        getPositionInfo(pos: string, supplyApy: BigNumberish, overrides?: CallOverrides): Promise<LeveragedPositionsLens.PositionInfoStructOutput>;
+        getPositionLiquidationThreshold(position: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getPositionNetAPY(_supplyAPY: BigNumberish, position: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getPositionRewardsSpeedPerSecond(position: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getPositionsInfo(positions: string[], supplyApys: BigNumberish[], overrides?: CallOverrides): Promise<LeveragedPositionsLens.PositionInfoStructOutput[]>;
+        getRewardsAprForPosition(position: string, overrides?: CallOverrides): Promise<BigNumber>;
+        initialize(_factory: string, overrides?: CallOverrides): Promise<void>;
+    };
     filters: {
-        "Initialized(uint8)": TypedContractEvent<InitializedEvent.InputTuple, InitializedEvent.OutputTuple, InitializedEvent.OutputObject>;
-        Initialized: TypedContractEvent<InitializedEvent.InputTuple, InitializedEvent.OutputTuple, InitializedEvent.OutputObject>;
+        "Initialized(uint8)"(version?: null): InitializedEventFilter;
+        Initialized(version?: null): InitializedEventFilter;
+    };
+    estimateGas: {
+        factory(overrides?: CallOverrides): Promise<BigNumber>;
+        getAssetBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getAssetsBorrowRates(assets: string[], overrides?: CallOverrides): Promise<BigNumber>;
+        getErc20Balances(user: string, tokens: string[], overrides?: CallOverrides): Promise<BigNumber>;
+        getErc20BalancesAndAllowances(user: string, spender: string, tokens: string[], overrides?: CallOverrides): Promise<BigNumber>;
+        getLiquidationThreshold(collateralAsset: string, collateralAmount: BigNumberish, borrowedAsset: string, leverageRatio: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        getMaxLeverageRatio(collateralAsset: string, collateralAmount: BigNumberish, borrowedAsset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getNetAPY(_supplyAPY: BigNumberish, _supplyAmount: BigNumberish, _collateralAsset: string, _stableAsset: string, _leverageRatio: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        getPositionInfo(pos: string, supplyApy: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        getPositionLiquidationThreshold(position: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getPositionNetAPY(_supplyAPY: BigNumberish, position: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getPositionRewardsSpeedPerSecond(position: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        getPositionsInfo(positions: string[], supplyApys: BigNumberish[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        getRewardsAprForPosition(position: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        initialize(_factory: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+    };
+    populateTransaction: {
+        factory(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getAssetBorrowRate(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getAssetPrice(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getAssetsBorrowRates(assets: string[], overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getErc20Balances(user: string, tokens: string[], overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getErc20BalancesAndAllowances(user: string, spender: string, tokens: string[], overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getLiquidationThreshold(collateralAsset: string, collateralAmount: BigNumberish, borrowedAsset: string, leverageRatio: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getMaxLeverageRatio(collateralAsset: string, collateralAmount: BigNumberish, borrowedAsset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getNetAPY(_supplyAPY: BigNumberish, _supplyAmount: BigNumberish, _collateralAsset: string, _stableAsset: string, _leverageRatio: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getPositionInfo(pos: string, supplyApy: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        getPositionLiquidationThreshold(position: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getPositionNetAPY(_supplyAPY: BigNumberish, position: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getPositionRewardsSpeedPerSecond(position: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        getPositionsInfo(positions: string[], supplyApys: BigNumberish[], overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        getRewardsAprForPosition(position: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        initialize(_factory: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
     };
 }

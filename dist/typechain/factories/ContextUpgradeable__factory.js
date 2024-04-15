@@ -7,26 +7,26 @@ exports.ContextUpgradeable__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        anonymous: false,
+        type: "event",
+        name: "Initialized",
         inputs: [
             {
-                indexed: false,
-                internalType: "uint8",
                 name: "version",
                 type: "uint8",
+                indexed: false,
+                internalType: "uint8",
             },
         ],
-        name: "Initialized",
-        type: "event",
+        anonymous: false,
     },
 ];
 class ContextUpgradeable__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.ContextUpgradeable__factory = ContextUpgradeable__factory;

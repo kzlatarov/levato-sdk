@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const ethers_1 = require("ethers");
 const typechain_1 = require("../typechain");
 const utils_1 = require("ethers/lib/utils");
 class LevatoSDK {
@@ -27,11 +28,11 @@ class LevatoSDK {
      * @returns A map with addresses as keys and percentages as values
      */
     async getAssetsBorrowRates(assetsUnderlying) {
-        const rates = await this.#lensContract.getAssetsBorrowRates.staticCall(assetsUnderlying);
+        const rates = await this.#lensContract.getAssetsBorrowRates(assetsUnderlying);
         const ratesMap = new Map();
         if (rates && rates.length) {
             for (let i = 0; i < rates.length; i++) {
-                ratesMap.set(assetsUnderlying[i], `${Number((0, utils_1.formatEther)(rates[i] * 100n)).toFixed(3)}%`);
+                ratesMap.set(assetsUnderlying[i], `${Number((0, utils_1.formatEther)(rates[i].mul(ethers_1.BigNumber.from(100)))).toFixed(3)}%`);
             }
         }
         return ratesMap;
@@ -45,7 +46,7 @@ class LevatoSDK {
      * @returns BigNumber representing the max leverage value
      */
     async getMaxLeverageRatio(collateralUnderlying, collateralAmount, borrowAssetUnderlying) {
-        const result = await this.#lensContract.getMaxLeverageRatio.staticCall(collateralUnderlying, collateralAmount, borrowAssetUnderlying);
+        const result = await this.#lensContract.getMaxLeverageRatio(collateralUnderlying, collateralAmount, borrowAssetUnderlying);
         return result;
     }
     /**
@@ -57,7 +58,7 @@ class LevatoSDK {
      * @returns BigNumber representing the liquidation threshold
      */
     async getLiquidationThreshold(collateralAsset, collateralAmount, borrowedAsset, leverageRatio) {
-        const result = await this.#lensContract.getLiquidationThreshold.staticCall(collateralAsset, collateralAmount.toString(), borrowedAsset, leverageRatio.toString());
+        const result = await this.#lensContract.getLiquidationThreshold(collateralAsset, collateralAmount.toString(), borrowedAsset, leverageRatio.toString());
         return result;
     }
     /**
@@ -66,9 +67,9 @@ class LevatoSDK {
      * @returns Opened and closed positions info in descending order
      */
     async getPositionsInfo(address) {
-        const [positions] = await this.#factoryContract.getPositionsByAccount.staticCall(address);
+        const [positions] = await this.#factoryContract.getPositionsByAccount(address);
         const apys = positions.map(() => '0');
-        const positionsData = await this.#lensContract.getPositionsInfo.staticCall(JSON.parse(JSON.stringify(positions)), apys);
+        const positionsData = await this.#lensContract.callStatic.getPositionsInfo(JSON.parse(JSON.stringify(positions)), apys);
         const openPositions = [];
         const closedPositions = [];
         for (let i = 0; i < positionsData.length; i++) {

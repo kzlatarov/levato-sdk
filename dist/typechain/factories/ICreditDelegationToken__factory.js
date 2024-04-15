@@ -7,129 +7,129 @@ exports.ICreditDelegationToken__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        anonymous: false,
+        type: "function",
+        name: "approveDelegation",
         inputs: [
             {
-                indexed: true,
-                internalType: "address",
-                name: "fromUser",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "toUser",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "asset",
-                type: "address",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "amount",
-                type: "uint256",
-            },
-        ],
-        name: "BorrowAllowanceDelegated",
-        type: "event",
-    },
-    {
-        inputs: [
-            {
-                internalType: "address",
                 name: "delegatee",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "amount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
-        name: "approveDelegation",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "borrowAllowance",
         inputs: [
             {
-                internalType: "address",
                 name: "fromUser",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "toUser",
                 type: "address",
+                internalType: "address",
             },
         ],
-        name: "borrowAllowance",
         outputs: [
             {
-                internalType: "uint256",
                 name: "",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "delegationWithSig",
         inputs: [
             {
-                internalType: "address",
                 name: "delegator",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "address",
                 name: "delegatee",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "value",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "deadline",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint8",
                 name: "v",
                 type: "uint8",
+                internalType: "uint8",
             },
             {
-                internalType: "bytes32",
                 name: "r",
                 type: "bytes32",
+                internalType: "bytes32",
             },
             {
-                internalType: "bytes32",
                 name: "s",
                 type: "bytes32",
+                internalType: "bytes32",
             },
         ],
-        name: "delegationWithSig",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
+    },
+    {
+        type: "event",
+        name: "BorrowAllowanceDelegated",
+        inputs: [
+            {
+                name: "fromUser",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "toUser",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "asset",
+                type: "address",
+                indexed: true,
+                internalType: "address",
+            },
+            {
+                name: "amount",
+                type: "uint256",
+                indexed: false,
+                internalType: "uint256",
+            },
+        ],
+        anonymous: false,
     },
 ];
 class ICreditDelegationToken__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.ICreditDelegationToken__factory = ICreditDelegationToken__factory;

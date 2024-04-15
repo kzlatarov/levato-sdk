@@ -7,135 +7,135 @@ exports.FlywheelDynamicRewards__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        inputs: [],
-        name: "FlywheelError",
-        type: "error",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "uint32",
-                name: "start",
-                type: "uint32",
-            },
-            {
-                indexed: true,
-                internalType: "uint32",
-                name: "end",
-                type: "uint32",
-            },
-            {
-                indexed: false,
-                internalType: "uint192",
-                name: "reward",
-                type: "uint192",
-            },
-        ],
-        name: "NewRewardsCycle",
-        type: "event",
-    },
-    {
-        inputs: [],
+        type: "function",
         name: "flywheel",
+        inputs: [],
         outputs: [
             {
-                internalType: "contract FlywheelCore",
                 name: "",
                 type: "address",
+                internalType: "contract FlywheelCore",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "getAccruedRewards",
         inputs: [
             {
-                internalType: "contract ERC20",
                 name: "strategy",
                 type: "address",
+                internalType: "contract ERC20",
             },
             {
-                internalType: "uint32",
                 name: "lastUpdatedTimestamp",
                 type: "uint32",
+                internalType: "uint32",
             },
         ],
-        name: "getAccruedRewards",
         outputs: [
             {
-                internalType: "uint256",
                 name: "amount",
                 type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "rewardToken",
+        inputs: [],
         outputs: [
             {
-                internalType: "contract ERC20",
                 name: "",
                 type: "address",
+                internalType: "contract ERC20",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "rewardsCycle",
         inputs: [
             {
-                internalType: "contract ERC20",
                 name: "",
                 type: "address",
+                internalType: "contract ERC20",
             },
         ],
-        name: "rewardsCycle",
         outputs: [
             {
-                internalType: "uint32",
                 name: "start",
                 type: "uint32",
+                internalType: "uint32",
             },
             {
-                internalType: "uint32",
                 name: "end",
                 type: "uint32",
+                internalType: "uint32",
             },
             {
-                internalType: "uint192",
                 name: "reward",
                 type: "uint192",
+                internalType: "uint192",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "rewardsCycleLength",
+        inputs: [],
         outputs: [
             {
-                internalType: "uint32",
                 name: "",
                 type: "uint32",
+                internalType: "uint32",
             },
         ],
         stateMutability: "view",
-        type: "function",
+    },
+    {
+        type: "event",
+        name: "NewRewardsCycle",
+        inputs: [
+            {
+                name: "start",
+                type: "uint32",
+                indexed: true,
+                internalType: "uint32",
+            },
+            {
+                name: "end",
+                type: "uint32",
+                indexed: true,
+                internalType: "uint32",
+            },
+            {
+                name: "reward",
+                type: "uint192",
+                indexed: false,
+                internalType: "uint192",
+            },
+        ],
+        anonymous: false,
+    },
+    {
+        type: "error",
+        name: "FlywheelError",
+        inputs: [],
     },
 ];
 class FlywheelDynamicRewards__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.FlywheelDynamicRewards__factory = FlywheelDynamicRewards__factory;

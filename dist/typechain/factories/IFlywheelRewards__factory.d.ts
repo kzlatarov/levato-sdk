@@ -1,45 +1,46 @@
-import { type ContractRunner } from "ethers";
+import { Signer } from "ethers";
+import type { Provider } from "@ethersproject/providers";
 import type { IFlywheelRewards, IFlywheelRewardsInterface } from "../IFlywheelRewards";
 export declare class IFlywheelRewards__factory {
     static readonly abi: readonly [{
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "flywheel";
+        readonly inputs: readonly [];
         readonly outputs: readonly [{
-            readonly internalType: "contract FlywheelCore";
             readonly name: "";
             readonly type: "address";
+            readonly internalType: "contract FlywheelCore";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }, {
+        readonly type: "function";
+        readonly name: "getAccruedRewards";
         readonly inputs: readonly [{
-            readonly internalType: "contract ERC20";
             readonly name: "strategy";
             readonly type: "address";
+            readonly internalType: "contract ERC20";
         }, {
-            readonly internalType: "uint32";
             readonly name: "lastUpdatedTimestamp";
             readonly type: "uint32";
+            readonly internalType: "uint32";
         }];
-        readonly name: "getAccruedRewards";
         readonly outputs: readonly [{
-            readonly internalType: "uint256";
             readonly name: "rewards";
             readonly type: "uint256";
+            readonly internalType: "uint256";
         }];
         readonly stateMutability: "nonpayable";
-        readonly type: "function";
     }, {
-        readonly inputs: readonly [];
+        readonly type: "function";
         readonly name: "rewardToken";
+        readonly inputs: readonly [];
         readonly outputs: readonly [{
-            readonly internalType: "contract ERC20";
             readonly name: "";
             readonly type: "address";
+            readonly internalType: "contract ERC20";
         }];
         readonly stateMutability: "view";
-        readonly type: "function";
     }];
     static createInterface(): IFlywheelRewardsInterface;
-    static connect(address: string, runner?: ContractRunner | null): IFlywheelRewards;
+    static connect(address: string, signerOrProvider: Signer | Provider): IFlywheelRewards;
 }

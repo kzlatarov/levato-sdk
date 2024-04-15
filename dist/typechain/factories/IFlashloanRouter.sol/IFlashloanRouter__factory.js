@@ -7,158 +7,158 @@ exports.IFlashloanRouter__factory = void 0;
 const ethers_1 = require("ethers");
 const _abi = [
     {
-        inputs: [],
+        type: "function",
         name: "_listExtensions",
+        inputs: [],
         outputs: [
             {
-                internalType: "address[]",
                 name: "",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_registerExtension",
         inputs: [
             {
-                internalType: "contract DiamondExtension",
                 name: "extensionToAdd",
                 type: "address",
+                internalType: "contract DiamondExtension",
             },
             {
-                internalType: "contract DiamondExtension",
                 name: "extensionToReplace",
                 type: "address",
+                internalType: "contract DiamondExtension",
             },
         ],
-        name: "_registerExtension",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_replaceExtensions",
         inputs: [
             {
-                internalType: "address[]",
                 name: "extensions",
                 type: "address[]",
+                internalType: "address[]",
             },
         ],
-        name: "_replaceExtensions",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "_setIonicMarketOfAsset",
         inputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "asset",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "contract IonicCErc20",
                 name: "market",
                 type: "address",
+                internalType: "contract IonicCErc20",
             },
         ],
-        name: "_setIonicMarketOfAsset",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "flashloan",
         inputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "asset",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                internalType: "uint256",
                 name: "amount",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "bytes",
                 name: "data",
                 type: "bytes",
+                internalType: "bytes",
             },
         ],
-        name: "flashloan",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
     {
+        type: "function",
+        name: "ionicMarketOfAsset",
         inputs: [
             {
-                internalType: "contract IERC20Upgradeable",
                 name: "asset",
                 type: "address",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
-        name: "ionicMarketOfAsset",
         outputs: [
             {
+                name: "",
+                type: "address",
                 internalType: "contract IonicCErc20",
-                name: "",
-                type: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [],
+        type: "function",
         name: "owner",
+        inputs: [],
         outputs: [
             {
-                internalType: "address",
                 name: "",
                 type: "address",
+                internalType: "address",
             },
         ],
         stateMutability: "view",
-        type: "function",
     },
     {
+        type: "function",
+        name: "receiveFlashLoan",
         inputs: [
             {
-                internalType: "address",
                 name: "borrowedAsset",
                 type: "address",
+                internalType: "address",
             },
             {
-                internalType: "uint256",
                 name: "borrowedAmount",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "uint256",
                 name: "premium",
                 type: "uint256",
+                internalType: "uint256",
             },
             {
-                internalType: "bytes",
                 name: "data",
                 type: "bytes",
+                internalType: "bytes",
             },
         ],
-        name: "receiveFlashLoan",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
     },
 ];
 class IFlashloanRouter__factory {
     static abi = _abi;
     static createInterface() {
-        return new ethers_1.Interface(_abi);
+        return new ethers_1.utils.Interface(_abi);
     }
-    static connect(address, runner) {
-        return new ethers_1.Contract(address, _abi, runner);
+    static connect(address, signerOrProvider) {
+        return new ethers_1.Contract(address, _abi, signerOrProvider);
     }
 }
 exports.IFlashloanRouter__factory = IFlashloanRouter__factory;
