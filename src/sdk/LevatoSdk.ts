@@ -1,4 +1,4 @@
-import { BigNumber, Signer } from 'ethers';
+import { BigNumber, ContractTransaction, Signer } from 'ethers';
 import {
   FlashloanRouter,
   FlashloanRouter__factory,
@@ -203,7 +203,7 @@ export default class LevatoSDK {
     amount: BigNumber,
     fundingTokenUnderlying: string,
     leverage: string
-  ): Promise<string> {
+  ): Promise<ContractTransaction> {
     const [collateralIonicMarket, stableIonicMarket] = await Promise.all([
       this.#flashLoanRouterContract.ionicMarketOfAsset(collateralUnderlying),
       this.#flashLoanRouterContract.ionicMarketOfAsset(stableTokenUnderlying)
@@ -217,9 +217,7 @@ export default class LevatoSDK {
       leverage ?? '1'
     );
 
-    await tx.wait();
-
-    return tx.hash;
+    return tx;
   }
 
   /**
@@ -227,7 +225,7 @@ export default class LevatoSDK {
    * @param { string } contractAddress
    * @returns The transaction hash
    */
-  async closePosition(contractAddress: string): Promise<string> {
+  async closePosition(contractAddress: string): Promise<ContractTransaction> {
     const leveragedPositionContract = LeveragedPosition__factory.connect(
       contractAddress,
       this.#signer
@@ -235,8 +233,6 @@ export default class LevatoSDK {
 
     const tx = await leveragedPositionContract['closePosition()']();
 
-    await tx.wait();
-
-    return tx.hash;
+    return tx;
   }
 }
