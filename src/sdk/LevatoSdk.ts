@@ -55,8 +55,24 @@ export default class LevatoSDK {
   }
 
   // Getters
-  get getSigner(): Signer {
+  get signer(): Signer {
     return this.#signer;
+  }
+
+  get factoryContract(): ILeveragedPositionsFactory {
+    return this.#factoryContract;
+  }
+
+  get lensContract(): LeveragedPositionsLens {
+    return this.#lensContract;
+  }
+
+  get creditDelegatorContract(): ICreditDelegator {
+    return this.#creditDelegatorContract;
+  }
+
+  get flashLoanRouterContract(): FlashloanRouter {
+    return this.#flashLoanRouterContract;
   }
 
   // Public get methods

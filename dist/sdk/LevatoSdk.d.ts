@@ -1,5 +1,5 @@
 import { BigNumber, Signer } from 'ethers';
-import { LeveragedPositionsLens } from '../typechain';
+import { FlashloanRouter, ICreditDelegator, ILeveragedPositionsFactory, LeveragedPositionsLens } from '../typechain';
 export type LevatoSDKContructor = {
     signer: Signer;
     lensContractAddress: string;
@@ -10,7 +10,11 @@ export type LevatoSDKContructor = {
 export default class LevatoSDK {
     #private;
     constructor({ signer, lensContractAddress, factoryContractAddress, creditDelegatorContractAddress, flashLoanRouterContractAddress }: LevatoSDKContructor);
-    get getSigner(): Signer;
+    get signer(): Signer;
+    get factoryContract(): ILeveragedPositionsFactory;
+    get lensContract(): LeveragedPositionsLens;
+    get creditDelegatorContract(): ICreditDelegator;
+    get flashLoanRouterContract(): FlashloanRouter;
     /**
      * Get borrow rates for underlying assets
      * @param assetsUnderlying

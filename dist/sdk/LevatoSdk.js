@@ -18,8 +18,20 @@ class LevatoSDK {
         this.#flashLoanRouterContract = typechain_1.FlashloanRouter__factory.connect(flashLoanRouterContractAddress, signer);
     }
     // Getters
-    get getSigner() {
+    get signer() {
         return this.#signer;
+    }
+    get factoryContract() {
+        return this.#factoryContract;
+    }
+    get lensContract() {
+        return this.#lensContract;
+    }
+    get creditDelegatorContract() {
+        return this.#creditDelegatorContract;
+    }
+    get flashLoanRouterContract() {
+        return this.#flashLoanRouterContract;
     }
     // Public get methods
     /**
