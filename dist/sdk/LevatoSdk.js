@@ -108,8 +108,7 @@ class LevatoSDK {
             this.#flashLoanRouterContract.ionicMarketOfAsset(stableTokenUnderlying)
         ]);
         const tx = await this.#factoryContract.createAndFundIonicPositionAtRatio(collateralIonicMarket, stableIonicMarket, fundingTokenUnderlying, amount, leverage ?? '1');
-        await tx.wait();
-        return tx.hash;
+        return tx;
     }
     /**
      * Close a position
@@ -119,8 +118,7 @@ class LevatoSDK {
     async closePosition(contractAddress) {
         const leveragedPositionContract = typechain_1.LeveragedPosition__factory.connect(contractAddress, this.#signer);
         const tx = await leveragedPositionContract['closePosition()']();
-        await tx.wait();
-        return tx.hash;
+        return tx;
     }
 }
 exports.default = LevatoSDK;

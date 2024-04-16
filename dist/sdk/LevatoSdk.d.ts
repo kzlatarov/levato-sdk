@@ -1,4 +1,4 @@
-import { BigNumber, Signer } from 'ethers';
+import { BigNumber, ContractTransaction, Signer } from 'ethers';
 import { FlashloanRouter, ICreditDelegator, ILeveragedPositionsFactory, LeveragedPositionsLens } from '../typechain';
 export type LevatoSDKContructor = {
     signer: Signer;
@@ -57,11 +57,11 @@ export default class LevatoSDK {
      * @param { string } leverage
      * @returns The transaction hash
      */
-    openPosition(collateralUnderlying: string, stableTokenUnderlying: string, amount: BigNumber, fundingTokenUnderlying: string, leverage: string): Promise<string>;
+    openPosition(collateralUnderlying: string, stableTokenUnderlying: string, amount: BigNumber, fundingTokenUnderlying: string, leverage: string): Promise<ContractTransaction>;
     /**
      * Close a position
      * @param { string } contractAddress
      * @returns The transaction hash
      */
-    closePosition(contractAddress: string): Promise<string>;
+    closePosition(contractAddress: string): Promise<ContractTransaction>;
 }
