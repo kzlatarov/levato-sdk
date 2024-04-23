@@ -1,6 +1,6 @@
 {
   "name": "levato-sdk",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "The package provides methods to use levato leverage contracts",
   "main": "dist/index.js",
   "devDependencies": {},
