@@ -1,4 +1,4 @@
-import { BigNumber, ContractTransaction, Signer } from 'ethers';
+import { BigNumber, ContractTransaction, Signer, ethers } from 'ethers';
 import {
   FlashloanRouter,
   FlashloanRouter__factory,
@@ -204,14 +204,10 @@ export default class LevatoSDK {
     fundingTokenUnderlying: string,
     leverage: string
   ): Promise<ContractTransaction> {
-    const [collateralIonicMarket, stableIonicMarket] = await Promise.all([
-      this.#flashLoanRouterContract.ionicMarketOfAsset(collateralUnderlying),
-      this.#flashLoanRouterContract.ionicMarketOfAsset(stableTokenUnderlying)
-    ]);
-
-    const tx = await this.#factoryContract.createAndFundIonicPositionAtRatio(
-      collateralIonicMarket,
-      stableIonicMarket,
+    const tx = await this.#factoryContract.createAndFundPositionAtRatio(
+      collateralUnderlying,
+      ethers.constants.AddressZero,
+      stableTokenUnderlying,
       fundingTokenUnderlying,
       amount,
       leverage ?? '1'

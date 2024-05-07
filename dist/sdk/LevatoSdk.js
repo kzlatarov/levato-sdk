@@ -103,11 +103,7 @@ class LevatoSDK {
      * @returns The transaction hash
      */
     async openPosition(collateralUnderlying, stableTokenUnderlying, amount, fundingTokenUnderlying, leverage) {
-        const [collateralIonicMarket, stableIonicMarket] = await Promise.all([
-            this.#flashLoanRouterContract.ionicMarketOfAsset(collateralUnderlying),
-            this.#flashLoanRouterContract.ionicMarketOfAsset(stableTokenUnderlying)
-        ]);
-        const tx = await this.#factoryContract.createAndFundIonicPositionAtRatio(collateralIonicMarket, stableIonicMarket, fundingTokenUnderlying, amount, leverage ?? '1');
+        const tx = await this.#factoryContract.createAndFundPositionAtRatio(collateralUnderlying, ethers_1.ethers.constants.AddressZero, stableTokenUnderlying, fundingTokenUnderlying, amount, leverage ?? '1');
         return tx;
     }
     /**
