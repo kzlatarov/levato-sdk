@@ -11,8 +11,8 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "CommonJS",
-    "moduleResolution": "node",
+    "module": "es2015",
+    "moduleResolution": "Bundler",
     "rootDirs": ["./src"]
   },
   "ts-node": {
