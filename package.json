@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/kzlatarov/levato-sdk#readme",
   "dependencies": {
-    "ethers": "5"
+    "@graphprotocol/client-cli": "^3.0.3",
+    "ethers": "5",
+    "graphql": "^16.8.1"
   }
 }
