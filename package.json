@@ -4,10 +4,13 @@
   "description": "The package provides methods to use levato leverage contracts",
   "main": "dist/index.js",
   "devDependencies": {
-    "@graphprotocol/client-cli": "^3.0.3"
+    "@graphprotocol/client-cli": "^3.0.3",
+    "@open-wc/building-rollup": "^3.0.2",
+    "rollup": "^4.18.0"
   },
   "scripts": {
-    "build": "tsc",
+    "rollup": "rollup -c rollup.config.js --bundleConfigAsCjs",
+    "build": "tsc && rollup -c rollup.config.js",
     "dev": "tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

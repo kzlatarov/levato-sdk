@@ -1,8 +1,8 @@
 {
   "include": ["src"],
   "compilerOptions": {
-    "target": "ES2015",
-    "outDir": "./dist",
+    "target": "ESNext",
+    "outDir": "./out-ts",
     "allowJs": true,
     "declaration": true,
     "skipLibCheck": true,
@@ -11,8 +11,8 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "es2015",
-    "moduleResolution": "Bundler",
+    "module": "CommonJS",
+    "moduleResolution": "node",
     "rootDirs": ["./src"]
   },
   "ts-node": {
