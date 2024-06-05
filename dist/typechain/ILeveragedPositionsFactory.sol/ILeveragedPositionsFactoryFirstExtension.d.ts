@@ -5,9 +5,9 @@ import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "../co
 export interface ILeveragedPositionsFactoryFirstExtensionInterface extends utils.Interface {
     functions: {
         "_setIonicPairWhitelisted(address,address,bool)": FunctionFragment;
-        "createAndFundIonicPosition(address,address,address,uint256)": FunctionFragment;
-        "createAndFundIonicPositionAtRatio(address,address,address,uint256,uint256)": FunctionFragment;
-        "createIonicPosition(address,address)": FunctionFragment;
+        "createAndFundIonicPosition(address,address,bool,address,uint256)": FunctionFragment;
+        "createAndFundIonicPositionAtRatio(address,address,bool,address,uint256,uint256)": FunctionFragment;
+        "createIonicPosition(address,address,address,bool)": FunctionFragment;
         "getAssetBorrowRate(address)": FunctionFragment;
         "getAssetPrice(address)": FunctionFragment;
         "getPositionsByAccount(address)": FunctionFragment;
@@ -18,9 +18,9 @@ export interface ILeveragedPositionsFactoryFirstExtensionInterface extends utils
     };
     getFunction(nameOrSignatureOrTopic: "_setIonicPairWhitelisted" | "createAndFundIonicPosition" | "createAndFundIonicPositionAtRatio" | "createIonicPosition" | "getAssetBorrowRate" | "getAssetPrice" | "getPositionsByAccount" | "getPositionsTotalCollateralValue" | "initialize" | "isFactoryPosition" | "reinitialize"): FunctionFragment;
     encodeFunctionData(functionFragment: "_setIonicPairWhitelisted", values: [string, string, boolean]): string;
-    encodeFunctionData(functionFragment: "createAndFundIonicPosition", values: [string, string, string, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "createAndFundIonicPositionAtRatio", values: [string, string, string, BigNumberish, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "createIonicPosition", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "createAndFundIonicPosition", values: [string, string, boolean, string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "createAndFundIonicPositionAtRatio", values: [string, string, boolean, string, BigNumberish, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "createIonicPosition", values: [string, string, string, boolean]): string;
     encodeFunctionData(functionFragment: "getAssetBorrowRate", values: [string]): string;
     encodeFunctionData(functionFragment: "getAssetPrice", values: [string]): string;
     encodeFunctionData(functionFragment: "getPositionsByAccount", values: [string]): string;
@@ -77,13 +77,13 @@ export interface ILeveragedPositionsFactoryFirstExtension extends BaseContract {
         _setIonicPairWhitelisted(_collateralMarket: string, _stableMarket: string, _whitelisted: boolean, overrides?: Overrides & {
             from?: string;
         }): Promise<ContractTransaction>;
-        createAndFundIonicPosition(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
+        createAndFundIonicPosition(_collateralAsset: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<ContractTransaction>;
-        createAndFundIonicPositionAtRatio(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
+        createAndFundIonicPositionAtRatio(_collateralAsset: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<ContractTransaction>;
-        createIonicPosition(_collateralMarket: string, _stableMarket: string, overrides?: Overrides & {
+        createIonicPosition(posOwner: string, _collateralAsset: string, _stableAsset: string, _isShort: boolean, overrides?: Overrides & {
             from?: string;
         }): Promise<ContractTransaction>;
         getAssetBorrowRate(asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -101,13 +101,13 @@ export interface ILeveragedPositionsFactoryFirstExtension extends BaseContract {
     _setIonicPairWhitelisted(_collateralMarket: string, _stableMarket: string, _whitelisted: boolean, overrides?: Overrides & {
         from?: string;
     }): Promise<ContractTransaction>;
-    createAndFundIonicPosition(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
+    createAndFundIonicPosition(_collateralAsset: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
         from?: string;
     }): Promise<ContractTransaction>;
-    createAndFundIonicPositionAtRatio(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
+    createAndFundIonicPositionAtRatio(_collateralAsset: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
         from?: string;
     }): Promise<ContractTransaction>;
-    createIonicPosition(_collateralMarket: string, _stableMarket: string, overrides?: Overrides & {
+    createIonicPosition(posOwner: string, _collateralAsset: string, _stableAsset: string, _isShort: boolean, overrides?: Overrides & {
         from?: string;
     }): Promise<ContractTransaction>;
     getAssetBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -123,9 +123,9 @@ export interface ILeveragedPositionsFactoryFirstExtension extends BaseContract {
     }): Promise<ContractTransaction>;
     callStatic: {
         _setIonicPairWhitelisted(_collateralMarket: string, _stableMarket: string, _whitelisted: boolean, overrides?: CallOverrides): Promise<void>;
-        createAndFundIonicPosition(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: CallOverrides): Promise<string>;
-        createAndFundIonicPositionAtRatio(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: CallOverrides): Promise<string>;
-        createIonicPosition(_collateralMarket: string, _stableMarket: string, overrides?: CallOverrides): Promise<string>;
+        createAndFundIonicPosition(_collateralAsset: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: CallOverrides): Promise<string>;
+        createAndFundIonicPositionAtRatio(_collateralAsset: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: CallOverrides): Promise<string>;
+        createIonicPosition(posOwner: string, _collateralAsset: string, _stableAsset: string, _isShort: boolean, overrides?: CallOverrides): Promise<string>;
         getAssetBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         getPositionsByAccount(account: string, overrides?: CallOverrides): Promise<[string[], boolean[]]>;
@@ -142,13 +142,13 @@ export interface ILeveragedPositionsFactoryFirstExtension extends BaseContract {
         _setIonicPairWhitelisted(_collateralMarket: string, _stableMarket: string, _whitelisted: boolean, overrides?: Overrides & {
             from?: string;
         }): Promise<BigNumber>;
-        createAndFundIonicPosition(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
+        createAndFundIonicPosition(_collateralAsset: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<BigNumber>;
-        createAndFundIonicPositionAtRatio(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
+        createAndFundIonicPositionAtRatio(_collateralAsset: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<BigNumber>;
-        createIonicPosition(_collateralMarket: string, _stableMarket: string, overrides?: Overrides & {
+        createIonicPosition(posOwner: string, _collateralAsset: string, _stableAsset: string, _isShort: boolean, overrides?: Overrides & {
             from?: string;
         }): Promise<BigNumber>;
         getAssetBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -167,13 +167,13 @@ export interface ILeveragedPositionsFactoryFirstExtension extends BaseContract {
         _setIonicPairWhitelisted(_collateralMarket: string, _stableMarket: string, _whitelisted: boolean, overrides?: Overrides & {
             from?: string;
         }): Promise<PopulatedTransaction>;
-        createAndFundIonicPosition(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
+        createAndFundIonicPosition(_collateralAsset: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<PopulatedTransaction>;
-        createAndFundIonicPositionAtRatio(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
+        createAndFundIonicPositionAtRatio(_collateralAsset: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<PopulatedTransaction>;
-        createIonicPosition(_collateralMarket: string, _stableMarket: string, overrides?: Overrides & {
+        createIonicPosition(posOwner: string, _collateralAsset: string, _stableAsset: string, _isShort: boolean, overrides?: Overrides & {
             from?: string;
         }): Promise<PopulatedTransaction>;
         getAssetBorrowRate(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;

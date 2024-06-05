@@ -195,6 +195,7 @@ export default class LevatoSDK {
    * @param { BigNumber } amount
    * @param { string } fundingTokenUnderlying
    * @param { string } leverage
+   * @param { type }
    * @returns The transaction hash
    */
   async openPosition(
@@ -202,12 +203,14 @@ export default class LevatoSDK {
     stableTokenUnderlying: string,
     amount: BigNumber,
     fundingTokenUnderlying: string,
-    leverage: string
+    leverage: string,
+    isShort: boolean
   ): Promise<ContractTransaction> {
     const tx = await this.#factoryContract.createAndFundPositionAtRatio(
       collateralUnderlying,
       ethers.constants.AddressZero,
       stableTokenUnderlying,
+      isShort,
       fundingTokenUnderlying,
       amount,
       leverage ?? '1'

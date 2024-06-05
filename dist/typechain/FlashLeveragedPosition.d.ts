@@ -27,13 +27,14 @@ export interface FlashLeveragedPositionInterface extends utils.Interface {
         "getSupplyAmountDelta(uint256)": FunctionFragment;
         "getSupplyRate(address)": FunctionFragment;
         "isPositionClosed()": FunctionFragment;
+        "isShort()": FunctionFragment;
         "positionOwner()": FunctionFragment;
         "receiveFlashLoan(address,uint256,uint256,bytes)": FunctionFragment;
         "seizeOnLiquidation(uint256)": FunctionFragment;
         "stableAsset()": FunctionFragment;
         "withdrawStableLeftovers(address)": FunctionFragment;
     };
-    getFunction(nameOrSignatureOrTopic: "SUPPLY_DELTA_ERROR" | "SUPPLY_DELTA_NO_ERROR" | "adjustLeverageRatio" | "claimRewards()" | "claimRewards(address)" | "closePosition(address)" | "closePosition()" | "collateralAsset" | "factory" | "fundPosition" | "getAccruedRewards" | "getBorrowRate" | "getCurrentLeverageRatio" | "getEquityAmount" | "getEquityValue" | "getMaxLeverageRatio" | "getMinLeverageRatio" | "getPositionBorrowAmount" | "getPositionSupplyAmount" | "getPrice" | "getSupplyAmountDelta" | "getSupplyRate" | "isPositionClosed" | "positionOwner" | "receiveFlashLoan" | "seizeOnLiquidation" | "stableAsset" | "withdrawStableLeftovers"): FunctionFragment;
+    getFunction(nameOrSignatureOrTopic: "SUPPLY_DELTA_ERROR" | "SUPPLY_DELTA_NO_ERROR" | "adjustLeverageRatio" | "claimRewards()" | "claimRewards(address)" | "closePosition(address)" | "closePosition()" | "collateralAsset" | "factory" | "fundPosition" | "getAccruedRewards" | "getBorrowRate" | "getCurrentLeverageRatio" | "getEquityAmount" | "getEquityValue" | "getMaxLeverageRatio" | "getMinLeverageRatio" | "getPositionBorrowAmount" | "getPositionSupplyAmount" | "getPrice" | "getSupplyAmountDelta" | "getSupplyRate" | "isPositionClosed" | "isShort" | "positionOwner" | "receiveFlashLoan" | "seizeOnLiquidation" | "stableAsset" | "withdrawStableLeftovers"): FunctionFragment;
     encodeFunctionData(functionFragment: "SUPPLY_DELTA_ERROR", values?: undefined): string;
     encodeFunctionData(functionFragment: "SUPPLY_DELTA_NO_ERROR", values?: undefined): string;
     encodeFunctionData(functionFragment: "adjustLeverageRatio", values: [BigNumberish]): string;
@@ -57,6 +58,7 @@ export interface FlashLeveragedPositionInterface extends utils.Interface {
     encodeFunctionData(functionFragment: "getSupplyAmountDelta", values: [BigNumberish]): string;
     encodeFunctionData(functionFragment: "getSupplyRate", values: [string]): string;
     encodeFunctionData(functionFragment: "isPositionClosed", values?: undefined): string;
+    encodeFunctionData(functionFragment: "isShort", values?: undefined): string;
     encodeFunctionData(functionFragment: "positionOwner", values?: undefined): string;
     encodeFunctionData(functionFragment: "receiveFlashLoan", values: [string, BigNumberish, BigNumberish, BytesLike]): string;
     encodeFunctionData(functionFragment: "seizeOnLiquidation", values: [BigNumberish]): string;
@@ -85,6 +87,7 @@ export interface FlashLeveragedPositionInterface extends utils.Interface {
     decodeFunctionResult(functionFragment: "getSupplyAmountDelta", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getSupplyRate", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "isPositionClosed", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "isShort", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "positionOwner", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "receiveFlashLoan", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "seizeOnLiquidation", data: BytesLike): Result;
@@ -194,6 +197,7 @@ export interface FlashLeveragedPosition extends BaseContract {
         getSupplyAmountDelta(targetRatio: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
         getSupplyRate(asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
         isPositionClosed(overrides?: CallOverrides): Promise<[boolean]>;
+        isShort(overrides?: CallOverrides): Promise<[boolean]>;
         positionOwner(overrides?: CallOverrides): Promise<[string]>;
         receiveFlashLoan(assetAddress: string, flashBorrowedAmount: BigNumberish, premium: BigNumberish, data: BytesLike, overrides?: Overrides & {
             from?: string;
@@ -243,6 +247,7 @@ export interface FlashLeveragedPosition extends BaseContract {
     getSupplyAmountDelta(targetRatio: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
     getSupplyRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
     isPositionClosed(overrides?: CallOverrides): Promise<boolean>;
+    isShort(overrides?: CallOverrides): Promise<boolean>;
     positionOwner(overrides?: CallOverrides): Promise<string>;
     receiveFlashLoan(assetAddress: string, flashBorrowedAmount: BigNumberish, premium: BigNumberish, data: BytesLike, overrides?: Overrides & {
         from?: string;
@@ -284,6 +289,7 @@ export interface FlashLeveragedPosition extends BaseContract {
         getSupplyAmountDelta(targetRatio: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
         getSupplyRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         isPositionClosed(overrides?: CallOverrides): Promise<boolean>;
+        isShort(overrides?: CallOverrides): Promise<boolean>;
         positionOwner(overrides?: CallOverrides): Promise<string>;
         receiveFlashLoan(assetAddress: string, flashBorrowedAmount: BigNumberish, premium: BigNumberish, data: BytesLike, overrides?: CallOverrides): Promise<void>;
         seizeOnLiquidation(stablesToSeize: BigNumberish, overrides?: CallOverrides): Promise<[
@@ -342,6 +348,7 @@ export interface FlashLeveragedPosition extends BaseContract {
         getSupplyAmountDelta(targetRatio: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
         getSupplyRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         isPositionClosed(overrides?: CallOverrides): Promise<BigNumber>;
+        isShort(overrides?: CallOverrides): Promise<BigNumber>;
         positionOwner(overrides?: CallOverrides): Promise<BigNumber>;
         receiveFlashLoan(assetAddress: string, flashBorrowedAmount: BigNumberish, premium: BigNumberish, data: BytesLike, overrides?: Overrides & {
             from?: string;
@@ -392,6 +399,7 @@ export interface FlashLeveragedPosition extends BaseContract {
         getSupplyAmountDelta(targetRatio: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         getSupplyRate(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         isPositionClosed(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        isShort(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         positionOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         receiveFlashLoan(assetAddress: string, flashBorrowedAmount: BigNumberish, premium: BigNumberish, data: BytesLike, overrides?: Overrides & {
             from?: string;

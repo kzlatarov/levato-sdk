@@ -27,12 +27,13 @@ export interface DelegatedLeveragedPositionInterface extends utils.Interface {
         "getSupplyAmountDelta(uint256)": FunctionFragment;
         "getSupplyRate(address)": FunctionFragment;
         "isPositionClosed()": FunctionFragment;
+        "isShort()": FunctionFragment;
         "positionOwner()": FunctionFragment;
         "seizeOnLiquidation(uint256)": FunctionFragment;
         "stableAsset()": FunctionFragment;
         "withdrawStableLeftovers(address)": FunctionFragment;
     };
-    getFunction(nameOrSignatureOrTopic: "SUPPLY_DELTA_ERROR" | "SUPPLY_DELTA_NO_ERROR" | "adjustLeverageRatio" | "claimRewards()" | "claimRewards(address)" | "closePosition(address)" | "closePosition()" | "collateralAsset" | "factory" | "fundPosition" | "getAccruedRewards" | "getBorrowRate" | "getCurrentLeverageRatio" | "getEquityAmount" | "getEquityValue" | "getMaxLeverageRatio" | "getMinLeverageRatio" | "getPositionBorrowAmount" | "getPositionSupplyAmount" | "getPrice" | "getSupplyAmountDelta" | "getSupplyRate" | "isPositionClosed" | "positionOwner" | "seizeOnLiquidation" | "stableAsset" | "withdrawStableLeftovers"): FunctionFragment;
+    getFunction(nameOrSignatureOrTopic: "SUPPLY_DELTA_ERROR" | "SUPPLY_DELTA_NO_ERROR" | "adjustLeverageRatio" | "claimRewards()" | "claimRewards(address)" | "closePosition(address)" | "closePosition()" | "collateralAsset" | "factory" | "fundPosition" | "getAccruedRewards" | "getBorrowRate" | "getCurrentLeverageRatio" | "getEquityAmount" | "getEquityValue" | "getMaxLeverageRatio" | "getMinLeverageRatio" | "getPositionBorrowAmount" | "getPositionSupplyAmount" | "getPrice" | "getSupplyAmountDelta" | "getSupplyRate" | "isPositionClosed" | "isShort" | "positionOwner" | "seizeOnLiquidation" | "stableAsset" | "withdrawStableLeftovers"): FunctionFragment;
     encodeFunctionData(functionFragment: "SUPPLY_DELTA_ERROR", values?: undefined): string;
     encodeFunctionData(functionFragment: "SUPPLY_DELTA_NO_ERROR", values?: undefined): string;
     encodeFunctionData(functionFragment: "adjustLeverageRatio", values: [BigNumberish]): string;
@@ -56,6 +57,7 @@ export interface DelegatedLeveragedPositionInterface extends utils.Interface {
     encodeFunctionData(functionFragment: "getSupplyAmountDelta", values: [BigNumberish]): string;
     encodeFunctionData(functionFragment: "getSupplyRate", values: [string]): string;
     encodeFunctionData(functionFragment: "isPositionClosed", values?: undefined): string;
+    encodeFunctionData(functionFragment: "isShort", values?: undefined): string;
     encodeFunctionData(functionFragment: "positionOwner", values?: undefined): string;
     encodeFunctionData(functionFragment: "seizeOnLiquidation", values: [BigNumberish]): string;
     encodeFunctionData(functionFragment: "stableAsset", values?: undefined): string;
@@ -83,6 +85,7 @@ export interface DelegatedLeveragedPositionInterface extends utils.Interface {
     decodeFunctionResult(functionFragment: "getSupplyAmountDelta", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getSupplyRate", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "isPositionClosed", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "isShort", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "positionOwner", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "seizeOnLiquidation", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "stableAsset", data: BytesLike): Result;
@@ -191,6 +194,7 @@ export interface DelegatedLeveragedPosition extends BaseContract {
         getSupplyAmountDelta(targetRatio: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
         getSupplyRate(asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
         isPositionClosed(overrides?: CallOverrides): Promise<[boolean]>;
+        isShort(overrides?: CallOverrides): Promise<[boolean]>;
         positionOwner(overrides?: CallOverrides): Promise<[string]>;
         seizeOnLiquidation(stablesToSeize: BigNumberish, overrides?: Overrides & {
             from?: string;
@@ -237,6 +241,7 @@ export interface DelegatedLeveragedPosition extends BaseContract {
     getSupplyAmountDelta(targetRatio: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
     getSupplyRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
     isPositionClosed(overrides?: CallOverrides): Promise<boolean>;
+    isShort(overrides?: CallOverrides): Promise<boolean>;
     positionOwner(overrides?: CallOverrides): Promise<string>;
     seizeOnLiquidation(stablesToSeize: BigNumberish, overrides?: Overrides & {
         from?: string;
@@ -275,6 +280,7 @@ export interface DelegatedLeveragedPosition extends BaseContract {
         getSupplyAmountDelta(targetRatio: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
         getSupplyRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         isPositionClosed(overrides?: CallOverrides): Promise<boolean>;
+        isShort(overrides?: CallOverrides): Promise<boolean>;
         positionOwner(overrides?: CallOverrides): Promise<string>;
         seizeOnLiquidation(stablesToSeize: BigNumberish, overrides?: CallOverrides): Promise<[
             BigNumber,
@@ -332,6 +338,7 @@ export interface DelegatedLeveragedPosition extends BaseContract {
         getSupplyAmountDelta(targetRatio: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
         getSupplyRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         isPositionClosed(overrides?: CallOverrides): Promise<BigNumber>;
+        isShort(overrides?: CallOverrides): Promise<BigNumber>;
         positionOwner(overrides?: CallOverrides): Promise<BigNumber>;
         seizeOnLiquidation(stablesToSeize: BigNumberish, overrides?: Overrides & {
             from?: string;
@@ -379,6 +386,7 @@ export interface DelegatedLeveragedPosition extends BaseContract {
         getSupplyAmountDelta(targetRatio: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         getSupplyRate(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         isPositionClosed(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        isShort(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         positionOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         seizeOnLiquidation(stablesToSeize: BigNumberish, overrides?: Overrides & {
             from?: string;

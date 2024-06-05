@@ -14,6 +14,7 @@ export interface IIonicCreditDelegatorExtensionInterface extends utils.Interface
         "getAssetPoolLtv(address)": FunctionFragment;
         "getAssetPrice(address)": FunctionFragment;
         "getBorrowingPowerUtilization()": FunctionFragment;
+        "getDelegatedPositions()": FunctionFragment;
         "getLevatoCurrentBorrowRate(address)": FunctionFragment;
         "getLiquidationThreshold(address,uint256)": FunctionFragment;
         "getPositionDebt(address)": FunctionFragment;
@@ -22,12 +23,14 @@ export interface IIonicCreditDelegatorExtensionInterface extends utils.Interface
         "getUserBorrowAllowance(address,address)": FunctionFragment;
         "initialize(address,address,address)": FunctionFragment;
         "initializeReserve(address,address)": FunctionFragment;
+        "isDelegatedPosition(address)": FunctionFragment;
         "isPoolSupportedAsset(address)": FunctionFragment;
         "isPositionLiquidateable(address)": FunctionFragment;
+        "registerDelegatedPosition(address)": FunctionFragment;
         "reinitialize(address,address)": FunctionFragment;
         "repayAsPosition(address,uint256)": FunctionFragment;
     };
-    getFunction(nameOrSignatureOrTopic: "borrowAsPosition" | "callLiquidation" | "callPartialLiquidation" | "changeBorrowAllowance" | "depositLevatoFunds" | "getAccruedToTreasury" | "getAssetBorrowRate" | "getAssetPoolLtv" | "getAssetPrice" | "getBorrowingPowerUtilization" | "getLevatoCurrentBorrowRate" | "getLiquidationThreshold" | "getPositionDebt" | "getPositionLiquidationThreshold" | "getTotalAvailableBorrows" | "getUserBorrowAllowance" | "initialize" | "initializeReserve" | "isPoolSupportedAsset" | "isPositionLiquidateable" | "reinitialize" | "repayAsPosition"): FunctionFragment;
+    getFunction(nameOrSignatureOrTopic: "borrowAsPosition" | "callLiquidation" | "callPartialLiquidation" | "changeBorrowAllowance" | "depositLevatoFunds" | "getAccruedToTreasury" | "getAssetBorrowRate" | "getAssetPoolLtv" | "getAssetPrice" | "getBorrowingPowerUtilization" | "getDelegatedPositions" | "getLevatoCurrentBorrowRate" | "getLiquidationThreshold" | "getPositionDebt" | "getPositionLiquidationThreshold" | "getTotalAvailableBorrows" | "getUserBorrowAllowance" | "initialize" | "initializeReserve" | "isDelegatedPosition" | "isPoolSupportedAsset" | "isPositionLiquidateable" | "registerDelegatedPosition" | "reinitialize" | "repayAsPosition"): FunctionFragment;
     encodeFunctionData(functionFragment: "borrowAsPosition", values: [string, BigNumberish]): string;
     encodeFunctionData(functionFragment: "callLiquidation", values: [string]): string;
     encodeFunctionData(functionFragment: "callPartialLiquidation", values: [string, BigNumberish]): string;
@@ -38,6 +41,7 @@ export interface IIonicCreditDelegatorExtensionInterface extends utils.Interface
     encodeFunctionData(functionFragment: "getAssetPoolLtv", values: [string]): string;
     encodeFunctionData(functionFragment: "getAssetPrice", values: [string]): string;
     encodeFunctionData(functionFragment: "getBorrowingPowerUtilization", values?: undefined): string;
+    encodeFunctionData(functionFragment: "getDelegatedPositions", values?: undefined): string;
     encodeFunctionData(functionFragment: "getLevatoCurrentBorrowRate", values: [string]): string;
     encodeFunctionData(functionFragment: "getLiquidationThreshold", values: [string, BigNumberish]): string;
     encodeFunctionData(functionFragment: "getPositionDebt", values: [string]): string;
@@ -46,8 +50,10 @@ export interface IIonicCreditDelegatorExtensionInterface extends utils.Interface
     encodeFunctionData(functionFragment: "getUserBorrowAllowance", values: [string, string]): string;
     encodeFunctionData(functionFragment: "initialize", values: [string, string, string]): string;
     encodeFunctionData(functionFragment: "initializeReserve", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "isDelegatedPosition", values: [string]): string;
     encodeFunctionData(functionFragment: "isPoolSupportedAsset", values: [string]): string;
     encodeFunctionData(functionFragment: "isPositionLiquidateable", values: [string]): string;
+    encodeFunctionData(functionFragment: "registerDelegatedPosition", values: [string]): string;
     encodeFunctionData(functionFragment: "reinitialize", values: [string, string]): string;
     encodeFunctionData(functionFragment: "repayAsPosition", values: [string, BigNumberish]): string;
     decodeFunctionResult(functionFragment: "borrowAsPosition", data: BytesLike): Result;
@@ -60,6 +66,7 @@ export interface IIonicCreditDelegatorExtensionInterface extends utils.Interface
     decodeFunctionResult(functionFragment: "getAssetPoolLtv", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getAssetPrice", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getBorrowingPowerUtilization", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "getDelegatedPositions", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getLevatoCurrentBorrowRate", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getLiquidationThreshold", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getPositionDebt", data: BytesLike): Result;
@@ -68,8 +75,10 @@ export interface IIonicCreditDelegatorExtensionInterface extends utils.Interface
     decodeFunctionResult(functionFragment: "getUserBorrowAllowance", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "initializeReserve", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "isDelegatedPosition", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "isPoolSupportedAsset", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "isPositionLiquidateable", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "registerDelegatedPosition", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "reinitialize", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "repayAsPosition", data: BytesLike): Result;
     events: {
@@ -157,6 +166,7 @@ export interface IIonicCreditDelegatorExtension extends BaseContract {
         getAssetPoolLtv(asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
         getAssetPrice(asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
         getBorrowingPowerUtilization(overrides?: CallOverrides): Promise<[BigNumber]>;
+        getDelegatedPositions(overrides?: CallOverrides): Promise<[string[]]>;
         getLevatoCurrentBorrowRate(asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
         getLiquidationThreshold(collateralAsset: string, delegatedDebtValue: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
         getPositionDebt(position: string, overrides?: CallOverrides): Promise<[
@@ -179,8 +189,12 @@ export interface IIonicCreditDelegatorExtension extends BaseContract {
         initializeReserve(_asset: string, _lpToken: string, overrides?: Overrides & {
             from?: string;
         }): Promise<ContractTransaction>;
+        isDelegatedPosition(position: string, overrides?: CallOverrides): Promise<[boolean]>;
         isPoolSupportedAsset(asset: string, overrides?: CallOverrides): Promise<[boolean]>;
         isPositionLiquidateable(position: string, overrides?: CallOverrides): Promise<[boolean]>;
+        registerDelegatedPosition(position: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
         reinitialize(_ionicPool: string, _irm: string, overrides?: Overrides & {
             from?: string;
         }): Promise<ContractTransaction>;
@@ -208,6 +222,7 @@ export interface IIonicCreditDelegatorExtension extends BaseContract {
     getAssetPoolLtv(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
     getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
     getBorrowingPowerUtilization(overrides?: CallOverrides): Promise<BigNumber>;
+    getDelegatedPositions(overrides?: CallOverrides): Promise<string[]>;
     getLevatoCurrentBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
     getLiquidationThreshold(collateralAsset: string, delegatedDebtValue: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
     getPositionDebt(position: string, overrides?: CallOverrides): Promise<[
@@ -228,8 +243,12 @@ export interface IIonicCreditDelegatorExtension extends BaseContract {
     initializeReserve(_asset: string, _lpToken: string, overrides?: Overrides & {
         from?: string;
     }): Promise<ContractTransaction>;
+    isDelegatedPosition(position: string, overrides?: CallOverrides): Promise<boolean>;
     isPoolSupportedAsset(asset: string, overrides?: CallOverrides): Promise<boolean>;
     isPositionLiquidateable(position: string, overrides?: CallOverrides): Promise<boolean>;
+    registerDelegatedPosition(position: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
     reinitialize(_ionicPool: string, _irm: string, overrides?: Overrides & {
         from?: string;
     }): Promise<ContractTransaction>;
@@ -247,6 +266,7 @@ export interface IIonicCreditDelegatorExtension extends BaseContract {
         getAssetPoolLtv(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         getBorrowingPowerUtilization(overrides?: CallOverrides): Promise<BigNumber>;
+        getDelegatedPositions(overrides?: CallOverrides): Promise<string[]>;
         getLevatoCurrentBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         getLiquidationThreshold(collateralAsset: string, delegatedDebtValue: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
         getPositionDebt(position: string, overrides?: CallOverrides): Promise<[
@@ -263,8 +283,10 @@ export interface IIonicCreditDelegatorExtension extends BaseContract {
         getUserBorrowAllowance(user: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         initialize(_ionicPool: string, _factory: string, _irm: string, overrides?: CallOverrides): Promise<void>;
         initializeReserve(_asset: string, _lpToken: string, overrides?: CallOverrides): Promise<void>;
+        isDelegatedPosition(position: string, overrides?: CallOverrides): Promise<boolean>;
         isPoolSupportedAsset(asset: string, overrides?: CallOverrides): Promise<boolean>;
         isPositionLiquidateable(position: string, overrides?: CallOverrides): Promise<boolean>;
+        registerDelegatedPosition(position: string, overrides?: CallOverrides): Promise<void>;
         reinitialize(_ionicPool: string, _irm: string, overrides?: CallOverrides): Promise<void>;
         repayAsPosition(asset: string, repayAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
     };
@@ -297,6 +319,7 @@ export interface IIonicCreditDelegatorExtension extends BaseContract {
         getAssetPoolLtv(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         getBorrowingPowerUtilization(overrides?: CallOverrides): Promise<BigNumber>;
+        getDelegatedPositions(overrides?: CallOverrides): Promise<BigNumber>;
         getLevatoCurrentBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         getLiquidationThreshold(collateralAsset: string, delegatedDebtValue: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
         getPositionDebt(position: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -309,8 +332,12 @@ export interface IIonicCreditDelegatorExtension extends BaseContract {
         initializeReserve(_asset: string, _lpToken: string, overrides?: Overrides & {
             from?: string;
         }): Promise<BigNumber>;
+        isDelegatedPosition(position: string, overrides?: CallOverrides): Promise<BigNumber>;
         isPoolSupportedAsset(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         isPositionLiquidateable(position: string, overrides?: CallOverrides): Promise<BigNumber>;
+        registerDelegatedPosition(position: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
         reinitialize(_ionicPool: string, _irm: string, overrides?: Overrides & {
             from?: string;
         }): Promise<BigNumber>;
@@ -339,6 +366,7 @@ export interface IIonicCreditDelegatorExtension extends BaseContract {
         getAssetPoolLtv(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         getAssetPrice(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         getBorrowingPowerUtilization(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getDelegatedPositions(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         getLevatoCurrentBorrowRate(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         getLiquidationThreshold(collateralAsset: string, delegatedDebtValue: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         getPositionDebt(position: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -351,8 +379,12 @@ export interface IIonicCreditDelegatorExtension extends BaseContract {
         initializeReserve(_asset: string, _lpToken: string, overrides?: Overrides & {
             from?: string;
         }): Promise<PopulatedTransaction>;
+        isDelegatedPosition(position: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         isPoolSupportedAsset(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         isPositionLiquidateable(position: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        registerDelegatedPosition(position: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
         reinitialize(_ionicPool: string, _irm: string, overrides?: Overrides & {
             from?: string;
         }): Promise<PopulatedTransaction>;

@@ -47,7 +47,6 @@ export interface ICreditDelegatorInterface extends utils.Interface {
         "callLiquidation(address)": FunctionFragment;
         "callPartialLiquidation(address,uint256)": FunctionFragment;
         "changeBorrowAllowance(uint256,uint256,address,address)": FunctionFragment;
-        "defaultRateModel()": FunctionFragment;
         "delegatedDebtAssetData(address)": FunctionFragment;
         "depositLevatoFunds(address)": FunctionFragment;
         "getAccruedToTreasury(address)": FunctionFragment;
@@ -55,6 +54,8 @@ export interface ICreditDelegatorInterface extends utils.Interface {
         "getAssetPoolLtv(address)": FunctionFragment;
         "getAssetPrice(address)": FunctionFragment;
         "getBorrowingPowerUtilization()": FunctionFragment;
+        "getDefaultRateModel()": FunctionFragment;
+        "getDelegatedPositions()": FunctionFragment;
         "getLevatoCurrentBorrowRate(address)": FunctionFragment;
         "getLiquidationThreshold(address,uint256)": FunctionFragment;
         "getPositionDebt(address)": FunctionFragment;
@@ -62,15 +63,17 @@ export interface ICreditDelegatorInterface extends utils.Interface {
         "getTotalAvailableBorrows(address)": FunctionFragment;
         "getUserBorrowAllowance(address,address)": FunctionFragment;
         "initializeReserve(address,address)": FunctionFragment;
+        "isDelegatedPosition(address)": FunctionFragment;
         "isPoolSupportedAsset(address)": FunctionFragment;
         "isPositionLiquidateable(address)": FunctionFragment;
         "owner()": FunctionFragment;
         "positionBorrowIndex(address,address)": FunctionFragment;
         "positionBorrowIndexLastUpdate(address,address)": FunctionFragment;
         "positionScaledATokens(address,address)": FunctionFragment;
+        "registerDelegatedPosition(address)": FunctionFragment;
         "repayAsPosition(address,uint256)": FunctionFragment;
     };
-    getFunction(nameOrSignatureOrTopic: "_listExtensions" | "_registerExtension" | "_replaceExtensions" | "borrowAllowance" | "borrowAsPosition" | "borrowBalance" | "callLiquidation" | "callPartialLiquidation" | "changeBorrowAllowance" | "defaultRateModel" | "delegatedDebtAssetData" | "depositLevatoFunds" | "getAccruedToTreasury" | "getAssetBorrowRate" | "getAssetPoolLtv" | "getAssetPrice" | "getBorrowingPowerUtilization" | "getLevatoCurrentBorrowRate" | "getLiquidationThreshold" | "getPositionDebt" | "getPositionLiquidationThreshold" | "getTotalAvailableBorrows" | "getUserBorrowAllowance" | "initializeReserve" | "isPoolSupportedAsset" | "isPositionLiquidateable" | "owner" | "positionBorrowIndex" | "positionBorrowIndexLastUpdate" | "positionScaledATokens" | "repayAsPosition"): FunctionFragment;
+    getFunction(nameOrSignatureOrTopic: "_listExtensions" | "_registerExtension" | "_replaceExtensions" | "borrowAllowance" | "borrowAsPosition" | "borrowBalance" | "callLiquidation" | "callPartialLiquidation" | "changeBorrowAllowance" | "delegatedDebtAssetData" | "depositLevatoFunds" | "getAccruedToTreasury" | "getAssetBorrowRate" | "getAssetPoolLtv" | "getAssetPrice" | "getBorrowingPowerUtilization" | "getDefaultRateModel" | "getDelegatedPositions" | "getLevatoCurrentBorrowRate" | "getLiquidationThreshold" | "getPositionDebt" | "getPositionLiquidationThreshold" | "getTotalAvailableBorrows" | "getUserBorrowAllowance" | "initializeReserve" | "isDelegatedPosition" | "isPoolSupportedAsset" | "isPositionLiquidateable" | "owner" | "positionBorrowIndex" | "positionBorrowIndexLastUpdate" | "positionScaledATokens" | "registerDelegatedPosition" | "repayAsPosition"): FunctionFragment;
     encodeFunctionData(functionFragment: "_listExtensions", values?: undefined): string;
     encodeFunctionData(functionFragment: "_registerExtension", values: [string, string]): string;
     encodeFunctionData(functionFragment: "_replaceExtensions", values: [string[]]): string;
@@ -80,7 +83,6 @@ export interface ICreditDelegatorInterface extends utils.Interface {
     encodeFunctionData(functionFragment: "callLiquidation", values: [string]): string;
     encodeFunctionData(functionFragment: "callPartialLiquidation", values: [string, BigNumberish]): string;
     encodeFunctionData(functionFragment: "changeBorrowAllowance", values: [BigNumberish, BigNumberish, string, string]): string;
-    encodeFunctionData(functionFragment: "defaultRateModel", values?: undefined): string;
     encodeFunctionData(functionFragment: "delegatedDebtAssetData", values: [string]): string;
     encodeFunctionData(functionFragment: "depositLevatoFunds", values: [string]): string;
     encodeFunctionData(functionFragment: "getAccruedToTreasury", values: [string]): string;
@@ -88,6 +90,8 @@ export interface ICreditDelegatorInterface extends utils.Interface {
     encodeFunctionData(functionFragment: "getAssetPoolLtv", values: [string]): string;
     encodeFunctionData(functionFragment: "getAssetPrice", values: [string]): string;
     encodeFunctionData(functionFragment: "getBorrowingPowerUtilization", values?: undefined): string;
+    encodeFunctionData(functionFragment: "getDefaultRateModel", values?: undefined): string;
+    encodeFunctionData(functionFragment: "getDelegatedPositions", values?: undefined): string;
     encodeFunctionData(functionFragment: "getLevatoCurrentBorrowRate", values: [string]): string;
     encodeFunctionData(functionFragment: "getLiquidationThreshold", values: [string, BigNumberish]): string;
     encodeFunctionData(functionFragment: "getPositionDebt", values: [string]): string;
@@ -95,12 +99,14 @@ export interface ICreditDelegatorInterface extends utils.Interface {
     encodeFunctionData(functionFragment: "getTotalAvailableBorrows", values: [string]): string;
     encodeFunctionData(functionFragment: "getUserBorrowAllowance", values: [string, string]): string;
     encodeFunctionData(functionFragment: "initializeReserve", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "isDelegatedPosition", values: [string]): string;
     encodeFunctionData(functionFragment: "isPoolSupportedAsset", values: [string]): string;
     encodeFunctionData(functionFragment: "isPositionLiquidateable", values: [string]): string;
     encodeFunctionData(functionFragment: "owner", values?: undefined): string;
     encodeFunctionData(functionFragment: "positionBorrowIndex", values: [string, string]): string;
     encodeFunctionData(functionFragment: "positionBorrowIndexLastUpdate", values: [string, string]): string;
     encodeFunctionData(functionFragment: "positionScaledATokens", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "registerDelegatedPosition", values: [string]): string;
     encodeFunctionData(functionFragment: "repayAsPosition", values: [string, BigNumberish]): string;
     decodeFunctionResult(functionFragment: "_listExtensions", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "_registerExtension", data: BytesLike): Result;
@@ -111,7 +117,6 @@ export interface ICreditDelegatorInterface extends utils.Interface {
     decodeFunctionResult(functionFragment: "callLiquidation", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "callPartialLiquidation", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "changeBorrowAllowance", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "defaultRateModel", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "delegatedDebtAssetData", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "depositLevatoFunds", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getAccruedToTreasury", data: BytesLike): Result;
@@ -119,6 +124,8 @@ export interface ICreditDelegatorInterface extends utils.Interface {
     decodeFunctionResult(functionFragment: "getAssetPoolLtv", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getAssetPrice", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getBorrowingPowerUtilization", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "getDefaultRateModel", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "getDelegatedPositions", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getLevatoCurrentBorrowRate", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getLiquidationThreshold", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getPositionDebt", data: BytesLike): Result;
@@ -126,12 +133,14 @@ export interface ICreditDelegatorInterface extends utils.Interface {
     decodeFunctionResult(functionFragment: "getTotalAvailableBorrows", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getUserBorrowAllowance", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "initializeReserve", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "isDelegatedPosition", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "isPoolSupportedAsset", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "isPositionLiquidateable", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "positionBorrowIndex", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "positionBorrowIndexLastUpdate", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "positionScaledATokens", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "registerDelegatedPosition", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "repayAsPosition", data: BytesLike): Result;
     events: {
         "BorrowAsPosition(address,address,uint256,uint256)": EventFragment;
@@ -219,7 +228,6 @@ export interface ICreditDelegator extends BaseContract {
         changeBorrowAllowance(fromAllowance: BigNumberish, toAllowance: BigNumberish, user: string, asset: string, overrides?: Overrides & {
             from?: string;
         }): Promise<ContractTransaction>;
-        defaultRateModel(overrides?: CallOverrides): Promise<[string]>;
         delegatedDebtAssetData(asset: string, overrides?: CallOverrides): Promise<[CreditDelegatorStorageBase.DelegatedDebtAssetDataStructOutput]>;
         depositLevatoFunds(asset: string, overrides?: Overrides & {
             from?: string;
@@ -229,6 +237,8 @@ export interface ICreditDelegator extends BaseContract {
         getAssetPoolLtv(asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
         getAssetPrice(asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
         getBorrowingPowerUtilization(overrides?: CallOverrides): Promise<[BigNumber]>;
+        getDefaultRateModel(overrides?: CallOverrides): Promise<[string]>;
+        getDelegatedPositions(overrides?: CallOverrides): Promise<[string[]]>;
         getLevatoCurrentBorrowRate(asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
         getLiquidationThreshold(collateralAsset: string, delegatedDebtValue: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
         getPositionDebt(position: string, overrides?: CallOverrides): Promise<[
@@ -248,12 +258,16 @@ export interface ICreditDelegator extends BaseContract {
         initializeReserve(_asset: string, _lpToken: string, overrides?: Overrides & {
             from?: string;
         }): Promise<ContractTransaction>;
+        isDelegatedPosition(position: string, overrides?: CallOverrides): Promise<[boolean]>;
         isPoolSupportedAsset(asset: string, overrides?: CallOverrides): Promise<[boolean]>;
         isPositionLiquidateable(position: string, overrides?: CallOverrides): Promise<[boolean]>;
         owner(overrides?: CallOverrides): Promise<[string]>;
         positionBorrowIndex(position: string, asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
         positionBorrowIndexLastUpdate(position: string, asset: string, overrides?: CallOverrides): Promise<[number]>;
         positionScaledATokens(position: string, asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        registerDelegatedPosition(position: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
         repayAsPosition(asset: string, repayAmount: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<ContractTransaction>;
@@ -279,7 +293,6 @@ export interface ICreditDelegator extends BaseContract {
     changeBorrowAllowance(fromAllowance: BigNumberish, toAllowance: BigNumberish, user: string, asset: string, overrides?: Overrides & {
         from?: string;
     }): Promise<ContractTransaction>;
-    defaultRateModel(overrides?: CallOverrides): Promise<string>;
     delegatedDebtAssetData(asset: string, overrides?: CallOverrides): Promise<CreditDelegatorStorageBase.DelegatedDebtAssetDataStructOutput>;
     depositLevatoFunds(asset: string, overrides?: Overrides & {
         from?: string;
@@ -289,6 +302,8 @@ export interface ICreditDelegator extends BaseContract {
     getAssetPoolLtv(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
     getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
     getBorrowingPowerUtilization(overrides?: CallOverrides): Promise<BigNumber>;
+    getDefaultRateModel(overrides?: CallOverrides): Promise<string>;
+    getDelegatedPositions(overrides?: CallOverrides): Promise<string[]>;
     getLevatoCurrentBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
     getLiquidationThreshold(collateralAsset: string, delegatedDebtValue: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
     getPositionDebt(position: string, overrides?: CallOverrides): Promise<[
@@ -306,12 +321,16 @@ export interface ICreditDelegator extends BaseContract {
     initializeReserve(_asset: string, _lpToken: string, overrides?: Overrides & {
         from?: string;
     }): Promise<ContractTransaction>;
+    isDelegatedPosition(position: string, overrides?: CallOverrides): Promise<boolean>;
     isPoolSupportedAsset(asset: string, overrides?: CallOverrides): Promise<boolean>;
     isPositionLiquidateable(position: string, overrides?: CallOverrides): Promise<boolean>;
     owner(overrides?: CallOverrides): Promise<string>;
     positionBorrowIndex(position: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
     positionBorrowIndexLastUpdate(position: string, asset: string, overrides?: CallOverrides): Promise<number>;
     positionScaledATokens(position: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    registerDelegatedPosition(position: string, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
     repayAsPosition(asset: string, repayAmount: BigNumberish, overrides?: Overrides & {
         from?: string;
     }): Promise<ContractTransaction>;
@@ -325,7 +344,6 @@ export interface ICreditDelegator extends BaseContract {
         callLiquidation(position: string, overrides?: CallOverrides): Promise<void>;
         callPartialLiquidation(position: string, debtToRepay: BigNumberish, overrides?: CallOverrides): Promise<void>;
         changeBorrowAllowance(fromAllowance: BigNumberish, toAllowance: BigNumberish, user: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
-        defaultRateModel(overrides?: CallOverrides): Promise<string>;
         delegatedDebtAssetData(asset: string, overrides?: CallOverrides): Promise<CreditDelegatorStorageBase.DelegatedDebtAssetDataStructOutput>;
         depositLevatoFunds(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         getAccruedToTreasury(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -333,6 +351,8 @@ export interface ICreditDelegator extends BaseContract {
         getAssetPoolLtv(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         getBorrowingPowerUtilization(overrides?: CallOverrides): Promise<BigNumber>;
+        getDefaultRateModel(overrides?: CallOverrides): Promise<string>;
+        getDelegatedPositions(overrides?: CallOverrides): Promise<string[]>;
         getLevatoCurrentBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         getLiquidationThreshold(collateralAsset: string, delegatedDebtValue: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
         getPositionDebt(position: string, overrides?: CallOverrides): Promise<[
@@ -348,12 +368,14 @@ export interface ICreditDelegator extends BaseContract {
         getTotalAvailableBorrows(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         getUserBorrowAllowance(user: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         initializeReserve(_asset: string, _lpToken: string, overrides?: CallOverrides): Promise<void>;
+        isDelegatedPosition(position: string, overrides?: CallOverrides): Promise<boolean>;
         isPoolSupportedAsset(asset: string, overrides?: CallOverrides): Promise<boolean>;
         isPositionLiquidateable(position: string, overrides?: CallOverrides): Promise<boolean>;
         owner(overrides?: CallOverrides): Promise<string>;
         positionBorrowIndex(position: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         positionBorrowIndexLastUpdate(position: string, asset: string, overrides?: CallOverrides): Promise<number>;
         positionScaledATokens(position: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        registerDelegatedPosition(position: string, overrides?: CallOverrides): Promise<void>;
         repayAsPosition(asset: string, repayAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
     };
     filters: {
@@ -386,7 +408,6 @@ export interface ICreditDelegator extends BaseContract {
         changeBorrowAllowance(fromAllowance: BigNumberish, toAllowance: BigNumberish, user: string, asset: string, overrides?: Overrides & {
             from?: string;
         }): Promise<BigNumber>;
-        defaultRateModel(overrides?: CallOverrides): Promise<BigNumber>;
         delegatedDebtAssetData(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         depositLevatoFunds(asset: string, overrides?: Overrides & {
             from?: string;
@@ -396,6 +417,8 @@ export interface ICreditDelegator extends BaseContract {
         getAssetPoolLtv(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         getAssetPrice(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         getBorrowingPowerUtilization(overrides?: CallOverrides): Promise<BigNumber>;
+        getDefaultRateModel(overrides?: CallOverrides): Promise<BigNumber>;
+        getDelegatedPositions(overrides?: CallOverrides): Promise<BigNumber>;
         getLevatoCurrentBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         getLiquidationThreshold(collateralAsset: string, delegatedDebtValue: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
         getPositionDebt(position: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -405,12 +428,16 @@ export interface ICreditDelegator extends BaseContract {
         initializeReserve(_asset: string, _lpToken: string, overrides?: Overrides & {
             from?: string;
         }): Promise<BigNumber>;
+        isDelegatedPosition(position: string, overrides?: CallOverrides): Promise<BigNumber>;
         isPoolSupportedAsset(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         isPositionLiquidateable(position: string, overrides?: CallOverrides): Promise<BigNumber>;
         owner(overrides?: CallOverrides): Promise<BigNumber>;
         positionBorrowIndex(position: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         positionBorrowIndexLastUpdate(position: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         positionScaledATokens(position: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        registerDelegatedPosition(position: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
         repayAsPosition(asset: string, repayAmount: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<BigNumber>;
@@ -437,7 +464,6 @@ export interface ICreditDelegator extends BaseContract {
         changeBorrowAllowance(fromAllowance: BigNumberish, toAllowance: BigNumberish, user: string, asset: string, overrides?: Overrides & {
             from?: string;
         }): Promise<PopulatedTransaction>;
-        defaultRateModel(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         delegatedDebtAssetData(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         depositLevatoFunds(asset: string, overrides?: Overrides & {
             from?: string;
@@ -447,6 +473,8 @@ export interface ICreditDelegator extends BaseContract {
         getAssetPoolLtv(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         getAssetPrice(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         getBorrowingPowerUtilization(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getDefaultRateModel(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getDelegatedPositions(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         getLevatoCurrentBorrowRate(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         getLiquidationThreshold(collateralAsset: string, delegatedDebtValue: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         getPositionDebt(position: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -456,12 +484,16 @@ export interface ICreditDelegator extends BaseContract {
         initializeReserve(_asset: string, _lpToken: string, overrides?: Overrides & {
             from?: string;
         }): Promise<PopulatedTransaction>;
+        isDelegatedPosition(position: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         isPoolSupportedAsset(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         isPositionLiquidateable(position: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         positionBorrowIndex(position: string, asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         positionBorrowIndexLastUpdate(position: string, asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         positionScaledATokens(position: string, asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        registerDelegatedPosition(position: string, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
         repayAsPosition(asset: string, repayAmount: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<PopulatedTransaction>;

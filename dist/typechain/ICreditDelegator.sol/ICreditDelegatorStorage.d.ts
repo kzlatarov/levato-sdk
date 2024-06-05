@@ -40,26 +40,26 @@ export interface ICreditDelegatorStorageInterface extends utils.Interface {
     functions: {
         "borrowAllowance(address,address)": FunctionFragment;
         "borrowBalance(address,address)": FunctionFragment;
-        "defaultRateModel()": FunctionFragment;
         "delegatedDebtAssetData(address)": FunctionFragment;
+        "getDefaultRateModel()": FunctionFragment;
         "owner()": FunctionFragment;
         "positionBorrowIndex(address,address)": FunctionFragment;
         "positionBorrowIndexLastUpdate(address,address)": FunctionFragment;
         "positionScaledATokens(address,address)": FunctionFragment;
     };
-    getFunction(nameOrSignatureOrTopic: "borrowAllowance" | "borrowBalance" | "defaultRateModel" | "delegatedDebtAssetData" | "owner" | "positionBorrowIndex" | "positionBorrowIndexLastUpdate" | "positionScaledATokens"): FunctionFragment;
+    getFunction(nameOrSignatureOrTopic: "borrowAllowance" | "borrowBalance" | "delegatedDebtAssetData" | "getDefaultRateModel" | "owner" | "positionBorrowIndex" | "positionBorrowIndexLastUpdate" | "positionScaledATokens"): FunctionFragment;
     encodeFunctionData(functionFragment: "borrowAllowance", values: [string, string]): string;
     encodeFunctionData(functionFragment: "borrowBalance", values: [string, string]): string;
-    encodeFunctionData(functionFragment: "defaultRateModel", values?: undefined): string;
     encodeFunctionData(functionFragment: "delegatedDebtAssetData", values: [string]): string;
+    encodeFunctionData(functionFragment: "getDefaultRateModel", values?: undefined): string;
     encodeFunctionData(functionFragment: "owner", values?: undefined): string;
     encodeFunctionData(functionFragment: "positionBorrowIndex", values: [string, string]): string;
     encodeFunctionData(functionFragment: "positionBorrowIndexLastUpdate", values: [string, string]): string;
     encodeFunctionData(functionFragment: "positionScaledATokens", values: [string, string]): string;
     decodeFunctionResult(functionFragment: "borrowAllowance", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "borrowBalance", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "defaultRateModel", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "delegatedDebtAssetData", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "getDefaultRateModel", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "positionBorrowIndex", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "positionBorrowIndexLastUpdate", data: BytesLike): Result;
@@ -83,8 +83,8 @@ export interface ICreditDelegatorStorage extends BaseContract {
     functions: {
         borrowAllowance(position: string, asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
         borrowBalance(user: string, asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
-        defaultRateModel(overrides?: CallOverrides): Promise<[string]>;
         delegatedDebtAssetData(asset: string, overrides?: CallOverrides): Promise<[CreditDelegatorStorageBase.DelegatedDebtAssetDataStructOutput]>;
+        getDefaultRateModel(overrides?: CallOverrides): Promise<[string]>;
         owner(overrides?: CallOverrides): Promise<[string]>;
         positionBorrowIndex(position: string, asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
         positionBorrowIndexLastUpdate(position: string, asset: string, overrides?: CallOverrides): Promise<[number]>;
@@ -92,8 +92,8 @@ export interface ICreditDelegatorStorage extends BaseContract {
     };
     borrowAllowance(position: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
     borrowBalance(user: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
-    defaultRateModel(overrides?: CallOverrides): Promise<string>;
     delegatedDebtAssetData(asset: string, overrides?: CallOverrides): Promise<CreditDelegatorStorageBase.DelegatedDebtAssetDataStructOutput>;
+    getDefaultRateModel(overrides?: CallOverrides): Promise<string>;
     owner(overrides?: CallOverrides): Promise<string>;
     positionBorrowIndex(position: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
     positionBorrowIndexLastUpdate(position: string, asset: string, overrides?: CallOverrides): Promise<number>;
@@ -101,8 +101,8 @@ export interface ICreditDelegatorStorage extends BaseContract {
     callStatic: {
         borrowAllowance(position: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         borrowBalance(user: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
-        defaultRateModel(overrides?: CallOverrides): Promise<string>;
         delegatedDebtAssetData(asset: string, overrides?: CallOverrides): Promise<CreditDelegatorStorageBase.DelegatedDebtAssetDataStructOutput>;
+        getDefaultRateModel(overrides?: CallOverrides): Promise<string>;
         owner(overrides?: CallOverrides): Promise<string>;
         positionBorrowIndex(position: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         positionBorrowIndexLastUpdate(position: string, asset: string, overrides?: CallOverrides): Promise<number>;
@@ -112,8 +112,8 @@ export interface ICreditDelegatorStorage extends BaseContract {
     estimateGas: {
         borrowAllowance(position: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         borrowBalance(user: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
-        defaultRateModel(overrides?: CallOverrides): Promise<BigNumber>;
         delegatedDebtAssetData(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getDefaultRateModel(overrides?: CallOverrides): Promise<BigNumber>;
         owner(overrides?: CallOverrides): Promise<BigNumber>;
         positionBorrowIndex(position: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         positionBorrowIndexLastUpdate(position: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -122,8 +122,8 @@ export interface ICreditDelegatorStorage extends BaseContract {
     populateTransaction: {
         borrowAllowance(position: string, asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         borrowBalance(user: string, asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-        defaultRateModel(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         delegatedDebtAssetData(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getDefaultRateModel(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         positionBorrowIndex(position: string, asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         positionBorrowIndexLastUpdate(position: string, asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;

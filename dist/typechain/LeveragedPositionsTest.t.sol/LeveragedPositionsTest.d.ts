@@ -19,6 +19,9 @@ export interface LeveragedPositionsTestInterface extends utils.Interface {
         "asArray(address,address,address)": FunctionFragment;
         "asArray(address,address)": FunctionFragment;
         "asArray(address)": FunctionFragment;
+        "baseUsdcAddress()": FunctionFragment;
+        "baseWethAddress()": FunctionFragment;
+        "baseWethWhale()": FunctionFragment;
         "dai()": FunctionFragment;
         "delegator()": FunctionFragment;
         "excludeArtifacts()": FunctionFragment;
@@ -31,6 +34,8 @@ export interface LeveragedPositionsTestInterface extends utils.Interface {
         "maticx()": FunctionFragment;
         "modePool()": FunctionFragment;
         "modeUsdc()": FunctionFragment;
+        "modeUsdt()": FunctionFragment;
+        "modeWbtc()": FunctionFragment;
         "modeWeth()": FunctionFragment;
         "mpo()": FunctionFragment;
         "proxyAdmin()": FunctionFragment;
@@ -46,22 +51,35 @@ export interface LeveragedPositionsTestInterface extends utils.Interface {
         "testAllAaveLeveragedPositions()": FunctionFragment;
         "testBaseAaveLeveragedPosition()": FunctionFragment;
         "testFuzzAaveLeveragedPosition(uint64)": FunctionFragment;
+        "testModeFuzzAaveLeveragedPosition(uint64)": FunctionFragment;
+        "testModeSomeAaveLeveragedPosition()": FunctionFragment;
         "testSomeAaveLeveragedPosition()": FunctionFragment;
         "testSomeIonicLeveragedPosition()": FunctionFragment;
         "testSpecificAaveLeveragedPosition()": FunctionFragment;
         "usdc()": FunctionFragment;
+        "usdcModeMarket()": FunctionFragment;
+        "usdcWhaleMode()": FunctionFragment;
         "usdt()": FunctionFragment;
+        "usdtModeMarket()": FunctionFragment;
         "wbtc()": FunctionFragment;
+        "wbtcModeMarket()": FunctionFragment;
+        "wbtcWhaleMode()": FunctionFragment;
         "weth()": FunctionFragment;
+        "wethModeMarket()": FunctionFragment;
+        "wethWhaleMode()": FunctionFragment;
         "wmatic()": FunctionFragment;
+        "wmaticWhale()": FunctionFragment;
         "wsteth()": FunctionFragment;
     };
-    getFunction(nameOrSignatureOrTopic: "IS_TEST" | "asArray(address,address,address,address,address)" | "asArray(address,address,address)" | "asArray(address,address)" | "asArray(address)" | "dai" | "delegator" | "excludeArtifacts" | "excludeContracts" | "excludeSenders" | "failed" | "irm" | "lens" | "lpf" | "maticx" | "modePool" | "modeUsdc" | "modeWeth" | "mpo" | "proxyAdmin" | "registry" | "router" | "sammUsdrUsdc" | "stmatic" | "targetArtifactSelectors" | "targetArtifacts" | "targetContracts" | "targetSelectors" | "targetSenders" | "testAllAaveLeveragedPositions" | "testBaseAaveLeveragedPosition" | "testFuzzAaveLeveragedPosition" | "testSomeAaveLeveragedPosition" | "testSomeIonicLeveragedPosition" | "testSpecificAaveLeveragedPosition" | "usdc" | "usdt" | "wbtc" | "weth" | "wmatic" | "wsteth"): FunctionFragment;
+    getFunction(nameOrSignatureOrTopic: "IS_TEST" | "asArray(address,address,address,address,address)" | "asArray(address,address,address)" | "asArray(address,address)" | "asArray(address)" | "baseUsdcAddress" | "baseWethAddress" | "baseWethWhale" | "dai" | "delegator" | "excludeArtifacts" | "excludeContracts" | "excludeSenders" | "failed" | "irm" | "lens" | "lpf" | "maticx" | "modePool" | "modeUsdc" | "modeUsdt" | "modeWbtc" | "modeWeth" | "mpo" | "proxyAdmin" | "registry" | "router" | "sammUsdrUsdc" | "stmatic" | "targetArtifactSelectors" | "targetArtifacts" | "targetContracts" | "targetSelectors" | "targetSenders" | "testAllAaveLeveragedPositions" | "testBaseAaveLeveragedPosition" | "testFuzzAaveLeveragedPosition" | "testModeFuzzAaveLeveragedPosition" | "testModeSomeAaveLeveragedPosition" | "testSomeAaveLeveragedPosition" | "testSomeIonicLeveragedPosition" | "testSpecificAaveLeveragedPosition" | "usdc" | "usdcModeMarket" | "usdcWhaleMode" | "usdt" | "usdtModeMarket" | "wbtc" | "wbtcModeMarket" | "wbtcWhaleMode" | "weth" | "wethModeMarket" | "wethWhaleMode" | "wmatic" | "wmaticWhale" | "wsteth"): FunctionFragment;
     encodeFunctionData(functionFragment: "IS_TEST", values?: undefined): string;
     encodeFunctionData(functionFragment: "asArray(address,address,address,address,address)", values: [string, string, string, string, string]): string;
     encodeFunctionData(functionFragment: "asArray(address,address,address)", values: [string, string, string]): string;
     encodeFunctionData(functionFragment: "asArray(address,address)", values: [string, string]): string;
     encodeFunctionData(functionFragment: "asArray(address)", values: [string]): string;
+    encodeFunctionData(functionFragment: "baseUsdcAddress", values?: undefined): string;
+    encodeFunctionData(functionFragment: "baseWethAddress", values?: undefined): string;
+    encodeFunctionData(functionFragment: "baseWethWhale", values?: undefined): string;
     encodeFunctionData(functionFragment: "dai", values?: undefined): string;
     encodeFunctionData(functionFragment: "delegator", values?: undefined): string;
     encodeFunctionData(functionFragment: "excludeArtifacts", values?: undefined): string;
@@ -74,6 +92,8 @@ export interface LeveragedPositionsTestInterface extends utils.Interface {
     encodeFunctionData(functionFragment: "maticx", values?: undefined): string;
     encodeFunctionData(functionFragment: "modePool", values?: undefined): string;
     encodeFunctionData(functionFragment: "modeUsdc", values?: undefined): string;
+    encodeFunctionData(functionFragment: "modeUsdt", values?: undefined): string;
+    encodeFunctionData(functionFragment: "modeWbtc", values?: undefined): string;
     encodeFunctionData(functionFragment: "modeWeth", values?: undefined): string;
     encodeFunctionData(functionFragment: "mpo", values?: undefined): string;
     encodeFunctionData(functionFragment: "proxyAdmin", values?: undefined): string;
@@ -89,20 +109,33 @@ export interface LeveragedPositionsTestInterface extends utils.Interface {
     encodeFunctionData(functionFragment: "testAllAaveLeveragedPositions", values?: undefined): string;
     encodeFunctionData(functionFragment: "testBaseAaveLeveragedPosition", values?: undefined): string;
     encodeFunctionData(functionFragment: "testFuzzAaveLeveragedPosition", values: [BigNumberish]): string;
+    encodeFunctionData(functionFragment: "testModeFuzzAaveLeveragedPosition", values: [BigNumberish]): string;
+    encodeFunctionData(functionFragment: "testModeSomeAaveLeveragedPosition", values?: undefined): string;
     encodeFunctionData(functionFragment: "testSomeAaveLeveragedPosition", values?: undefined): string;
     encodeFunctionData(functionFragment: "testSomeIonicLeveragedPosition", values?: undefined): string;
     encodeFunctionData(functionFragment: "testSpecificAaveLeveragedPosition", values?: undefined): string;
     encodeFunctionData(functionFragment: "usdc", values?: undefined): string;
+    encodeFunctionData(functionFragment: "usdcModeMarket", values?: undefined): string;
+    encodeFunctionData(functionFragment: "usdcWhaleMode", values?: undefined): string;
     encodeFunctionData(functionFragment: "usdt", values?: undefined): string;
+    encodeFunctionData(functionFragment: "usdtModeMarket", values?: undefined): string;
     encodeFunctionData(functionFragment: "wbtc", values?: undefined): string;
+    encodeFunctionData(functionFragment: "wbtcModeMarket", values?: undefined): string;
+    encodeFunctionData(functionFragment: "wbtcWhaleMode", values?: undefined): string;
     encodeFunctionData(functionFragment: "weth", values?: undefined): string;
+    encodeFunctionData(functionFragment: "wethModeMarket", values?: undefined): string;
+    encodeFunctionData(functionFragment: "wethWhaleMode", values?: undefined): string;
     encodeFunctionData(functionFragment: "wmatic", values?: undefined): string;
+    encodeFunctionData(functionFragment: "wmaticWhale", values?: undefined): string;
     encodeFunctionData(functionFragment: "wsteth", values?: undefined): string;
     decodeFunctionResult(functionFragment: "IS_TEST", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "asArray(address,address,address,address,address)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "asArray(address,address,address)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "asArray(address,address)", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "asArray(address)", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "baseUsdcAddress", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "baseWethAddress", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "baseWethWhale", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "dai", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "delegator", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "excludeArtifacts", data: BytesLike): Result;
@@ -115,6 +148,8 @@ export interface LeveragedPositionsTestInterface extends utils.Interface {
     decodeFunctionResult(functionFragment: "maticx", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "modePool", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "modeUsdc", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "modeUsdt", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "modeWbtc", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "modeWeth", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "mpo", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "proxyAdmin", data: BytesLike): Result;
@@ -130,14 +165,24 @@ export interface LeveragedPositionsTestInterface extends utils.Interface {
     decodeFunctionResult(functionFragment: "testAllAaveLeveragedPositions", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "testBaseAaveLeveragedPosition", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "testFuzzAaveLeveragedPosition", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "testModeFuzzAaveLeveragedPosition", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "testModeSomeAaveLeveragedPosition", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "testSomeAaveLeveragedPosition", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "testSomeIonicLeveragedPosition", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "testSpecificAaveLeveragedPosition", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "usdc", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "usdcModeMarket", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "usdcWhaleMode", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "usdt", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "usdtModeMarket", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "wbtc", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "wbtcModeMarket", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "wbtcWhaleMode", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "weth", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "wethModeMarket", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "wethWhaleMode", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "wmatic", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "wmaticWhale", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "wsteth", data: BytesLike): Result;
     events: {
         "log(string)": EventFragment;
@@ -370,6 +415,9 @@ export interface LeveragedPositionsTest extends BaseContract {
         "asArray(address,address,address)"(value0: string, value1: string, value2: string, overrides?: CallOverrides): Promise<[string[]]>;
         "asArray(address,address)"(value0: string, value1: string, overrides?: CallOverrides): Promise<[string[]]>;
         "asArray(address)"(value: string, overrides?: CallOverrides): Promise<[string[]]>;
+        baseUsdcAddress(overrides?: CallOverrides): Promise<[string]>;
+        baseWethAddress(overrides?: CallOverrides): Promise<[string]>;
+        baseWethWhale(overrides?: CallOverrides): Promise<[string]>;
         dai(overrides?: CallOverrides): Promise<[string]>;
         delegator(overrides?: CallOverrides): Promise<[string]>;
         excludeArtifacts(overrides?: CallOverrides): Promise<[string[]] & {
@@ -390,6 +438,8 @@ export interface LeveragedPositionsTest extends BaseContract {
         maticx(overrides?: CallOverrides): Promise<[string]>;
         modePool(overrides?: CallOverrides): Promise<[string]>;
         modeUsdc(overrides?: CallOverrides): Promise<[string]>;
+        modeUsdt(overrides?: CallOverrides): Promise<[string]>;
+        modeWbtc(overrides?: CallOverrides): Promise<[string]>;
         modeWeth(overrides?: CallOverrides): Promise<[string]>;
         mpo(overrides?: CallOverrides): Promise<[string]>;
         proxyAdmin(overrides?: CallOverrides): Promise<[string]>;
@@ -425,6 +475,12 @@ export interface LeveragedPositionsTest extends BaseContract {
         testFuzzAaveLeveragedPosition(random: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<ContractTransaction>;
+        testModeFuzzAaveLeveragedPosition(random: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
+        testModeSomeAaveLeveragedPosition(overrides?: Overrides & {
+            from?: string;
+        }): Promise<ContractTransaction>;
         testSomeAaveLeveragedPosition(overrides?: Overrides & {
             from?: string;
         }): Promise<ContractTransaction>;
@@ -435,10 +491,18 @@ export interface LeveragedPositionsTest extends BaseContract {
             from?: string;
         }): Promise<ContractTransaction>;
         usdc(overrides?: CallOverrides): Promise<[string]>;
+        usdcModeMarket(overrides?: CallOverrides): Promise<[string]>;
+        usdcWhaleMode(overrides?: CallOverrides): Promise<[string]>;
         usdt(overrides?: CallOverrides): Promise<[string]>;
+        usdtModeMarket(overrides?: CallOverrides): Promise<[string]>;
         wbtc(overrides?: CallOverrides): Promise<[string]>;
+        wbtcModeMarket(overrides?: CallOverrides): Promise<[string]>;
+        wbtcWhaleMode(overrides?: CallOverrides): Promise<[string]>;
         weth(overrides?: CallOverrides): Promise<[string]>;
+        wethModeMarket(overrides?: CallOverrides): Promise<[string]>;
+        wethWhaleMode(overrides?: CallOverrides): Promise<[string]>;
         wmatic(overrides?: CallOverrides): Promise<[string]>;
+        wmaticWhale(overrides?: CallOverrides): Promise<[string]>;
         wsteth(overrides?: CallOverrides): Promise<[string]>;
     };
     IS_TEST(overrides?: CallOverrides): Promise<boolean>;
@@ -446,6 +510,9 @@ export interface LeveragedPositionsTest extends BaseContract {
     "asArray(address,address,address)"(value0: string, value1: string, value2: string, overrides?: CallOverrides): Promise<string[]>;
     "asArray(address,address)"(value0: string, value1: string, overrides?: CallOverrides): Promise<string[]>;
     "asArray(address)"(value: string, overrides?: CallOverrides): Promise<string[]>;
+    baseUsdcAddress(overrides?: CallOverrides): Promise<string>;
+    baseWethAddress(overrides?: CallOverrides): Promise<string>;
+    baseWethWhale(overrides?: CallOverrides): Promise<string>;
     dai(overrides?: CallOverrides): Promise<string>;
     delegator(overrides?: CallOverrides): Promise<string>;
     excludeArtifacts(overrides?: CallOverrides): Promise<string[]>;
@@ -460,6 +527,8 @@ export interface LeveragedPositionsTest extends BaseContract {
     maticx(overrides?: CallOverrides): Promise<string>;
     modePool(overrides?: CallOverrides): Promise<string>;
     modeUsdc(overrides?: CallOverrides): Promise<string>;
+    modeUsdt(overrides?: CallOverrides): Promise<string>;
+    modeWbtc(overrides?: CallOverrides): Promise<string>;
     modeWeth(overrides?: CallOverrides): Promise<string>;
     mpo(overrides?: CallOverrides): Promise<string>;
     proxyAdmin(overrides?: CallOverrides): Promise<string>;
@@ -481,6 +550,12 @@ export interface LeveragedPositionsTest extends BaseContract {
     testFuzzAaveLeveragedPosition(random: BigNumberish, overrides?: Overrides & {
         from?: string;
     }): Promise<ContractTransaction>;
+    testModeFuzzAaveLeveragedPosition(random: BigNumberish, overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
+    testModeSomeAaveLeveragedPosition(overrides?: Overrides & {
+        from?: string;
+    }): Promise<ContractTransaction>;
     testSomeAaveLeveragedPosition(overrides?: Overrides & {
         from?: string;
     }): Promise<ContractTransaction>;
@@ -491,10 +566,18 @@ export interface LeveragedPositionsTest extends BaseContract {
         from?: string;
     }): Promise<ContractTransaction>;
     usdc(overrides?: CallOverrides): Promise<string>;
+    usdcModeMarket(overrides?: CallOverrides): Promise<string>;
+    usdcWhaleMode(overrides?: CallOverrides): Promise<string>;
     usdt(overrides?: CallOverrides): Promise<string>;
+    usdtModeMarket(overrides?: CallOverrides): Promise<string>;
     wbtc(overrides?: CallOverrides): Promise<string>;
+    wbtcModeMarket(overrides?: CallOverrides): Promise<string>;
+    wbtcWhaleMode(overrides?: CallOverrides): Promise<string>;
     weth(overrides?: CallOverrides): Promise<string>;
+    wethModeMarket(overrides?: CallOverrides): Promise<string>;
+    wethWhaleMode(overrides?: CallOverrides): Promise<string>;
     wmatic(overrides?: CallOverrides): Promise<string>;
+    wmaticWhale(overrides?: CallOverrides): Promise<string>;
     wsteth(overrides?: CallOverrides): Promise<string>;
     callStatic: {
         IS_TEST(overrides?: CallOverrides): Promise<boolean>;
@@ -502,6 +585,9 @@ export interface LeveragedPositionsTest extends BaseContract {
         "asArray(address,address,address)"(value0: string, value1: string, value2: string, overrides?: CallOverrides): Promise<string[]>;
         "asArray(address,address)"(value0: string, value1: string, overrides?: CallOverrides): Promise<string[]>;
         "asArray(address)"(value: string, overrides?: CallOverrides): Promise<string[]>;
+        baseUsdcAddress(overrides?: CallOverrides): Promise<string>;
+        baseWethAddress(overrides?: CallOverrides): Promise<string>;
+        baseWethWhale(overrides?: CallOverrides): Promise<string>;
         dai(overrides?: CallOverrides): Promise<string>;
         delegator(overrides?: CallOverrides): Promise<string>;
         excludeArtifacts(overrides?: CallOverrides): Promise<string[]>;
@@ -514,6 +600,8 @@ export interface LeveragedPositionsTest extends BaseContract {
         maticx(overrides?: CallOverrides): Promise<string>;
         modePool(overrides?: CallOverrides): Promise<string>;
         modeUsdc(overrides?: CallOverrides): Promise<string>;
+        modeUsdt(overrides?: CallOverrides): Promise<string>;
+        modeWbtc(overrides?: CallOverrides): Promise<string>;
         modeWeth(overrides?: CallOverrides): Promise<string>;
         mpo(overrides?: CallOverrides): Promise<string>;
         proxyAdmin(overrides?: CallOverrides): Promise<string>;
@@ -529,14 +617,24 @@ export interface LeveragedPositionsTest extends BaseContract {
         testAllAaveLeveragedPositions(overrides?: CallOverrides): Promise<void>;
         testBaseAaveLeveragedPosition(overrides?: CallOverrides): Promise<void>;
         testFuzzAaveLeveragedPosition(random: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        testModeFuzzAaveLeveragedPosition(random: BigNumberish, overrides?: CallOverrides): Promise<void>;
+        testModeSomeAaveLeveragedPosition(overrides?: CallOverrides): Promise<void>;
         testSomeAaveLeveragedPosition(overrides?: CallOverrides): Promise<void>;
         testSomeIonicLeveragedPosition(overrides?: CallOverrides): Promise<void>;
         testSpecificAaveLeveragedPosition(overrides?: CallOverrides): Promise<void>;
         usdc(overrides?: CallOverrides): Promise<string>;
+        usdcModeMarket(overrides?: CallOverrides): Promise<string>;
+        usdcWhaleMode(overrides?: CallOverrides): Promise<string>;
         usdt(overrides?: CallOverrides): Promise<string>;
+        usdtModeMarket(overrides?: CallOverrides): Promise<string>;
         wbtc(overrides?: CallOverrides): Promise<string>;
+        wbtcModeMarket(overrides?: CallOverrides): Promise<string>;
+        wbtcWhaleMode(overrides?: CallOverrides): Promise<string>;
         weth(overrides?: CallOverrides): Promise<string>;
+        wethModeMarket(overrides?: CallOverrides): Promise<string>;
+        wethWhaleMode(overrides?: CallOverrides): Promise<string>;
         wmatic(overrides?: CallOverrides): Promise<string>;
+        wmaticWhale(overrides?: CallOverrides): Promise<string>;
         wsteth(overrides?: CallOverrides): Promise<string>;
     };
     filters: {
@@ -585,6 +683,9 @@ export interface LeveragedPositionsTest extends BaseContract {
         "asArray(address,address,address)"(value0: string, value1: string, value2: string, overrides?: CallOverrides): Promise<BigNumber>;
         "asArray(address,address)"(value0: string, value1: string, overrides?: CallOverrides): Promise<BigNumber>;
         "asArray(address)"(value: string, overrides?: CallOverrides): Promise<BigNumber>;
+        baseUsdcAddress(overrides?: CallOverrides): Promise<BigNumber>;
+        baseWethAddress(overrides?: CallOverrides): Promise<BigNumber>;
+        baseWethWhale(overrides?: CallOverrides): Promise<BigNumber>;
         dai(overrides?: CallOverrides): Promise<BigNumber>;
         delegator(overrides?: CallOverrides): Promise<BigNumber>;
         excludeArtifacts(overrides?: CallOverrides): Promise<BigNumber>;
@@ -599,6 +700,8 @@ export interface LeveragedPositionsTest extends BaseContract {
         maticx(overrides?: CallOverrides): Promise<BigNumber>;
         modePool(overrides?: CallOverrides): Promise<BigNumber>;
         modeUsdc(overrides?: CallOverrides): Promise<BigNumber>;
+        modeUsdt(overrides?: CallOverrides): Promise<BigNumber>;
+        modeWbtc(overrides?: CallOverrides): Promise<BigNumber>;
         modeWeth(overrides?: CallOverrides): Promise<BigNumber>;
         mpo(overrides?: CallOverrides): Promise<BigNumber>;
         proxyAdmin(overrides?: CallOverrides): Promise<BigNumber>;
@@ -620,6 +723,12 @@ export interface LeveragedPositionsTest extends BaseContract {
         testFuzzAaveLeveragedPosition(random: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<BigNumber>;
+        testModeFuzzAaveLeveragedPosition(random: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
+        testModeSomeAaveLeveragedPosition(overrides?: Overrides & {
+            from?: string;
+        }): Promise<BigNumber>;
         testSomeAaveLeveragedPosition(overrides?: Overrides & {
             from?: string;
         }): Promise<BigNumber>;
@@ -630,10 +739,18 @@ export interface LeveragedPositionsTest extends BaseContract {
             from?: string;
         }): Promise<BigNumber>;
         usdc(overrides?: CallOverrides): Promise<BigNumber>;
+        usdcModeMarket(overrides?: CallOverrides): Promise<BigNumber>;
+        usdcWhaleMode(overrides?: CallOverrides): Promise<BigNumber>;
         usdt(overrides?: CallOverrides): Promise<BigNumber>;
+        usdtModeMarket(overrides?: CallOverrides): Promise<BigNumber>;
         wbtc(overrides?: CallOverrides): Promise<BigNumber>;
+        wbtcModeMarket(overrides?: CallOverrides): Promise<BigNumber>;
+        wbtcWhaleMode(overrides?: CallOverrides): Promise<BigNumber>;
         weth(overrides?: CallOverrides): Promise<BigNumber>;
+        wethModeMarket(overrides?: CallOverrides): Promise<BigNumber>;
+        wethWhaleMode(overrides?: CallOverrides): Promise<BigNumber>;
         wmatic(overrides?: CallOverrides): Promise<BigNumber>;
+        wmaticWhale(overrides?: CallOverrides): Promise<BigNumber>;
         wsteth(overrides?: CallOverrides): Promise<BigNumber>;
     };
     populateTransaction: {
@@ -642,6 +759,9 @@ export interface LeveragedPositionsTest extends BaseContract {
         "asArray(address,address,address)"(value0: string, value1: string, value2: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         "asArray(address,address)"(value0: string, value1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         "asArray(address)"(value: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        baseUsdcAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        baseWethAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        baseWethWhale(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         dai(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         delegator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         excludeArtifacts(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -656,6 +776,8 @@ export interface LeveragedPositionsTest extends BaseContract {
         maticx(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         modePool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         modeUsdc(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        modeUsdt(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        modeWbtc(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         modeWeth(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         mpo(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         proxyAdmin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -677,6 +799,12 @@ export interface LeveragedPositionsTest extends BaseContract {
         testFuzzAaveLeveragedPosition(random: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<PopulatedTransaction>;
+        testModeFuzzAaveLeveragedPosition(random: BigNumberish, overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
+        testModeSomeAaveLeveragedPosition(overrides?: Overrides & {
+            from?: string;
+        }): Promise<PopulatedTransaction>;
         testSomeAaveLeveragedPosition(overrides?: Overrides & {
             from?: string;
         }): Promise<PopulatedTransaction>;
@@ -687,10 +815,18 @@ export interface LeveragedPositionsTest extends BaseContract {
             from?: string;
         }): Promise<PopulatedTransaction>;
         usdc(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        usdcModeMarket(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        usdcWhaleMode(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         usdt(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        usdtModeMarket(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         wbtc(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        wbtcModeMarket(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        wbtcWhaleMode(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         weth(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        wethModeMarket(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        wethWhaleMode(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         wmatic(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        wmaticWhale(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         wsteth(overrides?: CallOverrides): Promise<PopulatedTransaction>;
     };
 }

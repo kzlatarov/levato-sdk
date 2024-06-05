@@ -25,6 +25,7 @@ export interface CreditDelegatorExtensionInterface extends utils.Interface {
         "getBorrowingPowerUtilization()": FunctionFragment;
         "getLevatoCurrentBorrowRate(address)": FunctionFragment;
         "getLiquidationThreshold(address,uint256)": FunctionFragment;
+        "getPositionAvailableBorrows(address,address)": FunctionFragment;
         "getPositionDebt(address)": FunctionFragment;
         "getPositionLiquidationThreshold(address)": FunctionFragment;
         "getPositionScaledATokens(address)": FunctionFragment;
@@ -39,12 +40,12 @@ export interface CreditDelegatorExtensionInterface extends utils.Interface {
         "positionBorrowIndex(address,address)": FunctionFragment;
         "positionBorrowIndexLastUpdate(address,address)": FunctionFragment;
         "positionScaledATokens(address,address)": FunctionFragment;
-        "reinitialize(address,address,address)": FunctionFragment;
+        "reinitialize(address)": FunctionFragment;
         "renounceOwnership()": FunctionFragment;
         "repayAsPosition(address,uint256)": FunctionFragment;
         "transferOwnership(address)": FunctionFragment;
     };
-    getFunction(nameOrSignatureOrTopic: "_getExtensionFunctions" | "_repayForPosition" | "aaveAddressesProvider" | "acceptOwnership" | "borrowAllowance" | "borrowAsPosition" | "borrowBalance" | "callLiquidation" | "callPartialLiquidation" | "changeBorrowAllowance" | "delegatedDebtAssetData" | "depositLevatoFunds" | "factory" | "getAavePool" | "getAccruedToTreasury" | "getAssetBorrowRate" | "getAssetPoolLtv" | "getAssetPrice" | "getBorrowingPowerUtilization" | "getLevatoCurrentBorrowRate" | "getLiquidationThreshold" | "getPositionDebt" | "getPositionLiquidationThreshold" | "getPositionScaledATokens" | "getTotalAvailableBorrows" | "getUserBorrowAllowance" | "initialize" | "initializeReserve" | "isPoolSupportedAsset" | "isPositionLiquidateable" | "owner" | "pendingOwner" | "positionBorrowIndex" | "positionBorrowIndexLastUpdate" | "positionScaledATokens" | "reinitialize" | "renounceOwnership" | "repayAsPosition" | "transferOwnership"): FunctionFragment;
+    getFunction(nameOrSignatureOrTopic: "_getExtensionFunctions" | "_repayForPosition" | "aaveAddressesProvider" | "acceptOwnership" | "borrowAllowance" | "borrowAsPosition" | "borrowBalance" | "callLiquidation" | "callPartialLiquidation" | "changeBorrowAllowance" | "delegatedDebtAssetData" | "depositLevatoFunds" | "factory" | "getAavePool" | "getAccruedToTreasury" | "getAssetBorrowRate" | "getAssetPoolLtv" | "getAssetPrice" | "getBorrowingPowerUtilization" | "getLevatoCurrentBorrowRate" | "getLiquidationThreshold" | "getPositionAvailableBorrows" | "getPositionDebt" | "getPositionLiquidationThreshold" | "getPositionScaledATokens" | "getTotalAvailableBorrows" | "getUserBorrowAllowance" | "initialize" | "initializeReserve" | "isPoolSupportedAsset" | "isPositionLiquidateable" | "owner" | "pendingOwner" | "positionBorrowIndex" | "positionBorrowIndexLastUpdate" | "positionScaledATokens" | "reinitialize" | "renounceOwnership" | "repayAsPosition" | "transferOwnership"): FunctionFragment;
     encodeFunctionData(functionFragment: "_getExtensionFunctions", values?: undefined): string;
     encodeFunctionData(functionFragment: "_repayForPosition", values: [string, string, BigNumberish]): string;
     encodeFunctionData(functionFragment: "aaveAddressesProvider", values?: undefined): string;
@@ -66,6 +67,7 @@ export interface CreditDelegatorExtensionInterface extends utils.Interface {
     encodeFunctionData(functionFragment: "getBorrowingPowerUtilization", values?: undefined): string;
     encodeFunctionData(functionFragment: "getLevatoCurrentBorrowRate", values: [string]): string;
     encodeFunctionData(functionFragment: "getLiquidationThreshold", values: [string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "getPositionAvailableBorrows", values: [string, string]): string;
     encodeFunctionData(functionFragment: "getPositionDebt", values: [string]): string;
     encodeFunctionData(functionFragment: "getPositionLiquidationThreshold", values: [string]): string;
     encodeFunctionData(functionFragment: "getPositionScaledATokens", values: [string]): string;
@@ -80,7 +82,7 @@ export interface CreditDelegatorExtensionInterface extends utils.Interface {
     encodeFunctionData(functionFragment: "positionBorrowIndex", values: [string, string]): string;
     encodeFunctionData(functionFragment: "positionBorrowIndexLastUpdate", values: [string, string]): string;
     encodeFunctionData(functionFragment: "positionScaledATokens", values: [string, string]): string;
-    encodeFunctionData(functionFragment: "reinitialize", values: [string, string, string]): string;
+    encodeFunctionData(functionFragment: "reinitialize", values: [string]): string;
     encodeFunctionData(functionFragment: "renounceOwnership", values?: undefined): string;
     encodeFunctionData(functionFragment: "repayAsPosition", values: [string, BigNumberish]): string;
     encodeFunctionData(functionFragment: "transferOwnership", values: [string]): string;
@@ -105,6 +107,7 @@ export interface CreditDelegatorExtensionInterface extends utils.Interface {
     decodeFunctionResult(functionFragment: "getBorrowingPowerUtilization", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getLevatoCurrentBorrowRate", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getLiquidationThreshold", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "getPositionAvailableBorrows", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getPositionDebt", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getPositionLiquidationThreshold", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getPositionScaledATokens", data: BytesLike): Result;
@@ -274,6 +277,7 @@ export interface CreditDelegatorExtension extends BaseContract {
             levatoCurrentBorrowRate: BigNumber;
         }>;
         getLiquidationThreshold(collateralAsset: string, delegatedDebtValue: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+        getPositionAvailableBorrows(positionAddress: string, asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
         getPositionDebt(position: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, string]>;
         getPositionLiquidationThreshold(position: string, overrides?: CallOverrides): Promise<[BigNumber]>;
         getPositionScaledATokens(position: string, overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -294,7 +298,7 @@ export interface CreditDelegatorExtension extends BaseContract {
         positionBorrowIndex(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
         positionBorrowIndexLastUpdate(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[number]>;
         positionScaledATokens(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
-        reinitialize(_addressesProvider: string, _factory: string, _irm: string, overrides?: Overrides & {
+        reinitialize(_irm: string, overrides?: Overrides & {
             from?: string;
         }): Promise<ContractTransaction>;
         renounceOwnership(overrides?: Overrides & {
@@ -362,6 +366,7 @@ export interface CreditDelegatorExtension extends BaseContract {
     getBorrowingPowerUtilization(overrides?: CallOverrides): Promise<BigNumber>;
     getLevatoCurrentBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
     getLiquidationThreshold(collateralAsset: string, delegatedDebtValue: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getPositionAvailableBorrows(positionAddress: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
     getPositionDebt(position: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, string]>;
     getPositionLiquidationThreshold(position: string, overrides?: CallOverrides): Promise<BigNumber>;
     getPositionScaledATokens(position: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -380,7 +385,7 @@ export interface CreditDelegatorExtension extends BaseContract {
     positionBorrowIndex(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
     positionBorrowIndexLastUpdate(arg0: string, arg1: string, overrides?: CallOverrides): Promise<number>;
     positionScaledATokens(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
-    reinitialize(_addressesProvider: string, _factory: string, _irm: string, overrides?: Overrides & {
+    reinitialize(_irm: string, overrides?: Overrides & {
         from?: string;
     }): Promise<ContractTransaction>;
     renounceOwnership(overrides?: Overrides & {
@@ -434,6 +439,7 @@ export interface CreditDelegatorExtension extends BaseContract {
         getBorrowingPowerUtilization(overrides?: CallOverrides): Promise<BigNumber>;
         getLevatoCurrentBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         getLiquidationThreshold(collateralAsset: string, delegatedDebtValue: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        getPositionAvailableBorrows(positionAddress: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         getPositionDebt(position: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, string]>;
         getPositionLiquidationThreshold(position: string, overrides?: CallOverrides): Promise<BigNumber>;
         getPositionScaledATokens(position: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -448,7 +454,7 @@ export interface CreditDelegatorExtension extends BaseContract {
         positionBorrowIndex(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
         positionBorrowIndexLastUpdate(arg0: string, arg1: string, overrides?: CallOverrides): Promise<number>;
         positionScaledATokens(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
-        reinitialize(_addressesProvider: string, _factory: string, _irm: string, overrides?: CallOverrides): Promise<void>;
+        reinitialize(_irm: string, overrides?: CallOverrides): Promise<void>;
         renounceOwnership(overrides?: CallOverrides): Promise<void>;
         repayAsPosition(asset: string, repayAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
         transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
@@ -503,6 +509,7 @@ export interface CreditDelegatorExtension extends BaseContract {
         getBorrowingPowerUtilization(overrides?: CallOverrides): Promise<BigNumber>;
         getLevatoCurrentBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         getLiquidationThreshold(collateralAsset: string, delegatedDebtValue: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        getPositionAvailableBorrows(positionAddress: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         getPositionDebt(position: string, overrides?: CallOverrides): Promise<BigNumber>;
         getPositionLiquidationThreshold(position: string, overrides?: CallOverrides): Promise<BigNumber>;
         getPositionScaledATokens(position: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -521,7 +528,7 @@ export interface CreditDelegatorExtension extends BaseContract {
         positionBorrowIndex(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
         positionBorrowIndexLastUpdate(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
         positionScaledATokens(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
-        reinitialize(_addressesProvider: string, _factory: string, _irm: string, overrides?: Overrides & {
+        reinitialize(_irm: string, overrides?: Overrides & {
             from?: string;
         }): Promise<BigNumber>;
         renounceOwnership(overrides?: Overrides & {
@@ -570,6 +577,7 @@ export interface CreditDelegatorExtension extends BaseContract {
         getBorrowingPowerUtilization(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         getLevatoCurrentBorrowRate(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         getLiquidationThreshold(collateralAsset: string, delegatedDebtValue: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getPositionAvailableBorrows(positionAddress: string, asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         getPositionDebt(position: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         getPositionLiquidationThreshold(position: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         getPositionScaledATokens(position: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -588,7 +596,7 @@ export interface CreditDelegatorExtension extends BaseContract {
         positionBorrowIndex(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         positionBorrowIndexLastUpdate(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         positionScaledATokens(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-        reinitialize(_addressesProvider: string, _factory: string, _irm: string, overrides?: Overrides & {
+        reinitialize(_irm: string, overrides?: Overrides & {
             from?: string;
         }): Promise<PopulatedTransaction>;
         renounceOwnership(overrides?: Overrides & {
