@@ -34,6 +34,19 @@ const _abi = [
     },
     {
         type: "function",
+        name: "isShort",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "bool",
+                internalType: "bool",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
         name: "positionOwner",
         inputs: [],
         outputs: [

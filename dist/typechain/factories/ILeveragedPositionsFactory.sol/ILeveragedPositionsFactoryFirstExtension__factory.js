@@ -34,14 +34,19 @@ const _abi = [
         name: "createAndFundIonicPosition",
         inputs: [
             {
-                name: "_collateralMarket",
+                name: "_collateralAsset",
                 type: "address",
-                internalType: "contract IonicCErc20",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                name: "_stableMarket",
+                name: "_stableAsset",
                 type: "address",
-                internalType: "contract IonicCErc20",
+                internalType: "contract IERC20Upgradeable",
+            },
+            {
+                name: "_isShort",
+                type: "bool",
+                internalType: "bool",
             },
             {
                 name: "_fundingAsset",
@@ -68,14 +73,19 @@ const _abi = [
         name: "createAndFundIonicPositionAtRatio",
         inputs: [
             {
-                name: "_collateralMarket",
+                name: "_collateralAsset",
                 type: "address",
-                internalType: "contract IonicCErc20",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                name: "_stableMarket",
+                name: "_stableAsset",
                 type: "address",
-                internalType: "contract IonicCErc20",
+                internalType: "contract IERC20Upgradeable",
+            },
+            {
+                name: "_isShort",
+                type: "bool",
+                internalType: "bool",
             },
             {
                 name: "_fundingAsset",
@@ -107,14 +117,24 @@ const _abi = [
         name: "createIonicPosition",
         inputs: [
             {
-                name: "_collateralMarket",
+                name: "posOwner",
                 type: "address",
-                internalType: "contract IonicCErc20",
+                internalType: "address",
             },
             {
-                name: "_stableMarket",
+                name: "_collateralAsset",
                 type: "address",
-                internalType: "contract IonicCErc20",
+                internalType: "contract IERC20Upgradeable",
+            },
+            {
+                name: "_stableAsset",
+                type: "address",
+                internalType: "contract IERC20Upgradeable",
+            },
+            {
+                name: "_isShort",
+                type: "bool",
+                internalType: "bool",
             },
         ],
         outputs: [

@@ -24,6 +24,16 @@ export declare class LeveragedPositionStorage__factory {
         readonly stateMutability: "view";
     }, {
         readonly type: "function";
+        readonly name: "isShort";
+        readonly inputs: readonly [];
+        readonly outputs: readonly [{
+            readonly name: "";
+            readonly type: "bool";
+            readonly internalType: "bool";
+        }];
+        readonly stateMutability: "view";
+    }, {
+        readonly type: "function";
         readonly name: "positionOwner";
         readonly inputs: readonly [];
         readonly outputs: readonly [{

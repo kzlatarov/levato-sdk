@@ -31,6 +31,10 @@ export declare class ILeveragedPositionsFactorySecondExtension__factory {
             readonly name: "_stableAsset";
             readonly type: "address";
             readonly internalType: "address";
+        }, {
+            readonly name: "_isShort";
+            readonly type: "bool";
+            readonly internalType: "bool";
         }];
         readonly outputs: readonly [{
             readonly name: "";
@@ -70,9 +74,9 @@ export declare class ILeveragedPositionsFactorySecondExtension__factory {
         readonly type: "function";
         readonly name: "getBorrowableMarketsByCollateral";
         readonly inputs: readonly [{
-            readonly name: "_collateralMarket";
+            readonly name: "_collateralAsset";
             readonly type: "address";
-            readonly internalType: "contract IonicCErc20";
+            readonly internalType: "contract IERC20Upgradeable";
         }];
         readonly outputs: readonly [{
             readonly name: "";

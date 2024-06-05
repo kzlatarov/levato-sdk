@@ -24,13 +24,17 @@ export declare class ILeveragedPositionsFactoryFirstExtension__factory {
         readonly type: "function";
         readonly name: "createAndFundIonicPosition";
         readonly inputs: readonly [{
-            readonly name: "_collateralMarket";
+            readonly name: "_collateralAsset";
             readonly type: "address";
-            readonly internalType: "contract IonicCErc20";
+            readonly internalType: "contract IERC20Upgradeable";
         }, {
-            readonly name: "_stableMarket";
+            readonly name: "_stableAsset";
             readonly type: "address";
-            readonly internalType: "contract IonicCErc20";
+            readonly internalType: "contract IERC20Upgradeable";
+        }, {
+            readonly name: "_isShort";
+            readonly type: "bool";
+            readonly internalType: "bool";
         }, {
             readonly name: "_fundingAsset";
             readonly type: "address";
@@ -50,13 +54,17 @@ export declare class ILeveragedPositionsFactoryFirstExtension__factory {
         readonly type: "function";
         readonly name: "createAndFundIonicPositionAtRatio";
         readonly inputs: readonly [{
-            readonly name: "_collateralMarket";
+            readonly name: "_collateralAsset";
             readonly type: "address";
-            readonly internalType: "contract IonicCErc20";
+            readonly internalType: "contract IERC20Upgradeable";
         }, {
-            readonly name: "_stableMarket";
+            readonly name: "_stableAsset";
             readonly type: "address";
-            readonly internalType: "contract IonicCErc20";
+            readonly internalType: "contract IERC20Upgradeable";
+        }, {
+            readonly name: "_isShort";
+            readonly type: "bool";
+            readonly internalType: "bool";
         }, {
             readonly name: "_fundingAsset";
             readonly type: "address";
@@ -80,13 +88,21 @@ export declare class ILeveragedPositionsFactoryFirstExtension__factory {
         readonly type: "function";
         readonly name: "createIonicPosition";
         readonly inputs: readonly [{
-            readonly name: "_collateralMarket";
+            readonly name: "posOwner";
             readonly type: "address";
-            readonly internalType: "contract IonicCErc20";
+            readonly internalType: "address";
         }, {
-            readonly name: "_stableMarket";
+            readonly name: "_collateralAsset";
             readonly type: "address";
-            readonly internalType: "contract IonicCErc20";
+            readonly internalType: "contract IERC20Upgradeable";
+        }, {
+            readonly name: "_stableAsset";
+            readonly type: "address";
+            readonly internalType: "contract IERC20Upgradeable";
+        }, {
+            readonly name: "_isShort";
+            readonly type: "bool";
+            readonly internalType: "bool";
         }];
         readonly outputs: readonly [{
             readonly name: "";

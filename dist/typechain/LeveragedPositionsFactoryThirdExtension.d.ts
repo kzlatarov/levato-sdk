@@ -11,20 +11,22 @@ export interface LeveragedPositionsFactoryThirdExtensionInterface extends utils.
         "_setPairWhitelisted(address,address,bool)": FunctionFragment;
         "acceptOwnership()": FunctionFragment;
         "blocksPerYear()": FunctionFragment;
-        "createAndFundDelegatedPosition(address,address,address,address,uint256)": FunctionFragment;
-        "createAndFundDelegatedPositionAtRatio(address,address,address,address,uint256,uint256)": FunctionFragment;
-        "createAndFundPosition(address,address,address,address,uint256)": FunctionFragment;
-        "createAndFundPositionAtRatio(address,address,address,address,uint256,uint256)": FunctionFragment;
-        "createDelegatedPosition(address,address,address)": FunctionFragment;
-        "createPosition(address,address,address)": FunctionFragment;
+        "createAndFundDelegatedPosition(address,address,address,bool,address,uint256)": FunctionFragment;
+        "createAndFundDelegatedPositionAtRatio(address,address,address,bool,address,uint256,uint256)": FunctionFragment;
+        "createAndFundPosition(address,address,address,bool,address,uint256)": FunctionFragment;
+        "createAndFundPositionAtRatio(address,address,address,bool,address,uint256,uint256)": FunctionFragment;
+        "createDelegatedPosition(address,address,address,bool)": FunctionFragment;
+        "createPosition(address,address,address,bool)": FunctionFragment;
         "creditDelegator()": FunctionFragment;
         "deregisterVault(address)": FunctionFragment;
         "flashloanRouter()": FunctionFragment;
         "fundersRegistry()": FunctionFragment;
-        "getAaveMaxLeverageRatio(address,uint256,address)": FunctionFragment;
+        "getBorrowedPriceOnPositionCreated(address)": FunctionFragment;
+        "getCollateralPriceOnPositionCreated(address)": FunctionFragment;
         "getLeverageRatioAfterBorrow(address,address,uint256,uint256,uint256)": FunctionFragment;
         "getLeverageRatioAfterRepay(address,address,uint256,uint256,uint256)": FunctionFragment;
         "getLiquidationThreshold(address,uint256,address,uint256)": FunctionFragment;
+        "getNondelegatedMaxLeverageRatio(address,uint256,address)": FunctionFragment;
         "getRegisteredVaults()": FunctionFragment;
         "isVaultRegistered(address)": FunctionFragment;
         "minBorrowNative()": FunctionFragment;
@@ -37,7 +39,7 @@ export interface LeveragedPositionsFactoryThirdExtensionInterface extends utils.
         "transferOwnership(address)": FunctionFragment;
         "vaultOfPosition(address)": FunctionFragment;
     };
-    getFunction(nameOrSignatureOrTopic: "AAVE" | "DELEGATED" | "IONIC" | "_getExtensionFunctions" | "_setPairWhitelisted" | "acceptOwnership" | "blocksPerYear" | "createAndFundDelegatedPosition" | "createAndFundDelegatedPositionAtRatio" | "createAndFundPosition" | "createAndFundPositionAtRatio" | "createDelegatedPosition" | "createPosition" | "creditDelegator" | "deregisterVault" | "flashloanRouter" | "fundersRegistry" | "getAaveMaxLeverageRatio" | "getLeverageRatioAfterBorrow" | "getLeverageRatioAfterRepay" | "getLiquidationThreshold" | "getRegisteredVaults" | "isVaultRegistered" | "minBorrowNative" | "oracle" | "owner" | "pendingOwner" | "rebalanceBorrowRate" | "registerVault" | "renounceOwnership" | "transferOwnership" | "vaultOfPosition"): FunctionFragment;
+    getFunction(nameOrSignatureOrTopic: "AAVE" | "DELEGATED" | "IONIC" | "_getExtensionFunctions" | "_setPairWhitelisted" | "acceptOwnership" | "blocksPerYear" | "createAndFundDelegatedPosition" | "createAndFundDelegatedPositionAtRatio" | "createAndFundPosition" | "createAndFundPositionAtRatio" | "createDelegatedPosition" | "createPosition" | "creditDelegator" | "deregisterVault" | "flashloanRouter" | "fundersRegistry" | "getBorrowedPriceOnPositionCreated" | "getCollateralPriceOnPositionCreated" | "getLeverageRatioAfterBorrow" | "getLeverageRatioAfterRepay" | "getLiquidationThreshold" | "getNondelegatedMaxLeverageRatio" | "getRegisteredVaults" | "isVaultRegistered" | "minBorrowNative" | "oracle" | "owner" | "pendingOwner" | "rebalanceBorrowRate" | "registerVault" | "renounceOwnership" | "transferOwnership" | "vaultOfPosition"): FunctionFragment;
     encodeFunctionData(functionFragment: "AAVE", values?: undefined): string;
     encodeFunctionData(functionFragment: "DELEGATED", values?: undefined): string;
     encodeFunctionData(functionFragment: "IONIC", values?: undefined): string;
@@ -45,20 +47,38 @@ export interface LeveragedPositionsFactoryThirdExtensionInterface extends utils.
     encodeFunctionData(functionFragment: "_setPairWhitelisted", values: [string, string, boolean]): string;
     encodeFunctionData(functionFragment: "acceptOwnership", values?: undefined): string;
     encodeFunctionData(functionFragment: "blocksPerYear", values?: undefined): string;
-    encodeFunctionData(functionFragment: "createAndFundDelegatedPosition", values: [string, string, string, string, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "createAndFundDelegatedPositionAtRatio", values: [string, string, string, string, BigNumberish, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "createAndFundPosition", values: [string, string, string, string, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "createAndFundPositionAtRatio", values: [string, string, string, string, BigNumberish, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "createDelegatedPosition", values: [string, string, string]): string;
-    encodeFunctionData(functionFragment: "createPosition", values: [string, string, string]): string;
+    encodeFunctionData(functionFragment: "createAndFundDelegatedPosition", values: [string, string, string, boolean, string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "createAndFundDelegatedPositionAtRatio", values: [
+        string,
+        string,
+        string,
+        boolean,
+        string,
+        BigNumberish,
+        BigNumberish
+    ]): string;
+    encodeFunctionData(functionFragment: "createAndFundPosition", values: [string, string, string, boolean, string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "createAndFundPositionAtRatio", values: [
+        string,
+        string,
+        string,
+        boolean,
+        string,
+        BigNumberish,
+        BigNumberish
+    ]): string;
+    encodeFunctionData(functionFragment: "createDelegatedPosition", values: [string, string, string, boolean]): string;
+    encodeFunctionData(functionFragment: "createPosition", values: [string, string, string, boolean]): string;
     encodeFunctionData(functionFragment: "creditDelegator", values?: undefined): string;
     encodeFunctionData(functionFragment: "deregisterVault", values: [string]): string;
     encodeFunctionData(functionFragment: "flashloanRouter", values?: undefined): string;
     encodeFunctionData(functionFragment: "fundersRegistry", values?: undefined): string;
-    encodeFunctionData(functionFragment: "getAaveMaxLeverageRatio", values: [string, BigNumberish, string]): string;
+    encodeFunctionData(functionFragment: "getBorrowedPriceOnPositionCreated", values: [string]): string;
+    encodeFunctionData(functionFragment: "getCollateralPriceOnPositionCreated", values: [string]): string;
     encodeFunctionData(functionFragment: "getLeverageRatioAfterBorrow", values: [string, string, BigNumberish, BigNumberish, BigNumberish]): string;
     encodeFunctionData(functionFragment: "getLeverageRatioAfterRepay", values: [string, string, BigNumberish, BigNumberish, BigNumberish]): string;
     encodeFunctionData(functionFragment: "getLiquidationThreshold", values: [string, BigNumberish, string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "getNondelegatedMaxLeverageRatio", values: [string, BigNumberish, string]): string;
     encodeFunctionData(functionFragment: "getRegisteredVaults", values?: undefined): string;
     encodeFunctionData(functionFragment: "isVaultRegistered", values: [string]): string;
     encodeFunctionData(functionFragment: "minBorrowNative", values?: undefined): string;
@@ -87,10 +107,12 @@ export interface LeveragedPositionsFactoryThirdExtensionInterface extends utils.
     decodeFunctionResult(functionFragment: "deregisterVault", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "flashloanRouter", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "fundersRegistry", data: BytesLike): Result;
-    decodeFunctionResult(functionFragment: "getAaveMaxLeverageRatio", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "getBorrowedPriceOnPositionCreated", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "getCollateralPriceOnPositionCreated", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getLeverageRatioAfterBorrow", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getLeverageRatioAfterRepay", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getLiquidationThreshold", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "getNondelegatedMaxLeverageRatio", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getRegisteredVaults", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "isVaultRegistered", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "minBorrowNative", data: BytesLike): Result;
@@ -177,22 +199,22 @@ export interface LeveragedPositionsFactoryThirdExtension extends BaseContract {
             from?: string;
         }): Promise<ContractTransaction>;
         blocksPerYear(overrides?: CallOverrides): Promise<[BigNumber]>;
-        createAndFundDelegatedPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
+        createAndFundDelegatedPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<ContractTransaction>;
-        createAndFundDelegatedPositionAtRatio(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
+        createAndFundDelegatedPositionAtRatio(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<ContractTransaction>;
-        createAndFundPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
+        createAndFundPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<ContractTransaction>;
-        createAndFundPositionAtRatio(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
+        createAndFundPositionAtRatio(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<ContractTransaction>;
-        createDelegatedPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, overrides?: Overrides & {
+        createDelegatedPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, overrides?: Overrides & {
             from?: string;
         }): Promise<ContractTransaction>;
-        createPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, overrides?: Overrides & {
+        createPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, overrides?: Overrides & {
             from?: string;
         }): Promise<ContractTransaction>;
         creditDelegator(overrides?: CallOverrides): Promise<[string]>;
@@ -201,9 +223,8 @@ export interface LeveragedPositionsFactoryThirdExtension extends BaseContract {
         }): Promise<ContractTransaction>;
         flashloanRouter(overrides?: CallOverrides): Promise<[string]>;
         fundersRegistry(overrides?: CallOverrides): Promise<[string]>;
-        getAaveMaxLeverageRatio(collateralAsset: string, collateralAmount: BigNumberish, borrowedAsset: string, overrides?: CallOverrides): Promise<[BigNumber] & {
-            maxLeverageRatio: BigNumber;
-        }>;
+        getBorrowedPriceOnPositionCreated(positionAddress: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+        getCollateralPriceOnPositionCreated(positionAddress: string, overrides?: CallOverrides): Promise<[BigNumber]>;
         getLeverageRatioAfterBorrow(collateralAsset: string, borrowedAsset: string, newBorrowsAmount: BigNumberish, positionSupplyAmount: BigNumberish, positionBorrowAmount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber] & {
             r: BigNumber;
         }>;
@@ -211,6 +232,9 @@ export interface LeveragedPositionsFactoryThirdExtension extends BaseContract {
             r: BigNumber;
         }>;
         getLiquidationThreshold(collateralAsset: string, collateralAmount: BigNumberish, borrowedAsset: string, leverageRatio: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+        getNondelegatedMaxLeverageRatio(collateralAsset: string, collateralAmount: BigNumberish, borrowedAsset: string, overrides?: CallOverrides): Promise<[BigNumber] & {
+            maxLeverageRatio: BigNumber;
+        }>;
         getRegisteredVaults(overrides?: CallOverrides): Promise<[string[]]>;
         isVaultRegistered(vault: string, overrides?: CallOverrides): Promise<[boolean]>;
         minBorrowNative(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -242,22 +266,22 @@ export interface LeveragedPositionsFactoryThirdExtension extends BaseContract {
         from?: string;
     }): Promise<ContractTransaction>;
     blocksPerYear(overrides?: CallOverrides): Promise<BigNumber>;
-    createAndFundDelegatedPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
+    createAndFundDelegatedPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
         from?: string;
     }): Promise<ContractTransaction>;
-    createAndFundDelegatedPositionAtRatio(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
+    createAndFundDelegatedPositionAtRatio(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
         from?: string;
     }): Promise<ContractTransaction>;
-    createAndFundPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
+    createAndFundPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
         from?: string;
     }): Promise<ContractTransaction>;
-    createAndFundPositionAtRatio(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
+    createAndFundPositionAtRatio(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
         from?: string;
     }): Promise<ContractTransaction>;
-    createDelegatedPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, overrides?: Overrides & {
+    createDelegatedPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, overrides?: Overrides & {
         from?: string;
     }): Promise<ContractTransaction>;
-    createPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, overrides?: Overrides & {
+    createPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, overrides?: Overrides & {
         from?: string;
     }): Promise<ContractTransaction>;
     creditDelegator(overrides?: CallOverrides): Promise<string>;
@@ -266,10 +290,12 @@ export interface LeveragedPositionsFactoryThirdExtension extends BaseContract {
     }): Promise<ContractTransaction>;
     flashloanRouter(overrides?: CallOverrides): Promise<string>;
     fundersRegistry(overrides?: CallOverrides): Promise<string>;
-    getAaveMaxLeverageRatio(collateralAsset: string, collateralAmount: BigNumberish, borrowedAsset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getBorrowedPriceOnPositionCreated(positionAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getCollateralPriceOnPositionCreated(positionAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
     getLeverageRatioAfterBorrow(collateralAsset: string, borrowedAsset: string, newBorrowsAmount: BigNumberish, positionSupplyAmount: BigNumberish, positionBorrowAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
     getLeverageRatioAfterRepay(collateralAsset: string, borrowedAsset: string, repaidBorrowsAmount: BigNumberish, positionSupplyAmount: BigNumberish, positionBorrowAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
     getLiquidationThreshold(collateralAsset: string, collateralAmount: BigNumberish, borrowedAsset: string, leverageRatio: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getNondelegatedMaxLeverageRatio(collateralAsset: string, collateralAmount: BigNumberish, borrowedAsset: string, overrides?: CallOverrides): Promise<BigNumber>;
     getRegisteredVaults(overrides?: CallOverrides): Promise<string[]>;
     isVaultRegistered(vault: string, overrides?: CallOverrides): Promise<boolean>;
     minBorrowNative(overrides?: CallOverrides): Promise<BigNumber>;
@@ -297,20 +323,22 @@ export interface LeveragedPositionsFactoryThirdExtension extends BaseContract {
         _setPairWhitelisted(_collateralAsset: string, _stableAsset: string, _whitelisted: boolean, overrides?: CallOverrides): Promise<void>;
         acceptOwnership(overrides?: CallOverrides): Promise<void>;
         blocksPerYear(overrides?: CallOverrides): Promise<BigNumber>;
-        createAndFundDelegatedPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: CallOverrides): Promise<string>;
-        createAndFundDelegatedPositionAtRatio(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: CallOverrides): Promise<string>;
-        createAndFundPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: CallOverrides): Promise<string>;
-        createAndFundPositionAtRatio(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: CallOverrides): Promise<string>;
-        createDelegatedPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, overrides?: CallOverrides): Promise<string>;
-        createPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, overrides?: CallOverrides): Promise<string>;
+        createAndFundDelegatedPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: CallOverrides): Promise<string>;
+        createAndFundDelegatedPositionAtRatio(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: CallOverrides): Promise<string>;
+        createAndFundPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: CallOverrides): Promise<string>;
+        createAndFundPositionAtRatio(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: CallOverrides): Promise<string>;
+        createDelegatedPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, overrides?: CallOverrides): Promise<string>;
+        createPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, overrides?: CallOverrides): Promise<string>;
         creditDelegator(overrides?: CallOverrides): Promise<string>;
         deregisterVault(vault: string, overrides?: CallOverrides): Promise<boolean>;
         flashloanRouter(overrides?: CallOverrides): Promise<string>;
         fundersRegistry(overrides?: CallOverrides): Promise<string>;
-        getAaveMaxLeverageRatio(collateralAsset: string, collateralAmount: BigNumberish, borrowedAsset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getBorrowedPriceOnPositionCreated(positionAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getCollateralPriceOnPositionCreated(positionAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
         getLeverageRatioAfterBorrow(collateralAsset: string, borrowedAsset: string, newBorrowsAmount: BigNumberish, positionSupplyAmount: BigNumberish, positionBorrowAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
         getLeverageRatioAfterRepay(collateralAsset: string, borrowedAsset: string, repaidBorrowsAmount: BigNumberish, positionSupplyAmount: BigNumberish, positionBorrowAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
         getLiquidationThreshold(collateralAsset: string, collateralAmount: BigNumberish, borrowedAsset: string, leverageRatio: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        getNondelegatedMaxLeverageRatio(collateralAsset: string, collateralAmount: BigNumberish, borrowedAsset: string, overrides?: CallOverrides): Promise<BigNumber>;
         getRegisteredVaults(overrides?: CallOverrides): Promise<string[]>;
         isVaultRegistered(vault: string, overrides?: CallOverrides): Promise<boolean>;
         minBorrowNative(overrides?: CallOverrides): Promise<BigNumber>;
@@ -345,22 +373,22 @@ export interface LeveragedPositionsFactoryThirdExtension extends BaseContract {
             from?: string;
         }): Promise<BigNumber>;
         blocksPerYear(overrides?: CallOverrides): Promise<BigNumber>;
-        createAndFundDelegatedPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
+        createAndFundDelegatedPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<BigNumber>;
-        createAndFundDelegatedPositionAtRatio(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
+        createAndFundDelegatedPositionAtRatio(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<BigNumber>;
-        createAndFundPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
+        createAndFundPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<BigNumber>;
-        createAndFundPositionAtRatio(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
+        createAndFundPositionAtRatio(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<BigNumber>;
-        createDelegatedPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, overrides?: Overrides & {
+        createDelegatedPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, overrides?: Overrides & {
             from?: string;
         }): Promise<BigNumber>;
-        createPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, overrides?: Overrides & {
+        createPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, overrides?: Overrides & {
             from?: string;
         }): Promise<BigNumber>;
         creditDelegator(overrides?: CallOverrides): Promise<BigNumber>;
@@ -369,10 +397,12 @@ export interface LeveragedPositionsFactoryThirdExtension extends BaseContract {
         }): Promise<BigNumber>;
         flashloanRouter(overrides?: CallOverrides): Promise<BigNumber>;
         fundersRegistry(overrides?: CallOverrides): Promise<BigNumber>;
-        getAaveMaxLeverageRatio(collateralAsset: string, collateralAmount: BigNumberish, borrowedAsset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getBorrowedPriceOnPositionCreated(positionAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getCollateralPriceOnPositionCreated(positionAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
         getLeverageRatioAfterBorrow(collateralAsset: string, borrowedAsset: string, newBorrowsAmount: BigNumberish, positionSupplyAmount: BigNumberish, positionBorrowAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
         getLeverageRatioAfterRepay(collateralAsset: string, borrowedAsset: string, repaidBorrowsAmount: BigNumberish, positionSupplyAmount: BigNumberish, positionBorrowAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
         getLiquidationThreshold(collateralAsset: string, collateralAmount: BigNumberish, borrowedAsset: string, leverageRatio: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+        getNondelegatedMaxLeverageRatio(collateralAsset: string, collateralAmount: BigNumberish, borrowedAsset: string, overrides?: CallOverrides): Promise<BigNumber>;
         getRegisteredVaults(overrides?: CallOverrides): Promise<BigNumber>;
         isVaultRegistered(vault: string, overrides?: CallOverrides): Promise<BigNumber>;
         minBorrowNative(overrides?: CallOverrides): Promise<BigNumber>;
@@ -405,22 +435,22 @@ export interface LeveragedPositionsFactoryThirdExtension extends BaseContract {
             from?: string;
         }): Promise<PopulatedTransaction>;
         blocksPerYear(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-        createAndFundDelegatedPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
+        createAndFundDelegatedPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<PopulatedTransaction>;
-        createAndFundDelegatedPositionAtRatio(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
+        createAndFundDelegatedPositionAtRatio(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<PopulatedTransaction>;
-        createAndFundPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
+        createAndFundPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<PopulatedTransaction>;
-        createAndFundPositionAtRatio(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
+        createAndFundPositionAtRatio(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<PopulatedTransaction>;
-        createDelegatedPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, overrides?: Overrides & {
+        createDelegatedPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, overrides?: Overrides & {
             from?: string;
         }): Promise<PopulatedTransaction>;
-        createPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, overrides?: Overrides & {
+        createPosition(_collateralAsset: string, _collateralVault: string, _stableAsset: string, _isShort: boolean, overrides?: Overrides & {
             from?: string;
         }): Promise<PopulatedTransaction>;
         creditDelegator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -429,10 +459,12 @@ export interface LeveragedPositionsFactoryThirdExtension extends BaseContract {
         }): Promise<PopulatedTransaction>;
         flashloanRouter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         fundersRegistry(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-        getAaveMaxLeverageRatio(collateralAsset: string, collateralAmount: BigNumberish, borrowedAsset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getBorrowedPriceOnPositionCreated(positionAddress: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getCollateralPriceOnPositionCreated(positionAddress: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         getLeverageRatioAfterBorrow(collateralAsset: string, borrowedAsset: string, newBorrowsAmount: BigNumberish, positionSupplyAmount: BigNumberish, positionBorrowAmount: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         getLeverageRatioAfterRepay(collateralAsset: string, borrowedAsset: string, repaidBorrowsAmount: BigNumberish, positionSupplyAmount: BigNumberish, positionBorrowAmount: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         getLiquidationThreshold(collateralAsset: string, collateralAmount: BigNumberish, borrowedAsset: string, leverageRatio: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getNondelegatedMaxLeverageRatio(collateralAsset: string, collateralAmount: BigNumberish, borrowedAsset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         getRegisteredVaults(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         isVaultRegistered(vault: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         minBorrowNative(overrides?: CallOverrides): Promise<PopulatedTransaction>;

@@ -49,15 +49,22 @@ export default class LevatoSDK {
         LeveragedPositionsLens.PositionInfoStructOutput[]
     ]>;
     /**
+     * Get positions PnL
+     * @param { string } address
+     * @returns A map with positions addresses as keys and PnL data
+     */
+    getPositionsPnl(account: string): Promise<Map<any, any> | null>;
+    /**
      * Open a position
      * @param { string } collateralUnderlying
      * @param { string } stableTokenUnderlying
      * @param { BigNumber } amount
      * @param { string } fundingTokenUnderlying
      * @param { string } leverage
+     * @param { type }
      * @returns The transaction hash
      */
-    openPosition(collateralUnderlying: string, stableTokenUnderlying: string, amount: BigNumber, fundingTokenUnderlying: string, leverage: string): Promise<ContractTransaction>;
+    openPosition(collateralUnderlying: string, stableTokenUnderlying: string, amount: BigNumber, fundingTokenUnderlying: string, leverage: string, isShort: boolean): Promise<ContractTransaction>;
     /**
      * Close a position
      * @param { string } contractAddress

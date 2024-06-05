@@ -134,6 +134,11 @@ const _abi = [
                 type: "address",
                 internalType: "address",
             },
+            {
+                name: "_isShort",
+                type: "bool",
+                internalType: "bool",
+            },
         ],
         outputs: [
             {
@@ -162,6 +167,11 @@ const _abi = [
                 name: "_stableAsset",
                 type: "address",
                 internalType: "address",
+            },
+            {
+                name: "_isShort",
+                type: "bool",
+                internalType: "bool",
             },
             {
                 name: "_fundingAsset",
@@ -203,6 +213,11 @@ const _abi = [
                 internalType: "address",
             },
             {
+                name: "_isShort",
+                type: "bool",
+                internalType: "bool",
+            },
+            {
                 name: "_fundingAsset",
                 type: "address",
                 internalType: "contract IERC20Upgradeable",
@@ -232,14 +247,19 @@ const _abi = [
         name: "createAndFundIonicPosition",
         inputs: [
             {
-                name: "_collateralMarket",
+                name: "_collateralAsset",
                 type: "address",
-                internalType: "contract IonicCErc20",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                name: "_stableMarket",
+                name: "_stableAsset",
                 type: "address",
-                internalType: "contract IonicCErc20",
+                internalType: "contract IERC20Upgradeable",
+            },
+            {
+                name: "_isShort",
+                type: "bool",
+                internalType: "bool",
             },
             {
                 name: "_fundingAsset",
@@ -266,14 +286,19 @@ const _abi = [
         name: "createAndFundIonicPositionAtRatio",
         inputs: [
             {
-                name: "_collateralMarket",
+                name: "_collateralAsset",
                 type: "address",
-                internalType: "contract IonicCErc20",
+                internalType: "contract IERC20Upgradeable",
             },
             {
-                name: "_stableMarket",
+                name: "_stableAsset",
                 type: "address",
-                internalType: "contract IonicCErc20",
+                internalType: "contract IERC20Upgradeable",
+            },
+            {
+                name: "_isShort",
+                type: "bool",
+                internalType: "bool",
             },
             {
                 name: "_fundingAsset",
@@ -320,6 +345,11 @@ const _abi = [
                 internalType: "address",
             },
             {
+                name: "_isShort",
+                type: "bool",
+                internalType: "bool",
+            },
+            {
                 name: "_fundingAsset",
                 type: "address",
                 internalType: "contract IERC20Upgradeable",
@@ -357,6 +387,11 @@ const _abi = [
                 name: "_stableAsset",
                 type: "address",
                 internalType: "address",
+            },
+            {
+                name: "_isShort",
+                type: "bool",
+                internalType: "bool",
             },
             {
                 name: "_fundingAsset",
@@ -402,6 +437,11 @@ const _abi = [
                 type: "address",
                 internalType: "address",
             },
+            {
+                name: "_isShort",
+                type: "bool",
+                internalType: "bool",
+            },
         ],
         outputs: [
             {
@@ -417,14 +457,24 @@ const _abi = [
         name: "createIonicPosition",
         inputs: [
             {
-                name: "_collateralMarket",
+                name: "posOwner",
                 type: "address",
-                internalType: "contract IonicCErc20",
+                internalType: "address",
             },
             {
-                name: "_stableMarket",
+                name: "_collateralAsset",
                 type: "address",
-                internalType: "contract IonicCErc20",
+                internalType: "contract IERC20Upgradeable",
+            },
+            {
+                name: "_stableAsset",
+                type: "address",
+                internalType: "contract IERC20Upgradeable",
+            },
+            {
+                name: "_isShort",
+                type: "bool",
+                internalType: "bool",
             },
         ],
         outputs: [
@@ -454,6 +504,11 @@ const _abi = [
                 name: "_stableAsset",
                 type: "address",
                 internalType: "address",
+            },
+            {
+                name: "_isShort",
+                type: "bool",
+                internalType: "bool",
             },
         ],
         outputs: [
@@ -548,35 +603,6 @@ const _abi = [
     },
     {
         type: "function",
-        name: "getAaveMaxLeverageRatio",
-        inputs: [
-            {
-                name: "collateralAsset",
-                type: "address",
-                internalType: "address",
-            },
-            {
-                name: "collateralAmount",
-                type: "uint256",
-                internalType: "uint256",
-            },
-            {
-                name: "borrowedAsset",
-                type: "address",
-                internalType: "address",
-            },
-        ],
-        outputs: [
-            {
-                name: "maxLeverageRatio",
-                type: "uint256",
-                internalType: "uint256",
-            },
-        ],
-        stateMutability: "view",
-    },
-    {
-        type: "function",
         name: "getAccountsWithOpenPositions",
         inputs: [],
         outputs: [
@@ -631,9 +657,9 @@ const _abi = [
         name: "getBorrowableMarketsByCollateral",
         inputs: [
             {
-                name: "_collateralMarket",
+                name: "_collateralAsset",
                 type: "address",
-                internalType: "contract IonicCErc20",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
         outputs: [
@@ -641,6 +667,44 @@ const _abi = [
                 name: "",
                 type: "address[]",
                 internalType: "address[]",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getBorrowedPriceOnPositionCreated",
+        inputs: [
+            {
+                name: "positionAddress",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getCollateralPriceOnPositionCreated",
+        inputs: [
+            {
+                name: "positionAddress",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
             },
         ],
         stateMutability: "view",
@@ -764,6 +828,35 @@ const _abi = [
         outputs: [
             {
                 name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getNondelegatedMaxLeverageRatio",
+        inputs: [
+            {
+                name: "collateralAsset",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "collateralAmount",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "borrowedAsset",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "maxLeverageRatio",
                 type: "uint256",
                 internalType: "uint256",
             },

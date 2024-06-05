@@ -11,6 +11,7 @@ import {
   LeveragedPositionsLens__factory
 } from '../typechain';
 import { formatEther } from 'ethers/lib/utils';
+import { PnlQueryDocument, Position, execute } from '../.graphclient';
 
 export type LevatoSDKContructor = {
   signer: Signer;
@@ -184,6 +185,40 @@ export default class LevatoSDK {
 
     // Reverse to sort them in descending order
     return [openPositions.reverse(), closedPositions.reverse()];
+  }
+
+  /**
+   * Get positions PnL
+   * @param { string } address
+   * @returns A map with positions addresses as keys and PnL data
+   */
+  async getPositionsPnl(account: string) {
+    const query = execute(PnlQueryDocument, { trader: account });
+
+    if (!query) {
+      console.log(`TODO fix the queries`);
+    } else {
+      const result = await query;
+      console.log(`result is ${JSON.stringify(result)}`);
+
+      const pnlData = result?.data?.positions as Position[];
+
+      if (pnlData) {
+        const newMap = new Map();
+
+        for (let i = 0; i < pnlData.length; i++) {
+          const positionPnLData = pnlData[i];
+          positionPnLData.id = ethers.utils.getAddress(positionPnLData.id);
+          newMap.set(positionPnLData.id, positionPnLData);
+        }
+
+        return newMap;
+      } else {
+        console.error(`missing PnL data for ${account} ${pnlData}`);
+      }
+    }
+
+    return null;
   }
 
   // Public mutations

@@ -6,16 +6,19 @@ export interface LeveragedPositionStorageInterface extends utils.Interface {
     functions: {
         "collateralAsset()": FunctionFragment;
         "factory()": FunctionFragment;
+        "isShort()": FunctionFragment;
         "positionOwner()": FunctionFragment;
         "stableAsset()": FunctionFragment;
     };
-    getFunction(nameOrSignatureOrTopic: "collateralAsset" | "factory" | "positionOwner" | "stableAsset"): FunctionFragment;
+    getFunction(nameOrSignatureOrTopic: "collateralAsset" | "factory" | "isShort" | "positionOwner" | "stableAsset"): FunctionFragment;
     encodeFunctionData(functionFragment: "collateralAsset", values?: undefined): string;
     encodeFunctionData(functionFragment: "factory", values?: undefined): string;
+    encodeFunctionData(functionFragment: "isShort", values?: undefined): string;
     encodeFunctionData(functionFragment: "positionOwner", values?: undefined): string;
     encodeFunctionData(functionFragment: "stableAsset", values?: undefined): string;
     decodeFunctionResult(functionFragment: "collateralAsset", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "factory", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "isShort", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "positionOwner", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "stableAsset", data: BytesLike): Result;
     events: {};
@@ -37,16 +40,19 @@ export interface LeveragedPositionStorage extends BaseContract {
     functions: {
         collateralAsset(overrides?: CallOverrides): Promise<[string]>;
         factory(overrides?: CallOverrides): Promise<[string]>;
+        isShort(overrides?: CallOverrides): Promise<[boolean]>;
         positionOwner(overrides?: CallOverrides): Promise<[string]>;
         stableAsset(overrides?: CallOverrides): Promise<[string]>;
     };
     collateralAsset(overrides?: CallOverrides): Promise<string>;
     factory(overrides?: CallOverrides): Promise<string>;
+    isShort(overrides?: CallOverrides): Promise<boolean>;
     positionOwner(overrides?: CallOverrides): Promise<string>;
     stableAsset(overrides?: CallOverrides): Promise<string>;
     callStatic: {
         collateralAsset(overrides?: CallOverrides): Promise<string>;
         factory(overrides?: CallOverrides): Promise<string>;
+        isShort(overrides?: CallOverrides): Promise<boolean>;
         positionOwner(overrides?: CallOverrides): Promise<string>;
         stableAsset(overrides?: CallOverrides): Promise<string>;
     };
@@ -54,12 +60,14 @@ export interface LeveragedPositionStorage extends BaseContract {
     estimateGas: {
         collateralAsset(overrides?: CallOverrides): Promise<BigNumber>;
         factory(overrides?: CallOverrides): Promise<BigNumber>;
+        isShort(overrides?: CallOverrides): Promise<BigNumber>;
         positionOwner(overrides?: CallOverrides): Promise<BigNumber>;
         stableAsset(overrides?: CallOverrides): Promise<BigNumber>;
     };
     populateTransaction: {
         collateralAsset(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         factory(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        isShort(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         positionOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         stableAsset(overrides?: CallOverrides): Promise<PopulatedTransaction>;
     };

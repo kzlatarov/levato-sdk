@@ -11,9 +11,9 @@ export interface LeveragedPositionsFactoryFirstExtensionInterface extends utils.
         "_setIonicPairWhitelisted(address,address,bool)": FunctionFragment;
         "acceptOwnership()": FunctionFragment;
         "blocksPerYear()": FunctionFragment;
-        "createAndFundIonicPosition(address,address,address,uint256)": FunctionFragment;
-        "createAndFundIonicPositionAtRatio(address,address,address,uint256,uint256)": FunctionFragment;
-        "createIonicPosition(address,address)": FunctionFragment;
+        "createAndFundIonicPosition(address,address,bool,address,uint256)": FunctionFragment;
+        "createAndFundIonicPositionAtRatio(address,address,bool,address,uint256,uint256)": FunctionFragment;
+        "createIonicPosition(address,address,address,bool)": FunctionFragment;
         "creditDelegator()": FunctionFragment;
         "flashloanRouter()": FunctionFragment;
         "fundersRegistry()": FunctionFragment;
@@ -39,9 +39,9 @@ export interface LeveragedPositionsFactoryFirstExtensionInterface extends utils.
     encodeFunctionData(functionFragment: "_setIonicPairWhitelisted", values: [string, string, boolean]): string;
     encodeFunctionData(functionFragment: "acceptOwnership", values?: undefined): string;
     encodeFunctionData(functionFragment: "blocksPerYear", values?: undefined): string;
-    encodeFunctionData(functionFragment: "createAndFundIonicPosition", values: [string, string, string, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "createAndFundIonicPositionAtRatio", values: [string, string, string, BigNumberish, BigNumberish]): string;
-    encodeFunctionData(functionFragment: "createIonicPosition", values: [string, string]): string;
+    encodeFunctionData(functionFragment: "createAndFundIonicPosition", values: [string, string, boolean, string, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "createAndFundIonicPositionAtRatio", values: [string, string, boolean, string, BigNumberish, BigNumberish]): string;
+    encodeFunctionData(functionFragment: "createIonicPosition", values: [string, string, string, boolean]): string;
     encodeFunctionData(functionFragment: "creditDelegator", values?: undefined): string;
     encodeFunctionData(functionFragment: "flashloanRouter", values?: undefined): string;
     encodeFunctionData(functionFragment: "fundersRegistry", values?: undefined): string;
@@ -159,13 +159,13 @@ export interface LeveragedPositionsFactoryFirstExtension extends BaseContract {
             from?: string;
         }): Promise<ContractTransaction>;
         blocksPerYear(overrides?: CallOverrides): Promise<[BigNumber]>;
-        createAndFundIonicPosition(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
+        createAndFundIonicPosition(_collateralAsset: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<ContractTransaction>;
-        createAndFundIonicPositionAtRatio(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
+        createAndFundIonicPositionAtRatio(_collateralAsset: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<ContractTransaction>;
-        createIonicPosition(_collateralMarket: string, _stableMarket: string, overrides?: Overrides & {
+        createIonicPosition(posOwner: string, _collateralAsset: string, _stableAsset: string, _isShort: boolean, overrides?: Overrides & {
             from?: string;
         }): Promise<ContractTransaction>;
         creditDelegator(overrides?: CallOverrides): Promise<[string]>;
@@ -210,13 +210,13 @@ export interface LeveragedPositionsFactoryFirstExtension extends BaseContract {
         from?: string;
     }): Promise<ContractTransaction>;
     blocksPerYear(overrides?: CallOverrides): Promise<BigNumber>;
-    createAndFundIonicPosition(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
+    createAndFundIonicPosition(_collateralAsset: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
         from?: string;
     }): Promise<ContractTransaction>;
-    createAndFundIonicPositionAtRatio(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
+    createAndFundIonicPositionAtRatio(_collateralAsset: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
         from?: string;
     }): Promise<ContractTransaction>;
-    createIonicPosition(_collateralMarket: string, _stableMarket: string, overrides?: Overrides & {
+    createIonicPosition(posOwner: string, _collateralAsset: string, _stableAsset: string, _isShort: boolean, overrides?: Overrides & {
         from?: string;
     }): Promise<ContractTransaction>;
     creditDelegator(overrides?: CallOverrides): Promise<string>;
@@ -257,9 +257,9 @@ export interface LeveragedPositionsFactoryFirstExtension extends BaseContract {
         _setIonicPairWhitelisted(_collateralMarket: string, _stableMarket: string, _whitelisted: boolean, overrides?: CallOverrides): Promise<void>;
         acceptOwnership(overrides?: CallOverrides): Promise<void>;
         blocksPerYear(overrides?: CallOverrides): Promise<BigNumber>;
-        createAndFundIonicPosition(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: CallOverrides): Promise<string>;
-        createAndFundIonicPositionAtRatio(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: CallOverrides): Promise<string>;
-        createIonicPosition(_collateralMarket: string, _stableMarket: string, overrides?: CallOverrides): Promise<string>;
+        createAndFundIonicPosition(_collateralAsset: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: CallOverrides): Promise<string>;
+        createAndFundIonicPositionAtRatio(_collateralAsset: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: CallOverrides): Promise<string>;
+        createIonicPosition(posOwner: string, _collateralAsset: string, _stableAsset: string, _isShort: boolean, overrides?: CallOverrides): Promise<string>;
         creditDelegator(overrides?: CallOverrides): Promise<string>;
         flashloanRouter(overrides?: CallOverrides): Promise<string>;
         fundersRegistry(overrides?: CallOverrides): Promise<string>;
@@ -305,13 +305,13 @@ export interface LeveragedPositionsFactoryFirstExtension extends BaseContract {
             from?: string;
         }): Promise<BigNumber>;
         blocksPerYear(overrides?: CallOverrides): Promise<BigNumber>;
-        createAndFundIonicPosition(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
+        createAndFundIonicPosition(_collateralAsset: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<BigNumber>;
-        createAndFundIonicPositionAtRatio(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
+        createAndFundIonicPositionAtRatio(_collateralAsset: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<BigNumber>;
-        createIonicPosition(_collateralMarket: string, _stableMarket: string, overrides?: Overrides & {
+        createIonicPosition(posOwner: string, _collateralAsset: string, _stableAsset: string, _isShort: boolean, overrides?: Overrides & {
             from?: string;
         }): Promise<BigNumber>;
         creditDelegator(overrides?: CallOverrides): Promise<BigNumber>;
@@ -351,13 +351,13 @@ export interface LeveragedPositionsFactoryFirstExtension extends BaseContract {
             from?: string;
         }): Promise<PopulatedTransaction>;
         blocksPerYear(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-        createAndFundIonicPosition(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
+        createAndFundIonicPosition(_collateralAsset: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<PopulatedTransaction>;
-        createAndFundIonicPositionAtRatio(_collateralMarket: string, _stableMarket: string, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
+        createAndFundIonicPositionAtRatio(_collateralAsset: string, _stableAsset: string, _isShort: boolean, _fundingAsset: string, _fundingAmount: BigNumberish, _leverageRatio: BigNumberish, overrides?: Overrides & {
             from?: string;
         }): Promise<PopulatedTransaction>;
-        createIonicPosition(_collateralMarket: string, _stableMarket: string, overrides?: Overrides & {
+        createIonicPosition(posOwner: string, _collateralAsset: string, _stableAsset: string, _isShort: boolean, overrides?: Overrides & {
             from?: string;
         }): Promise<PopulatedTransaction>;
         creditDelegator(overrides?: CallOverrides): Promise<PopulatedTransaction>;

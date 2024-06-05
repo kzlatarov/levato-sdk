@@ -28,6 +28,7 @@ export interface IonicLeveragedPositionInterface extends utils.Interface {
         "getSupplyAmountDelta(uint256)": FunctionFragment;
         "getSupplyRate(address)": FunctionFragment;
         "isPositionClosed()": FunctionFragment;
+        "isShort()": FunctionFragment;
         "pool()": FunctionFragment;
         "positionOwner()": FunctionFragment;
         "receiveFlashLoan(address,uint256,uint256,bytes)": FunctionFragment;
@@ -36,7 +37,7 @@ export interface IonicLeveragedPositionInterface extends utils.Interface {
         "stableMarket()": FunctionFragment;
         "withdrawStableLeftovers(address)": FunctionFragment;
     };
-    getFunction(nameOrSignatureOrTopic: "SUPPLY_DELTA_ERROR" | "SUPPLY_DELTA_NO_ERROR" | "adjustLeverageRatio" | "claimRewards()" | "claimRewards(address)" | "closePosition(address)" | "closePosition()" | "collateralAsset" | "collateralMarket" | "factory" | "fundPosition" | "getAccruedRewards" | "getBorrowRate" | "getCurrentLeverageRatio" | "getEquityAmount" | "getEquityValue" | "getMaxLeverageRatio" | "getMinLeverageRatio" | "getPositionBorrowAmount" | "getPositionSupplyAmount" | "getPrice" | "getSupplyAmountDelta" | "getSupplyRate" | "isPositionClosed" | "pool" | "positionOwner" | "receiveFlashLoan" | "seizeOnLiquidation" | "stableAsset" | "stableMarket" | "withdrawStableLeftovers"): FunctionFragment;
+    getFunction(nameOrSignatureOrTopic: "SUPPLY_DELTA_ERROR" | "SUPPLY_DELTA_NO_ERROR" | "adjustLeverageRatio" | "claimRewards()" | "claimRewards(address)" | "closePosition(address)" | "closePosition()" | "collateralAsset" | "collateralMarket" | "factory" | "fundPosition" | "getAccruedRewards" | "getBorrowRate" | "getCurrentLeverageRatio" | "getEquityAmount" | "getEquityValue" | "getMaxLeverageRatio" | "getMinLeverageRatio" | "getPositionBorrowAmount" | "getPositionSupplyAmount" | "getPrice" | "getSupplyAmountDelta" | "getSupplyRate" | "isPositionClosed" | "isShort" | "pool" | "positionOwner" | "receiveFlashLoan" | "seizeOnLiquidation" | "stableAsset" | "stableMarket" | "withdrawStableLeftovers"): FunctionFragment;
     encodeFunctionData(functionFragment: "SUPPLY_DELTA_ERROR", values?: undefined): string;
     encodeFunctionData(functionFragment: "SUPPLY_DELTA_NO_ERROR", values?: undefined): string;
     encodeFunctionData(functionFragment: "adjustLeverageRatio", values: [BigNumberish]): string;
@@ -61,6 +62,7 @@ export interface IonicLeveragedPositionInterface extends utils.Interface {
     encodeFunctionData(functionFragment: "getSupplyAmountDelta", values: [BigNumberish]): string;
     encodeFunctionData(functionFragment: "getSupplyRate", values: [string]): string;
     encodeFunctionData(functionFragment: "isPositionClosed", values?: undefined): string;
+    encodeFunctionData(functionFragment: "isShort", values?: undefined): string;
     encodeFunctionData(functionFragment: "pool", values?: undefined): string;
     encodeFunctionData(functionFragment: "positionOwner", values?: undefined): string;
     encodeFunctionData(functionFragment: "receiveFlashLoan", values: [string, BigNumberish, BigNumberish, BytesLike]): string;
@@ -92,6 +94,7 @@ export interface IonicLeveragedPositionInterface extends utils.Interface {
     decodeFunctionResult(functionFragment: "getSupplyAmountDelta", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getSupplyRate", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "isPositionClosed", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "isShort", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "pool", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "positionOwner", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "receiveFlashLoan", data: BytesLike): Result;
@@ -204,6 +207,7 @@ export interface IonicLeveragedPosition extends BaseContract {
         getSupplyAmountDelta(targetRatio: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
         getSupplyRate(asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
         isPositionClosed(overrides?: CallOverrides): Promise<[boolean]>;
+        isShort(overrides?: CallOverrides): Promise<[boolean]>;
         pool(overrides?: CallOverrides): Promise<[string]>;
         positionOwner(overrides?: CallOverrides): Promise<[string]>;
         receiveFlashLoan(assetAddress: string, flashBorrowedAmount: BigNumberish, premium: BigNumberish, data: BytesLike, overrides?: Overrides & {
@@ -256,6 +260,7 @@ export interface IonicLeveragedPosition extends BaseContract {
     getSupplyAmountDelta(targetRatio: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
     getSupplyRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
     isPositionClosed(overrides?: CallOverrides): Promise<boolean>;
+    isShort(overrides?: CallOverrides): Promise<boolean>;
     pool(overrides?: CallOverrides): Promise<string>;
     positionOwner(overrides?: CallOverrides): Promise<string>;
     receiveFlashLoan(assetAddress: string, flashBorrowedAmount: BigNumberish, premium: BigNumberish, data: BytesLike, overrides?: Overrides & {
@@ -300,6 +305,7 @@ export interface IonicLeveragedPosition extends BaseContract {
         getSupplyAmountDelta(targetRatio: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
         getSupplyRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         isPositionClosed(overrides?: CallOverrides): Promise<boolean>;
+        isShort(overrides?: CallOverrides): Promise<boolean>;
         pool(overrides?: CallOverrides): Promise<string>;
         positionOwner(overrides?: CallOverrides): Promise<string>;
         receiveFlashLoan(assetAddress: string, flashBorrowedAmount: BigNumberish, premium: BigNumberish, data: BytesLike, overrides?: CallOverrides): Promise<void>;
@@ -355,6 +361,7 @@ export interface IonicLeveragedPosition extends BaseContract {
         getSupplyAmountDelta(targetRatio: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
         getSupplyRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
         isPositionClosed(overrides?: CallOverrides): Promise<BigNumber>;
+        isShort(overrides?: CallOverrides): Promise<BigNumber>;
         pool(overrides?: CallOverrides): Promise<BigNumber>;
         positionOwner(overrides?: CallOverrides): Promise<BigNumber>;
         receiveFlashLoan(assetAddress: string, flashBorrowedAmount: BigNumberish, premium: BigNumberish, data: BytesLike, overrides?: Overrides & {
@@ -408,6 +415,7 @@ export interface IonicLeveragedPosition extends BaseContract {
         getSupplyAmountDelta(targetRatio: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         getSupplyRate(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         isPositionClosed(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        isShort(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         pool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         positionOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         receiveFlashLoan(assetAddress: string, flashBorrowedAmount: BigNumberish, premium: BigNumberish, data: BytesLike, overrides?: Overrides & {

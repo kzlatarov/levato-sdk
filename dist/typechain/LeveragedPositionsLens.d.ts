@@ -17,15 +17,19 @@ export declare namespace LeveragedPositionsLens {
         netApy: BigNumberish;
         rewardsApy: BigNumberish;
         debtRatio: BigNumberish;
-        liquidationThreshold: BigNumberish;
-        liquidationPrice: BigNumberish;
-        safetyBuffer: BigNumberish;
+        collateralLiquidationThreshold: BigNumberish;
+        borrowedLiquidationThreshold: BigNumberish;
+        collateralLiquidationPrice: BigNumberish;
+        borrowedLiquidationPrice: BigNumberish;
         leverageRatio: BigNumberish;
         maxLeverageRatio: BigNumberish;
         positionCollateralAllowance: BigNumberish;
         healthRatio: BigNumberish;
         collateralAsset: string;
         stableAsset: string;
+        isShort: boolean;
+        collateralPriceOnCreation: BigNumberish;
+        borrowedPriceOnCreation: BigNumberish;
     };
     type PositionInfoStructOutput = [
         string,
@@ -48,8 +52,12 @@ export declare namespace LeveragedPositionsLens {
         BigNumber,
         BigNumber,
         BigNumber,
+        BigNumber,
         string,
-        string
+        string,
+        boolean,
+        BigNumber,
+        BigNumber
     ] & {
         positionAddress: string;
         closed: boolean;
@@ -64,15 +72,19 @@ export declare namespace LeveragedPositionsLens {
         netApy: BigNumber;
         rewardsApy: BigNumber;
         debtRatio: BigNumber;
-        liquidationThreshold: BigNumber;
-        liquidationPrice: BigNumber;
-        safetyBuffer: BigNumber;
+        collateralLiquidationThreshold: BigNumber;
+        borrowedLiquidationThreshold: BigNumber;
+        collateralLiquidationPrice: BigNumber;
+        borrowedLiquidationPrice: BigNumber;
         leverageRatio: BigNumber;
         maxLeverageRatio: BigNumber;
         positionCollateralAllowance: BigNumber;
         healthRatio: BigNumber;
         collateralAsset: string;
         stableAsset: string;
+        isShort: boolean;
+        collateralPriceOnCreation: BigNumber;
+        borrowedPriceOnCreation: BigNumber;
     };
 }
 export interface LeveragedPositionsLensInterface extends utils.Interface {
@@ -92,9 +104,12 @@ export interface LeveragedPositionsLensInterface extends utils.Interface {
         "getPositionRewardsSpeedPerSecond(address)": FunctionFragment;
         "getPositionsInfo(address[],uint256[])": FunctionFragment;
         "getRewardsAprForPosition(address)": FunctionFragment;
+        "getStablecoinAssets()": FunctionFragment;
         "initialize(address)": FunctionFragment;
+        "isAssetStablecoin(address)": FunctionFragment;
+        "stablecoins(uint256)": FunctionFragment;
     };
-    getFunction(nameOrSignatureOrTopic: "factory" | "getAssetBorrowRate" | "getAssetPrice" | "getAssetsBorrowRates" | "getErc20Balances" | "getErc20BalancesAndAllowances" | "getLiquidationThreshold" | "getMaxLeverageRatio" | "getNetAPY" | "getPositionInfo" | "getPositionLiquidationThreshold" | "getPositionNetAPY" | "getPositionRewardsSpeedPerSecond" | "getPositionsInfo" | "getRewardsAprForPosition" | "initialize"): FunctionFragment;
+    getFunction(nameOrSignatureOrTopic: "factory" | "getAssetBorrowRate" | "getAssetPrice" | "getAssetsBorrowRates" | "getErc20Balances" | "getErc20BalancesAndAllowances" | "getLiquidationThreshold" | "getMaxLeverageRatio" | "getNetAPY" | "getPositionInfo" | "getPositionLiquidationThreshold" | "getPositionNetAPY" | "getPositionRewardsSpeedPerSecond" | "getPositionsInfo" | "getRewardsAprForPosition" | "getStablecoinAssets" | "initialize" | "isAssetStablecoin" | "stablecoins"): FunctionFragment;
     encodeFunctionData(functionFragment: "factory", values?: undefined): string;
     encodeFunctionData(functionFragment: "getAssetBorrowRate", values: [string]): string;
     encodeFunctionData(functionFragment: "getAssetPrice", values: [string]): string;
@@ -110,7 +125,10 @@ export interface LeveragedPositionsLensInterface extends utils.Interface {
     encodeFunctionData(functionFragment: "getPositionRewardsSpeedPerSecond", values: [string]): string;
     encodeFunctionData(functionFragment: "getPositionsInfo", values: [string[], BigNumberish[]]): string;
     encodeFunctionData(functionFragment: "getRewardsAprForPosition", values: [string]): string;
+    encodeFunctionData(functionFragment: "getStablecoinAssets", values?: undefined): string;
     encodeFunctionData(functionFragment: "initialize", values: [string]): string;
+    encodeFunctionData(functionFragment: "isAssetStablecoin", values: [string]): string;
+    encodeFunctionData(functionFragment: "stablecoins", values: [BigNumberish]): string;
     decodeFunctionResult(functionFragment: "factory", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getAssetBorrowRate", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getAssetPrice", data: BytesLike): Result;
@@ -126,7 +144,10 @@ export interface LeveragedPositionsLensInterface extends utils.Interface {
     decodeFunctionResult(functionFragment: "getPositionRewardsSpeedPerSecond", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getPositionsInfo", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "getRewardsAprForPosition", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "getStablecoinAssets", data: BytesLike): Result;
     decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "isAssetStablecoin", data: BytesLike): Result;
+    decodeFunctionResult(functionFragment: "stablecoins", data: BytesLike): Result;
     events: {
         "Initialized(uint8)": EventFragment;
     };
@@ -189,9 +210,12 @@ export interface LeveragedPositionsLens extends BaseContract {
         getRewardsAprForPosition(position: string, overrides?: Overrides & {
             from?: string;
         }): Promise<ContractTransaction>;
+        getStablecoinAssets(overrides?: CallOverrides): Promise<[string[]]>;
         initialize(_factory: string, overrides?: Overrides & {
             from?: string;
         }): Promise<ContractTransaction>;
+        isAssetStablecoin(asset: string, overrides?: CallOverrides): Promise<[boolean]>;
+        stablecoins(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
     };
     factory(overrides?: CallOverrides): Promise<string>;
     getAssetBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -222,9 +246,12 @@ export interface LeveragedPositionsLens extends BaseContract {
     getRewardsAprForPosition(position: string, overrides?: Overrides & {
         from?: string;
     }): Promise<ContractTransaction>;
+    getStablecoinAssets(overrides?: CallOverrides): Promise<string[]>;
     initialize(_factory: string, overrides?: Overrides & {
         from?: string;
     }): Promise<ContractTransaction>;
+    isAssetStablecoin(asset: string, overrides?: CallOverrides): Promise<boolean>;
+    stablecoins(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
     callStatic: {
         factory(overrides?: CallOverrides): Promise<string>;
         getAssetBorrowRate(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -247,7 +274,10 @@ export interface LeveragedPositionsLens extends BaseContract {
         getPositionRewardsSpeedPerSecond(position: string, overrides?: CallOverrides): Promise<BigNumber>;
         getPositionsInfo(positions: string[], supplyApys: BigNumberish[], overrides?: CallOverrides): Promise<LeveragedPositionsLens.PositionInfoStructOutput[]>;
         getRewardsAprForPosition(position: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getStablecoinAssets(overrides?: CallOverrides): Promise<string[]>;
         initialize(_factory: string, overrides?: CallOverrides): Promise<void>;
+        isAssetStablecoin(asset: string, overrides?: CallOverrides): Promise<boolean>;
+        stablecoins(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
     };
     filters: {
         "Initialized(uint8)"(version?: null): InitializedEventFilter;
@@ -277,9 +307,12 @@ export interface LeveragedPositionsLens extends BaseContract {
         getRewardsAprForPosition(position: string, overrides?: Overrides & {
             from?: string;
         }): Promise<BigNumber>;
+        getStablecoinAssets(overrides?: CallOverrides): Promise<BigNumber>;
         initialize(_factory: string, overrides?: Overrides & {
             from?: string;
         }): Promise<BigNumber>;
+        isAssetStablecoin(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+        stablecoins(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
     };
     populateTransaction: {
         factory(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -305,8 +338,11 @@ export interface LeveragedPositionsLens extends BaseContract {
         getRewardsAprForPosition(position: string, overrides?: Overrides & {
             from?: string;
         }): Promise<PopulatedTransaction>;
+        getStablecoinAssets(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         initialize(_factory: string, overrides?: Overrides & {
             from?: string;
         }): Promise<PopulatedTransaction>;
+        isAssetStablecoin(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        stablecoins(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
     };
 }

@@ -49,6 +49,11 @@ const _abi = [
                 internalType: "address",
             },
             {
+                name: "_isShort",
+                type: "bool",
+                internalType: "bool",
+            },
+            {
                 name: "_fundingAsset",
                 type: "address",
                 internalType: "contract IERC20Upgradeable",
@@ -86,6 +91,11 @@ const _abi = [
                 name: "_stableAsset",
                 type: "address",
                 internalType: "address",
+            },
+            {
+                name: "_isShort",
+                type: "bool",
+                internalType: "bool",
             },
             {
                 name: "_fundingAsset",
@@ -132,6 +142,11 @@ const _abi = [
                 internalType: "address",
             },
             {
+                name: "_isShort",
+                type: "bool",
+                internalType: "bool",
+            },
+            {
                 name: "_fundingAsset",
                 type: "address",
                 internalType: "contract IERC20Upgradeable",
@@ -169,6 +184,11 @@ const _abi = [
                 name: "_stableAsset",
                 type: "address",
                 internalType: "address",
+            },
+            {
+                name: "_isShort",
+                type: "bool",
+                internalType: "bool",
             },
             {
                 name: "_fundingAsset",
@@ -214,6 +234,11 @@ const _abi = [
                 type: "address",
                 internalType: "address",
             },
+            {
+                name: "_isShort",
+                type: "bool",
+                internalType: "bool",
+            },
         ],
         outputs: [
             {
@@ -242,6 +267,11 @@ const _abi = [
                 name: "_stableAsset",
                 type: "address",
                 internalType: "address",
+            },
+            {
+                name: "_isShort",
+                type: "bool",
+                internalType: "bool",
             },
         ],
         outputs: [
@@ -274,27 +304,36 @@ const _abi = [
     },
     {
         type: "function",
-        name: "getAaveMaxLeverageRatio",
+        name: "getBorrowedPriceOnPositionCreated",
         inputs: [
             {
-                name: "collateralAsset",
-                type: "address",
-                internalType: "address",
-            },
-            {
-                name: "collateralAmount",
-                type: "uint256",
-                internalType: "uint256",
-            },
-            {
-                name: "borrowedAsset",
+                name: "positionAddress",
                 type: "address",
                 internalType: "address",
             },
         ],
         outputs: [
             {
-                name: "maxLeverageRatio",
+                name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getCollateralPriceOnPositionCreated",
+        inputs: [
+            {
+                name: "positionAddress",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
                 type: "uint256",
                 internalType: "uint256",
             },
@@ -407,6 +446,35 @@ const _abi = [
         outputs: [
             {
                 name: "",
+                type: "uint256",
+                internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getNondelegatedMaxLeverageRatio",
+        inputs: [
+            {
+                name: "collateralAsset",
+                type: "address",
+                internalType: "address",
+            },
+            {
+                name: "collateralAmount",
+                type: "uint256",
+                internalType: "uint256",
+            },
+            {
+                name: "borrowedAsset",
+                type: "address",
+                internalType: "address",
+            },
+        ],
+        outputs: [
+            {
+                name: "maxLeverageRatio",
                 type: "uint256",
                 internalType: "uint256",
             },

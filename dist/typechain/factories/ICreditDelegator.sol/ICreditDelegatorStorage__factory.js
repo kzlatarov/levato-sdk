@@ -56,19 +56,6 @@ const _abi = [
     },
     {
         type: "function",
-        name: "defaultRateModel",
-        inputs: [],
-        outputs: [
-            {
-                name: "",
-                type: "address",
-                internalType: "contract DefaultInterestRateStrategy",
-            },
-        ],
-        stateMutability: "view",
-    },
-    {
-        type: "function",
         name: "delegatedDebtAssetData",
         inputs: [
             {
@@ -129,6 +116,19 @@ const _abi = [
                         internalType: "uint128",
                     },
                 ],
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getDefaultRateModel",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "contract DefaultInterestRateStrategy",
             },
         ],
         stateMutability: "view",

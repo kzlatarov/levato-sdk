@@ -40,16 +40,6 @@ export declare class ICreditDelegatorStorage__factory {
         readonly stateMutability: "view";
     }, {
         readonly type: "function";
-        readonly name: "defaultRateModel";
-        readonly inputs: readonly [];
-        readonly outputs: readonly [{
-            readonly name: "";
-            readonly type: "address";
-            readonly internalType: "contract DefaultInterestRateStrategy";
-        }];
-        readonly stateMutability: "view";
-    }, {
-        readonly type: "function";
         readonly name: "delegatedDebtAssetData";
         readonly inputs: readonly [{
             readonly name: "asset";
@@ -97,6 +87,16 @@ export declare class ICreditDelegatorStorage__factory {
                 readonly type: "uint128";
                 readonly internalType: "uint128";
             }];
+        }];
+        readonly stateMutability: "view";
+    }, {
+        readonly type: "function";
+        readonly name: "getDefaultRateModel";
+        readonly inputs: readonly [];
+        readonly outputs: readonly [{
+            readonly name: "";
+            readonly type: "address";
+            readonly internalType: "contract DefaultInterestRateStrategy";
         }];
         readonly stateMutability: "view";
     }, {

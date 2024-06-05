@@ -11,7 +11,7 @@ export interface LeveragedPositionsFactorySecondExtensionInterface extends utils
         "acceptOwnership()": FunctionFragment;
         "blocksPerYear()": FunctionFragment;
         "closeAndRemoveUserPosition(address)": FunctionFragment;
-        "createAavePosition(address,address,address)": FunctionFragment;
+        "createAavePosition(address,address,address,bool)": FunctionFragment;
         "creditDelegator()": FunctionFragment;
         "flashloanRouter()": FunctionFragment;
         "fundPosition(address,address,uint256)": FunctionFragment;
@@ -38,7 +38,7 @@ export interface LeveragedPositionsFactorySecondExtensionInterface extends utils
     encodeFunctionData(functionFragment: "acceptOwnership", values?: undefined): string;
     encodeFunctionData(functionFragment: "blocksPerYear", values?: undefined): string;
     encodeFunctionData(functionFragment: "closeAndRemoveUserPosition", values: [string]): string;
-    encodeFunctionData(functionFragment: "createAavePosition", values: [string, string, string]): string;
+    encodeFunctionData(functionFragment: "createAavePosition", values: [string, string, string, boolean]): string;
     encodeFunctionData(functionFragment: "creditDelegator", values?: undefined): string;
     encodeFunctionData(functionFragment: "flashloanRouter", values?: undefined): string;
     encodeFunctionData(functionFragment: "fundPosition", values: [string, string, BigNumberish]): string;
@@ -156,7 +156,7 @@ export interface LeveragedPositionsFactorySecondExtension extends BaseContract {
         closeAndRemoveUserPosition(position: string, overrides?: Overrides & {
             from?: string;
         }): Promise<ContractTransaction>;
-        createAavePosition(user: string, _collateralAsset: string, _stableAsset: string, overrides?: Overrides & {
+        createAavePosition(user: string, _collateralAsset: string, _stableAsset: string, _isShort: boolean, overrides?: Overrides & {
             from?: string;
         }): Promise<ContractTransaction>;
         creditDelegator(overrides?: CallOverrides): Promise<[string]>;
@@ -166,7 +166,7 @@ export interface LeveragedPositionsFactorySecondExtension extends BaseContract {
         }): Promise<ContractTransaction>;
         fundersRegistry(overrides?: CallOverrides): Promise<[string]>;
         getAccountsWithOpenPositions(overrides?: CallOverrides): Promise<[string[]]>;
-        getBorrowableMarketsByCollateral(_collateralMarket: string, overrides?: CallOverrides): Promise<[string[]]>;
+        getBorrowableMarketsByCollateral(_collateralAsset: string, overrides?: CallOverrides): Promise<[string[]]>;
         getMinBorrowNative(overrides?: CallOverrides): Promise<[BigNumber]>;
         getPositionsExtension(msgSig: BytesLike, overrides?: CallOverrides): Promise<[string]>;
         getWhitelistedCollateralMarkets(overrides?: CallOverrides): Promise<[string[]]>;
@@ -198,7 +198,7 @@ export interface LeveragedPositionsFactorySecondExtension extends BaseContract {
     closeAndRemoveUserPosition(position: string, overrides?: Overrides & {
         from?: string;
     }): Promise<ContractTransaction>;
-    createAavePosition(user: string, _collateralAsset: string, _stableAsset: string, overrides?: Overrides & {
+    createAavePosition(user: string, _collateralAsset: string, _stableAsset: string, _isShort: boolean, overrides?: Overrides & {
         from?: string;
     }): Promise<ContractTransaction>;
     creditDelegator(overrides?: CallOverrides): Promise<string>;
@@ -208,7 +208,7 @@ export interface LeveragedPositionsFactorySecondExtension extends BaseContract {
     }): Promise<ContractTransaction>;
     fundersRegistry(overrides?: CallOverrides): Promise<string>;
     getAccountsWithOpenPositions(overrides?: CallOverrides): Promise<string[]>;
-    getBorrowableMarketsByCollateral(_collateralMarket: string, overrides?: CallOverrides): Promise<string[]>;
+    getBorrowableMarketsByCollateral(_collateralAsset: string, overrides?: CallOverrides): Promise<string[]>;
     getMinBorrowNative(overrides?: CallOverrides): Promise<BigNumber>;
     getPositionsExtension(msgSig: BytesLike, overrides?: CallOverrides): Promise<string>;
     getWhitelistedCollateralMarkets(overrides?: CallOverrides): Promise<string[]>;
@@ -236,13 +236,13 @@ export interface LeveragedPositionsFactorySecondExtension extends BaseContract {
         acceptOwnership(overrides?: CallOverrides): Promise<void>;
         blocksPerYear(overrides?: CallOverrides): Promise<BigNumber>;
         closeAndRemoveUserPosition(position: string, overrides?: CallOverrides): Promise<boolean>;
-        createAavePosition(user: string, _collateralAsset: string, _stableAsset: string, overrides?: CallOverrides): Promise<string>;
+        createAavePosition(user: string, _collateralAsset: string, _stableAsset: string, _isShort: boolean, overrides?: CallOverrides): Promise<string>;
         creditDelegator(overrides?: CallOverrides): Promise<string>;
         flashloanRouter(overrides?: CallOverrides): Promise<string>;
         fundPosition(position: string, fundingAsset: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
         fundersRegistry(overrides?: CallOverrides): Promise<string>;
         getAccountsWithOpenPositions(overrides?: CallOverrides): Promise<string[]>;
-        getBorrowableMarketsByCollateral(_collateralMarket: string, overrides?: CallOverrides): Promise<string[]>;
+        getBorrowableMarketsByCollateral(_collateralAsset: string, overrides?: CallOverrides): Promise<string[]>;
         getMinBorrowNative(overrides?: CallOverrides): Promise<BigNumber>;
         getPositionsExtension(msgSig: BytesLike, overrides?: CallOverrides): Promise<string>;
         getWhitelistedCollateralMarkets(overrides?: CallOverrides): Promise<string[]>;
@@ -277,7 +277,7 @@ export interface LeveragedPositionsFactorySecondExtension extends BaseContract {
         closeAndRemoveUserPosition(position: string, overrides?: Overrides & {
             from?: string;
         }): Promise<BigNumber>;
-        createAavePosition(user: string, _collateralAsset: string, _stableAsset: string, overrides?: Overrides & {
+        createAavePosition(user: string, _collateralAsset: string, _stableAsset: string, _isShort: boolean, overrides?: Overrides & {
             from?: string;
         }): Promise<BigNumber>;
         creditDelegator(overrides?: CallOverrides): Promise<BigNumber>;
@@ -287,7 +287,7 @@ export interface LeveragedPositionsFactorySecondExtension extends BaseContract {
         }): Promise<BigNumber>;
         fundersRegistry(overrides?: CallOverrides): Promise<BigNumber>;
         getAccountsWithOpenPositions(overrides?: CallOverrides): Promise<BigNumber>;
-        getBorrowableMarketsByCollateral(_collateralMarket: string, overrides?: CallOverrides): Promise<BigNumber>;
+        getBorrowableMarketsByCollateral(_collateralAsset: string, overrides?: CallOverrides): Promise<BigNumber>;
         getMinBorrowNative(overrides?: CallOverrides): Promise<BigNumber>;
         getPositionsExtension(msgSig: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
         getWhitelistedCollateralMarkets(overrides?: CallOverrides): Promise<BigNumber>;
@@ -320,7 +320,7 @@ export interface LeveragedPositionsFactorySecondExtension extends BaseContract {
         closeAndRemoveUserPosition(position: string, overrides?: Overrides & {
             from?: string;
         }): Promise<PopulatedTransaction>;
-        createAavePosition(user: string, _collateralAsset: string, _stableAsset: string, overrides?: Overrides & {
+        createAavePosition(user: string, _collateralAsset: string, _stableAsset: string, _isShort: boolean, overrides?: Overrides & {
             from?: string;
         }): Promise<PopulatedTransaction>;
         creditDelegator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -330,7 +330,7 @@ export interface LeveragedPositionsFactorySecondExtension extends BaseContract {
         }): Promise<PopulatedTransaction>;
         fundersRegistry(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         getAccountsWithOpenPositions(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-        getBorrowableMarketsByCollateral(_collateralMarket: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+        getBorrowableMarketsByCollateral(_collateralAsset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         getMinBorrowNative(overrides?: CallOverrides): Promise<PopulatedTransaction>;
         getPositionsExtension(msgSig: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
         getWhitelistedCollateralMarkets(overrides?: CallOverrides): Promise<PopulatedTransaction>;

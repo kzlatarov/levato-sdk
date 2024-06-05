@@ -36,6 +36,10 @@ export declare class ILeveragedPositionsFactoryThirdExtension__factory {
             readonly type: "address";
             readonly internalType: "address";
         }, {
+            readonly name: "_isShort";
+            readonly type: "bool";
+            readonly internalType: "bool";
+        }, {
             readonly name: "_fundingAsset";
             readonly type: "address";
             readonly internalType: "contract IERC20Upgradeable";
@@ -65,6 +69,10 @@ export declare class ILeveragedPositionsFactoryThirdExtension__factory {
             readonly name: "_stableAsset";
             readonly type: "address";
             readonly internalType: "address";
+        }, {
+            readonly name: "_isShort";
+            readonly type: "bool";
+            readonly internalType: "bool";
         }, {
             readonly name: "_fundingAsset";
             readonly type: "address";
@@ -100,6 +108,10 @@ export declare class ILeveragedPositionsFactoryThirdExtension__factory {
             readonly type: "address";
             readonly internalType: "address";
         }, {
+            readonly name: "_isShort";
+            readonly type: "bool";
+            readonly internalType: "bool";
+        }, {
             readonly name: "_fundingAsset";
             readonly type: "address";
             readonly internalType: "contract IERC20Upgradeable";
@@ -129,6 +141,10 @@ export declare class ILeveragedPositionsFactoryThirdExtension__factory {
             readonly name: "_stableAsset";
             readonly type: "address";
             readonly internalType: "address";
+        }, {
+            readonly name: "_isShort";
+            readonly type: "bool";
+            readonly internalType: "bool";
         }, {
             readonly name: "_fundingAsset";
             readonly type: "address";
@@ -163,6 +179,10 @@ export declare class ILeveragedPositionsFactoryThirdExtension__factory {
             readonly name: "_stableAsset";
             readonly type: "address";
             readonly internalType: "address";
+        }, {
+            readonly name: "_isShort";
+            readonly type: "bool";
+            readonly internalType: "bool";
         }];
         readonly outputs: readonly [{
             readonly name: "";
@@ -185,6 +205,10 @@ export declare class ILeveragedPositionsFactoryThirdExtension__factory {
             readonly name: "_stableAsset";
             readonly type: "address";
             readonly internalType: "address";
+        }, {
+            readonly name: "_isShort";
+            readonly type: "bool";
+            readonly internalType: "bool";
         }];
         readonly outputs: readonly [{
             readonly name: "";
@@ -208,22 +232,28 @@ export declare class ILeveragedPositionsFactoryThirdExtension__factory {
         readonly stateMutability: "nonpayable";
     }, {
         readonly type: "function";
-        readonly name: "getAaveMaxLeverageRatio";
+        readonly name: "getBorrowedPriceOnPositionCreated";
         readonly inputs: readonly [{
-            readonly name: "collateralAsset";
-            readonly type: "address";
-            readonly internalType: "address";
-        }, {
-            readonly name: "collateralAmount";
-            readonly type: "uint256";
-            readonly internalType: "uint256";
-        }, {
-            readonly name: "borrowedAsset";
+            readonly name: "positionAddress";
             readonly type: "address";
             readonly internalType: "address";
         }];
         readonly outputs: readonly [{
-            readonly name: "maxLeverageRatio";
+            readonly name: "";
+            readonly type: "uint256";
+            readonly internalType: "uint256";
+        }];
+        readonly stateMutability: "view";
+    }, {
+        readonly type: "function";
+        readonly name: "getCollateralPriceOnPositionCreated";
+        readonly inputs: readonly [{
+            readonly name: "positionAddress";
+            readonly type: "address";
+            readonly internalType: "address";
+        }];
+        readonly outputs: readonly [{
+            readonly name: "";
             readonly type: "uint256";
             readonly internalType: "uint256";
         }];
@@ -310,6 +340,28 @@ export declare class ILeveragedPositionsFactoryThirdExtension__factory {
         }];
         readonly outputs: readonly [{
             readonly name: "";
+            readonly type: "uint256";
+            readonly internalType: "uint256";
+        }];
+        readonly stateMutability: "view";
+    }, {
+        readonly type: "function";
+        readonly name: "getNondelegatedMaxLeverageRatio";
+        readonly inputs: readonly [{
+            readonly name: "collateralAsset";
+            readonly type: "address";
+            readonly internalType: "address";
+        }, {
+            readonly name: "collateralAmount";
+            readonly type: "uint256";
+            readonly internalType: "uint256";
+        }, {
+            readonly name: "borrowedAsset";
+            readonly type: "address";
+            readonly internalType: "address";
+        }];
+        readonly outputs: readonly [{
+            readonly name: "maxLeverageRatio";
             readonly type: "uint256";
             readonly internalType: "uint256";
         }];

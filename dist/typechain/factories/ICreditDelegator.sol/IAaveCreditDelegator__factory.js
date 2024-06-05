@@ -196,19 +196,6 @@ const _abi = [
     },
     {
         type: "function",
-        name: "defaultRateModel",
-        inputs: [],
-        outputs: [
-            {
-                name: "",
-                type: "address",
-                internalType: "contract DefaultInterestRateStrategy",
-            },
-        ],
-        stateMutability: "view",
-    },
-    {
-        type: "function",
         name: "delegatedDebtAssetData",
         inputs: [
             {
@@ -390,6 +377,32 @@ const _abi = [
                 name: "",
                 type: "uint256",
                 internalType: "uint256",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getDefaultRateModel",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address",
+                internalType: "contract DefaultInterestRateStrategy",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "getDelegatedPositions",
+        inputs: [],
+        outputs: [
+            {
+                name: "",
+                type: "address[]",
+                internalType: "address[]",
             },
         ],
         stateMutability: "view",
@@ -590,6 +603,25 @@ const _abi = [
     },
     {
         type: "function",
+        name: "isDelegatedPosition",
+        inputs: [
+            {
+                name: "position",
+                type: "address",
+                internalType: "contract LeveragedPosition",
+            },
+        ],
+        outputs: [
+            {
+                name: "",
+                type: "bool",
+                internalType: "bool",
+            },
+        ],
+        stateMutability: "view",
+    },
+    {
+        type: "function",
         name: "isPoolSupportedAsset",
         inputs: [
             {
@@ -710,6 +742,19 @@ const _abi = [
             },
         ],
         stateMutability: "view",
+    },
+    {
+        type: "function",
+        name: "registerDelegatedPosition",
+        inputs: [
+            {
+                name: "position",
+                type: "address",
+                internalType: "contract LeveragedPosition",
+            },
+        ],
+        outputs: [],
+        stateMutability: "nonpayable",
     },
     {
         type: "function",

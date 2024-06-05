@@ -138,16 +138,6 @@ export declare class IIonicCreditDelegator__factory {
         readonly stateMutability: "nonpayable";
     }, {
         readonly type: "function";
-        readonly name: "defaultRateModel";
-        readonly inputs: readonly [];
-        readonly outputs: readonly [{
-            readonly name: "";
-            readonly type: "address";
-            readonly internalType: "contract DefaultInterestRateStrategy";
-        }];
-        readonly stateMutability: "view";
-    }, {
-        readonly type: "function";
         readonly name: "delegatedDebtAssetData";
         readonly inputs: readonly [{
             readonly name: "asset";
@@ -275,6 +265,26 @@ export declare class IIonicCreditDelegator__factory {
             readonly name: "";
             readonly type: "uint256";
             readonly internalType: "uint256";
+        }];
+        readonly stateMutability: "view";
+    }, {
+        readonly type: "function";
+        readonly name: "getDefaultRateModel";
+        readonly inputs: readonly [];
+        readonly outputs: readonly [{
+            readonly name: "";
+            readonly type: "address";
+            readonly internalType: "contract DefaultInterestRateStrategy";
+        }];
+        readonly stateMutability: "view";
+    }, {
+        readonly type: "function";
+        readonly name: "getDelegatedPositions";
+        readonly inputs: readonly [];
+        readonly outputs: readonly [{
+            readonly name: "";
+            readonly type: "address[]";
+            readonly internalType: "address[]";
         }];
         readonly stateMutability: "view";
     }, {
@@ -421,6 +431,20 @@ export declare class IIonicCreditDelegator__factory {
         readonly stateMutability: "view";
     }, {
         readonly type: "function";
+        readonly name: "isDelegatedPosition";
+        readonly inputs: readonly [{
+            readonly name: "position";
+            readonly type: "address";
+            readonly internalType: "contract LeveragedPosition";
+        }];
+        readonly outputs: readonly [{
+            readonly name: "";
+            readonly type: "bool";
+            readonly internalType: "bool";
+        }];
+        readonly stateMutability: "view";
+    }, {
+        readonly type: "function";
         readonly name: "isPoolSupportedAsset";
         readonly inputs: readonly [{
             readonly name: "asset";
@@ -511,6 +535,16 @@ export declare class IIonicCreditDelegator__factory {
             readonly internalType: "uint256";
         }];
         readonly stateMutability: "view";
+    }, {
+        readonly type: "function";
+        readonly name: "registerDelegatedPosition";
+        readonly inputs: readonly [{
+            readonly name: "position";
+            readonly type: "address";
+            readonly internalType: "contract LeveragedPosition";
+        }];
+        readonly outputs: readonly [];
+        readonly stateMutability: "nonpayable";
     }, {
         readonly type: "function";
         readonly name: "reinitialize";

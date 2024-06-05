@@ -44,6 +44,11 @@ const _abi = [
                 type: "address",
                 internalType: "address",
             },
+            {
+                name: "_isShort",
+                type: "bool",
+                internalType: "bool",
+            },
         ],
         outputs: [
             {
@@ -95,9 +100,9 @@ const _abi = [
         name: "getBorrowableMarketsByCollateral",
         inputs: [
             {
-                name: "_collateralMarket",
+                name: "_collateralAsset",
                 type: "address",
-                internalType: "contract IonicCErc20",
+                internalType: "contract IERC20Upgradeable",
             },
         ],
         outputs: [

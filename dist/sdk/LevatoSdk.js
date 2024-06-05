@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ethers_1 = require("ethers");
 const typechain_1 = require("../typechain");
 const utils_1 = require("ethers/lib/utils");
+const _graphclient_1 = require("../.graphclient");
 class LevatoSDK {
     // Private variables
     #signer;
@@ -92,6 +93,35 @@ class LevatoSDK {
         // Reverse to sort them in descending order
         return [openPositions.reverse(), closedPositions.reverse()];
     }
+    /**
+     * Get positions PnL
+     * @param { string } address
+     * @returns A map with positions addresses as keys and PnL data
+     */
+    async getPositionsPnl(account) {
+        const query = (0, _graphclient_1.execute)(_graphclient_1.PnlQueryDocument, { trader: account });
+        if (!query) {
+            console.log(`TODO fix the queries`);
+        }
+        else {
+            const result = await query;
+            console.log(`result is ${JSON.stringify(result)}`);
+            const pnlData = result?.data?.positions;
+            if (pnlData) {
+                const newMap = new Map();
+                for (let i = 0; i < pnlData.length; i++) {
+                    const positionPnLData = pnlData[i];
+                    positionPnLData.id = ethers_1.ethers.utils.getAddress(positionPnLData.id);
+                    newMap.set(positionPnLData.id, positionPnLData);
+                }
+                return newMap;
+            }
+            else {
+                console.error(`missing PnL data for ${account} ${pnlData}`);
+            }
+        }
+        return null;
+    }
     // Public mutations
     /**
      * Open a position
@@ -100,10 +130,11 @@ class LevatoSDK {
      * @param { BigNumber } amount
      * @param { string } fundingTokenUnderlying
      * @param { string } leverage
+     * @param { type }
      * @returns The transaction hash
      */
-    async openPosition(collateralUnderlying, stableTokenUnderlying, amount, fundingTokenUnderlying, leverage) {
-        const tx = await this.#factoryContract.createAndFundPositionAtRatio(collateralUnderlying, ethers_1.ethers.constants.AddressZero, stableTokenUnderlying, fundingTokenUnderlying, amount, leverage ?? '1');
+    async openPosition(collateralUnderlying, stableTokenUnderlying, amount, fundingTokenUnderlying, leverage, isShort) {
+        const tx = await this.#factoryContract.createAndFundPositionAtRatio(collateralUnderlying, ethers_1.ethers.constants.AddressZero, stableTokenUnderlying, isShort, fundingTokenUnderlying, amount, leverage ?? '1');
         return tx;
     }
     /**
