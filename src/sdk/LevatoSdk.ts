@@ -1,4 +1,6 @@
 import { BigNumber, ContractTransaction, Signer, ethers } from 'ethers';
+import { formatEther } from 'ethers/lib/utils';
+import { getBuiltGraphSDK } from '../.graphclient';
 import {
   FlashloanRouter,
   FlashloanRouter__factory,
@@ -10,8 +12,6 @@ import {
   LeveragedPositionsLens,
   LeveragedPositionsLens__factory
 } from '../typechain';
-import { formatEther } from 'ethers/lib/utils';
-import { PnlQueryDocument, Position, execute } from '../.graphclient';
 
 export type LevatoSDKContructor = {
   signer: Signer;
@@ -193,7 +193,8 @@ export default class LevatoSDK {
    * @returns A map with positions addresses as keys and PnL data
    */
   async getPositionsPnl(account: string) {
-    const query = execute(PnlQueryDocument, { trader: account });
+    const sdk = getBuiltGraphSDK();
+    const query = sdk.PnlQuery({ trader: account });
 
     if (!query) {
       console.log(`TODO fix the queries`);
@@ -201,7 +202,7 @@ export default class LevatoSDK {
       const result = await query;
       console.log(`result is ${JSON.stringify(result)}`);
 
-      const pnlData = result?.data?.positions as Position[];
+      const pnlData = result?.positions;
 
       if (pnlData) {
         const newMap = new Map();

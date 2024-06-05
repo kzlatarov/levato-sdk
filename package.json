@@ -1,11 +1,9 @@
 {
   "name": "levato-sdk",
-  "version": "1.0.15",
+  "version": "1.0.21",
   "description": "The package provides methods to use levato leverage contracts",
   "main": "dist/index.js",
-  "devDependencies": {
-    "@graphprotocol/client-cli": "^3.0.3"
-  },
+  "devDependencies": {},
   "scripts": {
     "build": "tsc",
     "dev": "tsc -w",
@@ -23,6 +21,9 @@
   "homepage": "https://github.com/kzlatarov/levato-sdk#readme",
   "dependencies": {
     "ethers": "5",
-    "graphql": "^16.8.1"
+    "graphql": "^16.8.1",
+    "@graphprotocol/client-cli": "^3.0.3",
+    "@graphql-tools/schema": "^10.0.2",
+    "@graphql-tools/utils": "^10.0.11"
   }
 }
