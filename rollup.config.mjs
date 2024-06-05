@@ -14,7 +14,12 @@ export default merge(baseConfig, [
       dir: './dist',
       format: 'commonjs'
     },
-    plugins: [nodeResolve(), json(), commonjs(), typescript()]
+    plugins: [
+      nodeResolve(),
+      json(),
+      commonjs(),
+      typescript({ declaration: false })
+    ]
   }
   // {
   //   input: './src/sdk/LevatoSdk.ts',
