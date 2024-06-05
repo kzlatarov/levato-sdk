@@ -20,8 +20,9 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 };
 var _LevatoSDK_signer, _LevatoSDK_lensContract, _LevatoSDK_factoryContract, _LevatoSDK_creditDelegatorContract, _LevatoSDK_flashLoanRouterContract;
 import { BigNumber, ethers } from 'ethers';
-import { FlashloanRouter__factory, ICreditDelegator__factory, ILeveragedPositionsFactory__factory, LeveragedPosition__factory, LeveragedPositionsLens__factory } from '../typechain';
 import { formatEther } from 'ethers/lib/utils';
+import { getBuiltGraphSDK } from '../.graphclient';
+import { FlashloanRouter__factory, ICreditDelegator__factory, ILeveragedPositionsFactory__factory, LeveragedPosition__factory, LeveragedPositionsLens__factory } from '../typechain';
 class LevatoSDK {
     constructor({ signer, lensContractAddress, factoryContractAddress, creditDelegatorContractAddress, flashLoanRouterContractAddress }) {
         // Private variables
@@ -124,28 +125,33 @@ class LevatoSDK {
      * @param { string } address
      * @returns A map with positions addresses as keys and PnL data
      */
-    // async getPositionsPnl(account: string) {
-    //   const query = execute(PnlQueryDocument, { trader: account });
-    //   if (!query) {
-    //     console.log(`TODO fix the queries`);
-    //   } else {
-    //     const result = await query;
-    //     console.log(`result is ${JSON.stringify(result)}`);
-    //     const pnlData = result?.data?.positions as Position[];
-    //     if (pnlData) {
-    //       const newMap = new Map();
-    //       for (let i = 0; i < pnlData.length; i++) {
-    //         const positionPnLData = pnlData[i];
-    //         positionPnLData.id = ethers.utils.getAddress(positionPnLData.id);
-    //         newMap.set(positionPnLData.id, positionPnLData);
-    //       }
-    //       return newMap;
-    //     } else {
-    //       console.error(`missing PnL data for ${account} ${pnlData}`);
-    //     }
-    //   }
-    //   return null;
-    // }
+    getPositionsPnl(account) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const sdk = getBuiltGraphSDK();
+            const query = sdk.PnlQuery({ trader: account });
+            if (!query) {
+                console.log(`TODO fix the queries`);
+            }
+            else {
+                const result = yield query;
+                console.log(`result is ${JSON.stringify(result)}`);
+                const pnlData = result === null || result === void 0 ? void 0 : result.positions;
+                if (pnlData) {
+                    const newMap = new Map();
+                    for (let i = 0; i < pnlData.length; i++) {
+                        const positionPnLData = pnlData[i];
+                        positionPnLData.id = ethers.utils.getAddress(positionPnLData.id);
+                        newMap.set(positionPnLData.id, positionPnLData);
+                    }
+                    return newMap;
+                }
+                else {
+                    console.error(`missing PnL data for ${account} ${pnlData}`);
+                }
+            }
+            return null;
+        });
+    }
     // Public mutations
     /**
      * Open a position

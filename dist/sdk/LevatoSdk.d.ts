@@ -53,6 +53,7 @@ export default class LevatoSDK {
      * @param { string } address
      * @returns A map with positions addresses as keys and PnL data
      */
+    getPositionsPnl(account: string): Promise<Map<any, any> | null>;
     /**
      * Open a position
      * @param { string } collateralUnderlying
