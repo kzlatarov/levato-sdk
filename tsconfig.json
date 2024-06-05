@@ -11,7 +11,7 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "CommonJS",
+    "module": "ESNext",
     "moduleResolution": "node",
     "rootDirs": ["./src"]
   },
