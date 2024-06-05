@@ -19,4 +19,5 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const LevatoSdk_1 = __importDefault(require("./sdk/LevatoSdk"));
 __exportStar(require("./typechain"), exports);
+__exportStar(require("./.graphclient"), exports);
 exports.default = LevatoSdk_1.default;
