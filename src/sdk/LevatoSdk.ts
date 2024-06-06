@@ -1,6 +1,6 @@
 import { BigNumber, ContractTransaction, Signer, ethers } from 'ethers';
 import { formatEther } from 'ethers/lib/utils';
-import { getBuiltGraphSDK } from '../.graphclient';
+import { Position, getBuiltGraphSDK } from '../.graphclient';
 import {
   FlashloanRouter,
   FlashloanRouter__factory,
@@ -205,7 +205,10 @@ export default class LevatoSDK {
       const pnlData = result?.positions;
 
       if (pnlData) {
-        const newMap = new Map();
+        const newMap = new Map<
+          string,
+          Pick<Position, 'id' | 'collateral' | 'fundedCollateralAmount'>
+        >();
 
         for (let i = 0; i < pnlData.length; i++) {
           const positionPnLData = pnlData[i];
