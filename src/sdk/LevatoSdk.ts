@@ -194,9 +194,10 @@ export default class LevatoSDK {
    */
   async getPositionsPnl(
     account: string
-  ): Promise<
-    Map<string, Pick<Position, 'id' | 'collateral' | 'fundedCollateralAmount'>>
-  > {
+  ): Promise<Map<
+    string,
+    Pick<Position, 'id' | 'collateral' | 'fundedCollateralAmount'>
+  > | null> {
     const sdk = getBuiltGraphSDK();
     const query = sdk.PnlQuery({ trader: account });
 
