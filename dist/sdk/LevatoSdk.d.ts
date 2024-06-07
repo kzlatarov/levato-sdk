@@ -1,5 +1,5 @@
 import { BigNumber, ContractTransaction, Signer } from 'ethers';
-import { Position } from '../.graphclient';
+import { AdjustedRatioQueryQuery, FundingQueryQuery, Position, PositionClosedQueryQuery, PositionCreatedQueryQuery } from '../.graphclient';
 import { FlashloanRouter, ICreditDelegator, ILeveragedPositionsFactory, LeveragedPositionsLens } from '../typechain';
 export type LevatoSDKContructor = {
     signer: Signer;
@@ -48,6 +48,17 @@ export default class LevatoSDK {
     getPositionsInfo(address: string): Promise<[
         LeveragedPositionsLens.PositionInfoStructOutput[],
         LeveragedPositionsLens.PositionInfoStructOutput[]
+    ]>;
+    /**
+     * Get graph positions info
+     * @param { string[] } positionsAddresses
+     * @returns An array containing graph position info
+     */
+    getGraphPositionsInfo(positionsAddresses: string[]): Promise<[
+        FundingQueryQuery,
+        AdjustedRatioQueryQuery,
+        PositionCreatedQueryQuery,
+        PositionClosedQueryQuery
     ]>;
     /**
      * Get positions PnL

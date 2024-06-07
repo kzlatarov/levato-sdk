@@ -360,6 +360,7 @@ export type PositionCreated = {
     blockNumber: Scalars['BigInt'];
     blockTimestamp: Scalars['BigInt'];
     transactionHash: Scalars['Bytes'];
+    usdcPriceOnCreation: Scalars['BigInt'];
 };
 export type PositionCreated_filter = {
     id?: InputMaybe<Scalars['Bytes']>;
@@ -454,12 +455,20 @@ export type PositionCreated_filter = {
     transactionHash_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
     transactionHash_contains?: InputMaybe<Scalars['Bytes']>;
     transactionHash_not_contains?: InputMaybe<Scalars['Bytes']>;
+    usdcPriceOnCreation?: InputMaybe<Scalars['BigInt']>;
+    usdcPriceOnCreation_not?: InputMaybe<Scalars['BigInt']>;
+    usdcPriceOnCreation_gt?: InputMaybe<Scalars['BigInt']>;
+    usdcPriceOnCreation_lt?: InputMaybe<Scalars['BigInt']>;
+    usdcPriceOnCreation_gte?: InputMaybe<Scalars['BigInt']>;
+    usdcPriceOnCreation_lte?: InputMaybe<Scalars['BigInt']>;
+    usdcPriceOnCreation_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    usdcPriceOnCreation_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
     /** Filter for the block changed event. */
     _change_block?: InputMaybe<BlockChangedFilter>;
     and?: InputMaybe<Array<InputMaybe<PositionCreated_filter>>>;
     or?: InputMaybe<Array<InputMaybe<PositionCreated_filter>>>;
 };
-export type PositionCreated_orderBy = 'id' | 'user' | 'position' | 'collateral' | 'stable' | 'lendingProtocol' | 'executionPrice' | 'blockNumber' | 'blockTimestamp' | 'transactionHash';
+export type PositionCreated_orderBy = 'id' | 'user' | 'position' | 'collateral' | 'stable' | 'lendingProtocol' | 'executionPrice' | 'blockNumber' | 'blockTimestamp' | 'transactionHash' | 'usdcPriceOnCreation';
 export type PositionFunded = {
     id: Scalars['Bytes'];
     position: Scalars['Bytes'];
@@ -1320,6 +1329,7 @@ export type PositionCreatedResolvers<ContextType = MeshContext, ParentType exten
     blockNumber?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
     blockTimestamp?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
     transactionHash?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+    usdcPriceOnCreation?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
     __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 export type PositionFundedResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PositionFunded'] = ResolversParentTypes['PositionFunded']> = ResolversObject<{
@@ -1477,7 +1487,7 @@ export type PositionCreatedQueryQueryVariables = Exact<{
     positionAddresses?: InputMaybe<Array<Scalars['Bytes']> | Scalars['Bytes']>;
 }>;
 export type PositionCreatedQueryQuery = {
-    positionCreateds: Array<Pick<PositionCreated, 'position' | 'collateral' | 'stable' | 'user' | 'lendingProtocol' | 'executionPrice' | 'blockTimestamp' | 'blockNumber' | 'transactionHash' | 'id'>>;
+    positionCreateds: Array<Pick<PositionCreated, 'position' | 'collateral' | 'stable' | 'user' | 'lendingProtocol' | 'executionPrice' | 'blockTimestamp' | 'blockNumber' | 'transactionHash' | 'id' | 'usdcPriceOnCreation'>>;
 };
 export type PositionClosedQueryQueryVariables = Exact<{
     positionAddresses?: InputMaybe<Array<Scalars['Bytes']> | Scalars['Bytes']>;

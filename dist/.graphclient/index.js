@@ -48,7 +48,7 @@ export async function getMeshOptions() {
     const additionalTypeDefs = [];
     const levatoHandler = new GraphqlHandler({
         name: "levato",
-        config: { "endpoint": "https://gateway-arbitrum.network.thegraph.com/api/b70fcc64ad255db024f4b2017947c661/subgraphs/id/9VFBtBBMzX4K7xZcdyzKEAU5xF8mq3dekmFWuYAhX3CY" },
+        config: { "endpoint": "https://api.studio.thegraph.com/query/38975/levato-mode/version/latest" },
         baseDir,
         cache,
         pubsub,
@@ -186,6 +186,7 @@ export const PositionCreatedQueryDocument = gql `
     blockNumber
     transactionHash
     id
+    usdcPriceOnCreation
   }
 }
     `;

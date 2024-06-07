@@ -353,6 +353,7 @@ export declare namespace LevatoTypes {
         blockNumber: Scalars['BigInt'];
         blockTimestamp: Scalars['BigInt'];
         transactionHash: Scalars['Bytes'];
+        usdcPriceOnCreation: Scalars['BigInt'];
     };
     type PositionCreated_filter = {
         id?: InputMaybe<Scalars['Bytes']>;
@@ -447,12 +448,20 @@ export declare namespace LevatoTypes {
         transactionHash_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
         transactionHash_contains?: InputMaybe<Scalars['Bytes']>;
         transactionHash_not_contains?: InputMaybe<Scalars['Bytes']>;
+        usdcPriceOnCreation?: InputMaybe<Scalars['BigInt']>;
+        usdcPriceOnCreation_not?: InputMaybe<Scalars['BigInt']>;
+        usdcPriceOnCreation_gt?: InputMaybe<Scalars['BigInt']>;
+        usdcPriceOnCreation_lt?: InputMaybe<Scalars['BigInt']>;
+        usdcPriceOnCreation_gte?: InputMaybe<Scalars['BigInt']>;
+        usdcPriceOnCreation_lte?: InputMaybe<Scalars['BigInt']>;
+        usdcPriceOnCreation_in?: InputMaybe<Array<Scalars['BigInt']>>;
+        usdcPriceOnCreation_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
         /** Filter for the block changed event. */
         _change_block?: InputMaybe<BlockChangedFilter>;
         and?: InputMaybe<Array<InputMaybe<PositionCreated_filter>>>;
         or?: InputMaybe<Array<InputMaybe<PositionCreated_filter>>>;
     };
-    type PositionCreated_orderBy = 'id' | 'user' | 'position' | 'collateral' | 'stable' | 'lendingProtocol' | 'executionPrice' | 'blockNumber' | 'blockTimestamp' | 'transactionHash';
+    type PositionCreated_orderBy = 'id' | 'user' | 'position' | 'collateral' | 'stable' | 'lendingProtocol' | 'executionPrice' | 'blockNumber' | 'blockTimestamp' | 'transactionHash' | 'usdcPriceOnCreation';
     type PositionFunded = {
         id: Scalars['Bytes'];
         position: Scalars['Bytes'];

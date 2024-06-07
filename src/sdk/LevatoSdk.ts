@@ -1,6 +1,13 @@
 import { BigNumber, ContractTransaction, Signer, ethers } from 'ethers';
 import { formatEther } from 'ethers/lib/utils';
-import { Position, getBuiltGraphSDK } from '../.graphclient';
+import {
+  AdjustedRatioQueryQuery,
+  FundingQueryQuery,
+  Position,
+  PositionClosedQueryQuery,
+  PositionCreatedQueryQuery,
+  getBuiltGraphSDK
+} from '../.graphclient';
 import {
   FlashloanRouter,
   FlashloanRouter__factory,
@@ -185,6 +192,51 @@ export default class LevatoSDK {
 
     // Reverse to sort them in descending order
     return [openPositions.reverse(), closedPositions.reverse()];
+  }
+
+  /**
+   * Get graph positions info
+   * @param { string[] } positionsAddresses
+   * @returns An array containing graph position info
+   */
+  async getGraphPositionsInfo(
+    positionsAddresses: string[]
+  ): Promise<
+    [
+      FundingQueryQuery,
+      AdjustedRatioQueryQuery,
+      PositionCreatedQueryQuery,
+      PositionClosedQueryQuery
+    ]
+  > {
+    const sdk = getBuiltGraphSDK();
+    const fundedQuery = sdk.FundingQuery({
+      positionAddresses: positionsAddresses
+    });
+    const adjustedQuery = sdk.AdjustedRatioQuery({
+      positionAddresses: positionsAddresses
+    });
+    const createdQuery = sdk.PositionCreatedQuery({
+      positionAddresses: positionsAddresses
+    });
+    const closedQuery = sdk.PositionClosedQuery({
+      positionAddresses: positionsAddresses
+    });
+
+    if (!fundedQuery || !adjustedQuery || !createdQuery || !closedQuery) {
+      console.log(`broken graph calls`);
+
+      throw new Error('Broken graph calls');
+    }
+
+    const graphData = await Promise.all([
+      fundedQuery,
+      adjustedQuery,
+      createdQuery,
+      closedQuery
+    ]);
+
+    return graphData;
   }
 
   /**

@@ -5568,6 +5568,25 @@ const schemaAST = {
                         }
                     },
                     "directives": []
+                },
+                {
+                    "kind": "FieldDefinition",
+                    "name": {
+                        "kind": "Name",
+                        "value": "usdcPriceOnCreation"
+                    },
+                    "arguments": [],
+                    "type": {
+                        "kind": "NonNullType",
+                        "type": {
+                            "kind": "NamedType",
+                            "name": {
+                                "kind": "Name",
+                                "value": "BigInt"
+                            }
+                        }
+                    },
+                    "directives": []
                 }
             ],
             "interfaces": [],
@@ -7082,6 +7101,138 @@ const schemaAST = {
                 },
                 {
                     "kind": "InputValueDefinition",
+                    "name": {
+                        "kind": "Name",
+                        "value": "usdcPriceOnCreation"
+                    },
+                    "type": {
+                        "kind": "NamedType",
+                        "name": {
+                            "kind": "Name",
+                            "value": "BigInt"
+                        }
+                    },
+                    "directives": []
+                },
+                {
+                    "kind": "InputValueDefinition",
+                    "name": {
+                        "kind": "Name",
+                        "value": "usdcPriceOnCreation_not"
+                    },
+                    "type": {
+                        "kind": "NamedType",
+                        "name": {
+                            "kind": "Name",
+                            "value": "BigInt"
+                        }
+                    },
+                    "directives": []
+                },
+                {
+                    "kind": "InputValueDefinition",
+                    "name": {
+                        "kind": "Name",
+                        "value": "usdcPriceOnCreation_gt"
+                    },
+                    "type": {
+                        "kind": "NamedType",
+                        "name": {
+                            "kind": "Name",
+                            "value": "BigInt"
+                        }
+                    },
+                    "directives": []
+                },
+                {
+                    "kind": "InputValueDefinition",
+                    "name": {
+                        "kind": "Name",
+                        "value": "usdcPriceOnCreation_lt"
+                    },
+                    "type": {
+                        "kind": "NamedType",
+                        "name": {
+                            "kind": "Name",
+                            "value": "BigInt"
+                        }
+                    },
+                    "directives": []
+                },
+                {
+                    "kind": "InputValueDefinition",
+                    "name": {
+                        "kind": "Name",
+                        "value": "usdcPriceOnCreation_gte"
+                    },
+                    "type": {
+                        "kind": "NamedType",
+                        "name": {
+                            "kind": "Name",
+                            "value": "BigInt"
+                        }
+                    },
+                    "directives": []
+                },
+                {
+                    "kind": "InputValueDefinition",
+                    "name": {
+                        "kind": "Name",
+                        "value": "usdcPriceOnCreation_lte"
+                    },
+                    "type": {
+                        "kind": "NamedType",
+                        "name": {
+                            "kind": "Name",
+                            "value": "BigInt"
+                        }
+                    },
+                    "directives": []
+                },
+                {
+                    "kind": "InputValueDefinition",
+                    "name": {
+                        "kind": "Name",
+                        "value": "usdcPriceOnCreation_in"
+                    },
+                    "type": {
+                        "kind": "ListType",
+                        "type": {
+                            "kind": "NonNullType",
+                            "type": {
+                                "kind": "NamedType",
+                                "name": {
+                                    "kind": "Name",
+                                    "value": "BigInt"
+                                }
+                            }
+                        }
+                    },
+                    "directives": []
+                },
+                {
+                    "kind": "InputValueDefinition",
+                    "name": {
+                        "kind": "Name",
+                        "value": "usdcPriceOnCreation_not_in"
+                    },
+                    "type": {
+                        "kind": "ListType",
+                        "type": {
+                            "kind": "NonNullType",
+                            "type": {
+                                "kind": "NamedType",
+                                "name": {
+                                    "kind": "Name",
+                                    "value": "BigInt"
+                                }
+                            }
+                        }
+                    },
+                    "directives": []
+                },
+                {
+                    "kind": "InputValueDefinition",
                     "description": {
                         "kind": "StringValue",
                         "value": "Filter for the block changed event.",
@@ -7223,6 +7374,14 @@ const schemaAST = {
                     "name": {
                         "kind": "Name",
                         "value": "transactionHash"
+                    },
+                    "directives": []
+                },
+                {
+                    "kind": "EnumValueDefinition",
+                    "name": {
+                        "kind": "Name",
+                        "value": "usdcPriceOnCreation"
                     },
                     "directives": []
                 }

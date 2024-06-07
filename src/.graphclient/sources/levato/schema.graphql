@@ -400,6 +400,7 @@ type PositionCreated {
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
+  usdcPriceOnCreation: BigInt!
 }
 
 input PositionCreated_filter {
@@ -495,6 +496,14 @@ input PositionCreated_filter {
   transactionHash_not_in: [Bytes!]
   transactionHash_contains: Bytes
   transactionHash_not_contains: Bytes
+  usdcPriceOnCreation: BigInt
+  usdcPriceOnCreation_not: BigInt
+  usdcPriceOnCreation_gt: BigInt
+  usdcPriceOnCreation_lt: BigInt
+  usdcPriceOnCreation_gte: BigInt
+  usdcPriceOnCreation_lte: BigInt
+  usdcPriceOnCreation_in: [BigInt!]
+  usdcPriceOnCreation_not_in: [BigInt!]
   """Filter for the block changed event."""
   _change_block: BlockChangedFilter
   and: [PositionCreated_filter]
@@ -512,6 +521,7 @@ enum PositionCreated_orderBy {
   blockNumber
   blockTimestamp
   transactionHash
+  usdcPriceOnCreation
 }
 
 type PositionFunded {

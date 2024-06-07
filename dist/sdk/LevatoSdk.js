@@ -92,6 +92,37 @@ export default class LevatoSDK {
         return [openPositions.reverse(), closedPositions.reverse()];
     }
     /**
+     * Get graph positions info
+     * @param { string[] } positionsAddresses
+     * @returns An array containing graph position info
+     */
+    async getGraphPositionsInfo(positionsAddresses) {
+        const sdk = getBuiltGraphSDK();
+        const fundedQuery = sdk.FundingQuery({
+            positionAddresses: positionsAddresses
+        });
+        const adjustedQuery = sdk.AdjustedRatioQuery({
+            positionAddresses: positionsAddresses
+        });
+        const createdQuery = sdk.PositionCreatedQuery({
+            positionAddresses: positionsAddresses
+        });
+        const closedQuery = sdk.PositionClosedQuery({
+            positionAddresses: positionsAddresses
+        });
+        if (!fundedQuery || !adjustedQuery || !createdQuery || !closedQuery) {
+            console.log(`broken graph calls`);
+            throw new Error('Broken graph calls');
+        }
+        const graphData = await Promise.all([
+            fundedQuery,
+            adjustedQuery,
+            createdQuery,
+            closedQuery
+        ]);
+        return graphData;
+    }
+    /**
      * Get positions PnL
      * @param { string } address
      * @returns A map with positions addresses as keys and PnL data

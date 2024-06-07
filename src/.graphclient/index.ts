@@ -416,6 +416,7 @@ export type PositionCreated = {
   blockNumber: Scalars['BigInt'];
   blockTimestamp: Scalars['BigInt'];
   transactionHash: Scalars['Bytes'];
+  usdcPriceOnCreation: Scalars['BigInt'];
 };
 
 export type PositionCreated_filter = {
@@ -511,6 +512,14 @@ export type PositionCreated_filter = {
   transactionHash_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
   transactionHash_contains?: InputMaybe<Scalars['Bytes']>;
   transactionHash_not_contains?: InputMaybe<Scalars['Bytes']>;
+  usdcPriceOnCreation?: InputMaybe<Scalars['BigInt']>;
+  usdcPriceOnCreation_not?: InputMaybe<Scalars['BigInt']>;
+  usdcPriceOnCreation_gt?: InputMaybe<Scalars['BigInt']>;
+  usdcPriceOnCreation_lt?: InputMaybe<Scalars['BigInt']>;
+  usdcPriceOnCreation_gte?: InputMaybe<Scalars['BigInt']>;
+  usdcPriceOnCreation_lte?: InputMaybe<Scalars['BigInt']>;
+  usdcPriceOnCreation_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  usdcPriceOnCreation_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
   and?: InputMaybe<Array<InputMaybe<PositionCreated_filter>>>;
@@ -527,7 +536,8 @@ export type PositionCreated_orderBy =
   | 'executionPrice'
   | 'blockNumber'
   | 'blockTimestamp'
-  | 'transactionHash';
+  | 'transactionHash'
+  | 'usdcPriceOnCreation';
 
 export type PositionFunded = {
   id: Scalars['Bytes'];
@@ -1570,6 +1580,7 @@ export type PositionCreatedResolvers<ContextType = MeshContext, ParentType exten
   blockNumber?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   blockTimestamp?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   transactionHash?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  usdcPriceOnCreation?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -1743,7 +1754,7 @@ const levatoTransforms = [];
 const additionalTypeDefs = [] as any[];
 const levatoHandler = new GraphqlHandler({
               name: "levato",
-              config: {"endpoint":"https://gateway-arbitrum.network.thegraph.com/api/b70fcc64ad255db024f4b2017947c661/subgraphs/id/9VFBtBBMzX4K7xZcdyzKEAU5xF8mq3dekmFWuYAhX3CY"},
+              config: {"endpoint":"https://api.studio.thegraph.com/query/38975/levato-mode/version/latest"},
               baseDir,
               cache,
               pubsub,
@@ -1863,7 +1874,7 @@ export type PositionCreatedQueryQueryVariables = Exact<{
 }>;
 
 
-export type PositionCreatedQueryQuery = { positionCreateds: Array<Pick<PositionCreated, 'position' | 'collateral' | 'stable' | 'user' | 'lendingProtocol' | 'executionPrice' | 'blockTimestamp' | 'blockNumber' | 'transactionHash' | 'id'>> };
+export type PositionCreatedQueryQuery = { positionCreateds: Array<Pick<PositionCreated, 'position' | 'collateral' | 'stable' | 'user' | 'lendingProtocol' | 'executionPrice' | 'blockTimestamp' | 'blockNumber' | 'transactionHash' | 'id' | 'usdcPriceOnCreation'>> };
 
 export type PositionClosedQueryQueryVariables = Exact<{
   positionAddresses?: InputMaybe<Array<Scalars['Bytes']> | Scalars['Bytes']>;
@@ -1924,6 +1935,7 @@ export const PositionCreatedQueryDocument = gql`
     blockNumber
     transactionHash
     id
+    usdcPriceOnCreation
   }
 }
     ` as unknown as DocumentNode<PositionCreatedQueryQuery, PositionCreatedQueryQueryVariables>;
